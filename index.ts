@@ -27,9 +27,6 @@ const limiter = rateLimit({
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
 
-const corsOptions = {
-    origin: process.env.PRODUCTION ? 'https://seuraava-askel-frontend.vercel.app' : '*'
-}
 const helmetOptions = {
     contentSecurityPolicy: {
         directives: {
@@ -48,19 +45,19 @@ cloudinary.config({
 
 // Apply the rate limiting middleware to all requests
 app.use(limiter)
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.json({ limit: '10kb' }))
 app.use(helmet(helmetOptions))
 app.use(morgan("common"))
 
 // ROUTES 
-app.use("/", express.static('public'))
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/organizations", organizationRoutes)
 app.use("/api/invitations", invitationRoutes)
 app.use("/api/events", eventRoutes)
 app.use("/api/organization-pages", organizationPageRoutes)
+app.use("/", express.static('public'))
 
 const connect = async () => {
     await MainConn.asPromise().then(result => {

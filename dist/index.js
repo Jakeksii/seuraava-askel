@@ -36,9 +36,6 @@ const limiter = (0, express_rate_limit_1.default)({
     standardHeaders: true,
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
-const corsOptions = {
-    origin: process.env.PRODUCTION ? 'https://seuraava-askel-frontend.vercel.app' : '*'
-};
 const helmetOptions = {
     contentSecurityPolicy: {
         directives: Object.assign(Object.assign({}, helmet_1.default.contentSecurityPolicy.getDefaultDirectives()), { 'img-src': ["'self'", "data:", "https://res.cloudinary.com"] })
@@ -52,18 +49,18 @@ cloudinary_1.v2.config({
 });
 // Apply the rate limiting middleware to all requests
 app.use(limiter);
-app.use((0, cors_1.default)(corsOptions));
+app.use((0, cors_1.default)());
 app.use(express_1.default.json({ limit: '10kb' }));
 app.use((0, helmet_1.default)(helmetOptions));
 app.use((0, morgan_1.default)("common"));
 // ROUTES 
-app.use("/", express_1.default.static('public'));
 app.use("/api/auth", auth_1.default);
 app.use("/api/users", user_1.default);
 app.use("/api/organizations", organization_1.default);
 app.use("/api/invitations", invitation_1.default);
 app.use("/api/events", event_1.default);
 app.use("/api/organization-pages", organizationPage_1.default);
+app.use("/", express_1.default.static('public'));
 const connect = () => __awaiter(void 0, void 0, void 0, function* () {
     yield MainConnection_1.default.asPromise().then(result => {
         console.log('Connected to Main database at: ' + result.host + ":" + result.port);
