@@ -84,7 +84,7 @@ const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const type = req.query.type;
     // PAGINATE
     const page = parseInt(req.query.page) || 1; // Current page number
-    const limit = parseInt(req.query.limit) || 3; // Number of items per page
+    const limit = parseInt(req.query.limit) || 4; // Number of items per page
     const skip = (page - 1) * limit;
     if (!type) {
         try {

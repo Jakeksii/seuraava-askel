@@ -21,14 +21,22 @@ dotenv.config();
 const app = express();
 
 const limiter = rateLimit({
-	windowMs: 5 * 60 * 1000, // 15 minutes
-	max: 50, // Limit each IP to 50 requests per `window` (here, per 15 minutes)
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    windowMs: 5 * 60 * 1000, // 15 minutes
+    max: 50, // Limit each IP to 50 requests per `window` (here, per 15 minutes)
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
 
 const corsOptions = {
     origin: process.env.PRODUCTION ? 'https://seuraava-askel-frontend.vercel.app' : '*'
+}
+const helmetOptions = {
+    contentSecurityPolicy: {
+        directives: {
+            ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+            'img-src': ["'self'", "data:", "https://res.cloudinary.com"]
+        }
+    }
 }
 
 cloudinary.config({
@@ -42,7 +50,7 @@ cloudinary.config({
 app.use(limiter)
 app.use(cors(corsOptions))
 app.use(express.json({ limit: '10kb' }))
-app.use(helmet())
+app.use(helmet(helmetOptions))
 app.use(morgan("common"))
 
 // ROUTES 

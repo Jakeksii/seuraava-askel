@@ -80,7 +80,7 @@ export const getEvents = async (req: Request, res: Response) => {
 
   // PAGINATE
   const page = parseInt(req.query.page as string) || 1; // Current page number
-  const limit = parseInt(req.query.limit as string) || 3; // Number of items per page
+  const limit = parseInt(req.query.limit as string) || 4; // Number of items per page
   const skip = (page - 1) * limit
 
 

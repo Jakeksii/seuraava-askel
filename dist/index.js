@@ -39,6 +39,11 @@ const limiter = (0, express_rate_limit_1.default)({
 const corsOptions = {
     origin: process.env.PRODUCTION ? 'https://seuraava-askel-frontend.vercel.app' : '*'
 };
+const helmetOptions = {
+    contentSecurityPolicy: {
+        directives: Object.assign(Object.assign({}, helmet_1.default.contentSecurityPolicy.getDefaultDirectives()), { 'img-src': ["'self'", "data:", "https://res.cloudinary.com"] })
+    }
+};
 cloudinary_1.v2.config({
     cloud_name: process.env.CLOUDINARY_NAME,
     api_key: process.env.CLOUDINARY_KEY,
@@ -49,7 +54,7 @@ cloudinary_1.v2.config({
 app.use(limiter);
 app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.json({ limit: '10kb' }));
-app.use((0, helmet_1.default)());
+app.use((0, helmet_1.default)(helmetOptions));
 app.use((0, morgan_1.default)("common"));
 // ROUTES 
 app.use("/", express_1.default.static('public'));
