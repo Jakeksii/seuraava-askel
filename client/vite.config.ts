@@ -25,6 +25,9 @@ export default defineConfig(({ command }) => {
       plugins: [react()],
       define: {
         APP_VERSION: JSON.stringify(process.env.npm_package_version),
+      },
+      build: {
+        outDir: '../server/public'
       }
     }
   }

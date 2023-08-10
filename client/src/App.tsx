@@ -1,11 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
-import MainNav from './assets/components/MainNav'
 import { useLocationContext } from './assets/context/locationContext'
-import EventPage from './pages/Event'
-import Home from './pages/Home'
-import OrganizationPage from './pages/Organization'
+import MainNav from './assets/components/MainNav'
+const Home = lazy(() => import('./pages/Home'))
+const EventPage = lazy(() => import('./pages/Event'))
+const OrganizationPage = lazy(() => import('./pages/Organization'))
+
 
 function App() {
   const locationContext = useLocationContext()
@@ -15,10 +16,12 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/:organization_name' element={<OrganizationPage />} />
-        <Route path='/:organization_name/:event_id' element={<EventPage />} />
-        <Route path='*' element={<Navigate to="/" />} />
+        <Suspense>
+          <Route path='/' element={<Home />} />
+          <Route path='/:organization_name' element={<OrganizationPage />} />
+          <Route path='/:organization_name/:event_id' element={<EventPage />} />
+          <Route path='*' element={<Navigate to="/" />} />
+        </Suspense>
       </Routes>
       <MainNav />
     </>
