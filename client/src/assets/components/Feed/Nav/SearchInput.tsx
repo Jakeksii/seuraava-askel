@@ -83,7 +83,7 @@ export default function SearchInput(props: Props) {
     return (
         <ClickAwayListener onClickAway={() => setResultsVisible(false)}>
             <div className='grow'>
-                <div >
+                <div>
                     <Input // SEARCH BAR
                         ref={inputRef}
                         className='w-[100%] p-2 rounded-md bg-blue-500 focus-within:bg-blue-400 '

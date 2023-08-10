@@ -60,7 +60,7 @@ const SearchResultsElement = (props: Props) => {
         const classlist = index === 0 ? "hover:font-bold border-b-2 selected" : "hover:font-bold"
         return (
             <li key={index} className={classlist}>
-                <button onClick={() => props.searchResultClick(result.data, result.type)} className='m-1 text-left flex flex-col box-border md:flex-row'>
+                <button onClick={() => props.searchResultClick(result.data, result.type)} className='m-1 text-left flex flex-col box-border md:flex-row w-full'>
                     <p className="pl-1 pr-1 text-slate-600">{getPrefix(result.type)}</p>
                     <p>{getHighlightedText(result.data, props.searchValue)}</p>
                 </button>

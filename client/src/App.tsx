@@ -1,12 +1,18 @@
-import { useEffect, lazy, Suspense } from 'react'
+import { CircularProgress } from '@mui/material'
+import { Suspense, lazy, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
-import { useLocationContext } from './assets/context/locationContext'
 import MainNav from './assets/components/MainNav'
+import { useLocationContext } from './assets/context/locationContext'
 const Home = lazy(() => import('./pages/Home'))
 const EventPage = lazy(() => import('./pages/Event'))
 const OrganizationPage = lazy(() => import('./pages/Organization'))
 
+const loading = (
+  <div className='h-[100vh] m-auto flex justify-center items-center text-white'>
+    <CircularProgress color="inherit" size={50} />
+  </div>
+)
 
 function App() {
   const locationContext = useLocationContext()
@@ -16,12 +22,10 @@ function App() {
   return (
     <>
       <Routes>
-        <Suspense>
-          <Route path='/' element={<Home />} />
-          <Route path='/:organization_name' element={<OrganizationPage />} />
-          <Route path='/:organization_name/:event_id' element={<EventPage />} />
+          <Route path='/' element={<Suspense fallback={loading}><Home/></Suspense>} />
+          <Route path='/:organization_name' element={<Suspense fallback={loading}><OrganizationPage/></Suspense>} />
+          <Route path='/:organization_name/:event_id' element={<Suspense fallback={loading}><EventPage/></Suspense>} />
           <Route path='*' element={<Navigate to="/" />} />
-        </Suspense>
       </Routes>
       <MainNav />
     </>
