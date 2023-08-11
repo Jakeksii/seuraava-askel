@@ -13,15 +13,15 @@ const Event = new mongoose_1.Schema({
     title: {
         type: String,
         required: true,
-        maxlength: 50,
+        maxlength: 65,
         minlenght: 5,
         index: true
     },
     extract: {
         type: String,
         required: true,
-        maxlength: 160,
-        minlenght: 10,
+        maxlength: 260,
+        minlenght: 25,
     },
     visible: {
         type: Boolean,

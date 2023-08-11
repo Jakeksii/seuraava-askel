@@ -1,7 +1,7 @@
 import LocationOffIcon from '@mui/icons-material/LocationOff';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import NotListedLocationIcon from '@mui/icons-material/NotListedLocation';
-import { Button, IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocationContext } from "../../../context/locationContext";
 import { WarningAlert } from "../../Alerts";
