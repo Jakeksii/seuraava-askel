@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import MainNav from './assets/components/MainNav'
 import { useLocationContext } from './assets/context/locationContext'
+import ThemeProvider from './Theme'
 const Home = lazy(() => import('./pages/Home'))
 const EventPage = lazy(() => import('./pages/Event'))
 const OrganizationPage = lazy(() => import('./pages/Organization'))
@@ -20,7 +21,7 @@ function App() {
       if (!locationContext.locationOn) locationContext.getLocation()
   }, [])
   return (
-    <>
+    <ThemeProvider>
       <Routes>
           <Route path='/' element={<Suspense fallback={loading}><Home/></Suspense>} />
           <Route path='/:organization_name' element={<Suspense fallback={loading}><OrganizationPage/></Suspense>} />
@@ -28,7 +29,7 @@ function App() {
           <Route path='*' element={<Navigate to="/" />} />
       </Routes>
       <MainNav />
-    </>
+    </ThemeProvider>
   )
 }
 export default App

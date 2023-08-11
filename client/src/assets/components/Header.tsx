@@ -1,25 +1,36 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { IconButton } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import { Link } from "react-router-dom";
+const Search = lazy(() => import("./Feed/Nav/Search"));
+const EmblaCarousel = lazy(() => import("./HeaderBanner/EmblaCarousel"));
 
-export default function Header() {
-    const navigate = useNavigate()
-    return (
+type Props = {
+    home?: boolean
+}
+
+export default function Header(props: Props) {
+    if (props.home) return (
         <header>
-            <div className="flex justify-between items-center w-full bg-blue-600 border-b-slate-700 border-b-2 p-2 text-white">
-                <div className="pl-4">
-                    <IconButton color="inherit" onClick={() => navigate(-1)}>
-                        <ArrowBackIcon fontSize="medium" />
-                    </IconButton>
-                </div>
-                <h1 className="text-center self-center pb-1">
+            <div className="bg-secondary-dark p-1">
+                <h1 className="text-center pb-0">
                     <Link className="text-white" to="/">Seuraava Askel</Link>
                 </h1>
-                <div className="w-[67px]" />
             </div>
+            <Suspense fallback={<div className="h-[312px]" />}>
+                <EmblaCarousel />
+            </Suspense>
+            <Suspense>
+                <Search />
+            </Suspense>
+        </header>
+    )
 
-
-
+    return (
+        <header>
+            <div className="bg-secondary-dark p-1">
+                <h1 className="text-center pb-0">
+                    <Link className="text-white" to="/">Seuraava Askel</Link>
+                </h1>
+            </div>
         </header>
     )
 }

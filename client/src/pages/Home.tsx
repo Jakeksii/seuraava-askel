@@ -1,16 +1,18 @@
-import Feed from "../assets/components/Feed/Feed";
-import HeaderBanner from "../assets/components/HeaderBanner/HeaderBanner";
+import Events from "../assets/components/Feed/Events";
+import Header from "../assets/components/Header";
 
 export default function Home() {
   return (
     <>
-    <main>
-      <HeaderBanner />
-      <Feed />
-    </main>
-    <footer>
-      <div className=" pb-16"/>
-    </footer>
+      <Header home />
+      <main>
+        <section className={"pt-6"}>
+          <Events />
+        </section>
+      </main>
+      <footer>
+        <div className=" pb-16" />
+      </footer>
     </>
   )
 }

@@ -26,12 +26,12 @@ export default function Event(props: Props) {
         .resize(
             fill()
                 .gravity("auto")
-                .width(768)
-                .height(549)
+                .width(350)
+                .height(350)
         )
 
     const distance = props.distance != null ?
-        <div className="flex w-fit items-center rounded-full bg-[#1976d2] p-1">
+        <div className="flex w-fit items-center rounded-full bg-[#1976d2] p-1 mb-1">
             <LocationOnIcon style={{ color: 'white' }} />
             <h6 className="p-1 text-white">{props.distance} km</h6>
         </div>
@@ -57,27 +57,26 @@ export default function Event(props: Props) {
     const eventLink = organizationLink + "/" + props._id
 
     return (
-        <div className="shadow-lg rounded-2xl bg-white h-[100%] cursor-pointer">
+        <div className="m-auto shadow-lg max-w-[350px] md:max-w-none md:w-auto rounded-2xl bg-white h-[100%] cursor-pointer mb-6">
             <Link to={eventLink}>
-                <div className="relative">
-                    <div className="h-0 w-fit absolute float-right top-[10px] right-[10px]">
+                <div className="md:grid grid-flow-col grid-cols-[350px,1fr] rounded-2xl items-center">
+                    <AdvancedImage className="rounded-2xl" cldImg={image} />
+                    <div className="m-4">
                         {distance}
+                        {props.organization}
+                        <h2 className="text-black p-0">{props.title}</h2>
+                        <div className="flex gap-2 pt-2 pb-2">
+                            {date}
+                            {time}
+                            
+                        </div>
+                        <p className="text-black">{props.extract}</p>
+                        <br />
                     </div>
                 </div>
 
-                <AdvancedImage className="rounded-t-2xl" cldImg={image} />
-            <div className="m-2">
-                {props.organization}
-                <h2 className="text-black p-0">{props.title}</h2>
-                <div className="flex gap-2 pt-2 pb-2">
-                    {date}
-                    {time}
-                </div>
-                <p className="text-black">{props.extract}</p>
-            </div>
             </ Link>
         </div>
-
     )
 }
 

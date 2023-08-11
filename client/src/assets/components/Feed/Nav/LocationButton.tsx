@@ -43,16 +43,17 @@ export default function LocationButton(props: Props) {
     }, [locationContext])
 
     return (
-        <>
-            <IconButton // LOCATION BUTTON
+        <div>
+            <Button // LOCATION BUTTON
                 onClick={locationClick}
-                size="large"
                 aria-label="toggle location"
-                color="inherit">
+                variant='contained'
+                size='large'
+                color='primary'>
                 {
                     icon === "notlisted" ? <NotListedLocationIcon /> : (icon==="locationon") ? <LocationOnIcon /> : <LocationOffIcon />
                 }
-            </IconButton>
+            </Button>
             <WarningAlert
                 open={locationWarningOpen}
                 message='Location Access Denied'
@@ -61,6 +62,6 @@ export default function LocationButton(props: Props) {
             <LocationAccessDeniedDialog
                 open={locationAccessDialogOpen}
                 onClose={() => setLocationAccessDialogOpen(false)} />
-        </>
+        </div>
     )
 }

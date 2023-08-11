@@ -8,8 +8,8 @@ import useCalculateDistance from "../../hooks/useCalculateDistance"
 import Event from "./Event"
 
 const loading = (
-    <div className="grid justify-center text-white pt-4" aria-busy={true}>
-        <CircularProgress size={50} color="inherit" />
+    <div className="grid justify-center pt-4" aria-busy={true}>
+        <CircularProgress size={50} color="info" />
     </div>
 )
 
@@ -33,7 +33,7 @@ export default function EventFeed() {
     if (isError) {
         return (
             <div>
-                <h2 className="text-center text-white pt-4">Error when fetching events. Please try again</h2>
+                <h2 className="text-center pt-4">Error when fetching events. Please try again</h2>
             </div>
         )
     }
@@ -41,7 +41,7 @@ export default function EventFeed() {
 
     return (
         <>
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2" >
+            <div /*className="grid gap-4 grid-cols-1 sm:grid-cols-2" */>
                 {
                     data?.pages.map((page) => (
                         page.map((event, i) => {

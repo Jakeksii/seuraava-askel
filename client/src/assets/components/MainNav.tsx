@@ -17,12 +17,13 @@ export default function MainNav() {
         open={drawerOpen}
         onClose={closeDrawer}
       >
-        <div className="h-[100%] bg-blue-600 p-5">
-          <Button color="inherit" fullWidth component={Link} to="/" aria-label='navigate to home' onClick={closeDrawer}>Tapahtumat</Button>
+        
+        <div className="h-[100%] bg-secondary-main p-5 flex flex-col justify-center">
+          <Button color='primary' variant='contained' fullWidth component={Link} to="/" aria-label='navigate to home' onClick={closeDrawer}><h4>Tapahtumat</h4></Button>
         </div>
       </Drawer>
       <div className='fixed bottom-5 left-5 md:bottom-10 md:left-10'>
-      <Fab color="primary" aria-label="menu" onClick={() => setDrawerOpen(true)} >
+      <Fab color='primary' aria-label="menu" onClick={() => setDrawerOpen(true)} >
         <MenuIcon />
       </Fab>
       </div>
