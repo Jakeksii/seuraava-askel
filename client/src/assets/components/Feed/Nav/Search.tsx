@@ -93,9 +93,9 @@ export default function Search() {
 
     return (
         <section className='h-14'>
-            <div className='relative z-50 p-2 rounded-b-2xl bg-secondary-dark'>
+            <ClickAwayListener onClickAway={() => setResultsVisible(false)}>
+            <div className='relative z-10 p-2 rounded-b-2xl bg-secondary-dark'>
                 <div className='flex justify-center items-center gap-1'>
-                    <ClickAwayListener onClickAway={() => setResultsVisible(false)}>
                         <div className='grow'>
                             <div>
                                 <Input // SEARCH BAR
@@ -114,7 +114,6 @@ export default function Search() {
                                     onFocus={onInputFocus} />
                             </div>
                         </div>
-                    </ClickAwayListener>
                     <LocationButton onSearchByLocation={locationSearch} />
                     <Button // FILTER BUTTON
                         aria-label="Filter events"
@@ -128,6 +127,7 @@ export default function Search() {
                     {resultsVisible ? searchResults() : <></>}
                 </div>
             </div>
+            </ClickAwayListener>
         </section>
     )
 }
