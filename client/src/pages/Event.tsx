@@ -66,7 +66,7 @@ export default function EventPage() {
             <Header />
             <main className="m-auto">
                 <section>
-                    <PageImage image_id={data.image_id} width={820} height={549} />
+                    <PageImage image_id={data.image_id} width={(820 > window.innerWidth) ? window.innerWidth+100 : 820}/>
                 </section>
                 <section className="m-4">
                     <div className="text-center">

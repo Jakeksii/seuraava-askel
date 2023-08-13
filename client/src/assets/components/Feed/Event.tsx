@@ -26,12 +26,12 @@ export default function Event(props: Props) {
         .resize(
             fill()
                 .gravity("auto")
-                .width(350)
-                .height(350)
+                .width(450)
+                .height(300)
         )
 
     const distance = props.distance != null ?
-        <div className="flex w-fit items-center rounded-full bg-[#1976d2] p-1 mb-1">
+        <div className="flex w-fit items-center rounded-full bg-secondary-light p-1 mb-1">
             <LocationOnIcon style={{ color: 'white' }} />
             <h6 className="p-1 text-white">{props.distance} km</h6>
         </div>
@@ -39,7 +39,7 @@ export default function Event(props: Props) {
 
     const formattedDates = useFormatDate(props.startDate, props.endDate)
     const date =
-        <div className="flex items-center rounded-full bg-[#1976d2] p-1">
+        <div className="flex items-center rounded-full bg-secondary-light p-1">
             <EventIcon style={{ color: 'white' }} />
             <h6 className="p-1 text-white">
                 {(formattedDates.startDate === formattedDates.endDate) ?
@@ -48,7 +48,7 @@ export default function Event(props: Props) {
             </h6>
         </div>
     const time =
-        <div className="flex items-center rounded-full bg-[#1976d2] p-1">
+        <div className="flex items-center rounded-full bg-secondary-light p-1">
             <ScheduleIcon style={{ color: 'white' }} />
             <h6 className="p-1 text-white">{formattedDates.startTime} - {formattedDates.endTime}</h6>
         </div>

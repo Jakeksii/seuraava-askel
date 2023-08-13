@@ -26,7 +26,7 @@ const EmblaCarousel = () => {
   return (
     <div style={style.embla} className="embla" ref={emblaRef}>
       <div style={style.embla__container} className="embla__container">
-        <div style={style.embla__slide} className="embla__slide ml-2"><CarouselImage imageID='df1hlp0xwczdjf13mzbw' /></div>
+        <div style={style.embla__slide} className="embla__slide ml-2"><CarouselImage imageID='Seuraava_Askel_dxxvpv' /></div>
         <div style={style.embla__slide} className="embla__slide ml-2"><CarouselImage imageID='df1hlp0xwczdjf13mzbw' /></div>
         <div style={style.embla__slide} className="embla__slide ml-2"><CarouselImage imageID='df1hlp0xwczdjf13mzbw' /></div>
       </div>

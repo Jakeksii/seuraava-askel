@@ -16,14 +16,14 @@ const CarouselImage = (props: Props) => {
             fill()
                 .gravity("auto")
                 .width(820)
-                .height(312)
+                .height(547)
         ) :
     new CloudinaryImage(props.imageID, { cloudName: "dcjfcrgvu" })
     .resize(
         fill()
             .gravity("auto")
             .width(820)
-            .height(312)
+            .height(420)
     )
 
     return (

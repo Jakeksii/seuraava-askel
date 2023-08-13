@@ -10,12 +10,7 @@ type Props = {
 export default function Header(props: Props) {
     if (props.home) return (
         <header>
-            <div className="bg-secondary-dark p-1">
-                <h1 className="text-center pb-0">
-                    <Link className="text-white" to="/">Seuraava Askel</Link>
-                </h1>
-            </div>
-            <Suspense fallback={<div className="h-[312px]" />}>
+            <Suspense fallback={<div className="h-[420px]" />}>
                 <EmblaCarousel />
             </Suspense>
             <Suspense>
