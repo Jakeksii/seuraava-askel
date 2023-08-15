@@ -23,6 +23,9 @@ export default function EventFeed() {
         threshold: 0
     })
     useEffect(() => {
+        if (!locationContext.locationOn) locationContext.getLocation()
+    }, [])
+    useEffect(() => {
         if (entry?.isIntersecting && hasNextPage) fetchNextPage()
     }, [entry])
 

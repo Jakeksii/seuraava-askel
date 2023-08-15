@@ -2,10 +2,10 @@ import { Input } from '@mui/base';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { Button, CircularProgress, ClickAwayListener } from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { SEARCH_TYPE_LOCATION } from '../../../constants';
-import { useLocationContext } from '../../../context/locationContext';
-import { useSearchContext } from '../../../context/searchContext';
-import useGetSearchResults from '../../../hooks/api-hooks/useGetSearchResults';
+import { SEARCH_TYPE_LOCATION } from '../../constants';
+import { useLocationContext } from '../../context/locationContext';
+import { useSearchContext } from '../../context/searchContext';
+import useGetSearchResults from '../../hooks/api-hooks/useGetSearchResults';
 import LocationButton from './LocationButton';
 import SearchResultsElement from './SearchResultsElement';
 

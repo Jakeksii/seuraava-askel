@@ -63,20 +63,45 @@ export interface OrganizationPage {
     data: string
     updatedAt: Date
 }
-
-// PAGES
-export interface PageProps {
-    dict: Dictionary
+export interface Organization {
+    address: Address,
+	contact_info: ContactInfo,
+	_id: string,
+	name: string,
+	business_id: string,
+	contact_info_visible: boolean,
+	visible: boolean,
+	organization_users: [
+		{
+			user_id: string,
+			user_name: string,
+			user_email: string,
+			role: "user" | "admin" | "owner",
+			_id: string
+		}
+	],
+	created_by: string,
+	updated_by: string,
+	createdAt: Date,
+	updatedAt: Date,
+	__v: number
 }
 
-// DICTIONARY
-export interface Dictionary {
-    global_error: {
-        404: string,
-        500: string,
-        failed: string
-    },
-    actions: {
-        to_front_page: string
+export interface User {
+    token: string,
+    user: {
+        _id: string,
+        first_name: string,
+        last_name: string,
+        email: string,
+        verified: boolean,
+        organizations?: [
+            {
+                organization_id: string,
+                organization_name: string,
+                role: "user" | "admin" | "owner",
+                _id: string
+            }
+        ]
     }
 }

@@ -3,9 +3,9 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import NotListedLocationIcon from '@mui/icons-material/NotListedLocation';
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useLocationContext } from "../../../context/locationContext";
-import { WarningAlert } from "../../Alerts";
-import { LocationAccessDeniedDialog } from "../../Dialogs";
+import { useLocationContext } from "../../context/locationContext";
+import { WarningAlert } from "../Alerts";
+import { LocationAccessDeniedDialog } from "../Dialogs";
 
 type LocationiIcon = "notlisted" | "locationon" | "locationoff"
 

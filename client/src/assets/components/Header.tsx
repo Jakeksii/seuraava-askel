@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
-const Search = lazy(() => import("./Feed/Nav/Search"));
-const EmblaCarousel = lazy(() => import("./HeaderBanner/EmblaCarousel"));
+const Search = lazy(() => import("./Nav/Search"));
+const EmblaCarousel = lazy(() => import("./EmblaCarousel"));
 
 type Props = {
     home?: boolean

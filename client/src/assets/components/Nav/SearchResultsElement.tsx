@@ -1,6 +1,6 @@
 import { Fragment } from "react"
-import { SearchResult } from "../../../types"
-import { SEARCH_TYPE_CITY, SEARCH_TYPE_ORGANIZATION, SEARCH_TYPE_TITLE } from "../../../constants"
+import { SearchResult } from "../../types"
+import { SEARCH_TYPE_CITY, SEARCH_TYPE_ORGANIZATION, SEARCH_TYPE_TITLE } from "../../constants"
 import { Button } from "@mui/material"
 
 type Props = | {
