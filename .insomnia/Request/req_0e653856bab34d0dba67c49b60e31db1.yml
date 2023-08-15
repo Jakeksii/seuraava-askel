@@ -1,0 +1,25 @@
+_id: req_0e653856bab34d0dba67c49b60e31db1
+type: Request
+parentId: fld_41f8eb34a8ee49a69a55ddf3b76f4110
+modified: 1687270605348
+created: 1686439865075
+url: http://localhost:3001/api/users
+name: GET Current user
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - id: pair_0afec5e7482a463b9314e63abe6e5a5c
+    name: Authorization
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDkxYjQ3NzA1YjQ3NTQzODhhZDU4YzQiLCJpYXQiOjE2ODcyNzA1MjEsImV4cCI6MTY4NzI3MTEyMX0.zS0NpywYTxAn5yU-fxuin5xyEHhK_2KF_Zhh0ww1hl4
+    description: ""
+authentication: {}
+metaSortKey: -1686443485649
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

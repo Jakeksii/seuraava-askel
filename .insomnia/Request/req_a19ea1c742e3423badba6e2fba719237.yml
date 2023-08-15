@@ -1,0 +1,21 @@
+_id: req_a19ea1c742e3423badba6e2fba719237
+type: Request
+parentId: fld_79c013e8aa8a4ac48f98f6096b66d4d4
+modified: 1687266424240
+created: 1687012821047
+url: http://localhost:3001/api/organizations/6491a45fe97d3ad1331f92e9
+name: GET organization
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1686512848236
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

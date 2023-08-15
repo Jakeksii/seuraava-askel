@@ -1,0 +1,47 @@
+_id: req_52fdedf42ded4f289889e2488644ecea
+type: Request
+parentId: fld_79c013e8aa8a4ac48f98f6096b66d4d4
+modified: 1687270530957
+created: 1686512848286
+url: http://localhost:3001/api/organizations
+name: Create organization
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"name":"test Järvenpään vapaaseurakunta Arkki",
+    	"business_id":"Y-12112",
+    	"address":{
+    		"street":"Wärtsilänkatu 8",
+    		"city":"Järvenpää",
+    		"state":"Uusimaa",
+    		"zipcode":"04410",
+    		"country":"Finland",
+    		"coordinates":[60.48038566303072, 25.081171525458853]
+    	},
+    	"contact_info":{
+    		"email":"arkki@svk.fi",
+    		"phone":"0103289473"
+    	},
+    	"contact_info_visible":true
+    }
+parameters: []
+headers:
+  - id: pair_ee11aad08828498994d38ae4f3d01331
+    name: Authorization
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDkxYjQ3NzA1YjQ3NTQzODhhZDU4YzQiLCJpYXQiOjE2ODcyNzA1MjEsImV4cCI6MTY4NzI3MTEyMX0.zS0NpywYTxAn5yU-fxuin5xyEHhK_2KF_Zhh0ww1hl4
+    description: ""
+  - name: Content-Type
+    value: application/json
+    id: pair_59ef13ac85de482bacd4cc24f7ba8ea0
+authentication: {}
+metaSortKey: -1686512848286
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

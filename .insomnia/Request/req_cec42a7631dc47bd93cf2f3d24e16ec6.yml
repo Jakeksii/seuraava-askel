@@ -1,0 +1,25 @@
+_id: req_cec42a7631dc47bd93cf2f3d24e16ec6
+type: Request
+parentId: fld_79c013e8aa8a4ac48f98f6096b66d4d4
+modified: 1687270635600
+created: 1687023338309
+url: http://localhost:3001/api/organizations/6491b4b43676629fcece81c7
+name: Delete organization
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers:
+  - id: pair_e85d46b754bb409ca8e5d236be1cf2ee
+    name: Authorization
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDkxYjQ3NzA1YjQ3NTQzODhhZDU4YzQiLCJpYXQiOjE2ODcyNzA1MjEsImV4cCI6MTY4NzI3MTEyMX0.zS0NpywYTxAn5yU-fxuin5xyEHhK_2KF_Zhh0ww1hl4
+    description: ""
+authentication: {}
+metaSortKey: -1686507004889.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

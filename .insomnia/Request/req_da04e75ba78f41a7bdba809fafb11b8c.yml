@@ -1,0 +1,31 @@
+_id: req_da04e75ba78f41a7bdba809fafb11b8c
+type: Request
+parentId: fld_0d9a8147a94b4836bb1cd4d84d6a9151
+modified: 1687268411653
+created: 1686439034318
+url: http://localhost:3001/api/auth/register
+name: REGISTER user
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"first_name":"Jaakko",
+    	"last_name":"Ruhanen",
+    	"email":"a@a.fi",
+    	"password":"testi"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1686501161593
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

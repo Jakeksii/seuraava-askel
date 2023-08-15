@@ -1,0 +1,33 @@
+_id: req_aa23115ec75243b58827e43b15e208ae
+type: Request
+parentId: wrk_8fdbdbe97d14420f842385b6d3e10b50
+modified: 1692119629820
+created: 1692119557516
+url: http://localhost:3001/api/invitations
+name: Create Invitation
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"organization_id":"6494c3a2eaeb81ae3d792b82",
+    	"user_email":"aaaaaa@a.fi"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_a4214e515e3249a582f040402ea04430
+  - name: Authorization
+    value: Insomnia/2023.5.2
+    id: pair_59f489944b8a4d7d86f34fc996fe6c89
+authentication: {}
+metaSortKey: -1692119557517
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

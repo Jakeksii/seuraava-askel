@@ -1,0 +1,25 @@
+_id: req_73390b09ec924c6f9157726ba17872b8
+type: Request
+parentId: fld_0d9a8147a94b4836bb1cd4d84d6a9151
+modified: 1687266390197
+created: 1686501161693
+url: http://localhost:3001/api/auth/token
+name: GET new auth token
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - id: pair_bbf1f4d5efc745ad94fa8cccdfa88633
+    name: Authorization
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDkxOTdjZTVhZmRkMWYxMWQyNWJhYjMiLCJpYXQiOjE2ODcyNjYxMDcsImV4cCI6MTY4NzI2NjcwN30.TQsvXa5YJj7OzG9aJ4QFswhUnAlmlIrB5E8SLINTClE
+    description: ""
+authentication: {}
+metaSortKey: -1686501161543
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
