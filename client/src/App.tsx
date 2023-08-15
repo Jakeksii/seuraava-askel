@@ -1,10 +1,10 @@
 import { CircularProgress } from '@mui/material'
 import { ReactNode, Suspense, lazy } from 'react'
-import { Navigate, Route, Routes, redirect, useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import './App.css'
 import ThemeProvider from './Theme'
 import MainNav from './assets/components/MainNav'
-import { useAppContext, AppContextProvider } from './assets/context/appContext'
+import { useAppContext } from './assets/context/appContext'
 const Home = lazy(() => import('./pages/Home'))
 const EventPage = lazy(() => import('./pages/Event'))
 const OrganizationPage = lazy(() => import('./pages/Organization'))

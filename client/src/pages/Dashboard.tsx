@@ -1,10 +1,5 @@
 import Header from "../assets/components/Header";
-import { useAppContext } from "../assets/context/appContext";
 
-type OrganizationProps = {
-    name: string
-    link: string
-}
 function Organization() {
     return (
         <></>
@@ -12,7 +7,7 @@ function Organization() {
 }
 
 export default function Dasboard() {
-    const appContext = useAppContext()
+    //const appContext = useAppContext()
     return (
         <>
         <Header />
