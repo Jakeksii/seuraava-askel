@@ -66,7 +66,7 @@ export const login = async (req:Request, res:Response):Promise<Response> => {
 export const refreshToken = async (req:Request, res:Response):Promise<Response> => {
     try {
         const secret:string = process.env.JWT_SECRET ?? ""
-        const token = sign({ _id: req.user._id }, secret, { expiresIn: '10min'});
+        const token = sign({ _id: req.user._id }, secret, { expiresIn: '1d'});
         return res.status(200).json({ token: token });
     } catch (error:any) {
         return res.status(500).json({error: error.message});

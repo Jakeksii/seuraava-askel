@@ -68,7 +68,7 @@ const refreshToken = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     var _b;
     try {
         const secret = (_b = process.env.JWT_SECRET) !== null && _b !== void 0 ? _b : "";
-        const token = (0, jsonwebtoken_1.sign)({ _id: req.user._id }, secret, { expiresIn: '10min' });
+        const token = (0, jsonwebtoken_1.sign)({ _id: req.user._id }, secret, { expiresIn: '1d' });
         return res.status(200).json({ token: token });
     }
     catch (error) {
