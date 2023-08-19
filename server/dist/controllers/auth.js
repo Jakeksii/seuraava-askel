@@ -31,10 +31,8 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.status(400).json({ message: validationError.message });
         if (yield UserConnection_js_1.User.findOne({ email: email }))
             return res.status(409).json({ message: "Email already in use" });
-        const savedUser = yield newUser.save();
-        const sanitizedUser = Object.assign({}, savedUser._doc);
-        delete sanitizedUser.password;
-        return res.status(201).json(sanitizedUser);
+        yield newUser.save();
+        return res.status(201).end();
     }
     catch (error) {
         return res.status(500).json({ error: error.message });

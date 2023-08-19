@@ -31,11 +31,8 @@ export const register = async (req:Request, res:Response):Promise<Response> => {
 
         if(await User.findOne({email: email})) return res.status(409).json({ message: "Email already in use" })
 
-        const savedUser = await newUser.save();
-        const sanitizedUser = { ...savedUser._doc };
-        delete sanitizedUser.password;
-        return res.status(201).json(sanitizedUser);
-
+        await newUser.save();
+        return res.status(201).end();
     } catch (error:any) {
         return res.status(500).json({ error: error.message })
     }

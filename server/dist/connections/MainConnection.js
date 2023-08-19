@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrganizationPage = exports.Organization = exports.Invitation = exports.EventPage = exports.Event = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const Event_js_1 = __importDefault(require("../schemas/Event.js"));
 const EventPage_js_1 = __importDefault(require("../schemas/EventPage.js"));
 const Invitation_js_1 = __importDefault(require("../schemas/Invitation.js"));
