@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyToken = void 0;
 const jsonwebtoken_1 = require("jsonwebtoken");
-const UserConnection_js_1 = require("../connections/UserConnection.js");
+const UserConnection_1 = require("../connections/UserConnection");
 const verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
@@ -22,7 +22,7 @@ const verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             const secret = (_a = process.env.JWT_SECRET) !== null && _a !== void 0 ? _a : "";
             const verified = (0, jsonwebtoken_1.verify)(token, secret);
             //Test if user can be found with _id that was provided by token
-            const user = yield UserConnection_js_1.User.findById(verified);
+            const user = yield UserConnection_1.User.findById(verified);
             if (!user)
                 return res.status(401).send({ message: "Access Denied: Bad authorization token" });
             req.user = user;

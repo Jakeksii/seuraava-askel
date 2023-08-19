@@ -1,7 +1,7 @@
-import { Organization } from "../connections/MainConnection.js";
-import { User } from "../connections/UserConnection.js";
-import { Request, Response } from "../types/types.js";
-import { IUser } from "../schemas/User.js";
+import { Organization } from "../connections/MainConnection";
+import { User } from "../connections/UserConnection";
+import { Request, Response } from "../types/types";
+import { IUser } from "../schemas/User";
 
 /* READ */
 export const getCurrentUser = async (req:Request, res:Response):Promise<Response> => {

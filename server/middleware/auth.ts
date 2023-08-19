@@ -1,8 +1,8 @@
 import { verify } from "jsonwebtoken";
-import { Request, Response, NextFunction } from "../types/types.js";
+import { Request, Response, NextFunction } from "../types/types";
 
-import { User } from "../connections/UserConnection.js";
-import { IUser } from "../schemas/User.js";
+import { User } from "../connections/UserConnection";
+import { IUser } from "../schemas/User";
 
 export const verifyToken = async (req:Request, res:Response, next:NextFunction):Promise<Response|void> => {
     try {

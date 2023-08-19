@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import EventSchema from "../schemas/Event.js";
-import EventPageSchema from "../schemas/EventPage.js";
-import InvitationSchema from "../schemas/Invitation.js";
-import OrganizationSchema from "../schemas/Organization.js";
-import OrganizationPageSchema from "../schemas/OrganizationPage.js";
+import EventSchema from "../schemas/Event";
+import EventPageSchema from "../schemas/EventPage";
+import InvitationSchema from "../schemas/Invitation";
+import OrganizationSchema from "../schemas/Organization";
+import OrganizationPageSchema from "../schemas/OrganizationPage";
 
 dotenv.config();
 const url:string = process.env.MONGO_URL_MAIN ?? ""

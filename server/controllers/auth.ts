@@ -1,8 +1,8 @@
 import { genSalt, hash, compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
-import { Request, Response } from "../types/types.js";
+import { Request, Response } from "../types/types";
 
-import { User } from "../connections/UserConnection.js";
+import { User } from "../connections/UserConnection";
 import { Types } from "mongoose";
 
 /* REGISTER USER */

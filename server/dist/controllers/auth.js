@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.refreshToken = exports.login = exports.register = void 0;
 const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = require("jsonwebtoken");
-const UserConnection_js_1 = require("../connections/UserConnection.js");
+const UserConnection_1 = require("../connections/UserConnection");
 /* REGISTER USER */
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -20,7 +20,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //salt and hash
         const salt = yield (0, bcrypt_1.genSalt)();
         const passwordHash = yield (0, bcrypt_1.hash)(password, salt);
-        const newUser = new UserConnection_js_1.User({
+        const newUser = new UserConnection_1.User({
             first_name,
             last_name,
             email,
@@ -29,7 +29,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const validationError = newUser.validateSync();
         if (validationError)
             return res.status(400).json({ message: validationError.message });
-        if (yield UserConnection_js_1.User.findOne({ email: email }))
+        if (yield UserConnection_1.User.findOne({ email: email }))
             return res.status(409).json({ message: "Email already in use" });
         yield newUser.save();
         return res.status(201).end();
@@ -45,7 +45,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //Check if credintials are valid and user exist
         const { email, password } = req.body;
-        var user = yield UserConnection_js_1.User.findOne({ email: email });
+        var user = yield UserConnection_1.User.findOne({ email: email });
         if (!user)
             return res.status(400).json({ message: "Invalid credentials" });
         const isMatch = yield (0, bcrypt_1.compare)(password, user.password);

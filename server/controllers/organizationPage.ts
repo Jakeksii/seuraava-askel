@@ -1,7 +1,7 @@
-import { Response, Request } from "../types/types.js";
-import { Organization, OrganizationPage } from "../connections/MainConnection.js";
+import { Response, Request } from "../types/types";
+import { Organization, OrganizationPage } from "../connections/MainConnection";
 import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
-import { sanitizeHTML } from "../Functions/sanitizeHTML.js";
+import { sanitizeHTML } from "../Functions/sanitizeHTML";
 
 
 export const createOrganizationPage = async (req: Request, res: Response) => {

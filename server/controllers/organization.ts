@@ -1,14 +1,14 @@
-import { Response, Request } from "../types/types.js";
-import { Organization } from "../connections/MainConnection.js";
-import { User } from "../connections/UserConnection.js";
+import { Response, Request } from "../types/types";
+import { Organization } from "../connections/MainConnection";
+import { User } from "../connections/UserConnection";
 
 export const createOrganization = async (req:Request, res:Response):Promise<Response> => {
     try {
         const {
-            name, 
-            business_id, 
-            address, 
-            contact_info, 
+            name,
+            business_id,
+            address,
+            contact_info,
             contact_info_visible } = req.body;
 
         const user = req.user;
@@ -58,8 +58,6 @@ export const createOrganization = async (req:Request, res:Response):Promise<Resp
         return res.status(500).json({ error: error.message })
     }
 }
-
-
 
 // GET organization
 export const getOrganization = async (req:Request, res:Response):Promise<Response> => {

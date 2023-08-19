@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-import UserSchema, { IUser } from "../schemas/User.js";
+import UserSchema, { IUser } from "../schemas/User";
 
 dotenv.config();
 
