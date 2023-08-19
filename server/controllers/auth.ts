@@ -51,7 +51,7 @@ export const login = async (req:Request, res:Response):Promise<Response> => {
 
         //Create token
         const secret:string = process.env.JWT_SECRET ?? ""
-        const token = sign({ _id: user._id as Types.ObjectId }, secret, { expiresIn: '10min'});
+        const token = sign({ _id: user._id as Types.ObjectId }, secret, { expiresIn: '1d'});
 
         //Send token and user info to front
         var user = { ...user._doc };

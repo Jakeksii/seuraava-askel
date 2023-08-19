@@ -53,7 +53,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.status(400).json({ message: "Invalid credentials" });
         //Create token
         const secret = (_a = process.env.JWT_SECRET) !== null && _a !== void 0 ? _a : "";
-        const token = (0, jsonwebtoken_1.sign)({ _id: user._id }, secret, { expiresIn: '10min' });
+        const token = (0, jsonwebtoken_1.sign)({ _id: user._id }, secret, { expiresIn: '1d' });
         //Send token and user info to front
         var user = Object.assign({}, user._doc);
         delete user.password;
