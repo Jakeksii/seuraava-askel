@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { createOrganizationPage, findOrganizationPage } from "../controllers/organizationPage.js";
-import { verifyToken } from "../middleware/auth.js";
-import { uploadImage } from "../middleware/storage.js";
+import { createOrganizationPage, findOrganizationPage } from "../controllers/organizationPage";
+import { verifyToken } from "../middleware/auth";
+import { uploadImage } from "../middleware/storage";
 
 const router = Router();
 

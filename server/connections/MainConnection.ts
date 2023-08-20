@@ -1,21 +1,20 @@
-import mongoose from "mongoose";
 import dotenv from "dotenv";
-
-import EventSchema, { IEvent } from "../schemas/Event.js";
-import EventPageSchema, { IEventPage } from "../schemas/EventPage.js";
-import InvitationSchema, { IInvitation } from "../schemas/Invitation.js";
-import OrganizationSchema, { IOrganization } from "../schemas/Organization.js";
-import OrganizationPageSchema, { IOrganizationPage } from "../schemas/OrganizationPage.js";
+import mongoose from "mongoose";
+import EventSchema from "../schemas/Event";
+import EventPageSchema from "../schemas/EventPage";
+import InvitationSchema from "../schemas/Invitation";
+import OrganizationSchema from "../schemas/Organization";
+import OrganizationPageSchema from "../schemas/OrganizationPage";
 
 dotenv.config();
 const url:string = process.env.MONGO_URL_MAIN ?? ""
 const MainConn = mongoose.createConnection(url)
 
-MainConn.model<IEvent>("Event", EventSchema)
-MainConn.model<IEventPage>("EventPage", EventPageSchema)
-MainConn.model<IInvitation>("Invitation", InvitationSchema)
-MainConn.model<IOrganization>("Organization", OrganizationSchema)
-MainConn.model<IOrganizationPage>("OrganizationPage", OrganizationPageSchema)
+MainConn.model("Event", EventSchema)
+MainConn.model("EventPage", EventPageSchema)
+MainConn.model("Invitation", InvitationSchema)
+MainConn.model("Organization", OrganizationSchema)
+MainConn.model("OrganizationPage", OrganizationPageSchema)
 
 export const Event = MainConn.models.Event
 export const EventPage = MainConn.models.Event

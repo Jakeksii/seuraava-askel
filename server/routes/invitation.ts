@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { create, accept, decline } from "../controllers/invitations.js";
-import { verifyToken } from "../middleware/auth.js";
+import { create, accept, decline } from "../controllers/invitations";
+import { verifyToken } from "../middleware/auth";
 
 const router: Router = Router();
 

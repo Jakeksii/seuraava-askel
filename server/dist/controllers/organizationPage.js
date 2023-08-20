@@ -10,9 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findOrganizationPage = exports.createOrganizationPage = void 0;
-const MainConnection_js_1 = require("../connections/MainConnection.js");
+const MainConnection_1 = require("../connections/MainConnection");
 const cloudinary_1 = require("cloudinary");
-const sanitizeHTML_js_1 = require("../Functions/sanitizeHTML.js");
+const sanitizeHTML_1 = require("../Functions/sanitizeHTML");
 const createOrganizationPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Validate image
     if (!req.file)
@@ -28,8 +28,8 @@ const createOrganizationPage = (req, res) => __awaiter(void 0, void 0, void 0, f
             organization.role !== "user")) {
         return res.status(403).end();
     }
-    const page = (0, sanitizeHTML_js_1.sanitizeHTML)(req.body.page);
-    const newPage = new MainConnection_js_1.OrganizationPage({
+    const page = (0, sanitizeHTML_1.sanitizeHTML)(req.body.page);
+    const newPage = new MainConnection_1.OrganizationPage({
         organization_name: organization.organization_name,
         organization_id: organization.organization_id,
         image_id: '',
@@ -70,8 +70,8 @@ const findOrganizationPage = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
     const query = { organization_name: req.query.name };
     try {
-        const page = yield MainConnection_js_1.OrganizationPage.findOne(query);
-        const organization = yield MainConnection_js_1.Organization.findById(page.organization_id);
+        const page = yield MainConnection_1.OrganizationPage.findOne(query);
+        const organization = yield MainConnection_1.Organization.findById(page.organization_id);
         console.log(organization);
         const data = {
             organization: {

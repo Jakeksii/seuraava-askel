@@ -10,15 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteOrganization = exports.getDetailedOrganization = exports.getOrganization = exports.createOrganization = void 0;
-const MainConnection_js_1 = require("../connections/MainConnection.js");
-const UserConnection_js_1 = require("../connections/UserConnection.js");
+const MainConnection_1 = require("../connections/MainConnection");
+const UserConnection_1 = require("../connections/UserConnection");
 const createOrganization = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, business_id, address, contact_info, contact_info_visible } = req.body;
         const user = req.user;
         if (user.organizations[0])
             return res.status(409).json({ message: "You have already created or joined organization" });
-        const newOrganization = new MainConnection_js_1.Organization({
+        const newOrganization = new MainConnection_1.Organization({
             name,
             business_id,
             address,
@@ -33,7 +33,7 @@ const createOrganization = (req, res) => __awaiter(void 0, void 0, void 0, funct
             created_by: user._id,
             updated_by: user._id
         });
-        if (yield MainConnection_js_1.Organization.findOne({ name: name })) {
+        if (yield MainConnection_1.Organization.findOne({ name: name })) {
             return res.status(409).json({
                 message: "Organization with name " + name + " is already created"
             });
@@ -44,7 +44,7 @@ const createOrganization = (req, res) => __awaiter(void 0, void 0, void 0, funct
         //Create organization
         const savedOrganization = yield newOrganization.save();
         //Make current user owner of the newly created organization
-        yield UserConnection_js_1.User.findByIdAndUpdate(user._id, { $push: { "organizations": {
+        yield UserConnection_1.User.findByIdAndUpdate(user._id, { $push: { "organizations": {
                     organization_id: savedOrganization._id,
                     organization_name: savedOrganization.name,
                     role: "owner"
@@ -60,7 +60,7 @@ exports.createOrganization = createOrganization;
 // GET organization
 const getOrganization = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const organization = yield MainConnection_js_1.Organization.findById(req.params.id);
+        const organization = yield MainConnection_1.Organization.findById(req.params.id);
         if (!organization)
             return res.status(404).json({ message: "Organization not found by id: " + req.params.id });
         const sanitizedOrganization = {
@@ -85,7 +85,7 @@ const getDetailedOrganization = (req, res) => __awaiter(void 0, void 0, void 0, 
         if (!user_organization || (user_organization.role !== "owner" && user_organization.role !== "admin"))
             return res.status(403).end();
         // Get asked organization from database
-        const organization = yield MainConnection_js_1.Organization.findById(req.params.id);
+        const organization = yield MainConnection_1.Organization.findById(req.params.id);
         if (!organization)
             return res.status(404).json({ message: "Organization not found by id: " + req.params.id });
         // Return full organization details
@@ -106,9 +106,9 @@ const deleteOrganization = (req, res) => __awaiter(void 0, void 0, void 0, funct
         if (!user_organization || (user_organization.role !== "owner"))
             return res.status(403).end();
         // Delete organization from database
-        yield MainConnection_js_1.Organization.findByIdAndDelete(req.params.id);
+        yield MainConnection_1.Organization.findByIdAndDelete(req.params.id);
         //Remove organization from every user
-        const updatedUsers = (yield UserConnection_js_1.User.updateMany({ $pull: { "organizations": { organization_id: req.params.id } } })).modifiedCount;
+        const updatedUsers = (yield UserConnection_1.User.updateMany({ $pull: { "organizations": { organization_id: req.params.id } } })).modifiedCount;
         return res.status(200).json({ organizationsDeleted: 1, usersUpdated: updatedUsers });
     }
     catch (error) {

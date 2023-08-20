@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { createOrganization, getOrganization, getDetailedOrganization, deleteOrganization } from "../controllers/organization.js";
-import { verifyToken } from "../middleware/auth.js";
+import { createOrganization, getOrganization, getDetailedOrganization, deleteOrganization } from "../controllers/organization";
+import { verifyToken } from "../middleware/auth";
 
 const router = Router();
 

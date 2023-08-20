@@ -15,6 +15,7 @@ import organizationRoutes from "./routes/organization"
 import invitationRoutes from "./routes/invitation";
 import eventRoutes from "./routes/event";
 import organizationPageRoutes from "./routes/organizationPage";
+import mongoose from "mongoose";
 
 // CONFIGURATIONS
 dotenv.config();

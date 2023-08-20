@@ -1,8 +1,8 @@
 import { genSalt, hash, compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
-import { Request, Response } from "../types/types.js";
+import { Request, Response } from "../types/types";
 
-import { User } from "../connections/UserConnection.js";
+import { User } from "../connections/UserConnection";
 import { Types } from "mongoose";
 
 /* REGISTER USER */
@@ -31,11 +31,8 @@ export const register = async (req:Request, res:Response):Promise<Response> => {
 
         if(await User.findOne({email: email})) return res.status(409).json({ message: "Email already in use" })
 
-        const savedUser = await newUser.save();
-        const sanitizedUser = { ...savedUser._doc };
-        delete sanitizedUser.password;
-        return res.status(201).json(sanitizedUser);
-
+        await newUser.save();
+        return res.status(201).end();
     } catch (error:any) {
         return res.status(500).json({ error: error.message })
     }
@@ -54,7 +51,7 @@ export const login = async (req:Request, res:Response):Promise<Response> => {
 
         //Create token
         const secret:string = process.env.JWT_SECRET ?? ""
-        const token = sign({ _id: user._id as Types.ObjectId }, secret, { expiresIn: '10min'});
+        const token = sign({ _id: user._id as Types.ObjectId }, secret, { expiresIn: '1d'});
 
         //Send token and user info to front
         var user = { ...user._doc };
@@ -69,7 +66,7 @@ export const login = async (req:Request, res:Response):Promise<Response> => {
 export const refreshToken = async (req:Request, res:Response):Promise<Response> => {
     try {
         const secret:string = process.env.JWT_SECRET ?? ""
-        const token = sign({ _id: req.user._id }, secret, { expiresIn: '10min'});
+        const token = sign({ _id: req.user._id }, secret, { expiresIn: '1d'});
         return res.status(200).json({ token: token });
     } catch (error:any) {
         return res.status(500).json({error: error.message});

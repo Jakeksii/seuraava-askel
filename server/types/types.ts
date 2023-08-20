@@ -3,7 +3,7 @@ import {
     Response as ExpressResponse, 
     NextFunction as ExpressNextFunction } from "express";
 
-import { IUser } from "../schemas/User.js";
+import { IUser } from "../schemas/User";
 
 // EXPRESS
 export interface Request extends ExpressRequest {

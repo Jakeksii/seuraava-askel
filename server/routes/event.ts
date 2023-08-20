@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { uploadImage } from "../middleware/storage"
-import { verifyToken } from "../middleware/auth.js";
+import { verifyToken } from "../middleware/auth";
 import { createEvent, getEvent, getEvents, searchEvents } from "../controllers/events";
 
 const router: Router = Router();

@@ -8,57 +8,43 @@ import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import { AxiosError } from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../assets/components/Header';
-import { useLogin } from '../assets/hooks/api-hooks/useAuthenticate';
+import { ERROR_BAD_RESPONSE, ERROR_DEFAULT, ERROR_NETWORK } from '../assets/constants';
 import { useAppContext } from '../assets/context/appContext';
+import { useLogin } from '../assets/hooks/api-hooks/useAuthenticate';
 
-function Copyright(props: any) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link to="/" className='text-info-main'>
-                Seuraava Askel
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-function getErrorMessage(status: number): string {
-    if(!status) return ""
-    switch(status) {
-        case 400:
-            return "Tarkista salasana ja sähköposti osoite"
-        case 500:
-            return "Sisäinen palvelin virhe. Yritä uudelleen"
+function getErrorMessage(error: AxiosError): string {
+    switch (error.code) {
+        case 'ERR_NETWORK': // Network error
+            return ERROR_NETWORK
+        case 'ERR_BAD_RESPONSE': // server did not answer
+            return ERROR_BAD_RESPONSE
         default:
-            return "Jokin meni vikaan. Yritä uudelleen"
+            return ERROR_DEFAULT
     }
 }
-
-
 export default function Login() {
     const appContext = useAppContext()
     const navigate = useNavigate()
     const location = useLocation()
     const { mutate, isLoading, error } = useLogin()
+    const typedError = error as AxiosError
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
 
         mutate({
-                email: formData.get('email')?.toString(), 
-                password: formData.get('password')?.toString()
-            },
+            email: formData.get('email')?.toString(),
+            password: formData.get('password')?.toString()
+        },
             {
                 onSuccess(data) {
                     appContext.setUser(data)
                     sessionStorage.setItem('user_data', JSON.stringify(data))
-                    location.state?.from ? navigate(location.state.from, {replace: true}) : navigate('/dashboard', {replace: true})
+                    location.state?.from ? navigate(location.state.from, { replace: true }) : navigate('/dashboard', { replace: true })
                 },
             }
         )
@@ -68,15 +54,19 @@ export default function Login() {
         <>
             <Header />
             <main>
-                <Container component="section" maxWidth="xs">
-                    <div className='mt-4 flex flex-col items-center p-2 '>
+                <Container component="section" maxWidth="xs" className='mt-6'>
+                    <div className='flex flex-col items-center p-2'>
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.dark' }}>
                             <LockOutlinedIcon />
-                        </Avatar>
-                        <div className='pt-2 text-error-main'>
-                            <p>{getErrorMessage((error as any)?.response.status)}</p>
+                        </Avatar >
+                        <div className='m-4 text-error-main text-center'>
+                            {
+                                typedError
+                                    ? <p>{getErrorMessage(typedError)}</p>
+                                    : undefined
+                            }
                         </div>
-                        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                        <Box component="form" onSubmit={handleSubmit}>
                             <TextField
                                 color='info'
                                 margin="normal"
@@ -127,7 +117,6 @@ export default function Login() {
                             </Grid>
                         </Box>
                     </div>
-                    <Copyright sx={{ mt: 6, mb: 0 }} />
                 </Container>
             </main>
         </>
