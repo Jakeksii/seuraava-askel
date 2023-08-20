@@ -1,25 +1,26 @@
-_id: req_364baf4ef142490fb83d96fd10a6eb63
+_id: req_7dd7a7016b56480882a3dfb161b7b2ad
 type: Request
-parentId: fld_0d9a8147a94b4836bb1cd4d84d6a9151
-modified: 1692438118757
-created: 1686439252330
-url: http://localhost:3001/api/auth/login
-name: Login
+parentId: fld_e1eb0d26c6414223b049036d7849b665
+modified: 1692438809450
+created: 1692438684207
+url: http://localhost:3001/api/invitations/decline/_id
+name: Decline invitation
 description: ""
 method: POST
 body:
   mimeType: application/json
   text: |-
     {
-    	"email":"a@a.fi",
-    	"password":"testi"
+    	"Not": "implemented"
     }
 parameters: []
 headers:
   - name: Content-Type
     value: application/json
+  - name: User-Agent
+    value: Insomnia/2023.5.5
 authentication: {}
-metaSortKey: -1686501161643
+metaSortKey: -1692177920214
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

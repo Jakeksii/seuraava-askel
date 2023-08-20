@@ -1,10 +1,10 @@
 _id: req_675c4b30b2a146ff9da545819e721b8b
 type: Request
 parentId: fld_41f8eb34a8ee49a69a55ddf3b76f4110
-modified: 1687270633598
+modified: 1692490315261
 created: 1686443485699
 url: http://localhost:3001/api/users
-name: DELETE user
+name: Delete user
 description: ""
 method: DELETE
 body: {}

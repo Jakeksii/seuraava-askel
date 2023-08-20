@@ -1,10 +1,10 @@
 _id: req_73390b09ec924c6f9157726ba17872b8
 type: Request
 parentId: fld_0d9a8147a94b4836bb1cd4d84d6a9151
-modified: 1687266390197
+modified: 1692438111786
 created: 1686501161693
 url: http://localhost:3001/api/auth/token
-name: GET new auth token
+name: Refress auth token
 description: ""
 method: GET
 body: {}

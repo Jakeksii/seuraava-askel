@@ -1,10 +1,10 @@
 _id: req_aa23115ec75243b58827e43b15e208ae
 type: Request
-parentId: wrk_8fdbdbe97d14420f842385b6d3e10b50
-modified: 1692119629820
+parentId: fld_e1eb0d26c6414223b049036d7849b665
+modified: 1692438680863
 created: 1692119557516
 url: http://localhost:3001/api/invitations
-name: Create Invitation
+name: Create invitation
 description: ""
 method: POST
 body:
@@ -23,7 +23,7 @@ headers:
     value: Insomnia/2023.5.2
     id: pair_59f489944b8a4d7d86f34fc996fe6c89
 authentication: {}
-metaSortKey: -1692119557517
+metaSortKey: -1692177920314
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true
