@@ -4,9 +4,6 @@ export const ERROR_BAD_RESPONSE = "Palvelimeen ei saatu yhteyttä. Yritä uudell
 export const ERROR_NETWORK = "Palvelimeen ei saatu yhteyttä. Tarkista verkkoyhteytesi ja yritä uudelleen"
 export const ERROR_DEFAULT = "Oho, jotakin meni vikaan. Yritä uudelleen"
 
-// SERVER
-export const API_URL = ""
-
 // Search style constants
 export const SEARCH_TYPE_LOCATION = "location"
 export const SEARCH_TYPE_CITY = "city"

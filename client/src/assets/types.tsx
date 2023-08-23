@@ -86,22 +86,3 @@ export interface Organization {
 	updatedAt: Date,
 	__v: number
 }
-
-export interface User {
-    token: string,
-    user: {
-        _id: string,
-        first_name: string,
-        last_name: string,
-        email: string,
-        verified: boolean,
-        organizations?: [
-            {
-                organization_id: string,
-                organization_name: string,
-                role: "user" | "admin" | "owner",
-                _id: string
-            }
-        ]
-    }
-}

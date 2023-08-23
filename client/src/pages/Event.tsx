@@ -12,7 +12,6 @@ import useGetEventPage from "../assets/hooks/api-hooks/useGetEventPage"
 import calculateDistance from "../assets/functions/calculateDistance"
 import useFormatDate from "../assets/hooks/useFormatDate"
 import NotFound from "./NotFound"
-import { useAppContext } from '../assets/context/appContext'
 
 const skeleton = (
     <>
@@ -28,7 +27,6 @@ const notFound = (
 )
 
 export default function EventPage() {
-    const {user} = useAppContext()
     //window.scrollTo({ top: 0, behavior: "instant" })
     const { event_id } = useParams()
     const locationContext = useLocationContext()
@@ -67,7 +65,6 @@ export default function EventPage() {
         <>
             <Header />
             <main className="m-auto">
-                {user && "Logged in user: "+user.user.first_name + " " + user.user.last_name}
                 <section>
                     <PageImage image_id={data.image_id} width={(820 > window.innerWidth) ? window.innerWidth+100 : 820}/>
                 </section>

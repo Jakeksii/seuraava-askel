@@ -1,1 +1,0 @@
-import{j as a}from"./index-61a7dcf4.js";import{H as s}from"./Header-e82cbb85.js";function r(){return a.jsx(a.Fragment,{})}function n(){return a.jsxs(a.Fragment,{children:[a.jsx(s,{}),a.jsxs("main",{children:[a.jsx("div",{className:"p-4"}),a.jsx("h2",{className:"text-center",children:"Valitse hallittava seurakunta"}),a.jsx(r,{})]})]})}export{n as default};
