@@ -15,7 +15,6 @@ export default function Dasboard() {
             <div className="p-4"/>
             <h2 className="text-center">Valitse hallittava seurakunta</h2>
             <Organization />
-            
         </main>
         </>
     )

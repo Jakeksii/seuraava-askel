@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import { useLocationContext } from "../../context/locationContext"
 import { useSearchContext } from "../../context/searchContext"
 import useGetEvents from "../../hooks/api-hooks/useGetEvents"
-import useCalculateDistance from "../../hooks/useCalculateDistance"
+import calculateDistance from "../../functions/calculateDistance"
 import Event from "./Event"
 
 const loading = (
@@ -58,7 +58,7 @@ export default function EventFeed() {
                                             extract={event.extract}
                                             organization={event.organization.organization_name}
                                             //We calculate the distance between our coords and coords in event
-                                            distance={(locationContext.coords.latitude) ? Math.round(useCalculateDistance(
+                                            distance={(locationContext.coords.latitude) ? Math.round(calculateDistance(
                                                 locationContext.coords.longitude,
                                                 locationContext.coords.latitude,
                                                 event.address.coordinates[0],
@@ -76,7 +76,7 @@ export default function EventFeed() {
                                         extract={event.extract}
                                         organization={event.organization.organization_name}
                                         //We calculate the distance between our coords and coords in event
-                                        distance={(locationContext.coords.latitude) ? Math.round(useCalculateDistance(
+                                        distance={(locationContext.coords.latitude) ? Math.round(calculateDistance(
                                             locationContext.coords.longitude,
                                             locationContext.coords.latitude,
                                             event.address.coordinates[0],

@@ -62,7 +62,7 @@ export const createOrganizationPage = async (req: Request, res: Response) => {
 
 export const findOrganizationPage = async (req: Request, res: Response): Promise<Response> => {
     if (!req.query.name) {
-        return res.status(403).end();
+        return res.status(400).end();
     }
     const query = { organization_name: req.query.name }
 

@@ -9,7 +9,7 @@ import Header from "../assets/components/Header"
 import { PageImage } from "../assets/components/PageImage"
 import { useLocationContext } from "../assets/context/locationContext"
 import useGetEventPage from "../assets/hooks/api-hooks/useGetEventPage"
-import useCalculateDistance from "../assets/hooks/useCalculateDistance"
+import calculateDistance from "../assets/functions/calculateDistance"
 import useFormatDate from "../assets/hooks/useFormatDate"
 import NotFound from "./NotFound"
 
@@ -38,7 +38,7 @@ export default function EventPage() {
     const organizationLink = "/" + encodeURI(data.organization.organization_name.replace(/\s/g, '-'))
 
     const distance = locationContext.locationOn
-        ? Math.round(useCalculateDistance(locationContext.coords.longitude, locationContext.coords.latitude, data.address.coordinates[0], data.address.coordinates[1]))
+        ? Math.round(calculateDistance(locationContext.coords.longitude, locationContext.coords.latitude, data.address.coordinates[0], data.address.coordinates[1]))
         : null
     const kilometers = distance != null ?
         <div className="flex items-center justify-center rounded-full bg-[#1976d2] p-0 sm:p-1">
