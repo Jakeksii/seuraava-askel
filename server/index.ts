@@ -59,6 +59,7 @@ app.use("/api/invitations", invitationRoutes)
 app.use("/api/events", eventRoutes)
 app.use("/api/organization-pages", organizationPageRoutes)
 app.use("/", express.static('public'))
+app.use("/api/settings", )
 
 const connect = async () => {
     await MainConn.asPromise().then(result => {
