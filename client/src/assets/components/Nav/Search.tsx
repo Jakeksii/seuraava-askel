@@ -1,11 +1,12 @@
 import { Input } from '@mui/base';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import { Button, CircularProgress, ClickAwayListener } from '@mui/material';
+import { Button, CircularProgress, ClickAwayListener, Drawer } from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { SEARCH_TYPE_LOCATION } from '../../constants';
 import { useLocationContext } from '../../context/locationContext';
 import { useSearchContext } from '../../context/searchContext';
 import useGetSearchResults from '../../hooks/api-hooks/useGetSearchResults';
+import Filters from './Filters';
 import LocationButton from './LocationButton';
 import SearchResultsElement from './SearchResultsElement';
 
@@ -18,6 +19,15 @@ const loadingBar = (
 export default function Search() {
     const searchContext = useSearchContext()
     const locationContext = useLocationContext()
+
+    // Filter panel
+    const [filterPanelOpen, setFilterPanelOpen] = useState(false);
+    function openFilterPanel() {
+        setFilterPanelOpen(true)
+    }
+    function closeFilterPanel() {
+        setFilterPanelOpen(false)
+    }
 
     // Called from location button
     const locationSearch = () => {
@@ -94,8 +104,8 @@ export default function Search() {
     return (
         <section className='h-14'>
             <ClickAwayListener onClickAway={() => setResultsVisible(false)}>
-            <div className='relative z-10 p-2 rounded-b-2xl bg-secondary-dark'>
-                <div className='flex justify-center items-center gap-1'>
+                <div className='relative z-10 p-2 rounded-b-2xl bg-secondary-dark'>
+                    <div className='flex justify-center items-center gap-1'>
                         <div className='grow'>
                             <div>
                                 <Input // SEARCH BAR
@@ -114,20 +124,28 @@ export default function Search() {
                                     onFocus={onInputFocus} />
                             </div>
                         </div>
-                    <LocationButton onSearchByLocation={locationSearch} />
-                    <Button // FILTER BUTTON
-                        aria-label="Filter events"
-                        size='large'
-                        variant="contained"
-                        color='primary'>
-                        <FilterAltIcon />
-                    </Button>
+                        <LocationButton onSearchByLocation={locationSearch} />
+                        <Button // FILTER BUTTON
+                            aria-label="Filter events"
+                            size='large'
+                            variant="contained"
+                            color='primary'
+                            onClick={openFilterPanel}>
+                            <FilterAltIcon />
+                        </Button>
+                    </div>
+                    <div className='p-1'>
+                        {resultsVisible ? searchResults() : <></>}
+                    </div>
                 </div>
-                <div className='p-1'>
-                    {resultsVisible ? searchResults() : <></>}
-                </div>
-            </div>
             </ClickAwayListener>
+            <Drawer
+                anchor={'right'}
+                open={filterPanelOpen}
+                onClose={closeFilterPanel}
+            >
+                <Filters />
+            </Drawer>
         </section>
     )
 }
