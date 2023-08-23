@@ -1,10 +1,10 @@
 _id: req_0e653856bab34d0dba67c49b60e31db1
 type: Request
 parentId: fld_41f8eb34a8ee49a69a55ddf3b76f4110
-modified: 1687270605348
+modified: 1692490286453
 created: 1686439865075
 url: http://localhost:3001/api/users
-name: GET Current user
+name: Current user
 description: ""
 method: GET
 body: {}

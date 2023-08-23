@@ -1,0 +1,52 @@
+_id: req_bec9872e35e0409c8ad015b132e06554
+type: Request
+parentId: fld_79c013e8aa8a4ac48f98f6096b66d4d4
+modified: 1692489181675
+created: 1689009018874
+url: http://localhost:3001/api/organization-pages
+name: Create organization page
+description: ""
+method: POST
+body:
+  mimeType: multipart/form-data
+  params:
+    - id: pair_379bfdbf8d804394ab1de1011ecb49fc
+      name: image
+      value: ""
+      description: ""
+      type: file
+      fileName: C:\Users\jaakk\AppData\Local\Microsoft\Windows\INetCache\IE\QYDH6J2R\sheep[1].jpg
+    - id: pair_6576217c86474c2eb5db8ee5d801ce94
+      name: page
+      value: >-2
+            <h1>Järvenpään Vapaaseurakunta Arkki</h1>
+            <p>Tervetuloa Järvenpään Vapaaseurakunta Arkkiin!</p>
+            <p>Olemme uskovien yhteisö, omistautuneena palvelemaan ja ylistämään yhdessä.</p>
+            <p>Tule mukaan viikoittaisiin tilaisuuksiimme, joissa opimme, kasvamme ja kiitämme yhdessä.</p>
+            <p>Tutustu rohkeasti <a href="https://arkki.org/">verkkosivuumme</a> saadaksesi lisätietoja tapahtumista, palvelutyöstämme ja siitä, miten voit osallistua.</p>
+            <p>Odotamme innolla tapaamistamme!</p>
+      description: ""
+      type: text
+      multiline: application/json
+    - id: pair_3b02356943d54774b18526e503f43b50
+      name: organization_id
+      value: 64aac099139ebe515898923e
+      description: ""
+parameters: []
+headers:
+  - name: Content-Type
+    value: multipart/form-data
+    id: pair_d326a5f4b9cd46648cb476617cc54f5d
+  - id: pair_dc67c0e1c2e64dc1b44a7c8ff4c97463
+    name: Authorization
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk0YmRkMTM2N2I3NjY0ZTNiODY0YTIiLCJpYXQiOjE2ODkwMTE1NDYsImV4cCI6MTY4OTAxMjE0Nn0.lf5aR19EdqIOa3B9B48JejFde9dD3U3fDeZrkB5TwzE
+    description: ""
+authentication: {}
+metaSortKey: -1686512848261
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

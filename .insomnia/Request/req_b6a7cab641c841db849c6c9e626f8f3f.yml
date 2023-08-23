@@ -1,0 +1,71 @@
+_id: req_b6a7cab641c841db849c6c9e626f8f3f
+type: Request
+parentId: fld_efb65216d6e74037bbfb0bce97a4fddb
+modified: 1692438349433
+created: 1688055455969
+url: http://localhost:3001/api/events
+name: Create event
+description: ""
+method: POST
+body:
+  mimeType: multipart/form-data
+  params:
+    - id: pair_6f3b4f6352384ebd81a2ac32297058fc
+      name: image
+      value: ""
+      description: ""
+      type: file
+      fileName: C:\Users\jaakk\Downloads\placeholder_images\22.png
+    - id: pair_456a5784982e43bf85bb08401cbe75da
+      name: event
+      value: >-
+        {
+        			"start_date": "2023-07-19T13:30:00Z",
+        			"end_date": "2023-07-19T16:00:00Z",
+        			"title": "Digital Marketing Conference",
+        			"extract": "Stay ahead of the digital marketing trends at the Digital Marketing Conference.",
+        			"visible": true,
+        			"address": {
+        				"street": "Puistokatu 2",
+        				"city": "Oulu",
+        				"state": "Pohjois-Pohjanmaa",
+        				"zipcode": "90100",
+        				"country": "Finland",
+        				"coordinates": [
+        					25.474613,
+        					65.013217
+        				]
+        			},
+        			"event_meta": {
+        				"speaker": "Anna-Maria Mäkinen",
+        				"music": "None",
+        				"presenter": "Mika Lehtonen"
+        			}
+        		}
+      description: ""
+      type: text
+      multiline: application/json
+    - id: pair_2fef0ca65f5847079bc8f0d57a2db962
+      name: organization_id
+      value: 64aac0a3139ebe5158989249
+      description: ""
+      type: text
+      multiline: false
+parameters: []
+headers:
+  - id: pair_be3f2e7e93a74673a9d4f5e60d7f96c2
+    name: Authorization
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk0YmRkMTM2N2I3NjY0ZTNiODY0YTIiLCJpYXQiOjE2ODk3MjkyNzMsImV4cCI6MTY4OTcyOTg3M30.tPn_AauU0vijPK2d0fMzuuLJn2Qw-HCSa4Yr3-NK8XU
+    description: ""
+  - name: Content-Type
+    value: multipart/form-data
+    id: pair_88f7d967b6af4d0d80ecb553986acbbe
+authentication: {}
+metaSortKey: -1692164253339
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

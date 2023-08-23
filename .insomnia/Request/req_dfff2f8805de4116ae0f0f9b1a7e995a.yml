@@ -1,17 +1,17 @@
-_id: req_a19ea1c742e3423badba6e2fba719237
+_id: req_dfff2f8805de4116ae0f0f9b1a7e995a
 type: Request
-parentId: fld_79c013e8aa8a4ac48f98f6096b66d4d4
-modified: 1692438955021
-created: 1687012821047
-url: http://localhost:3001/api/organizations/6491a45fe97d3ad1331f92e9
-name: Organization
+parentId: fld_efb65216d6e74037bbfb0bce97a4fddb
+modified: 1692438352405
+created: 1688634499168
+url: http://localhost:3001/api/events/search?search=hels
+name: Search events
 description: ""
 method: GET
 body: {}
 parameters: []
 headers: []
 authentication: {}
-metaSortKey: -1686512848236
+metaSortKey: -1692164253239
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

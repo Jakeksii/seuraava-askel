@@ -6,6 +6,9 @@ import Header from "../assets/components/Header"
 import { PageImage } from "../assets/components/PageImage"
 import useGetOrganizationPage from "../assets/hooks/api-hooks/useGetOrganizationPage"
 import NotFound from "./NotFound"
+import Events from "../assets/components/Feed/Events"
+import Search from "../assets/components/Nav/Search"
+import { useSearchContext } from "../assets/context/searchContext"
 
 const contactInfo = (phone: string, email: string) => {
     return (
@@ -26,6 +29,7 @@ const skeleton = (
 
 export default function OrganizationPage() {
     const { organization_name } = useParams()
+    const searchContext = useSearchContext()
     if (!organization_name) return <Suspense><NotFound /></Suspense>
     const { data, isLoading, isError } = useGetOrganizationPage({ query: decodeURI(organization_name.replace(/-/g, ' ')) })
     if (isLoading) return skeleton
@@ -33,7 +37,7 @@ export default function OrganizationPage() {
 
     const mapsLink = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURI(`${data.organization.address.street} ${data.organization.address.zipcode} ${data.organization.address.city} ${data.organization.address.state} ${data.organization.address.country}`)
     const contactInfoElement = contactInfo(data.organization.contact_info.phone, data.organization.contact_info.email)
-
+    searchContext.setQuery("?s="+decodeURI(organization_name.replace(/-/g, ' ')))
     return (
         <>
         <Header />
@@ -56,7 +60,7 @@ export default function OrganizationPage() {
                     </TabPanel>
                     <TabPanel value={2}>
                         <section className="mt-8">
-                            Event feed
+                            <Events />
                         </section>
                     </TabPanel>
                     <TabPanel value={3}>

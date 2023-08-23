@@ -1,17 +1,19 @@
-_id: req_a19ea1c742e3423badba6e2fba719237
+_id: req_cde6fd94819f4e0597c8a017e905ebdb
 type: Request
 parentId: fld_79c013e8aa8a4ac48f98f6096b66d4d4
-modified: 1692438955021
-created: 1687012821047
-url: http://localhost:3001/api/organizations/6491a45fe97d3ad1331f92e9
-name: Organization
+modified: 1692490169426
+created: 1692489261462
+url: http://localhost:3001/api/organization-pages?name=J%C3%A4rvenp%C3%A4%C3%A4n%20vapaaseurakunta
+name: Find organization page
 description: ""
 method: GET
 body: {}
 parameters: []
-headers: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.5
 authentication: {}
-metaSortKey: -1686512848236
+metaSortKey: -1686507004864.5
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

@@ -5,6 +5,7 @@ import './App.css'
 import ThemeProvider from './Theme'
 import MainNav from './assets/components/MainNav'
 import { useAppContext } from './assets/context/appContext'
+import { SearchContextProvider } from './assets/context/searchContext'
 const Home = lazy(() => import('./pages/Home'))
 const EventPage = lazy(() => import('./pages/Event'))
 const OrganizationPage = lazy(() => import('./pages/Organization'))
@@ -35,6 +36,7 @@ function App() {
   const isAuthenticated = appContext.user ? true : false
 
   return (
+    <SearchContextProvider>
     <ThemeProvider>
       <Routes>
         <Route path='/' element={<Suspense fallback={loading}><Home /></Suspense>} />
@@ -56,6 +58,7 @@ function App() {
       </Routes>
       <MainNav />
     </ThemeProvider>
+    </SearchContextProvider>
   )
 }
 export default App
