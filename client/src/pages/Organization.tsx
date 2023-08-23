@@ -7,7 +7,6 @@ import { PageImage } from "../assets/components/PageImage"
 import useGetOrganizationPage from "../assets/hooks/api-hooks/useGetOrganizationPage"
 import NotFound from "./NotFound"
 import Events from "../assets/components/Feed/Events"
-import Search from "../assets/components/Nav/Search"
 import { useSearchContext } from "../assets/context/searchContext"
 
 const contactInfo = (phone: string, email: string) => {
