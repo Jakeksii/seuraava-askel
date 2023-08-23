@@ -60,7 +60,6 @@ export const create = async (req:Request, res:Response) => {
         const update = { expires: expirationDate, updated_by: req.user._id }
         const existingInvitation:IInvitation | null = await Invitation.findOneAndUpdate(query, update)
         if(existingInvitation) return res.status(200).json(existingInvitation)
-        
 
         const newInvitation = new Invitation ({
             user_email: req.body.user_email,
@@ -80,5 +79,4 @@ export const create = async (req:Request, res:Response) => {
         console.error(error)
         return res.status(500).json({ error: error.message })
     }
-        
 }
