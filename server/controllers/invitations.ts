@@ -41,9 +41,6 @@ export const decline = async (req:Request, res:Response) => {
 
 export const create = async (req:Request, res:Response) => {
     try {
-        const expiresIn = Date.now() + 172800000
-        const expirationDate = new Date(expiresIn)
-
         if(!req.body.organization_id ||
             !req.body.user_email) return res.status(400).end()
 
@@ -55,12 +52,9 @@ export const create = async (req:Request, res:Response) => {
         // then user has no acces to that organization
         if(!organization) return res.status(403).end()
 
-        //Check if there is invitation already exists then update that invitation expiration date
+        //Check if invitation already exists then delete it and create new
         const query = { user_email: req.body.user_email, "organization.organization_id": organization.organization_id }
-        const update = { expires: expirationDate, updated_by: req.user._id }
-        const existingInvitation:IInvitation | null = await Invitation.findOneAndUpdate(query, update)
-        if(existingInvitation) return res.status(200).json(existingInvitation)
-        
+        await Invitation.findOneAndDelete(query)
 
         const newInvitation = new Invitation ({
             user_email: req.body.user_email,
@@ -68,7 +62,6 @@ export const create = async (req:Request, res:Response) => {
                 organization_id: organization.organization_id,
                 organization_name: organization.organization_name
             },
-            expires: expirationDate,
             created_by: req.user._id
         })
 
@@ -80,5 +73,4 @@ export const create = async (req:Request, res:Response) => {
         console.error(error)
         return res.status(500).json({ error: error.message })
     }
-        
 }

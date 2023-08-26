@@ -12,21 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
+const cloudinary_1 = require("cloudinary");
+const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const express_1 = __importDefault(require("express"));
+const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const helmet_1 = __importDefault(require("helmet"));
 const morgan_1 = __importDefault(require("morgan"));
-const cors_1 = __importDefault(require("cors"));
-const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
-const cloudinary_1 = require("cloudinary");
 const MainConnection_1 = __importDefault(require("./connections/MainConnection"));
 const UserConnection_1 = __importDefault(require("./connections/UserConnection"));
 const auth_1 = __importDefault(require("./routes/auth"));
-const user_1 = __importDefault(require("./routes/user"));
-const organization_1 = __importDefault(require("./routes/organization"));
-const invitation_1 = __importDefault(require("./routes/invitation"));
+const email_1 = __importDefault(require("./routes/email"));
 const event_1 = __importDefault(require("./routes/event"));
+const invitation_1 = __importDefault(require("./routes/invitation"));
+const organization_1 = __importDefault(require("./routes/organization"));
 const organizationPage_1 = __importDefault(require("./routes/organizationPage"));
+const user_1 = __importDefault(require("./routes/user"));
 // CONFIGURATIONS
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -60,6 +61,7 @@ app.use("/api/organizations", organization_1.default);
 app.use("/api/invitations", invitation_1.default);
 app.use("/api/events", event_1.default);
 app.use("/api/organization-pages", organizationPage_1.default);
+app.use("/api/email", email_1.default);
 app.use("/", express_1.default.static('public'));
 const connect = () => __awaiter(void 0, void 0, void 0, function* () {
     yield MainConnection_1.default.asPromise().then(result => {

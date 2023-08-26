@@ -3,7 +3,6 @@ import { Organization, OrganizationPage } from "../connections/MainConnection";
 import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
 import { sanitizeHTML } from "../Functions/sanitizeHTML";
 
-
 export const createOrganizationPage = async (req: Request, res: Response) => {
 
     // Validate image
@@ -59,7 +58,6 @@ export const createOrganizationPage = async (req: Request, res: Response) => {
     }
 }
 
-
 export const findOrganizationPage = async (req: Request, res: Response): Promise<Response> => {
     if (!req.query.name) {
         return res.status(400).end();
@@ -68,8 +66,8 @@ export const findOrganizationPage = async (req: Request, res: Response): Promise
 
     try {
         const page = await OrganizationPage.findOne(query)
+        if(!page) return res.status(404).end();
         const organization = await Organization.findById(page.organization_id)
-        console.log(organization)
 
         const data = {
             organization: {

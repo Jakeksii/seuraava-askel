@@ -66,13 +66,14 @@ const createOrganizationPage = (req, res) => __awaiter(void 0, void 0, void 0, f
 exports.createOrganizationPage = createOrganizationPage;
 const findOrganizationPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.query.name) {
-        return res.status(403).end();
+        return res.status(400).end();
     }
     const query = { organization_name: req.query.name };
     try {
         const page = yield MainConnection_1.OrganizationPage.findOne(query);
+        if (!page)
+            return res.status(404).end();
         const organization = yield MainConnection_1.Organization.findById(page.organization_id);
-        console.log(organization);
         const data = {
             organization: {
                 name: organization.name,
