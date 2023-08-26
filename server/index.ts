@@ -1,21 +1,21 @@
-import express from "express";
+import { v2 as cloudinary } from 'cloudinary';
+import cors from "cors";
 import dotenv from "dotenv";
+import express from "express";
+import rateLimit from 'express-rate-limit';
 import helmet from "helmet";
 import morgan from "morgan";
-import cors from "cors"
-import rateLimit from 'express-rate-limit'
-import { v2 as cloudinary } from 'cloudinary'
 
 import MainConn from "./connections/MainConnection";
 import UserConn from "./connections/UserConnection";
 
-import authRoutes from "./routes/auth"
-import userRoutes from "./routes/user"
-import organizationRoutes from "./routes/organization"
-import invitationRoutes from "./routes/invitation";
+import authRoutes from "./routes/auth";
+import emailRoutes from './routes/email';
 import eventRoutes from "./routes/event";
+import invitationRoutes from "./routes/invitation";
+import organizationRoutes from "./routes/organization";
 import organizationPageRoutes from "./routes/organizationPage";
-import mongoose from "mongoose";
+import userRoutes from "./routes/user";
 
 // CONFIGURATIONS
 dotenv.config();
@@ -58,6 +58,7 @@ app.use("/api/organizations", organizationRoutes)
 app.use("/api/invitations", invitationRoutes)
 app.use("/api/events", eventRoutes)
 app.use("/api/organization-pages", organizationPageRoutes)
+app.use("/api/email", emailRoutes)
 app.use("/", express.static('public'))
 
 const connect = async () => {

@@ -44,8 +44,6 @@ const decline = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.decline = decline;
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const expiresIn = Date.now() + 172800000;
-        const expirationDate = new Date(expiresIn);
         if (!req.body.organization_id ||
             !req.body.user_email)
             return res.status(400).end();
@@ -54,19 +52,15 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // then user has no acces to that organization
         if (!organization)
             return res.status(403).end();
-        //Check if there is invitation already exists then update that invitation expiration date
+        //Check if invitation already exists then delete it and create new
         const query = { user_email: req.body.user_email, "organization.organization_id": organization.organization_id };
-        const update = { expires: expirationDate, updated_by: req.user._id };
-        const existingInvitation = yield MainConnection_1.Invitation.findOneAndUpdate(query, update);
-        if (existingInvitation)
-            return res.status(200).json(existingInvitation);
+        yield MainConnection_1.Invitation.findOneAndDelete(query);
         const newInvitation = new MainConnection_1.Invitation({
             user_email: req.body.user_email,
             organization: {
                 organization_id: organization.organization_id,
                 organization_name: organization.organization_name
             },
-            expires: expirationDate,
             created_by: req.user._id
         });
         const invitation = yield newInvitation.save();
