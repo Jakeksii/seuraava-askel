@@ -1,7 +1,7 @@
 _id: req_73390b09ec924c6f9157726ba17872b8
 type: Request
 parentId: fld_0d9a8147a94b4836bb1cd4d84d6a9151
-modified: 1692438111786
+modified: 1693049694637
 created: 1686501161693
 url: http://localhost:3001/api/auth/token
 name: Refress auth token
@@ -12,7 +12,7 @@ parameters: []
 headers:
   - id: pair_bbf1f4d5efc745ad94fa8cccdfa88633
     name: Authorization
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDkxOTdjZTVhZmRkMWYxMWQyNWJhYjMiLCJpYXQiOjE2ODcyNjYxMDcsImV4cCI6MTY4NzI2NjcwN30.TQsvXa5YJj7OzG9aJ4QFswhUnAlmlIrB5E8SLINTClE
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk0YmRkMTM2N2I3NjY0ZTNiODY0YTIiLCJpYXQiOjE2OTI5ODQ2NTMsImV4cCI6MTY5MzA3MTA1M30.GYfRRcPQNP_hljAU08I6EOBt1gMu020aTJ83l_QYPNw
     description: ""
 authentication: {}
 metaSortKey: -1686501161543

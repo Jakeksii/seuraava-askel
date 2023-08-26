@@ -1,7 +1,7 @@
 _id: req_da04e75ba78f41a7bdba809fafb11b8c
 type: Request
 parentId: fld_0d9a8147a94b4836bb1cd4d84d6a9151
-modified: 1692438122462
+modified: 1693064312900
 created: 1686439034318
 url: http://localhost:3001/api/auth/register
 name: Register
@@ -13,7 +13,7 @@ body:
     {
     	"first_name":"Jaakko",
     	"last_name":"Ruhanen",
-    	"email":"a@a.fi",
+    	"email":"jaakko.ruhanen@outlook.com",
     	"password":"testi"
     }
 parameters: []
