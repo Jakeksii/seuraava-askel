@@ -1,7 +1,7 @@
 _id: req_813afb492d384489a435a2b538b8463f
 type: Request
 parentId: fld_79c013e8aa8a4ac48f98f6096b66d4d4
-modified: 1692489196605
+modified: 1693049055800
 created: 1687023079315
 url: http://localhost:3001/api/organizations/6490b4eb6b24df85a60e8f09/detailed
 name: Detailed organization
@@ -12,7 +12,7 @@ parameters: []
 headers:
   - id: pair_fbb37c0ed7b44be7904656aa4ee29404
     name: Authorization
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDhkZDc4ODNhMjhkNGMzNmI0MTc3MzMiLCJpYXQiOjE2ODcyNjgzMDUsImV4cCI6MTY4NzI2ODkwNX0.r-VYf70M3UycECUCgcq4QLUlR0OxBn086iwtA7CE6Hg
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk0YmRkMTM2N2I3NjY0ZTNiODY0YTIiLCJpYXQiOjE2OTMwNDkwNDUsImV4cCI6MTY5MzEzNTQ0NX0.slfIZHBtQWuh969xGoDRpL54iDecr7Vip8XO0uui41k
     description: ""
 authentication: {}
 metaSortKey: -1686507004939.5

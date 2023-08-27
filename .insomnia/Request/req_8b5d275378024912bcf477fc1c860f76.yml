@@ -1,0 +1,37 @@
+_id: req_8b5d275378024912bcf477fc1c860f76
+type: Request
+parentId: fld_513712af6a434cb291baba4ca4b35759
+modified: 1693067301420
+created: 1693056892992
+url: http://localhost:3001/api/email/verify/64ea234765d7212914fb294f
+name: Verify Email
+description: >-
+  kutsuu apia /api/email/verify/:_id jossa _id on email verifikaatio objectin
+  _id
+
+
+  serveri etsii verificaatio objectin annetulla _id:llä, tallentaa sen muuttujaan ja poistaa sen tietokannasta. Tallennetusta objectista otetaan user_id jolla päivitetään userin verified tieto tietoon {verified: true}
+
+
+  vastaukset:
+
+  - 404 serveri ei löytänyt EmailVerification objectia
+
+  - 200 Serveri löysi ja poisti EmailVerification objectin sekä päivitti käyttäjän verified tiedon {verified: true}
+
+  - 500 internal server error suositeltavaa tutkia mistä johtuu
+method: POST
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.6
+authentication: {}
+metaSortKey: -1693066347017
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

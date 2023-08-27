@@ -1,0 +1,49 @@
+_id: req_3a1d190b29954c5abfebee6f684046c8
+type: Request
+parentId: fld_513712af6a434cb291baba4ca4b35759
+modified: 1693067269634
+created: 1693053852505
+url: http://localhost:3001/api/email/verification
+name: Send Email verification
+description: >-
+  kutsuu apia /api/email/verification
+
+
+  tarvitsee toimiakseen Auhorization headerin headers: {Authorization: token} jotta serveri tietää mikä käyttäjä on lähettänyt pyynnön.
+
+
+  1. serveri hakee käyttäjän tiedot tietokannasta
+
+  2. serveri luo EmailVerificationObjectin käyttäjän _id:llä ja tallentaa sen tietokantaan.
+
+  3. serveri lähettää sähköpostiviestin käyttäjän emailiin
+
+
+  vastaukset:
+
+
+  401 serveri ei hyväksynyt Authorization tokenia
+
+  200 Serveri löysi ja poisti EmailVerification objectin sekä päivitti käyttäjän verified tiedon {verified: true}
+
+  500 internal server error suositeltavaa tutkia mistä johtuu
+method: POST
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.6
+    id: pair_9d3c012dc81c4634a96d2c6b4145c262
+  - id: pair_6e0856c442944946b35e9524b868b63e
+    name: Authorization
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGVhMWM3ZDM4ZTczMTUzNWVlN2E4YjciLCJpYXQiOjE2OTMwNjQzMjQsImV4cCI6MTY5MzE1MDcyNH0.gOd6BAGITPl_VwI1tTssYXTBhGtlYc9bmc_62tKQp5I
+    description: ""
+authentication: {}
+metaSortKey: -1693066346917
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

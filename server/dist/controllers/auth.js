@@ -29,8 +29,10 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const validationError = newUser.validateSync();
         if (validationError)
             return res.status(400).json({ message: validationError.message });
+        // We search for user with provided email and if we find one we return conflict
         if (yield UserConnection_1.User.findOne({ email: email }))
             return res.status(409).json({ message: "Email already in use" });
+        // Save user to db
         yield newUser.save();
         return res.status(201).end();
     }

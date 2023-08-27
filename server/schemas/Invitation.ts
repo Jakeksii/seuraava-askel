@@ -1,4 +1,4 @@
-import { Schema, Types} from "mongoose";
+import { Schema, Types } from "mongoose";
 import validator from "validator";
 
 export interface IInvitation {
@@ -8,7 +8,7 @@ export interface IInvitation {
         organization_id: Types.ObjectId
         organization_name: string
     }
-    expires: Date
+    expirationDate: Date
     created_by: Types.ObjectId
     updated_by?: Types.ObjectId
     createdAt?: Date
@@ -17,13 +17,13 @@ export interface IInvitation {
 }
 
 const Invitation = new Schema<IInvitation>({
-    user_email: { 
+    user_email: {
         type: String,
         required: true,
         trim: true,
         index: true,
         validate: {
-            validator: function(value:string) {
+            validator: function (value: string) {
                 return validator.isEmail(value);
             },
             message: 'Invalid email address'
@@ -33,9 +33,8 @@ const Invitation = new Schema<IInvitation>({
         organization_id: { type: Types.ObjectId, required: true, ref: "Organization" },
         organization_name: { type: String, required: true }
     },
-    expires: { type: Date, required: true },
     created_by: Types.ObjectId,
     updated_by: Types.ObjectId
-}, {timestamps: true}); //adds createdAt, updatedAt
+}, { timestamps: true, expires: 604800 }); //adds createdAt, updatedAt, 604800 = 1 week
 
 export default Invitation;

@@ -22,8 +22,7 @@ const Invitation = new mongoose_1.Schema({
         organization_id: { type: mongoose_1.Types.ObjectId, required: true, ref: "Organization" },
         organization_name: { type: String, required: true }
     },
-    expires: { type: Date, required: true },
     created_by: mongoose_1.Types.ObjectId,
     updated_by: mongoose_1.Types.ObjectId
-}, { timestamps: true }); //adds createdAt, updatedAt
+}, { timestamps: true, expires: 604800 }); //adds createdAt, updatedAt, 604800 = 1 week
 exports.default = Invitation;
