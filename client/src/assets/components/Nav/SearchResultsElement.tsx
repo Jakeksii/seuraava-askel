@@ -18,7 +18,7 @@ function getHighlightedText(text: string, higlight: string) {
     return parts.map((part, index) => (
         <Fragment key={index}>
             {part.toLowerCase() === higlight.toLowerCase() ? (
-                <b className="bg-secondary-dark text-white rounded-sm">{part}</b>
+                <b className="bg-secondary-main text-white rounded-sm">{part}</b>
             ) : (
                 part
             )}
@@ -54,11 +54,11 @@ const SearchResultsElement = (props: Props) => {
             <li key={index} className='pb-1'>
                 <Button
                     variant="contained"
-                    color="info"
+                    color="primary"
                     fullWidth
                     onClick={() => props.searchResultClick(result.data, result.type)} >
                     <div className='flex flex-col md:flex-row'>
-                        <p className="pl-1 pr-1 text-slate-600">{getPrefix(result.type)}</p>
+                        <p className="pl-1 pr-1 text-white">{getPrefix(result.type)}</p>
                         <p>{getHighlightedText(result.data, props.searchValue)}</p>
                     </div>
                 </Button>

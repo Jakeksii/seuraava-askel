@@ -12,6 +12,7 @@ const autoplayOptions = {
 const style = {
     embla: {
         overflow: "hidden",
+        margin: "6px ",
       },
       embla__container: {
         display: "flex"

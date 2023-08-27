@@ -16,18 +16,33 @@ export default function MainNav() {
         open={drawerOpen}
         onClose={closeDrawer}
       >
-        <nav className="h-[100%] bg-secondary-main p-5 flex flex-col justify-center gap-2">
-          <Button color='info' variant='contained' fullWidth component={Link} to="/" onClick={closeDrawer}><p>Etusivu</p></Button>
-          <Button color='info' variant='contained' fullWidth component={Link} to="/" onClick={closeDrawer}><p>Tykkäämäsi tapahtumat</p></Button>
-          <Button color='info' variant='contained' fullWidth component={Link} to="/" onClick={closeDrawer}><p>Meidän tarina</p></Button>
+        <nav className="h-[100%] bg-primary-main p-5 flex flex-col justify-center gap-2">
+          <Button sx={{
+                    borderRadius: '10px'
+                }}
+                color='info' variant='contained' fullWidth component={Link} to="/" onClick={closeDrawer}><h5>Etusivu</h5></Button>
+          <Button sx={{
+                    borderRadius: '10px'
+                }}
+                color='info' variant='contained' fullWidth component={Link} to="/" onClick={closeDrawer}><h5>Tykkäämäsi tapahtumat</h5></Button>
+          <Button sx={{
+                    borderRadius: '10px'
+                }}
+                color='info' variant='contained' fullWidth component={Link} to="/" onClick={closeDrawer}><h5>Meidän tarina</h5></Button>
           <br />
-          <Button color='info' variant='outlined' fullWidth component={Link} to="/about" onClick={closeDrawer}><p>Ota yhteyttä</p></Button>
-          <Button color='info' variant='text' component={Link} to="/" onClick={closeDrawer}><p>Listaa seurakuntasi</p></Button>
+          <Button sx={{
+                    borderRadius: '10px'
+                }}
+                color='info' variant='outlined' fullWidth component={Link} to="/about" onClick={closeDrawer}><h6>Ota yhteyttä</h6></Button>
+          <Button sx={{
+                    borderRadius: '10px'
+                }}
+                color='info' variant='outlined' component={Link} to="/" onClick={closeDrawer}><h6>Listaa seurakuntasi</h6></Button>
         </nav>
       </Drawer>
       <div className='fixed bottom-5 left-5 md:bottom-10 md:left-10'>
         <Fab color='primary' aria-label="menu" onClick={() => setDrawerOpen(true)} >
-          <MenuIcon />
+          <MenuIcon color='info'/>
         </Fab>
       </div>
     </div>

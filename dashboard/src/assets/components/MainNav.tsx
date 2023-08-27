@@ -45,7 +45,7 @@ export default function MainNav() {
         anchor={'left'}
         open={drawerOpen}
         onClose={closeDrawer}
-        variant='persistent'
+        
       >
         <section className='h-[100%] flex flex-col bg-secondary-main'>
           {nav}

@@ -7,6 +7,9 @@ type Props = {
     home?: boolean
 }
 
+
+// TÄN PITÄÄ MUUTTUA
+
 export default function Header(props: Props) {
     if (props.home) return (
         <header>

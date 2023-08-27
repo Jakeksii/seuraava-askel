@@ -4,21 +4,22 @@ import { ReactNode } from "react";
 const theme = createTheme({
     palette: {
         primary: { //https://coolors.co/palette/FFE8D6-DDBEA9-CB997E
-            light: "#FFE8D6",
-            main: '#DDBEA9',
-            dark: '#CB997E',
+            light: "#5c7876",
+            main: '#455e5d',
+            dark: '#1f2b2a',
             contrastText: '#fff',
         },
         secondary: { //https://coolors.co/palette/B7B7A4-A5A58D-6B705C
-            light: '#B7B7A4',
+            light: '#f6fff8',
             main: '#A5A58D',
-            dark: '#6B705C'
+            dark: '#B7B7A4'
         },
         info: { //https://coolors.co/palette/f6fff8-eaf4f4-cce3de
-            light: '#f6fff8',
-            main: '#eaf4f4',
-            dark: '#cce3de'
+            light: '#ffff',
+            main: '#f5cca8',
+            dark: '#B7B7A4'
         },
+
         success: { //https://coolors.co/palette/73A942-538D22-245501
             light: '#73A942',
             main: '#538D22',
@@ -37,7 +38,7 @@ const theme = createTheme({
     },
     typography: {
         button: {
-            textTransform: 'none'
+            textTransform: 'none',
         }
     }
 })

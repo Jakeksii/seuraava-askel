@@ -102,21 +102,22 @@ export default function Search() {
     }
 
     return (
-        <section className='h-14'>
+        <section className='ml-1.5 mr-1.5 md:w-auto h-14'>
             <ClickAwayListener onClickAway={() => setResultsVisible(false)}>
-                <div className='relative z-10 p-2 rounded-b-2xl bg-secondary-dark'>
+                <div className='relative z-10 p-2 rounded-xl bg-[#7d8f8800] drop-shadow-md shadow-zinc-900/90'>
                     <div className='flex justify-center items-center gap-1'>
-                        <div className='grow'>
+                        <div className='grow '>
                             <div>
                                 <Input // SEARCH BAR
-                                    className='w-[100%] p-2 rounded-md text-white shadow-md bg-primary-main focus-within:bg-primary-dark transition-colors'
+                                    className='w-[100%] p-2 rounded-lg text-white shadow-md bg-primary-main focus-within:bg-primary-dark transition-colors'
 
                                     slotProps={{
                                         input: {
                                             className:
-                                                'bg-transparent outline-0 w-[100%] placeholder-slate-100 rounded-sm'
+                                                'bg-transparent outline-0 w-[100%] placeholder-[#f5cca8] rounded-sm'
                                         }
                                     }}
+                                    
                                     aria-label='search'
                                     placeholder='Etsi tapahtumia...'
                                     onChange={onSearchChange}
@@ -131,7 +132,7 @@ export default function Search() {
                             variant="contained"
                             color='primary'
                             onClick={openFilterPanel}>
-                            <FilterAltIcon />
+                            <FilterAltIcon color="info"/>
                         </Button>
                     </div>
                     <div className='p-1'>

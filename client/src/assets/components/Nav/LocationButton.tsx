@@ -44,16 +44,19 @@ export default function LocationButton(props: Props) {
 
     return (
         <div>
-            <Button // LOCATION BUTTON
-                onClick={locationClick}
-                aria-label="toggle location"
-                variant='contained'
-                size='large'
-                color='primary'>
-                {
-                    icon === "notlisted" ? <NotListedLocationIcon /> : (icon==="locationon") ? <LocationOnIcon /> : <LocationOffIcon />
-                }
-            </Button>
+            
+                <Button // LOCATION BUTTON
+                    onClick={locationClick}
+                    aria-label="toggle location"
+                    variant='contained'
+                    size='large'
+                    color='primary'>
+                    {
+                        icon === "notlisted" ? <NotListedLocationIcon color="info" /> : (icon==="locationon") ? <LocationOnIcon color="info" /> : <LocationOffIcon color="info"/>
+                    }
+                </Button>
+            
+            
             <WarningAlert
                 open={locationWarningOpen}
                 message='Location Access Denied'

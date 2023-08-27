@@ -87,6 +87,9 @@ export interface Organization {
 	__v: number
 }
 
+
+
+
 export interface User {
     token: string,
     user: {
