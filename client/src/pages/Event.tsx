@@ -8,8 +8,8 @@ import Footer from "../assets/components/Footer"
 import Header from "../assets/components/Header"
 import { PageImage } from "../assets/components/PageImage"
 import { useLocationContext } from "../assets/context/locationContext"
-import useGetEventPage from "../assets/hooks/api-hooks/useGetEventPage"
 import calculateDistance from "../assets/functions/calculateDistance"
+import useGetEventPage from "../assets/hooks/api-hooks/useGetEventPage"
 import useFormatDate from "../assets/hooks/useFormatDate"
 import NotFound from "./NotFound"
 
@@ -27,7 +27,6 @@ const notFound = (
 )
 
 export default function EventPage() {
-    //window.scrollTo({ top: 0, behavior: "instant" })
     const { event_id } = useParams()
     const locationContext = useLocationContext()
     if (!event_id) return notFound
@@ -41,24 +40,24 @@ export default function EventPage() {
         ? Math.round(calculateDistance(locationContext.coords.longitude, locationContext.coords.latitude, data.address.coordinates[0], data.address.coordinates[1]))
         : null
     const kilometers = distance != null ?
-        <div className="flex items-center justify-center rounded-full bg-[#1976d2] p-0 sm:p-1">
-            <LocationOnIcon style={{ color: 'white' }} />
-            <h6 className="p-1 text-white">{distance} km</h6>
+        <div className="flex items-center justify-center rounded-full bg-primary-main p-0 sm:p-1">
+            <LocationOnIcon color='info' />
+            <h6 className="p-1">{distance} km</h6>
         </div>
         : null
 
     const formattedDates = useFormatDate(data.start_date, data.end_date)
     const date =
-        <div className="flex items-center justify-center rounded-full bg-[#1976d2] p-0 sm:p-1">
-            <EventIcon style={{ color: 'white' }} />
-            <h6 className="p-1 text-white">
+        <div className="flex items-center justify-center rounded-full bg-primary-main p-0 sm:p-1">
+            <EventIcon color='info' />
+            <h6 className="p-1">
                 {formattedDates.startDate + " - " + formattedDates.endDate}
             </h6>
         </div>
     const time =
-        <div className="flex items-center justify-center rounded-full bg-[#1976d2] p-0 sm:p-1">
-            <ScheduleIcon style={{ color: 'white' }} />
-            <h6 className="p-1 text-white">{formattedDates.startTime} - {formattedDates.endTime}</h6>
+        <div className="flex items-center justify-center rounded-full bg-primary-main p-0 sm:p-1">
+            <ScheduleIcon color='info' />
+            <h6 className="p-1">{formattedDates.startTime} - {formattedDates.endTime}</h6>
         </div>
 
     return (
@@ -71,7 +70,7 @@ export default function EventPage() {
                 <section className="m-4">
                     <div className="text-center">
                         <Link className="text-slate-50 hover:text-slate-300 underline" to={organizationLink}>{data.organization.organization_name}</Link>
-                        <h1>{data.title}</h1>
+                        <h2 className='text-white pt-1'>{data.title}</h2>
                     </div>
                     <div className="bg-white text-black p-4 pt-1 rounded-2xl" >
                         <div className="flex flex-col gap-2 pt-2 pb-2 justify-center grow sm:flex-row">

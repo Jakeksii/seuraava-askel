@@ -3,17 +3,16 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import NotListedLocationIcon from '@mui/icons-material/NotListedLocation';
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
+import { SEARCH_TYPE_LOCATION } from '../../constants';
 import { useLocationContext } from "../../context/locationContext";
+import { useSearchContext } from '../../context/searchContext';
 import { WarningAlert } from "../Alerts";
 import { LocationAccessDeniedDialog } from "../Dialogs";
 
 type LocationiIcon = "notlisted" | "locationon" | "locationoff"
 
-interface Props {
-    onSearchByLocation: () => void
-}
-
-export default function LocationButton(props: Props) {
+export default function LocationButton() {
+    const searchContext = useSearchContext()
     const locationContext = useLocationContext()
     const [locationWarningOpen, setLocationWarning] = useState(false);
     const [locationAccessDialogOpen, setLocationAccessDialogOpen] = useState(false)
@@ -29,13 +28,21 @@ export default function LocationButton(props: Props) {
         locationContext.getLocation()
     }
     useEffect(() => {
-        if(!mounted) return setMounted(true)
+        if (!mounted) return setMounted(true)
         if (locationContext.error) {
             setIcon("notlisted")
             return setLocationWarning(true)
         }
         if (locationContext.locationOn) {
-            props.onSearchByLocation()
+            const query =
+                '?latitude=' + locationContext.coords.latitude +
+                '&longitude=' + locationContext.coords.longitude +
+                '&type=' + SEARCH_TYPE_LOCATION
+            searchContext.setValues({
+                ...searchContext.values,
+                query: query,
+                search: undefined
+            })
             setIcon("locationon")
         } else {
             setIcon("locationoff")
@@ -43,20 +50,18 @@ export default function LocationButton(props: Props) {
     }, [locationContext])
 
     return (
-        <div>
-            
-                <Button // LOCATION BUTTON
-                    onClick={locationClick}
-                    aria-label="toggle location"
-                    variant='contained'
-                    size='large'
-                    color='primary'>
-                    {
-                        icon === "notlisted" ? <NotListedLocationIcon color="info" /> : (icon==="locationon") ? <LocationOnIcon color="info" /> : <LocationOffIcon color="info"/>
-                    }
-                </Button>
-            
-            
+        <>
+            <Button // LOCATION BUTTON
+                onClick={locationClick}
+                aria-label="toggle location"
+                variant='contained'
+                size='large'
+                color='primary'>
+                {
+                    icon === "notlisted" ? <NotListedLocationIcon color="info" /> : (icon === "locationon") ? <LocationOnIcon color="info" /> : <LocationOffIcon color="info" />
+                }
+            </Button>
+
             <WarningAlert
                 open={locationWarningOpen}
                 message='Location Access Denied'
@@ -65,6 +70,6 @@ export default function LocationButton(props: Props) {
             <LocationAccessDeniedDialog
                 open={locationAccessDialogOpen}
                 onClose={() => setLocationAccessDialogOpen(false)} />
-        </div>
+        </>
     )
 }

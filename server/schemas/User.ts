@@ -1,6 +1,6 @@
 import { Schema, Types} from "mongoose";
 import validator from "validator";
-
+// Tyyppi = objektin rakenne
 export interface IUser {
     _id: Types.ObjectId,
 	first_name: string,

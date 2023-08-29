@@ -1,11 +1,16 @@
 import { useIntersection } from "@mantine/hooks"
 import CircularProgress from "@mui/material/CircularProgress"
 import { useEffect, useRef } from "react"
+import { ERROR_DEFAULT } from "../../constants"
 import { useLocationContext } from "../../context/locationContext"
 import { useSearchContext } from "../../context/searchContext"
-import useGetEvents from "../../hooks/api-hooks/useGetEvents"
 import calculateDistance from "../../functions/calculateDistance"
+import useGetEvents from "../../hooks/api-hooks/useGetEvents"
 import Event from "./Event"
+
+type Props = {
+    query?: string
+}
 
 const loading = (
     <div className="grid justify-center pt-4" aria-busy={true}>
@@ -13,10 +18,10 @@ const loading = (
     </div>
 )
 
-export default function EventFeed() {
-    const searchContext = useSearchContext()
+export default function EventFeed(props: Props) {
+    const { values: { query } } = useSearchContext()
     const locationContext = useLocationContext()
-    const { isLoading, data, isError, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetEvents({ query: searchContext.query, page: 1 })
+    const { isLoading, data, isError, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetEvents({ query: props.query ?? query, page: 1 }) // if query is passed as a prop we use it to fetch events
     const lastEventRef = useRef<HTMLDivElement | null>(null)
     const { ref, entry } = useIntersection({
         root: lastEventRef.current,
@@ -36,7 +41,7 @@ export default function EventFeed() {
     if (isError) {
         return (
             <div>
-                <h2 className="text-center pt-4">Error when fetching events. Please try again</h2>
+                <h2 className="text-center pt-4">{ERROR_DEFAULT}</h2>
             </div>
         )
     }
@@ -44,7 +49,7 @@ export default function EventFeed() {
 
     return (
         <>
-            <div /*className="grid gap-4 grid-cols-1 sm:grid-cols-2" */>
+            <div>
                 {
                     data?.pages.map((page) => (
                         page.map((event, i) => {

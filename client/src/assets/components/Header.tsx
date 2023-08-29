@@ -1,12 +1,11 @@
 import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
-const Search = lazy(() => import("./Nav/Search"));
+import Nav from "./Nav/Nav";
 const EmblaCarousel = lazy(() => import("./EmblaCarousel"));
 
 type Props = {
     home?: boolean
 }
-
 
 // TÄN PITÄÄ MUUTTUA
 
@@ -16,15 +15,13 @@ export default function Header(props: Props) {
             <Suspense fallback={<div className="h-[420px]" />}>
                 <EmblaCarousel />
             </Suspense>
-            <Suspense>
-                <Search />
-            </Suspense>
+            <Nav />
         </header>
     )
 
     return (
         <header>
-            <div className="bg-secondary-dark p-1">
+            <div className="bg-secondary-main p-1">
                 <h1 className="text-center pb-0">
                     <Link className="text-white" to="/">Seuraava Askel</Link>
                 </h1>

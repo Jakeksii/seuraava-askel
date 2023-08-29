@@ -14,7 +14,7 @@ export default function Home() {
         </section>
       </main>
       <footer>
-        <div className=" pb-16" />
+        <div className="pb-16" />
       </footer>
     </ LocationContextProvider>
     </ SearchContextProvider>
