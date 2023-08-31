@@ -25,7 +25,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "npx tsc --watch"
+    "dev": "nodemon index.ts"
   },
   "author": "Jaakko Ruhanen",
   "license": "CC-BY-NC-ND-4.0",
