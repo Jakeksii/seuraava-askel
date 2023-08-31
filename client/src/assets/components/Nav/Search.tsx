@@ -1,6 +1,6 @@
 import { Input } from '@mui/base';
 import SearchIcon from '@mui/icons-material/Search';
-import { Button, CircularProgress, Dialog, DialogContent } from '@mui/material';
+import { Button, DialogContent } from '@mui/material';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { ERROR_DEFAULT } from '../../constants';
 import { useLocationContext } from '../../context/locationContext';
@@ -8,12 +8,7 @@ import { useSearchContext } from '../../context/searchContext';
 import { getHighlightedText, getPrefix } from '../../functions/searchResultFunctions';
 import useGetSearchResults from '../../hooks/api-hooks/useGetSearchResults';
 import { SearchResult } from '../../types';
-
-const loadingBar = (
-    <div className="m-2 flex justify-center text-white">
-        <CircularProgress size={40} color='inherit' />
-    </div>
-)
+import Loading from '../../partials/Loading';
 
 interface Props {
     open: boolean
@@ -71,7 +66,7 @@ export default function Search(props: Props) {
         props.close()
     }
     const searchResults = () => {
-        if (isLoading) return loadingBar
+        if (isLoading) return <Loading size={40} />
         if (isError) return <h5 key={0} className='pt-2 text-center text-info-main'> {ERROR_DEFAULT} </h5>
         if (data && data.length === 0) return <h5 key={0} className='pt-2 text-center text-info-main'> {getHighlightedText(searchValue, searchValue)} {" ei tuottanut tuloksia."} </h5>
         if (data) return <ul>
@@ -98,34 +93,32 @@ export default function Search(props: Props) {
 
 
     return (
-        <Dialog open={props.open} onClose={props.close} fullWidth maxWidth="md" disableRestoreFocus disableScrollLock>
-            <DialogContent className='bg-primary-main m-1 rounded-sm'>
-                <section onClick={selectInput} className='mb-2 w-full flex justify-center items-center p-3 rounded-lg text-info-main shadow-md bg-secondary-main'>
-                    <SearchIcon color='info' />
-                    <Input
-                        onFocus={selectInput}
-                        className='w-full pl-1'
-                        slotProps={{
-                            input: {
-                                autoFocus: true,
-                                ref: inputRef,
-                                className:
-                                    'bg-transparent outline-0 w-full placeholder-[#f5cca8] rounded-sm'
-                            }
-                        }}
-                        aria-label='search'
-                        placeholder='Etsi tapahtumia...'
-                        onChange={onSearchChange}
-                        value={searchValue}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' && data) {
-                                onSearchResultClick(data[0])
-                            }
-                        }}
-                    />
-                </section>
-                {searchResults()}
-            </DialogContent>
-        </Dialog>
+        <DialogContent>
+            <section onClick={selectInput} className='mb-2 w-full flex justify-center items-center p-3 rounded-lg text-info-main shadow-md bg-secondary-main'>
+                <SearchIcon color='info' />
+                <Input
+                    onFocus={selectInput}
+                    className='w-full pl-1'
+                    slotProps={{
+                        input: {
+                            autoFocus: true,
+                            ref: inputRef,
+                            className:
+                                'bg-transparent outline-0 w-full placeholder-[#f5cca8] rounded-sm'
+                        }
+                    }}
+                    aria-label='search'
+                    placeholder='Etsi tapahtumia...'
+                    onChange={onSearchChange}
+                    value={searchValue}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' && data) {
+                            onSearchResultClick(data[0])
+                        }
+                    }}
+                />
+            </section>
+            {searchResults()}
+        </DialogContent>
     )
 }

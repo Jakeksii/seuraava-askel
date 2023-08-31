@@ -1,11 +1,13 @@
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SearchIcon from '@mui/icons-material/Search';
-import { Button, Drawer } from '@mui/material';
-import { useState } from 'react';
+import { Button, Dialog, Drawer } from '@mui/material';
+import { lazy, Suspense, useState } from 'react';
 import { useSearchContext } from '../../context/searchContext';
 import Filters from './Filters';
 import LocationButton from './LocationButton';
-import Search from './Search';
+import Loading from '../../partials/Loading';
+
+const Search = lazy(() => import('./Search'))
 
 export default function Nav() {
     const { values: { search } } = useSearchContext()
@@ -61,7 +63,11 @@ export default function Nav() {
             >
                 <Filters />
             </Drawer>
-            <Search open={searchModalOpen} close={closeSearchModal} />
+            <Dialog open={searchModalOpen} onClose={closeSearchModal} fullWidth maxWidth="md" disableRestoreFocus sx={{ 'div .MuiPaper-root': {alignSelf: 'start', backgroundColor: 'primary.main'} }}>
+                <Suspense fallback={<Loading />}>
+                    <Search open={searchModalOpen} close={closeSearchModal} />
+                </Suspense>
+            </Dialog>
         </>
     )
 }
