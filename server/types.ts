@@ -18,7 +18,7 @@ export interface IEvent {
     end_date: Date
     title: string
     extract: string
-    description: string //HTML
+    description?: string //HTML
     visible: boolean
     address: {
         street: string
