@@ -2,7 +2,7 @@ import { compare, genSalt, hash } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { Types } from "mongoose";
 import { EmailVerification, User } from "../connections/UserConnection";
-import { NextFunction, Request, Response } from "../types/types";
+import { NextFunction, Request, Response } from "../types";
 
 /* REGISTER USER */
 export const register = async (req: Request, res: Response): Promise<Response> => {

@@ -23,8 +23,7 @@ These are general best practices, and the actual implementation may vary based o
 */
 
 import { Invitation } from "../connections/MainConnection";
-import { IInvitation } from "../schemas/Invitation";
-import { Request, Response } from "../types/types";
+import { Request, Response } from "../types";
 
 export const accept = async (req:Request, res:Response) => {
 

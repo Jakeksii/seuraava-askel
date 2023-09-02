@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from "../types/types";
 import multer from 'multer';
+import { NextFunction, Request, Response } from "../types";
 
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage });

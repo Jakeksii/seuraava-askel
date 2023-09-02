@@ -1,4 +1,4 @@
-import { Response, Request } from "../types/types";
+import { Response, Request } from "../types";
 import { Organization, OrganizationPage } from "../connections/MainConnection";
 import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
 import { sanitizeHTML } from "../Functions/sanitizeHTML";

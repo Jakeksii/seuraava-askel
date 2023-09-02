@@ -1,39 +1,7 @@
-import { Schema, Types} from "mongoose";
+import { Schema, Types } from "mongoose";
+import { IEvent } from "../types";
 
-export interface IEvent {
-    _id: Types.ObjectId
-    start_date: Date
-    end_date: Date
-    title: string
-    extract: string
-    visible: boolean
-    address: {
-        street: string
-        city: string
-        state: string
-        zipcode: string
-        country: string
-        coordinates: [number, number]
-    }
-    image_id: string
-    event_meta: {
-        speaker: string
-        music: string
-        presenter: string
-    }
-    organization: {
-        organization_id: String,
-        organization_name: String,
-    }
-    created_by: string
-    updated_by: string
-    createdAt?: Date,
-    updatedAt?: Date,
-    __v?: number
-}
-
-const Event = new Schema<IEvent>({
-
+export default new Schema<IEvent>({
     start_date: {
         type: Date,
         require: true
@@ -54,6 +22,10 @@ const Event = new Schema<IEvent>({
         required: true,
         maxlength: 260,
         minlenght: 25,
+    },
+    description: {
+        type: String, 
+        maxlength: 10000
     },
     visible: {
         type: Boolean,
@@ -84,8 +56,4 @@ const Event = new Schema<IEvent>({
     
     created_by: Types.ObjectId,
     updated_by: String
-
-
 }, {timestamps: true}); //adds createdAt, updatedAt
-
-export default Event;

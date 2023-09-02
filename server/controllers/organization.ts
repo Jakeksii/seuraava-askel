@@ -1,4 +1,4 @@
-import { Response, Request } from "../types/types";
+import { Response, Request } from "../types";
 import { Organization } from "../connections/MainConnection";
 import { User } from "../connections/UserConnection";
 

@@ -1,25 +1,8 @@
 import { Schema, Types} from "mongoose";
 import validator from "validator";
-// Tyyppi = objektin rakenne
-export interface IUser {
-    _id: Types.ObjectId,
-	first_name: string,
-	last_name: string,
-	email: string,
-    password?: string,
-	verified?: boolean,
-	organizations: [{
-        organization_id: Types.ObjectId
-        organization_name: string
-        role: string
-        _id: Types.ObjectId
-    }]
-    createdAt?: Date,
-	updatedAt?: Date,
-	__v?: number,
-}
+import { IUser } from "../types";
 
-const User = new Schema<IUser>({
+export default new Schema<IUser>({
     first_name: {
         type: String,
         required: true,
@@ -60,5 +43,3 @@ const User = new Schema<IUser>({
     verified: {type: Boolean, default: false}
 
 }, {timestamps: true}); //adds createdAt, updatedAt
-
-export default User;

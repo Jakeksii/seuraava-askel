@@ -1,7 +1,7 @@
 import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
-import { Event } from "../connections/MainConnection"
-import { Request, Response } from "../types/types"
 import { Types } from 'mongoose'
+import { Event } from "../connections/MainConnection"
+import { IEvent, Request, Response } from '../types'
 
 // USE ZOD VALIDATOR
 
@@ -83,85 +83,71 @@ export const getEvents = async (req: Request, res: Response) => {
   const limit = parseInt(req.query.limit as string) || 2; // Number of items per page
   const skip = (page - 1) * limit
 
+  if (!type) return res.status(400).json({ message: "Query didn't contain a type" })
+  
+  try {
 
-  if (!type) {
-    try {
-      const regex = { $regex: search, $options: 'i' };
-      const query = {
-        $or: [
-          { 'address.city': regex },
-          { 'organization.organization_name': regex },
-          { title: regex }
-        ],
-        //endDate: { $gte: new Date() } // make sure we dont query ended events
-      }
-      const events = await Event.find(query).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
-      return res.status(200).json(events);
-    } catch (error) {
-      return res.status(500).json({ error: 'An error occurred while fetching events' })
-    }
-  } //return res.status(400).json({ message: "No query type property. Include ?type=" })
+    let events: IEvent[]
 
-  // LOCATION BASED SEARCH
-  if (type === 'location') {
-    const { latitude, longitude } = req.query;
-    const parsedLatitude = parseFloat(latitude as string) || 60.192059 // Default coords for Helsinki
-    const parsedLongitude = parseFloat(longitude as string) || 24.945831
-    try {
-      const events = await Event.aggregate([
-        {
-          $geoNear: {
-            near: {
-              type: 'Point',
-              coordinates: [parsedLongitude, parsedLatitude],
+    switch (type) {
+      case 'location':
+          const { latitude, longitude } = req.query;
+          const parsedLatitude = parseFloat(latitude as string) || 60.192059 // Default coords for Helsinki
+          const parsedLongitude = parseFloat(longitude as string) || 24.945831
+          events = await Event.aggregate([
+            {
+              $geoNear: {
+                near: {
+                  type: 'Point',
+                  coordinates: [parsedLongitude, parsedLatitude],
+                },
+                distanceField: 'distance',
+                spherical: true,
+                query: {}, // Optional additional query criteria
+                // Additional options if needed
+              },
             },
-            distanceField: 'distance',
-            spherical: true,
-            query: {}, // Optional additional query criteria
-            // Additional options if needed
-          },
-        },
-        // Additional stages if needed
-      ]).skip(skip).limit(limit).exec();
-      return res.status(200).json(events);
-    } catch (error) {
-      return res.status(500).json({ error: 'An error occurred' });
+            // Additional stages if needed
+          ]).skip(skip).limit(limit).exec();
+          break
+  
+      case 'city':
+          events = await Event.find({ 'address.city': search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
+          break
+
+      case 'organization':
+          events = await Event.find({ 'organization.organization_name': search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
+          break
+
+      case 'title':
+          events = await Event.find({ 'title': search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
+          break
+
+      default:
+        return res.status(400).json({ message: "Query type " + type + " is not valid." })
     }
+
+    const data = events.map((event: IEvent) => {
+      return {
+        _id: event._id,
+        start_date: event.start_date,
+        end_date: event.end_date,
+        title: event.title,
+        extract: event.extract,
+        address: event.address,
+        image_id: event.image_id,
+        organization: event.organization,
+        createdAt: event.createdAt,
+        updatedAt: event.updatedAt
+      }
+    })
+
+    return res.status(200).json(data)
+
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({ error: 'An error occurred while fetching events' })
   }
-
-  // TYPE BASED SEARCH
-  const approvedTypes = ['city', 'organization', 'title']
-  if (!approvedTypes.includes(type)) return res.status(400).json({ message: "Query type " + type + " is not valid. Valid types: " + approvedTypes })
-
-  switch (type) {
-    case 'city':
-      try {
-        const query = { 'address.city': search };
-        const events = await Event.find(query).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
-        return res.status(200).json(events);
-      } catch (error) {
-        return res.status(500).json({ error: 'An error occurred while fetching events' })
-      }
-
-    case 'organization':
-      try {
-        const query = { 'organization.organization_name': search };
-        const events = await Event.find(query).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
-        return res.status(200).json(events);
-      } catch (error) {
-        return res.status(500).json({ error: 'An error occurred while fetching events' })
-      }
-
-    case 'title':
-      try {
-        const query = { 'title': search };
-        const events = await Event.find(query).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
-        return res.status(200).json(events);
-      } catch (error) {
-        return res.status(500).json({ error: 'An error occurred while fetching events' })
-      }
-  }
-
 }
 
 export const searchEvents = async (req: Request, res: Response) => {
@@ -171,7 +157,7 @@ export const searchEvents = async (req: Request, res: Response) => {
 
   const regex = { $regex: searchTerm, $options: 'i' };
   const endDateFilter = { endDate: { $gte: new Date() } }
-  const cityFilter = { 'address.city': regex}
+  const cityFilter = { 'address.city': regex }
   const organizationFilter = { 'organization.organization_name': regex }
   const titleFilter = { title: regex }
   console.warn("remember to use datefilter in searchEvents")
@@ -183,7 +169,7 @@ export const searchEvents = async (req: Request, res: Response) => {
     ]);
     const cities = distinctCities.map((data) => ({ type: 'city', data: data }))
     const organizations = distinctOrgNames.map((data) => ({ type: 'organization', data: data }))
-    const titles = distinctTitles.map((data) => ({ type: 'title', data: data}))
+    const titles = distinctTitles.map((data) => ({ type: 'title', data: data }))
 
     const results = [...cities, ...organizations, ...titles]
 
@@ -195,20 +181,34 @@ export const searchEvents = async (req: Request, res: Response) => {
   }
 }
 
-export const getEvent = async (req: Request, res: Response) => {
+// Event page
+export const getEventPage = async (req: Request, res: Response) => {
   const { _id } = req.params
   if (!Types.ObjectId.isValid(_id)) {
     return res.status(400).json({ message: "Invalid Id" });
   }
 
   try {
-    const event = await Event.findById(_id);
-  
-    if (!event) {
-      return res.status(404).json({ message: "Event not found" });
+    const event: IEvent | null = await Event.findById(_id);
+
+    if (!event) return res.status(404).json({ message: "Event not found" });
+
+    const data = {
+      _id: event._id,
+      start_date: event.start_date,
+      end_date: event.end_date,
+      title: event.title,
+      extract: event.extract,
+      description: event.description,
+      address: event.address,
+      image_id: event.image_id,
+      event_meta: event.event_meta,
+      organization: event.organization,
+      createdAt: event.createdAt,
+      updatedAt: event.updatedAt
     }
-  
-    return res.status(200).json(event);
+
+    return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error" });
   }
