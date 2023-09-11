@@ -1,5 +1,5 @@
 import Header from "../assets/components/Header";
-import OrganizationUsers from "../assets/components/organizationUsers";
+import OrganizationUsers from "../assets/components/OrganizationUsers";
 
 export default function Subscription() {
     return (

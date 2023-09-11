@@ -1,0 +1,1 @@
+import{j as s,H as e}from"./index-598b4a4a.js";function a(){return s.jsxs(s.Fragment,{children:[s.jsx(e,{}),s.jsx("main",{children:s.jsx("h2",{className:"text-center p-2",children:"Tapahtuma listaus sivu"})})]})}export{a as default};

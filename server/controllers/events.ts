@@ -36,7 +36,7 @@ export const createEvent = async (req: Request, res: Response) => {
     visible: event.visible,
     address: event.address,
     image_id: "", // Set after the image is uploaded to cloudinary
-    event_meta: event?.event_meta,
+    meta: event?.meta,
     organization: {
       organization_id: organization.organization_id,
       organization_name: organization.organization_name
@@ -202,7 +202,7 @@ export const getEventPage = async (req: Request, res: Response) => {
       description: event.description,
       address: event.address,
       image_id: event.image_id,
-      event_meta: event.event_meta,
+      meta: event.meta,
       organization: event.organization,
       createdAt: event.createdAt,
       updatedAt: event.updatedAt

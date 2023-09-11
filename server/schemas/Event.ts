@@ -44,7 +44,13 @@ export default new Schema<IEvent>({
         }
     },
     image_id: String,
-    event_meta: {
+    meta: {
+        denomination: {type: String, maxlength: 20},
+        type: {type: String, maxlength: 20},
+        size: {type: String, maxlength: 20},
+        language: {type: String, maxlength: 20},
+        price: {type: String, maxlength: 20},
+        online: {type: Boolean, default: false},
         speaker: {type: String, maxlength: 20},
         music: {type: String, maxlength: 20},
         presenter: {type: String, maxlength: 20},

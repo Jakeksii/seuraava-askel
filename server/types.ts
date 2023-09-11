@@ -29,10 +29,16 @@ export interface IEvent {
         coordinates: [number, number]
     }
     image_id: string
-    event_meta: {
-        speaker: string
-        music: string
-        presenter: string
+    meta: {
+        denomination?: string
+        type?: string
+        size?: string
+        language?: string
+        price?: number
+        online?: boolean
+        speaker?: string
+        music?: string
+        presenter?: string
     }
     organization: {
         organization_id: String,

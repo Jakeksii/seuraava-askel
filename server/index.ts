@@ -59,7 +59,7 @@ app.use("/api/invitations", invitationRoutes)
 app.use("/api/events", eventRoutes)
 app.use("/api/organization-pages", organizationPageRoutes)
 app.use("/api/email", emailRoutes)
-app.use("/", express.static('public'))
+app.use("/", express.static(process.env.DASHBOARD ? 'public_dashboard' : 'public'))
 
 const connect = async () => {
     await MainConn.asPromise().then(result => {
