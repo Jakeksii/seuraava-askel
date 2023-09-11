@@ -34,13 +34,13 @@ export default function OrganizationPage() {
 
     const mapsLink = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURI(`${data.organization.address.street} ${data.organization.address.zipcode} ${data.organization.address.city} ${data.organization.address.state} ${data.organization.address.country}`)
     const contactInfoElement = contactInfo(data.organization.contact_info.phone, data.organization.contact_info.email)
-    const query = "?s=" + decodeURI(organization_name.replace(/-/g, ' '))
+    const query = "?type=organization&s=" + decodeURI(organization_name.replace(/-/g, ' '))
     return (
         <>
             <Header />
-            <main className="max-w-4xl m-auto">
-                <div>
-                    <PageImage image_id={data.image_id} width={820} height={312} />
+            <main className="max-w-4xl m-auto pb-10">
+                <div className="p-2">
+                    <PageImage className="rounded-2xl" image_id={data.image_id} width={820} height={312} />
                 </div>
                 <div className="text-white m-4 min-h-screen">
                     <h1 className=" text-center">{data.organization.name}</h1>

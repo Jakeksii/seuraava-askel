@@ -2,12 +2,11 @@ import { Input } from '@mui/base';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button, DialogContent } from '@mui/material';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { SearchResult } from '../../../types';
 import { ERROR_DEFAULT } from '../../constants';
-import { useLocationContext } from '../../context/locationContext';
 import { useSearchContext } from '../../context/searchContext';
 import { getHighlightedText, getPrefix } from '../../functions/searchResultFunctions';
 import useGetSearchResults from '../../hooks/api-hooks/useGetSearchResults';
-import { SearchResult } from '../../types';
 import Loading from '../../partials/Loading';
 
 interface Props {
@@ -17,7 +16,6 @@ interface Props {
 
 export default function Search(props: Props) {
     const searchContext = useSearchContext()
-    const locationContext = useLocationContext()
 
     // INPUT
     const inputRef = useRef<HTMLInputElement>(null)
@@ -55,7 +53,6 @@ export default function Search(props: Props) {
 
     // SearchResults
     const onSearchResultClick = (data: SearchResult) => {
-        locationContext.clearLocation()
         // Handle search
         const query = '?s=' + data.data + '&type=' + data.type
         searchContext.setValues({

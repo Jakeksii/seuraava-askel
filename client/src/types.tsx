@@ -1,4 +1,4 @@
-import { SEARCH_TYPE_CITY, SEARCH_TYPE_ORGANIZATION, SEARCH_TYPE_TITLE } from "./constants"
+import { SEARCH_TYPE_CITY, SEARCH_TYPE_ORGANIZATION, SEARCH_TYPE_TITLE } from "./assets/constants"
 
 // Sub types
 interface Address {
@@ -13,29 +13,62 @@ interface ContactInfo {
     email: string,
     phone: string
 }
+export type FormattedDate = {
+    startDate: string
+    endDate: string
+    startTime: string
+    endTime: string
+}
 
 // EVENT
-export interface IEvent {
+export interface Event {
     _id: string
     start_date: Date
     end_date: Date
     title: string
     extract: string
-    visible: boolean
     address: Address
     image_id: string
-    event_meta: {
-        speaker: string
-        music: string
-        presenter: string
-    }
-    event_page_url: string
     organization: {
-        organization_id: string,
-        organization_name: string,
+        organization_id: string
+        organization_name: string
     }
-    createdAt: Date,
-    updatedAt: Date,
+    createdAt: Date
+    updatedAt: Date
+}
+export interface EventPage {
+    _id: string
+    start_date: Date
+    end_date: Date
+    title: string
+    extract: string
+    description?: string
+    address: Address
+    image_id: string
+    meta: {
+        denomination?: string
+        type?: string
+        size?: string
+        language?: string
+        price?: number
+        online?: boolean
+        speaker?: string
+        music?: string
+        presenter?: string
+    }
+    organization: {
+        organization_id: string
+        organization_name: string
+    }
+    createdAt: Date
+    updatedAt: Date
+}
+export interface EventContentProps {
+    data: EventPage
+    formattedDates: FormattedDate
+    organizationLink: string
+    distance: number
+    mapLink: string
 }
 
 // SEARCH
@@ -45,10 +78,6 @@ export type SearchResult = {
     typeof SEARCH_TYPE_ORGANIZATION |
     typeof SEARCH_TYPE_TITLE
     data: string
-}
-export type SearchResults = {
-    results: SearchResult[]
-    error?: string
 }
 
 // Organization

@@ -16,7 +16,7 @@ export default function LocationButton() {
     const locationContext = useLocationContext()
     const [locationWarningOpen, setLocationWarning] = useState(false);
     const [locationAccessDialogOpen, setLocationAccessDialogOpen] = useState(false)
-    const [icon, setIcon] = useState<LocationiIcon>("notlisted")
+    const [icon, setIcon] = useState<LocationiIcon>(locationContext.values.locationOn ? "locationon" : "notlisted")
     const [mounted, setMounted] = useState(false)
     const locationWarningAction = (
         <Button color="inherit" size="small"
@@ -29,14 +29,11 @@ export default function LocationButton() {
     }
     useEffect(() => {
         if (!mounted) return setMounted(true)
-        if (locationContext.error) {
-            setIcon("notlisted")
-            return setLocationWarning(true)
-        }
-        if (locationContext.locationOn) {
+
+        if (locationContext.values.locationOn) {
             const query =
-                '?latitude=' + locationContext.coords.latitude +
-                '&longitude=' + locationContext.coords.longitude +
+                '?latitude=' + locationContext.values.coords.latitude +
+                '&longitude=' + locationContext.values.coords.longitude +
                 '&type=' + SEARCH_TYPE_LOCATION
             searchContext.setValues({
                 ...searchContext.values,

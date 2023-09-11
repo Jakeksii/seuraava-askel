@@ -20,7 +20,7 @@ const loading = (
 
 export default function EventFeed(props: Props) {
     const { values: { query } } = useSearchContext()
-    const locationContext = useLocationContext()
+    const { values: { locationOn, coords}, getLocation} = useLocationContext()
     const { isLoading, data, isError, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetEvents({ query: props.query ?? query, page: 1 }) // if query is passed as a prop we use it to fetch events
     const lastEventRef = useRef<HTMLDivElement | null>(null)
     const { ref, entry } = useIntersection({
@@ -28,7 +28,7 @@ export default function EventFeed(props: Props) {
         threshold: 0
     })
     useEffect(() => {
-        if (!locationContext.locationOn) locationContext.getLocation()
+        if (!locationOn) getLocation()
     }, [])
     useEffect(() => {
         if (entry?.isIntersecting && hasNextPage) fetchNextPage()
@@ -63,9 +63,9 @@ export default function EventFeed(props: Props) {
                                             extract={event.extract}
                                             organization={event.organization.organization_name}
                                             //We calculate the distance between our coords and coords in event
-                                            distance={(locationContext.coords.latitude) ? Math.round(calculateDistance(
-                                                locationContext.coords.longitude,
-                                                locationContext.coords.latitude,
+                                            distance={(locationOn) ? Math.round(calculateDistance(
+                                                coords.longitude,
+                                                coords.latitude,
                                                 event.address.coordinates[0],
                                                 event.address.coordinates[1])) : null}
                                             startDate={event.start_date}
@@ -81,9 +81,9 @@ export default function EventFeed(props: Props) {
                                         extract={event.extract}
                                         organization={event.organization.organization_name}
                                         //We calculate the distance between our coords and coords in event
-                                        distance={(locationContext.coords.latitude) ? Math.round(calculateDistance(
-                                            locationContext.coords.longitude,
-                                            locationContext.coords.latitude,
+                                        distance={(locationOn) ? Math.round(calculateDistance(
+                                            coords.longitude,
+                                            coords.latitude,
                                             event.address.coordinates[0],
                                             event.address.coordinates[1])) : null}
                                         startDate={event.start_date}

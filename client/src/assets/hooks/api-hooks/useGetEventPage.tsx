@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useQuery } from "react-query";
-import { IEvent } from "../../types";
+import { EventPage } from "../../../types";
 
 interface Props {
     _id: string
@@ -13,7 +13,7 @@ export default function useGetEventPage(props: Props) {
         staleTime: 1000 * 60,
         queryFn: async () => {
             const { data } = await axios.get('/api/events/single/' + props._id)
-            return data as IEvent
+            return data as EventPage
         },
         onError(error){
             console.error("Error when fetching event: ", error)

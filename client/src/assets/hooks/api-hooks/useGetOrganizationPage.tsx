@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useQuery } from "react-query";
-import { OrganizationPage } from "../../types";
+import { OrganizationPage } from "../../../types";
 
 interface Props {
     query: string

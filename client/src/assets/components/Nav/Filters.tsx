@@ -6,7 +6,7 @@ export default function Filters() {
     const [value, setValue] = useState(40)
 
     return (
-        <section className="h-[100%] bg-primary-main p-5 flex flex-col justify-center gap-2">
+        <section className="h-full p-5 flex flex-col justify-center gap-2">
             <div className="shadow-2xl shadow-zinc-900/60 rounded-2xl">
                 <Button sx={{
                     borderRadius: '10px'

@@ -1,6 +1,7 @@
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SearchIcon from '@mui/icons-material/Search';
-import { Button, Dialog, Drawer } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { Button, Dialog, Drawer, Fab } from '@mui/material';
 import { lazy, Suspense, useState } from 'react';
 import { useSearchContext } from '../../context/searchContext';
 import Filters from './Filters';
@@ -59,11 +60,17 @@ export default function Nav() {
                 anchor={'right'}
                 open={filterPanelOpen}
                 onClose={closeFilterPanel}
-                disableScrollLock
             >
+                <div className='h-full bg-primary-main flex flex-col'>
                 <Filters />
+                <div className='self-center mb-10'>
+                    <Fab color='primary' size='small' aria-label="menu-close" onClick={closeFilterPanel} >
+                        <CloseIcon />
+                    </Fab>
+                </div>
+                </div>
             </Drawer>
-            <Dialog open={searchModalOpen} onClose={closeSearchModal} fullWidth maxWidth="md" disableRestoreFocus sx={{ 'div .MuiPaper-root': {alignSelf: 'start', backgroundColor: 'primary.main'} }}>
+            <Dialog open={searchModalOpen} onClose={closeSearchModal} fullWidth maxWidth="md" disableRestoreFocus sx={{ 'div .MuiPaper-root': { alignSelf: 'start', backgroundColor: 'primary.main' } }}>
                 <Suspense fallback={<Loading />}>
                     <Search open={searchModalOpen} close={closeSearchModal} />
                 </Suspense>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useInfiniteQuery } from "react-query";
-import { IEvent } from "../../types";
+import { Event } from "../../../types";
 
 type Props = {
     query: string
@@ -14,7 +14,7 @@ export default function useGetEvents(props: Props) {
         staleTime: 1000 * 60 * 5,
         queryFn: async ({ pageParam = 1 }) => {
             const { data } = await axios.get("api/events" + props.query + "&page=" + pageParam)
-            return data as IEvent[]
+            return data as Event[]
         },
         onError(error) {
             console.error("Error when fetching events: ", error)

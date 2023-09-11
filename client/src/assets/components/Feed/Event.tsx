@@ -75,7 +75,7 @@ export default function Event(props: Props) {
                     
                     <div className="m-4">
                         {props.organization}
-                        <h2 className="text-black p-0">{props.title}</h2>
+                        <h3 className="text-black p-0">{props.title}</h3>
                         <div className="flex gap-2 pt-2 pb-2">
                             {distance_big_screen}
                             {date}
