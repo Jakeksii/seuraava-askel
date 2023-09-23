@@ -113,12 +113,8 @@ export const getFilters = async (req: Request, res: Response) => {
       },
     },
   ]).exec();
-  
-  
-  console.log(availableFilters);
-  
 
-  return res.status(200).json(availableFilters)
+  return res.status(200).json(availableFilters[0])
 }
 
 export const getEvents = async (req: Request, res: Response) => {
