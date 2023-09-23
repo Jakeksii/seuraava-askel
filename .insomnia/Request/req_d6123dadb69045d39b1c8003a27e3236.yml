@@ -1,0 +1,28 @@
+_id: req_d6123dadb69045d39b1c8003a27e3236
+type: Request
+parentId: wrk_8fdbdbe97d14420f842385b6d3e10b50
+modified: 1695461938430
+created: 1694950445062
+url: http://localhost:3001/api/dummydata/create
+name: CreateDummyData
+description: ""
+method: POST
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: insomnia/2023.5.8
+    id: pair_cac4c2636a304c76bc6f3c8bbf4e6fa3
+  - id: pair_588382a4fd9b4bb3b4602b4e3a4d5265
+    name: Authorization
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGVhMWM3ZDM4ZTczMTUzNWVlN2E4YjciLCJpYXQiOjE2OTU0NjE4OTYsImV4cCI6MTY5NTU0ODI5Nn0.oUjOIxETkDJKjaJyi-s1YNjdmMHBzVpAVqEriXIsIuw
+    description: ""
+authentication: {}
+metaSortKey: -1694950445062
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
