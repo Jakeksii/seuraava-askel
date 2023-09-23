@@ -16,6 +16,7 @@ import invitationRoutes from "./routes/invitation";
 import organizationRoutes from "./routes/organization";
 import organizationPageRoutes from "./routes/organizationPage";
 import userRoutes from "./routes/user";
+import { DummyDataRouter } from './schemas/dummy_data/Create';
 
 // CONFIGURATIONS
 dotenv.config();
@@ -23,7 +24,7 @@ const app = express();
 
 const limiter = rateLimit({
     windowMs: 5 * 60 * 1000, // 15 minutes
-    max: 50, // Limit each IP to 50 requests per `window` (here, per 15 minutes)
+    max: 150, // Limit each IP to 50 requests per `window` (here, per 15 minutes)
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
@@ -52,6 +53,8 @@ app.use(helmet(helmetOptions))
 app.use(morgan("common"))
 
 // ROUTES 
+app.use("/api/dummydata", DummyDataRouter)
+
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/organizations", organizationRoutes)

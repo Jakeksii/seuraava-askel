@@ -1,37 +1,41 @@
-import { 
-    Request as ExpressRequest, 
-    Response as ExpressResponse, 
-    NextFunction as ExpressNextFunction } from "express";
+import {
+    Request as ExpressRequest,
+    Response as ExpressResponse,
+    NextFunction as ExpressNextFunction
+} from "express";
 import { Types } from "mongoose";
 
 // EXPRESS
 export interface Request extends ExpressRequest {
     user: IUser
 }
-export interface Response extends ExpressResponse {}
-export interface NextFunction extends ExpressNextFunction {}
+export interface Response extends ExpressResponse { }
+export interface NextFunction extends ExpressNextFunction { }
+
+// Partial
+export interface IAddress {
+    street: string
+    city: string
+    state: string
+    zipcode: string
+    country: string
+    coordinates: [number, number]
+}
 
 // Event
 export interface IEvent {
-    _id: Types.ObjectId
+    _id?: Types.ObjectId
     start_date: Date
     end_date: Date
     title: string
     extract: string
     description?: string //HTML
     visible: boolean
-    address: {
-        street: string
-        city: string
-        state: string
-        zipcode: string
-        country: string
-        coordinates: [number, number]
-    }
+    address: IAddress
     image_id: string
     meta: {
         denomination?: string
-        type?: string
+        types?: string[]
         size?: string
         language?: string
         price?: number
@@ -44,47 +48,37 @@ export interface IEvent {
         organization_id: String,
         organization_name: String,
     }
-    created_by: string
-    updated_by: string
-    createdAt?: Date,
-    updatedAt?: Date,
+    created_by: Types.ObjectId
+    updated_by: Types.ObjectId
+    createdAt?: Date
+    updatedAt?: Date
     __v?: number
 }
 
 // User
 export interface IUser {
     _id: Types.ObjectId,
-	first_name: string,
-	last_name: string,
-	email: string,
+    first_name: string,
+    last_name: string,
+    email: string,
     password?: string,
-	verified?: boolean,
-	organizations: [{
+    verified?: boolean,
+    organizations: [{
         organization_id: Types.ObjectId
         organization_name: string
         role: string
         _id: Types.ObjectId
     }]
     createdAt?: Date,
-	updatedAt?: Date,
-	__v?: number,
+    updatedAt?: Date,
+    __v?: number,
 }
 
 // Organization
 export interface IOrganization {
     name: string,
     business_id: string,
-    address: {
-        street: string,
-        city: string,
-        state: string,
-        zipcode: string,
-        country: string,
-        coordinates: [
-            number,
-            number
-        ]
-    },
+    address: IAddress
     contact_info: {
         email: string,
         phone: string
@@ -96,7 +90,7 @@ export interface IOrganization {
         user_name: String,
         user_email: String,
         role: String
-        _id:Types.ObjectId
+        _id?: Types.ObjectId
     }],
     created_by: Types.ObjectId,
     updated_by: Types.ObjectId,
