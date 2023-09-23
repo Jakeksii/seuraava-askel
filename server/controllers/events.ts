@@ -74,57 +74,99 @@ export const createEvent = async (req: Request, res: Response) => {
   }
 }
 
+export const getFilters = async (req: Request, res: Response) => {
+  const filters = req.body.filters
+
+  const availableFilters = await Event.aggregate([
+    {
+      $match: filters, // Apply your initial filters
+    },
+    {
+      $facet: {
+        denomination: [
+          { $group: { _id:'$meta.denomination' } },
+          { $project: { _id: 0, value: '$_id' } },
+        ],
+        types: [
+          {
+            $unwind: '$meta.types' // Split the array into individual documents
+          },
+          { $group: { _id: '$meta.types' } },
+          { $project: { _id: 0, value: '$_id' } },
+        ],
+        size: [
+          { $group: { _id: '$meta.size' } },
+          { $project: { _id: 0, value: '$_id' } },
+        ],
+        language: [
+          { $group: { _id: '$meta.language' } },
+          { $project: { _id: 0, value: '$_id' } },
+        ],
+        price: [
+          { $group: { _id: '$meta.price' } },
+          { $project: { _id: 0, value: '$_id' } },
+        ],
+        online: [
+          { $group: { _id: '$meta.online' } },
+          { $project: { _id: 0, value: '$_id' } },
+        ],
+      },
+    },
+  ]).exec();
+  
+  
+  console.log(availableFilters);
+  
+
+  return res.status(200).json(availableFilters)
+}
+
 export const getEvents = async (req: Request, res: Response) => {
-  const search = req.query.s as string
   const type = req.query.type as string
+  const filters = req.body.filters
+  const search = req.body.search
 
   // PAGINATE
   const page = parseInt(req.query.page as string) || 1; // Current page number
-  const limit = parseInt(req.query.limit as string) || 2; // Number of items per page
+  const limit = parseInt(req.query.limit as string) || 3; // Number of items per page
   const skip = (page - 1) * limit
 
-  if (!type) return res.status(400).json({ message: "Query didn't contain a type" })
-  
   try {
 
     let events: IEvent[]
 
     switch (type) {
       case 'location':
-          const { latitude, longitude } = req.query;
-          const parsedLatitude = parseFloat(latitude as string) || 60.192059 // Default coords for Helsinki
-          const parsedLongitude = parseFloat(longitude as string) || 24.945831
-          events = await Event.aggregate([
-            {
-              $geoNear: {
-                near: {
-                  type: 'Point',
-                  coordinates: [parsedLongitude, parsedLatitude],
-                },
-                distanceField: 'distance',
-                spherical: true,
-                query: {}, // Optional additional query criteria
-                // Additional options if needed
+        const { latitude, longitude } = req.query;
+        const parsedLatitude = parseFloat(latitude as string) || 60.192059 // Default coords for Helsinki
+        const parsedLongitude = parseFloat(longitude as string) || 24.945831
+        events = await Event.aggregate([
+          {
+            $geoNear: {
+              near: {
+                type: 'Point',
+                coordinates: [parsedLongitude, parsedLatitude],
               },
+              distanceField: 'distance',
+              spherical: true,
             },
-            // Additional stages if needed
-          ]).skip(skip).limit(limit).exec();
-          break
-  
-      case 'city':
-          events = await Event.find({ 'address.city': search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
-          break
-
-      case 'organization':
-          events = await Event.find({ 'organization.organization_name': search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
-          break
-
-      case 'title':
-          events = await Event.find({ 'title': search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
-          break
+          },
+          {
+            $match: filters
+          },
+          {
+            $sort: {
+              distance: 1,  // Sort by distance in ascending order (closest first)
+              start_date: 1, // Then sort by start_date in ascending order
+            },
+          },
+          // Additional stages if needed
+        ]).skip(skip).limit(limit).exec();
+        break
 
       default:
-        return res.status(400).json({ message: "Query type " + type + " is not valid." })
+        events = await Event.find({ ...filters, $or: search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
+        break
     }
 
     const data = events.map((event: IEvent) => {
@@ -136,6 +178,7 @@ export const getEvents = async (req: Request, res: Response) => {
         extract: event.extract,
         address: event.address,
         image_id: event.image_id,
+        meta: event.meta,
         organization: event.organization,
         createdAt: event.createdAt,
         updatedAt: event.updatedAt
@@ -160,12 +203,11 @@ export const searchEvents = async (req: Request, res: Response) => {
   const cityFilter = { 'address.city': regex }
   const organizationFilter = { 'organization.organization_name': regex }
   const titleFilter = { title: regex }
-  console.warn("remember to use datefilter in searchEvents")
   try {
     const [distinctCities, distinctOrgNames, distinctTitles] = await Promise.all([
-      Event.find({ $and: [cityFilter, /*endDateFilter*/] }).distinct('address.city').exec(),
-      Event.find({ $and: [organizationFilter, /*endDateFilter*/] }).distinct('organization.organization_name').exec(),
-      Event.find({ $and: [titleFilter, /*endDateFilter*/] }).distinct('title').exec(),
+      Event.find({ $and: [cityFilter, endDateFilter] }).distinct('address.city').exec(),
+      Event.find({ $and: [organizationFilter, endDateFilter] }).distinct('organization.organization_name').exec(),
+      Event.find({ $and: [titleFilter, endDateFilter] }).distinct('title').exec(),
     ]);
     const cities = distinctCities.map((data) => ({ type: 'city', data: data }))
     const organizations = distinctOrgNames.map((data) => ({ type: 'organization', data: data }))

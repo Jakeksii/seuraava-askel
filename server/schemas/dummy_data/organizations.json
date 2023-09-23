@@ -8,12 +8,12 @@
             "zipcode": "00170",
             "country": "Suomi",
             "coordinates": [
-                60.169365,
-                24.947615
+                24.947615,
+                60.169365
             ]
         },
         "events": [
-            {"name": "Joulukonsertti tuomiokirkossa", "types": ["Konsertti", "Kokoperheen tapahtuma"], "extract": "Joulukonsertti tuomiokirkossa on musiikillinen tapahtuma, joka sopii koko perheelle. Nauti kauniista joululauluista ja tunnelmallisesta kirkkotilasta. Tule kokemaan joulun taika yhdessä läheistesi kanssa!"},
+            {"name": "Joulukonsertti tuomiokirkossa", "denomination":"0", "types": ["Konsertti", "Kokoperheen tapahtuma"], "extract": "Joulukonsertti tuomiokirkossa on musiikillinen tapahtuma, joka sopii koko perheelle. Nauti kauniista joululauluista ja tunnelmallisesta kirkkotilasta. Tule kokemaan joulun taika yhdessä läheistesi kanssa!"},
             {"name": "Nuorten raamattupiiri", "types": ["Raamattupiiri", "Nuoret"], "extract": "Nuorten raamattupiiri on tilaisuus, jossa voit tutustua Raamatun opetuksiin yhdessä samanhenkisten nuorten kanssa."},
             {"name": "Hyväntekeväisyyskirpputori", "types": ["Teemailta"], "extract": "Hyväntekeväisyyskirpputori on tapahtuma, jossa voit tehdä hyvää ostamalla käytettyjä tavaroita. Tule mukaan tukemaan hyväntekeväisyystyötä!"},
             {"name": "Perhepiknik puistossa", "types": ["Kokoperheen tapahtuma"], "extract": "Perhepiknik puistossa on rento tapahtuma, jossa voit viettää aikaa perheesi kanssa ulkoillen ja nauttien hyvästä seurasta."},
@@ -34,8 +34,8 @@
             "zipcode": "33100",
             "country": "Suomi",
             "coordinates": [
-                61.498564,
-                23.761579
+                23.761579,
+                61.498564
             ]
         },
         "events": [
@@ -60,8 +60,8 @@
             "zipcode": "20100",
             "country": "Suomi",
             "coordinates": [
-                60.448583,
-                22.273809
+                22.273809,
+                60.448583
             ]
         },
         "events": [
@@ -86,8 +86,8 @@
             "zipcode": "90100",
             "country": "Suomi",
             "coordinates": [
-                65.012271,
-                25.470188
+                25.470188,
+                65.012271
             ]
         },
         "events": [
@@ -112,8 +112,8 @@
             "zipcode": "40100",
             "country": "Suomi",
             "coordinates": [
-                62.241591,
-                25.750617
+                25.750617,
+                62.241591
             ]
         },
         "events": [
@@ -138,8 +138,8 @@
             "zipcode": "70100",
             "country": "Suomi",
             "coordinates": [
-                62.892666,
-                27.678315
+                27.678315,
+                62.892666
             ]
         },
         "events": [
@@ -168,8 +168,8 @@
             "zipcode": "28100",
             "country": "Suomi",
             "coordinates": [
-                61.484282,
-                21.796991
+                21.796991,
+                61.484282
             ]
         },
         "events": [
@@ -194,8 +194,8 @@
             "zipcode": "48100",
             "country": "Suomi",
             "coordinates": [
-                60.468056,
-                26.945998
+                26.945998,
+                60.468056
             ]
         },
         "events": [
@@ -220,8 +220,8 @@
             "zipcode": "65100",
             "country": "Suomi",
             "coordinates": [
-                63.096595,
-                21.614568
+                21.614568,
+                63.096595
             ]
         },
         "events": [
@@ -246,8 +246,8 @@
             "zipcode": "87100",
             "country": "Suomi",
             "coordinates": [
-                64.227154,
-                27.729376
+                27.729376,
+                64.227154
             ]
         },
         "events": [
@@ -272,8 +272,8 @@
             "zipcode": "80100",
             "country": "Suomi",
             "coordinates": [
-                62.601619,
-                29.760155
+                29.760155,
+                62.601619
             ]
         },
         "events": [
@@ -298,8 +298,8 @@
             "zipcode": "96100",
             "country": "Suomi",
             "coordinates": [
-                66.501235,
-                25.724011
+                25.724011,
+                66.501235
             ]
         },
         "events": [
@@ -325,8 +325,8 @@
             "zipcode": "53100",
             "country": "Suomi",
             "coordinates": [
-                61.062496,
-                28.100322
+                28.100322,
+                61.062496
             ]
         },
         "events": [
@@ -353,8 +353,8 @@
             "zipcode": "60100",
             "country": "Suomi",
             "coordinates": [
-                62.791456,
-                22.844821
+                22.844821,
+                62.791456
             ]
         },
         "events": [
@@ -379,8 +379,8 @@
             "zipcode": "94100",
             "country": "Suomi",
             "coordinates": [
-                65.734074,
-                24.546642
+                24.546642,
+                65.734074
             ]
         },
         "events": [

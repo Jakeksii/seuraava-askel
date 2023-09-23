@@ -49,7 +49,10 @@ export default new Schema<IEvent>({
         types: {type: [String], maxlength: 20},
         size: {type: String, maxlength: 20},
         language: {type: String, maxlength: 20},
-        price: {type: String, maxlength: 20},
+        price: {
+            value: Number,
+            currency: String
+        },
         online: {type: Boolean, default: false},
         speaker: {type: String, maxlength: 20},
         music: {type: String, maxlength: 20},

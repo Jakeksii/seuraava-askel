@@ -5,6 +5,7 @@ import { IEvent, IOrganization, Request, Response } from "../../types";
 import images from "./images.json";
 import meta from "./meta.json";
 import organization from "./organizations.json";
+import FI from "../../lang/FI.json";
 
 const router: Router = Router();
 router.post("/create", verifyToken as any, CreateDummyData as any)
