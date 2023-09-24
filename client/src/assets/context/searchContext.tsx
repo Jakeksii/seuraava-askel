@@ -1,8 +1,9 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { SEARCH_DEFAULT_QUERY } from "../constants";
+import { SearchQuery } from "../../types";
+import getSearchQuery from "../functions/getSearchQuery";
 
 interface Values {
-    query: string
+    query: SearchQuery
     search?: string
 }
 interface SearchContextType {
@@ -22,7 +23,7 @@ export function useSearchContext() {
 
 export function SearchContextProvider({ children }: { children: ReactNode }) {
     const [values, setValues] = useState({
-        query: SEARCH_DEFAULT_QUERY
+        query: getSearchQuery({type:"city", search:"Helsinki"})
     })
 
     const contextValue: SearchContextType = {

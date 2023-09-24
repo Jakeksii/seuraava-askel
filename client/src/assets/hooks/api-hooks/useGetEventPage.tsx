@@ -12,7 +12,7 @@ export default function useGetEventPage(props: Props) {
         queryKey: ['event_page', props._id],
         staleTime: 1000 * 60,
         queryFn: async () => {
-            const { data } = await axios.get('/api/events/single/' + props._id)
+            const { data } = await axios.get('/api/events/' + props._id)
             return data as EventPage
         },
         onError(error){

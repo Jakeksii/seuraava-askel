@@ -79,6 +79,27 @@ export type SearchResult = {
     typeof SEARCH_TYPE_TITLE
     data: string
 }
+export interface Filters { // KS Event Schema
+    "meta.denomination"?: 0 | 1 | 2
+    "meta.types"?: number[]
+    "meta.size"?: 0 | 1 | 2
+    "meta.language"?: 0 | 1 | 2
+    "meta.price.value"?: number
+    "meta.online"?: boolean
+}
+export interface SearchQuery {
+    location?: {
+        latitude: number,
+        longitude: number
+    }
+    search?: [
+        {"address.city": string},
+        {"organization.organization_name": string},
+        {"title": string}
+    ]
+    filters?: Filters
+}
+
 
 // Organization
 export interface OrganizationPage {

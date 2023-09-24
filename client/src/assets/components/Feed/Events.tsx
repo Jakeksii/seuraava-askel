@@ -1,6 +1,7 @@
 import { useIntersection } from "@mantine/hooks"
 import CircularProgress from "@mui/material/CircularProgress"
 import { useEffect, useRef } from "react"
+import { SearchQuery } from "../../../types"
 import { ERROR_DEFAULT } from "../../constants"
 import { useLocationContext } from "../../context/locationContext"
 import { useSearchContext } from "../../context/searchContext"
@@ -9,7 +10,7 @@ import useGetEvents from "../../hooks/api-hooks/useGetEvents"
 import Event from "./Event"
 
 type Props = {
-    query?: string
+    query?: SearchQuery
 }
 
 const loading = (

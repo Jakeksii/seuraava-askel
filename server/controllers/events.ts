@@ -84,7 +84,7 @@ export const getFilters = async (req: Request, res: Response) => {
     {
       $facet: {
         denomination: [
-          { $group: { _id:'$meta.denomination' } },
+          { $group: { _id: '$meta.denomination' } },
           { $project: { _id: 0, value: '$_id' } },
         ],
         types: [
@@ -118,9 +118,13 @@ export const getFilters = async (req: Request, res: Response) => {
 }
 
 export const getEvents = async (req: Request, res: Response) => {
-  const type = req.query.type as string
-  const filters = req.body.filters
-  const search = req.body.search
+  const location = req.body.location
+  const search = req.body.search as [
+    {"address.city": string},
+    {"organization.organization_name": string},
+    {"title": string}
+  ]
+  const filters = req.body.filters ?? {}
 
   // PAGINATE
   const page = parseInt(req.query.page as string) || 1; // Current page number
@@ -131,38 +135,32 @@ export const getEvents = async (req: Request, res: Response) => {
 
     let events: IEvent[]
 
-    switch (type) {
-      case 'location':
-        const { latitude, longitude } = req.query;
-        const parsedLatitude = parseFloat(latitude as string) || 60.192059 // Default coords for Helsinki
-        const parsedLongitude = parseFloat(longitude as string) || 24.945831
-        events = await Event.aggregate([
-          {
-            $geoNear: {
-              near: {
-                type: 'Point',
-                coordinates: [parsedLongitude, parsedLatitude],
-              },
-              distanceField: 'distance',
-              spherical: true,
+    if (location) {
+      const { latitude, longitude } = location;
+      events = await Event.aggregate([
+        {
+          $geoNear: {
+            near: {
+              type: 'Point',
+              coordinates: [latitude, longitude],
             },
+            distanceField: 'distance',
+            spherical: true,
           },
-          {
-            $match: filters
+        },
+        {
+          $match: filters
+        },
+        {
+          $sort: {
+            distance: 1,  // Sort by distance in ascending order (closest first)
+            start_date: 1, // Then sort by start_date in ascending order
           },
-          {
-            $sort: {
-              distance: 1,  // Sort by distance in ascending order (closest first)
-              start_date: 1, // Then sort by start_date in ascending order
-            },
-          },
-          // Additional stages if needed
-        ]).skip(skip).limit(limit).exec();
-        break
-
-      default:
-        events = await Event.find({ ...filters, $or: search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
-        break
+        },
+        // Additional stages if needed
+      ]).skip(skip).limit(limit).exec();
+    } else {
+      events = await Event.find({ ...filters, $or: search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
     }
 
     const data = events.map((event: IEvent) => {
@@ -190,12 +188,12 @@ export const getEvents = async (req: Request, res: Response) => {
 }
 
 export const searchEvents = async (req: Request, res: Response) => {
-  const search = req.query.search as string;
+  const search = req.query.s as string;
   const searchTerm = search.toLowerCase();
   if (searchTerm.length < 3) return res.status(400).json({ message: "search term needs to be atleast 3 char long" })
 
   const regex = { $regex: searchTerm, $options: 'i' };
-  const endDateFilter = { endDate: { $gte: new Date() } }
+  const endDateFilter = { end_date: { $gte: new Date() } }
   const cityFilter = { 'address.city': regex }
   const organizationFilter = { 'organization.organization_name': regex }
   const titleFilter = { title: regex }

@@ -3,9 +3,9 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import NotListedLocationIcon from '@mui/icons-material/NotListedLocation';
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import { SEARCH_TYPE_LOCATION } from '../../constants';
 import { useLocationContext } from "../../context/locationContext";
 import { useSearchContext } from '../../context/searchContext';
+import getSearchQuery from '../../functions/getSearchQuery';
 import { WarningAlert } from "../Alerts";
 import { LocationAccessDeniedDialog } from "../Dialogs";
 
@@ -31,10 +31,7 @@ export default function LocationButton() {
         if (!mounted) return setMounted(true)
 
         if (locationContext.values.locationOn) {
-            const query =
-                '?latitude=' + locationContext.values.coords.latitude +
-                '&longitude=' + locationContext.values.coords.longitude +
-                '&type=' + SEARCH_TYPE_LOCATION
+            const query = getSearchQuery({type:"location", location:{ latitude:locationContext.values.coords.latitude, longitude:locationContext.values.coords.longitude }})
             searchContext.setValues({
                 ...searchContext.values,
                 query: query,

@@ -7,6 +7,7 @@ import Header from "../assets/components/Header"
 import { PageImage } from "../assets/components/PageImage"
 import useGetOrganizationPage from "../assets/hooks/api-hooks/useGetOrganizationPage"
 import NotFound from "./NotFound"
+import getSearchQuery from "../assets/functions/getSearchQuery"
 
 const contactInfo = (phone: string, email: string) => {
     return (
@@ -34,7 +35,9 @@ export default function OrganizationPage() {
 
     const mapsLink = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURI(`${data.organization.address.street} ${data.organization.address.zipcode} ${data.organization.address.city} ${data.organization.address.state} ${data.organization.address.country}`)
     const contactInfoElement = contactInfo(data.organization.contact_info.phone, data.organization.contact_info.email)
-    const query = "?type=organization&s=" + decodeURI(organization_name.replace(/-/g, ' '))
+
+    const query = getSearchQuery({type:"organization", search:organization_name.replace(/-/g, ' ')})
+    
     return (
         <>
             <Header />

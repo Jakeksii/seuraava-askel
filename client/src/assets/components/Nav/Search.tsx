@@ -8,6 +8,7 @@ import { useSearchContext } from '../../context/searchContext';
 import { getHighlightedText, getPrefix } from '../../functions/searchResultFunctions';
 import useGetSearchResults from '../../hooks/api-hooks/useGetSearchResults';
 import Loading from '../../partials/Loading';
+import getSearchQuery from '../../functions/getSearchQuery';
 
 interface Props {
     open: boolean
@@ -54,7 +55,12 @@ export default function Search(props: Props) {
     // SearchResults
     const onSearchResultClick = (data: SearchResult) => {
         // Handle search
-        const query = '?s=' + data.data + '&type=' + data.type
+        let query
+        switch(data.type){
+            case "city": query = getSearchQuery({type:"city", search:data.data}); break
+            case "organization": query = getSearchQuery({type:"organization", search:data.data}); break
+            case "title": query = getSearchQuery({type:"title", search:data.data}); break
+        }
         searchContext.setValues({
             ...searchContext.values,
             query: query,
