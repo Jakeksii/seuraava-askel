@@ -1,9 +1,18 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { SEARCH_DEFAULT_QUERY } from "../constants";
 
+interface Filters {
+    "meta.size"?: string
+    "meta.price"?: number,
+    "meta.online"?: boolean,
+    "meta.language"?: string,
+    "meta.types"?: string,
+    "address.coordinates"?: number
+}
 interface Values {
     query: string
     search?: string
+    filters?: Filters
 }
 interface SearchContextType {
     values: Values
