@@ -19,31 +19,6 @@ export default function Filters() {
     //const {values, setValues} = useSearchContext()
     const [filters, setFilters] = useState<Filters>({})
 
-    // submit function
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-
-
-        // try {
-        //     const response = await fetch("/", {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(data),
-        //     });
-
-        //     if (response.ok) {
-        //         console.log("data sent")
-        //     } else {
-        //         console.log("Didnt send nothing")
-        //     }
-        // } catch (error) {
-        //     console.log('Error:', error);
-        // }
-
-    }
-
     // Filter functions
 
     // Tapahtumatyyppi
@@ -92,7 +67,7 @@ export default function Filters() {
       };
 
     // Maksullisuus
-    const pricevalue = (_: any, value:number) => {
+    const pricevalue = (value:number) => {
         
         setFilters({
             ...filters, 
@@ -125,7 +100,7 @@ export default function Filters() {
 
     return (
         <section className="h-full p-5 flex flex-col justify-center gap-2">
-            <div className="shadow-2xl shadow-zinc-900/60 rounded-2xl" onSubmit={(e) => handleSubmit}>
+            <div className="shadow-2xl shadow-zinc-900/60 rounded-2xl">
                 <Button sx={{
                     borderRadius: '10px'
                 }} color='info' variant='contained' fullWidth><h4>Filtteri</h4></Button>
@@ -145,7 +120,7 @@ export default function Filters() {
 
                 <h1 className="bg-blue-800">{filters["meta.size"]}</h1>
                 <Slider
-                onChange={(e) => sizeValue}
+                onChange={(e) => sizeValue(e)}
                 aria-label="Event-Size"
                 defaultValue={0}
                 
@@ -181,7 +156,7 @@ export default function Filters() {
                 <Slider
                     aria-label="Price"
                     defaultValue={30}
-                    onChange={(_, v) => pricevalue}
+                    onChange={(_, v) => pricevalue(v as number)}
                     valueLabelDisplay="auto"
                     step={10}
                     marks={true}
