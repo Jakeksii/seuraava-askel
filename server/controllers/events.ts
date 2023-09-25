@@ -142,7 +142,7 @@ export const getEvents = async (req: Request, res: Response) => {
           $geoNear: {
             near: {
               type: 'Point',
-              coordinates: [latitude, longitude],
+              coordinates: [longitude, latitude],
             },
             distanceField: 'distance',
             spherical: true,
