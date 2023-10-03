@@ -6,12 +6,15 @@ import ThemeProvider from './Theme'
 import MainNav from './assets/components/MainNav'
 import { useAppContext } from './assets/context/appContext'
 
+
 // Pages
 import Login from './pages/Login'
 const Register = lazy(() => import('./pages/Register'))
 const ChooseOrganization = lazy(() => import('./pages/ChooseOrganization'))
 const CreateOrganization = lazy(() => import('./pages/CreateOrganization'))
 const Dasboard = lazy(() => import('./pages/Dashboard'))
+const CreateEvent = lazy(() => import('./pages/CreateEvent'))
+// Banjo added ^
 const Events = lazy(() => import('./pages/Events'))
 const Event = lazy(() => import('./pages/Event'))
 const Organization = lazy(() => import('./pages/Organization'))
@@ -40,6 +43,8 @@ function App() {
                 <Route path='/create' element={<Suspense fallback={loading}><CreateOrganization /></Suspense>} />
                 <Route path='/:organization_id' element={<Suspense fallback={loading}><Dasboard /></Suspense>} />
                 <Route path='/:organization_id/events' element={<Suspense fallback={loading}><Events /></Suspense>} />
+                <Route path='/:organization_id/events/create-event' element={<Suspense fallback={loading}><CreateEvent /></Suspense>} />
+                {/* Banjo added ^ */}
                 <Route path='/:organization_id/events/:event_id' element={<Suspense fallback={loading}><Event /></Suspense>} />
                 <Route path='/:organization_id/organization' element={<Suspense fallback={loading}><Organization /></Suspense>} />
                 <Route path='/:organization_id/analytics' element={<Suspense fallback={loading}><Analytics /></Suspense>} />

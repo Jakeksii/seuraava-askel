@@ -74,7 +74,7 @@ const DragDropFiles: React.FC = () => {
 
   return (
     <>
-    <h3>Lataa seurakunnasta kuva</h3>
+
       <div
         className={`dropzone ${isDragging ? 'drag-hover' : ''}`}
         onDragOver={handleDragOver}

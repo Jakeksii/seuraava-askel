@@ -1,18 +1,30 @@
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-
-
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateRange } from '@mui/x-date-pickers-pro';
+import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import Container from '@mui/material/Container';
-
 import TextField from '@mui/material/TextField';
+
+
 import Header from "../assets/components/Header";
 import { useAppContext } from '../assets/context/appContext';
 import DragDropFiles from '../assets/components/DragDropFiles';
 
+import * as React from 'react';
 
-export default function CreateOrganization() {
 
+
+export default function CreateEvent() {
+
+    const [value, setValue] = React.useState<DateRange<Dayjs>>([
+        dayjs('2022-04-17'),
+        dayjs('2022-04-21'),
+      ]);
 
     const appContext = useAppContext()
 
@@ -37,9 +49,9 @@ export default function CreateOrganization() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="name"
-                                label="Seurakunnan nimi"
-                                name="name"
+                                id="title"
+                                label="Tapahtuman nimi"
+                                name="title"
                                 autoFocus
                             />
 
@@ -48,25 +60,24 @@ export default function CreateOrganization() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                name="nomination"
-                                label="Kirkkokunta"
-                                type="text"
-                                id="nomination"
-                                
-                            />
-
-                            <TextField
-                                color='info'
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Sähköposti"
-                                type='email'
-                                name="email"
-                                
+                                id="description"
+                                label="Tapahtuman kuvaus"
+                                name="description"
                                 autoFocus
                             />
+
+                            {/* https://mui.com/x/react-date-pickers/date-range-picker/#uncontrolled-vs-controlled-value */}
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer components={['DateRangePicker', 'DateRangePicker']}>
+                                    <DemoItem label="Uncontrolled picker" component="DateRangePicker">
+                                    <DateRangePicker
+                                        defaultValue={[dayjs('2022-04-17'), dayjs('2022-04-21')]}
+                                    />
+                                    </DemoItem>
+
+                                </DemoContainer>
+                                </LocalizationProvider>
+
                             <TextField
                                 color='info'
                                 margin="normal"
@@ -75,8 +86,7 @@ export default function CreateOrganization() {
                                 name="phone-number"
                                 label="Puhelin numero"
                                 type="text"
-                                id="phone-number"
-                                
+                                id="phone-number"             
                             />
 
 
@@ -92,6 +102,7 @@ export default function CreateOrganization() {
                                 
                             />
 
+                            <h2> Osoite </h2>
                             <TextField
                                 color='info'
                                 margin="normal"
@@ -160,15 +171,37 @@ export default function CreateOrganization() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                name="business-id"
-                                label="Y-tunnus"
+                                name="speaker"
+                                label="Puhuja"
                                 type="text"
-                                id="business-id"
+                                id="speaker"
                                 
                             />
 
+                            <TextField
+                                color='info'
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="music"
+                                label="Ylistys"
+                                type="text"
+                                id="music"    
+                            />
+
+                            <TextField
+                                color='info'
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="page-url"
+                                label="Linkki"
+                                type="url"
+                                id="page-url"    
+                            />
+
                             <div className='drag-container'>
-                                <h3>Lataa kuva seurakunnasta</h3>
+                                <h3>Lataa kuva tapahtumasta</h3>
                                 <DragDropFiles />
                             </div>
                            
@@ -181,7 +214,7 @@ export default function CreateOrganization() {
                                 
                                 sx={{ mt: 3, mb: 2 }}
                             >
-                                Luo seurakunta
+                                Luo tapahtuma
                             </Button>
                             
                         </Box>

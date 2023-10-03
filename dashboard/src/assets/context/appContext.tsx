@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { Organization, User } from "../types";
 
+
 interface AppContextType {
     user?: User
     setUser: (user: User | undefined) => void
