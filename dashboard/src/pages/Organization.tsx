@@ -10,6 +10,9 @@ export default function Organization() {
 
     const organization = appContext.user?.user.organizations?.[0]
 
+    // tänne hae kaikki organisaatiot, joissa on käyttäjän id
+
+
     return (
         <>
         <Header />

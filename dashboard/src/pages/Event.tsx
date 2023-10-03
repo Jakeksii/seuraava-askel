@@ -1,6 +1,22 @@
 import Header from "../assets/components/Header";
 
-export default function Event() {
+
+type Props = {
+    imageID: string
+    title: string
+    extract: string
+    organization: string
+    distance: number | null
+    startDate: Date
+    endDate: Date
+    _id: string
+}
+
+
+export default function Event(props: Props) {
+
+    // tänne hae kaikki Eventit joissa on organisaation id
+   
     return (
         <>
         <Header />
