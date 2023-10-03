@@ -25,6 +25,8 @@ function getErrorMessage(error: AxiosError): string {
             return ERROR_DEFAULT
     }
 }
+
+
 export default function Login() {
     const appContext = useAppContext()
     const navigate = useNavigate()
