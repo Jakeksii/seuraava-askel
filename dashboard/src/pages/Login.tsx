@@ -47,6 +47,7 @@ export default function Login() {
                     appContext.setUser(data)
                     sessionStorage.setItem('user_data', JSON.stringify(data))
                     location.state?.from ? navigate(location.state.from, { replace: true }) : navigate('/dashboard', { replace: true })
+                    console.log(data)
                 },
             }
         )

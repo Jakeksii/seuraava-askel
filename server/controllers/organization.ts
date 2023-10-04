@@ -78,6 +78,19 @@ export const getOrganization = async (req:Request, res:Response):Promise<Respons
     }
 }
 
+// GET all organizations
+export const getAllOrganizations = async (req:Request, res:Response):Promise<Response> => {
+    try {
+        const organizations = await Organization.find()
+        console.log('Fetched organizations:', organizations);
+  
+        return res.status(200).json(organizations)
+
+    } catch (error:any) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
 // GET detailed organizatio. requires auth
 export const getDetailedOrganization = async (req:Request, res:Response):Promise<Response> => {
     try {
