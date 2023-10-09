@@ -13,16 +13,16 @@
             ]
         },
         "events": [
-            {"name": "Joulukonsertti tuomiokirkossa", "denomination":"0", "types": ["Konsertti", "Kokoperheen tapahtuma"], "extract": "Joulukonsertti tuomiokirkossa on musiikillinen tapahtuma, joka sopii koko perheelle. Nauti kauniista joululauluista ja tunnelmallisesta kirkkotilasta. Tule kokemaan joulun taika yhdessä läheistesi kanssa!"},
-            {"name": "Nuorten raamattupiiri", "types": ["Raamattupiiri", "Nuoret"], "extract": "Nuorten raamattupiiri on tilaisuus, jossa voit tutustua Raamatun opetuksiin yhdessä samanhenkisten nuorten kanssa."},
-            {"name": "Hyväntekeväisyyskirpputori", "types": ["Teemailta"], "extract": "Hyväntekeväisyyskirpputori on tapahtuma, jossa voit tehdä hyvää ostamalla käytettyjä tavaroita. Tule mukaan tukemaan hyväntekeväisyystyötä!"},
-            {"name": "Perhepiknik puistossa", "types": ["Kokoperheen tapahtuma"], "extract": "Perhepiknik puistossa on rento tapahtuma, jossa voit viettää aikaa perheesi kanssa ulkoillen ja nauttien hyvästä seurasta."},
-            {"name": "Luento: Uskonnon merkitys nykymaailmassa", "types": ["Opetus- ja koulutustapahtuma"], "extract": "Luento: Uskonnon merkitys nykymaailmassa on tilaisuus, jossa voit syventää tietämystäsi uskonnon roolista nykypäivän yhteiskunnassa."},
-            {"name": "Diakoniapäivä vanhainkodissa", "types": ["Jumalanpalvelus", "Seniorit"], "extract": "Diakoniapäivä vanhainkodissa on päivä, jolloin voit osallistua diakoniatyöhön ja tuoda iloa vanhusten arkeen."},
-            {"name": "Kirkkokuoro harjoitusilta", "types": ["Musiikki- ja laulutapahtuma"], "extract": "Kirkkokuoro harjoitusilta on tilaisuus, jossa voit laulaa yhdessä muiden kanssa ja harjoitella kirkkomusiikkia."},
-            {"name": "Yhteisöllinen aamupalapalaveri", "types": ["Teemailta"], "extract": "Yhteisöllinen aamupalapalaveri on tilaisuus, jossa voit aloittaa päivän yhdessä muiden seurakuntalaisten kanssa ja keskustella ajankohtaisista asioista."},
-            {"name": "Nuorten leiri saaristossa", "types": ["Nuoret"], "extract": "Nuorten leiri saaristossa on seikkailu täynnä hauskaa ohjelmaa ja uusia ystäviä. Tule mukaan viettämään unohtumatonta aikaa nuorten seurassa!"},
-            {"name": "Rippikoululaisten retkipäivä", "types": ["Nuoret", "Opetus- ja koulutustapahtuma"], "extract": "Rippikoululaisten retkipäivä on päivä, jolloin voit tutustua uusiin paikkoihin ja oppia uutta yhdessä muiden rippikoululaisten kanssa."}
+            {"name": "Joulukonsertti tuomiokirkossa", "denomination":0, "types": [0, 1], "extract": "Joulukonsertti tuomiokirkossa on musiikillinen tapahtuma, joka sopii koko perheelle. Nauti kauniista joululauluista ja tunnelmallisesta kirkkotilasta. Tule kokemaan joulun taika yhdessä läheistesi kanssa!"},
+            {"name": "Nuorten raamattupiiri", "types": [2, 3], "extract": "Nuorten raamattupiiri on tilaisuus, jossa voit tutustua Raamatun opetuksiin yhdessä samanhenkisten nuorten kanssa."},
+            {"name": "Hyväntekeväisyyskirpputori", "types": [4], "extract": "Hyväntekeväisyyskirpputori on tapahtuma, jossa voit tehdä hyvää ostamalla käytettyjä tavaroita. Tule mukaan tukemaan hyväntekeväisyystyötä!"},
+            {"name": "Perhepiknik puistossa", "types": [1], "extract": "Perhepiknik puistossa on rento tapahtuma, jossa voit viettää aikaa perheesi kanssa ulkoillen ja nauttien hyvästä seurasta."},
+            {"name": "Luento: Uskonnon merkitys nykymaailmassa", "types": [5], "extract": "Luento: Uskonnon merkitys nykymaailmassa on tilaisuus, jossa voit syventää tietämystäsi uskonnon roolista nykypäivän yhteiskunnassa."},
+            {"name": "Diakoniapäivä vanhainkodissa", "types": [6, 7], "extract": "Diakoniapäivä vanhainkodissa on päivä, jolloin voit osallistua diakoniatyöhön ja tuoda iloa vanhusten arkeen."},
+            {"name": "Kirkkokuoro harjoitusilta", "types": [8], "extract": "Kirkkokuoro harjoitusilta on tilaisuus, jossa voit laulaa yhdessä muiden kanssa ja harjoitella kirkkomusiikkia."},
+            {"name": "Yhteisöllinen aamupalapalaveri", "types": [4], "extract": "Yhteisöllinen aamupalapalaveri on tilaisuus, jossa voit aloittaa päivän yhdessä muiden seurakuntalaisten kanssa ja keskustella ajankohtaisista asioista."},
+            {"name": "Nuorten leiri saaristossa", "types": [3], "extract": "Nuorten leiri saaristossa on seikkailu täynnä hauskaa ohjelmaa ja uusia ystäviä. Tule mukaan viettämään unohtumatonta aikaa nuorten seurassa!"},
+            {"name": "Rippikoululaisten retkipäivä", "types": [3, 5], "extract": "Rippikoululaisten retkipäivä on päivä, jolloin voit tutustua uusiin paikkoihin ja oppia uutta yhdessä muiden rippikoululaisten kanssa."}
         ]
     },
     {
@@ -39,16 +39,16 @@
             ]
         },
         "events": [
-            {"name": "Kesäinen ulkoilumessu", "types": ["Jumalanpalvelus"], "extract": "Kesäinen ulkoilumessu on ulkona järjestettävä jumalanpalvelus, jossa voit nauttia luonnon kauneudesta samalla kun osallistut hengelliseen tilaisuuteen."},
-            {"name": "Nuorten musiikki- ja laulupaja", "types": ["Musiikki- ja laulutapahtuma", "Nuoret"], "extract": "Nuorten musiikki- ja laulupaja on tilaisuus, jossa voit kehittää musiikillisia taitojasi yhdessä samanhenkisten nuorten kanssa."},
-            {"name": "Vaatekeräys vähäosaisille", "types": ["Teemailta"], "extract": "Vaatekeräys vähäosaisille on tapahtuma, jossa voit lahjoittaa vaatteita ja auttaa niitä, jotka tarvitsevat apua."},
-            {"name": "Seniorien virkistyspäivä", "types": ["Kokoperheen tapahtuma", "Seniorit"], "extract": "Seniorien virkistyspäivä on päivä, jolloin voit viettää aikaa muiden ikäihmisten seurassa ja osallistua erilaisiin virkistäviin aktiviteetteihin."},
-            {"name": "Luontoretki lähimaastoon", "types": ["Kokoperheen tapahtuma"], "extract": "Luontoretki lähimaastoon on retki, jossa voit tutustua lähialueen luontoon ja nauttia ulkoilusta yhdessä perheesi kanssa."},
-            {"name": "Taidekurssi kirkon taidegalleriassa", "types": ["Teemailta"], "extract": "Taidekurssi kirkon taidegalleriassa on kurssi, jossa voit oppia erilaisia taiteen tekniikoita ja ilmaisutapoja kirkon taidegalleriassa."},
-            {"name": "Raamatun lukupiiri", "types": ["Raamattupiiri"], "extract": "Raamatun lukupiiri on tilaisuus, jossa voit tutkia Raamatun tekstejä yhdessä muiden kiinnostuneiden kanssa."},
-            {"name": "Lapsikuorojen konsertti", "types": ["Konsertti"], "extract": "Lapsikuorojen konsertti on musiikillinen tapahtuma, jossa voit kuulla kauniita lauluja esitettynä lapsikuorojen toimesta."},
-            {"name": "Perheleiri metsän siimeksessä", "types": ["Kokoperheen tapahtuma"], "extract": "Perheleiri metsän siimeksessä on leiri, jossa voit viettää aikaa perheesi kanssa luonnon keskellä ja osallistua erilaisiin yhteisiin aktiviteetteihin."},
-            {"name": "Ehtoolliskirkko viikottain", "types": ["Jumalanpalvelus"], "extract": "Ehtoolliskirkko viikottain on säännöllisesti järjestettävä jumalanpalvelus, jossa voit osallistua ehtoollisen viettoon ja hiljentyä hengellisen tilaisuuden äärellä."}
+            {"name": "Kesäinen ulkoilumessu", "types": [6], "extract": "Kesäinen ulkoilumessu on ulkona järjestettävä jumalanpalvelus, jossa voit nauttia luonnon kauneudesta samalla kun osallistut hengelliseen tilaisuuteen."},
+            {"name": "Nuorten musiikki- ja laulupaja", "types": [8, 3], "extract": "Nuorten musiikki- ja laulupaja on tilaisuus, jossa voit kehittää musiikillisia taitojasi yhdessä samanhenkisten nuorten kanssa."},
+            {"name": "Vaatekeräys vähäosaisille", "types": [4], "extract": "Vaatekeräys vähäosaisille on tapahtuma, jossa voit lahjoittaa vaatteita ja auttaa niitä, jotka tarvitsevat apua."},
+            {"name": "Seniorien virkistyspäivä", "types": [1, 7], "extract": "Seniorien virkistyspäivä on päivä, jolloin voit viettää aikaa muiden ikäihmisten seurassa ja osallistua erilaisiin virkistäviin aktiviteetteihin."},
+            {"name": "Luontoretki lähimaastoon", "types": [1], "extract": "Luontoretki lähimaastoon on retki, jossa voit tutustua lähialueen luontoon ja nauttia ulkoilusta yhdessä perheesi kanssa."},
+            {"name": "Taidekurssi kirkon taidegalleriassa", "types": [4], "extract": "Taidekurssi kirkon taidegalleriassa on kurssi, jossa voit oppia erilaisia taiteen tekniikoita ja ilmaisutapoja kirkon taidegalleriassa."},
+            {"name": "Raamatun lukupiiri", "types": [2], "extract": "Raamatun lukupiiri on tilaisuus, jossa voit tutkia Raamatun tekstejä yhdessä muiden kiinnostuneiden kanssa."},
+            {"name": "Lapsikuorojen konsertti", "types": [0], "extract": "Lapsikuorojen konsertti on musiikillinen tapahtuma, jossa voit kuulla kauniita lauluja esitettynä lapsikuorojen toimesta."},
+            {"name": "Perheleiri metsän siimeksessä", "types": [1], "extract": "Perheleiri metsän siimeksessä on leiri, jossa voit viettää aikaa perheesi kanssa luonnon keskellä ja osallistua erilaisiin yhteisiin aktiviteetteihin."},
+            {"name": "Ehtoolliskirkko viikottain", "types": [6], "extract": "Ehtoolliskirkko viikottain on säännöllisesti järjestettävä jumalanpalvelus, jossa voit osallistua ehtoollisen viettoon ja hiljentyä hengellisen tilaisuuden äärellä."}
         ]
     },
     {
@@ -65,16 +65,16 @@
             ]
         },
         "events": [
-            {"name": "Käsityöpiiri seurakuntasalissa", "types": ["Teemailta"], "extract": "Käsityöpiiri seurakuntasalissa on tilaisuus, jossa voit harrastaa käsityötä yhdessä muiden samanhenkisten ihmisten kanssa."},
-            {"name": "Konsertti Mikaelin kirkossa", "types": ["Konsertti"], "extract": "Konsertti Mikaelin kirkossa on musiikillinen tapahtuma, jossa voit nauttia kauniista musiikista ja tunnelmallisesta kirkkotilasta."},
-            {"name": "Ystävänpäivän juhla seniorikeskuksessa", "types": ["Kokoperheen tapahtuma", "Seniorit"], "extract": "Ystävänpäivän juhla seniorikeskuksessa on tapahtuma, jossa voit viettää aikaa läheistesi kanssa ja juhlistaa ystävyyttä seniorikeskuksen mukavassa ilmapiirissä."},
-            {"name": "Raamattuluento: Jeesuksen opetukset", "types": ["Raamattupiiri", "Opetus- ja koulutustapahtuma"], "extract": "Raamattuluento: Jeesuksen opetukset on tilaisuus, jossa voit syventää tietämystäsi Raamatun opetuksista ja keskustella niistä yhdessä muiden kiinnostuneiden kanssa."},
-            {"name": "Nuorten yhteisöilta", "types": ["Nuoret"], "extract": "Nuorten yhteisöilta on tilaisuus, jossa voit viettää aikaa samanikäisten nuorten kanssa ja osallistua erilaisiin yhteisöllisiin aktiviteetteihin."},
-            {"name": "Ekoystävällinen kirpputori", "types": ["Teemailta"], "extract": "Ekoystävällinen kirpputori on tapahtuma, jossa voit ostaa ja myydä käytettyjä tavaroita ekologisella tavalla. Tule mukaan edistämään kestävää kulutusta!"},
-            {"name": "Diakoninen ruokajakelu", "types": ["Jumalanpalvelus"], "extract": "Diakoninen ruokajakelu on tilaisuus, jossa voit auttaa jakamalla ruokaa niille, jotka sitä tarvitsevat. Tule mukaan tekemään hyvää!"},
-            {"name": "Kirkkopäiväkoti lasten taidepaja", "types": ["Kokoperheen tapahtuma"], "extract": "Kirkkopäiväkoti lasten taidepaja on taidepaja, jossa lapset voivat ilmaista itseään erilaisten taiteen tekniikoiden avulla."},
-            {"name": "Vanhusten tukiryhmä", "types": ["Teemailta", "Seniorit"], "extract": "Vanhusten tukiryhmä on ryhmä, jossa voit jakaa kokemuksia ja tukea toisia samassa elämäntilanteessa olevia vanhuksia."},
-            {"name": "Retki saaristoon", "types": ["Kokoperheen tapahtuma"], "extract": "Retki saaristoon on retki, jossa voit tutustua lähisaaristoon ja nauttia merellisestä maisemasta yhdessä perheesi kanssa."}
+            {"name": "Käsityöpiiri seurakuntasalissa", "types": [4], "extract": "Käsityöpiiri seurakuntasalissa on tilaisuus, jossa voit harrastaa käsityötä yhdessä muiden samanhenkisten ihmisten kanssa."},
+            {"name": "Konsertti Mikaelin kirkossa", "types": [0], "extract": "Konsertti Mikaelin kirkossa on musiikillinen tapahtuma, jossa voit nauttia kauniista musiikista ja tunnelmallisesta kirkkotilasta."},
+            {"name": "Ystävänpäivän juhla seniorikeskuksessa", "types": [1, 7], "extract": "Ystävänpäivän juhla seniorikeskuksessa on tapahtuma, jossa voit viettää aikaa läheistesi kanssa ja juhlistaa ystävyyttä seniorikeskuksen mukavassa ilmapiirissä."},
+            {"name": "Raamattuluento: Jeesuksen opetukset", "types": [2, 5], "extract": "Raamattuluento: Jeesuksen opetukset on tilaisuus, jossa voit syventää tietämystäsi Raamatun opetuksista ja keskustella niistä yhdessä muiden kiinnostuneiden kanssa."},
+            {"name": "Nuorten yhteisöilta", "types": [3], "extract": "Nuorten yhteisöilta on tilaisuus, jossa voit viettää aikaa samanikäisten nuorten kanssa ja osallistua erilaisiin yhteisöllisiin aktiviteetteihin."},
+            {"name": "Ekoystävällinen kirpputori", "types": [4], "extract": "Ekoystävällinen kirpputori on tapahtuma, jossa voit ostaa ja myydä käytettyjä tavaroita ekologisella tavalla. Tule mukaan edistämään kestävää kulutusta!"},
+            {"name": "Diakoninen ruokajakelu", "types": [6], "extract": "Diakoninen ruokajakelu on tilaisuus, jossa voit auttaa jakamalla ruokaa niille, jotka sitä tarvitsevat. Tule mukaan tekemään hyvää!"},
+            {"name": "Kirkkopäiväkoti lasten taidepaja", "types": [1], "extract": "Kirkkopäiväkoti lasten taidepaja on taidepaja, jossa lapset voivat ilmaista itseään erilaisten taiteen tekniikoiden avulla."},
+            {"name": "Vanhusten tukiryhmä", "types": [4, 7], "extract": "Vanhusten tukiryhmä on ryhmä, jossa voit jakaa kokemuksia ja tukea toisia samassa elämäntilanteessa olevia vanhuksia."},
+            {"name": "Retki saaristoon", "types": [1], "extract": "Retki saaristoon on retki, jossa voit tutustua lähisaaristoon ja nauttia merellisestä maisemasta yhdessä perheesi kanssa."}
         ]
     },
     {
@@ -91,16 +91,16 @@
             ]
         },
         "events": [
-            {"name": "Konsertti tuomiokirkossa", "types": ["Konsertti"], "extract": "Konsertti tuomiokirkossa on musiikillinen tapahtuma, jossa voit nauttia kauniista musiikista ja tunnelmallisesta kirkkotilasta."},
-            {"name": "Diakoninen neuvontapäivä", "types": ["Jumalanpalvelus"], "extract": "Diakoninen neuvontapäivä on tilaisuus, jossa voit saada neuvontaa ja tukea diakoniatyön asiantuntijoilta."},
-            {"name": "Uskontodialogi-keskusteluilta", "types": ["Teemailta"], "extract": "Uskontodialogi-keskusteluilta on tilaisuus, jossa voit keskustella eri uskontojen edustajien kanssa ja oppia eri uskontojen näkökulmia."},
-            {"name": "Perheleiri rannalla", "types": ["Kokoperheen tapahtuma", "Lapset"], "extract": "Perheleiri rannalla on leiri, jossa voit viettää aikaa perheesi kanssa rannalla ja osallistua erilaisiin yhteisiin aktiviteetteihin."},
-            {"name": "Luento: Kirkkohistoriaa", "types": ["Opetus- ja koulutustapahtuma"], "extract": "Luento: Kirkkohistoriaa on tilaisuus, jossa voit oppia lisää kirkon historiasta ja sen merkityksestä."},
-            {"name": "Nuorten liikuntatapahtuma", "types": ["Nuoret"], "extract": "Nuorten liikuntatapahtuma on tapahtuma, jossa voit osallistua erilaisiin liikunnallisiin aktiviteetteihin yhdessä samanikäisten nuorten kanssa."},
-            {"name": "Yhteisöllinen rukousilta", "types": ["Rukouskokous"], "extract": "Yhteisöllinen rukousilta on tilaisuus, jossa voit rukoilla yhdessä muiden seurakuntalaisten kanssa ja jakaa hengellisiä kokemuksia."},
-            {"name": "Seniorien lauluryhmä", "types": ["Musiikki- ja laulutapahtuma", "Seniorit"], "extract": "Seniorien lauluryhmä on ryhmä, jossa voit laulaa yhdessä muiden ikäihmisten kanssa ja nauttia musiikista."},
-            {"name": "Nuorten musiikki-ilta", "types": ["Musiikki- ja laulutapahtuma", "Nuoret"], "extract": "Nuorten musiikki-ilta on tilaisuus, jossa voit esiintyä ja kuunnella musiikkia yhdessä samanhenkisten nuorten kanssa."},
-            {"name": "Lasten joulupaja", "types": ["Kokoperheen tapahtuma", "Varkit", "Lapset"], "extract": "Lasten joulupaja on tapahtuma, jossa lapset voivat osallistua erilaisiin jouluisiin askarteluihin ja valmistaa lahjoja läheisilleen."}
+            {"name": "Konsertti tuomiokirkossa", "types": [0], "extract": "Konsertti tuomiokirkossa on musiikillinen tapahtuma, jossa voit nauttia kauniista musiikista ja tunnelmallisesta kirkkotilasta."},
+            {"name": "Diakoninen neuvontapäivä", "types": [6], "extract": "Diakoninen neuvontapäivä on tilaisuus, jossa voit saada neuvontaa ja tukea diakoniatyön asiantuntijoilta."},
+            {"name": "Uskontodialogi-keskusteluilta", "types": [4], "extract": "Uskontodialogi-keskusteluilta on tilaisuus, jossa voit keskustella eri uskontojen edustajien kanssa ja oppia eri uskontojen näkökulmia."},
+            {"name": "Perheleiri rannalla", "types": [1, 9], "extract": "Perheleiri rannalla on leiri, jossa voit viettää aikaa perheesi kanssa rannalla ja osallistua erilaisiin yhteisiin aktiviteetteihin."},
+            {"name": "Luento: Kirkkohistoriaa", "types": [5], "extract": "Luento: Kirkkohistoriaa on tilaisuus, jossa voit oppia lisää kirkon historiasta ja sen merkityksestä."},
+            {"name": "Nuorten liikuntatapahtuma", "types": [3], "extract": "Nuorten liikuntatapahtuma on tapahtuma, jossa voit osallistua erilaisiin liikunnallisiin aktiviteetteihin yhdessä samanikäisten nuorten kanssa."},
+            {"name": "Yhteisöllinen rukousilta", "types": [10], "extract": "Yhteisöllinen rukousilta on tilaisuus, jossa voit rukoilla yhdessä muiden seurakuntalaisten kanssa ja jakaa hengellisiä kokemuksia."},
+            {"name": "Seniorien lauluryhmä", "types": [8, 7], "extract": "Seniorien lauluryhmä on ryhmä, jossa voit laulaa yhdessä muiden ikäihmisten kanssa ja nauttia musiikista."},
+            {"name": "Nuorten musiikki-ilta", "types": [8, 3], "extract": "Nuorten musiikki-ilta on tilaisuus, jossa voit esiintyä ja kuunnella musiikkia yhdessä samanhenkisten nuorten kanssa."},
+            {"name": "Lasten joulupaja", "types": [1, 11, 9], "extract": "Lasten joulupaja on tapahtuma, jossa lapset voivat osallistua erilaisiin jouluisiin askarteluihin ja valmistaa lahjoja läheisilleen."}
         ]
     },
     {
@@ -117,16 +117,16 @@
             ]
         },
         "events": [
-            {"name": "Yhteislaulutilaisuus", "types": ["Musiikki- ja laulutapahtuma"], "extract": "Yhteislaulutilaisuus on tapahtuma, jossa voit laulaa yhdessä muiden ihmisten kanssa ja nauttia musiikista."},
-            {"name": "Perhepäivä puistossa", "types": ["Kokoperheen tapahtuma", "Lapset"], "extract": "Perhepäivä puistossa on tapahtuma, jossa voit viettää aikaa perheesi kanssa ulkoillen ja osallistua erilaisiin aktiviteetteihin."},
-            {"name": "Raamattupiiri nuorille aikuisille", "types": ["Raamattupiiri", "Nuoret"], "extract": "Raamattupiiri nuorille aikuisille on tilaisuus, jossa voit tutustua Raamatun opetuksiin yhdessä samanhenkisten nuorten kanssa."},
-            {"name": "Lasten teatteriesitys", "types": ["Kokoperheen tapahtuma", "Lapset"], "extract": "Lasten teatteriesitys on tapahtuma, jossa voit nauttia lasten esittämästä teatteriesityksestä ja viettää aikaa perheesi kanssa."},
-            {"name": "Diakonia-avustuksen jakotilaisuus", "types": ["Jumalanpalvelus"], "extract": "Diakonia-avustuksen jakotilaisuus on tilaisuus, jossa voit osallistua diakoniatyöhön ja auttaa niitä, jotka tarvitsevat apua."},
-            {"name": "Kansanlauluilta seurakuntatalolla", "types": ["Musiikki- ja laulutapahtuma"], "extract": "Kansanlauluilta seurakuntatalolla on tapahtuma, jossa voit laulaa yhdessä muiden ihmisten kanssa ja nauttia musiikista."},
-            {"name": "Leivontakurssi", "types": ["Teemailta"], "extract": "Leivontakurssi on tilaisuus, jossa voit oppia leipomaan erilaisia herkkuja yhdessä muiden leivonnasta kiinnostuneiden kanssa."},
-            {"name": "Rippikoululeiri", "types": ["Nuoret", "Opetus- ja koulutustapahtuma"], "extract": "Rippikoululeiri on leiri, jossa voit oppia lisää uskonnosta ja osallistua erilaisiin opetus- ja koulutustapahtumiin."},
-            {"name": "Seniorien ulkoilupäivä", "types": ["Kokoperheen tapahtuma", "Seniorit"], "extract": "Seniorien ulkoilupäivä on päivä, jolloin voit viettää aikaa muiden ikäihmisten seurassa ulkoillen ja osallistua erilaisiin aktiviteetteihin."},
-            {"name": "Kirkon kerhohuoneen remontti", "types": ["Teemailta"], "extract": "Kirkon kerhohuoneen remontti on tilaisuus, jossa voit auttaa kunnostamaan seurakunnan kerhohuonetta ja tehdä siitä viihtyisämmän paikan."}
+            {"name": "Yhteislaulutilaisuus", "types": [8], "extract": "Yhteislaulutilaisuus on tapahtuma, jossa voit laulaa yhdessä muiden ihmisten kanssa ja nauttia musiikista."},
+            {"name": "Perhepäivä puistossa", "types": [1, 9], "extract": "Perhepäivä puistossa on tapahtuma, jossa voit viettää aikaa perheesi kanssa ulkoillen ja osallistua erilaisiin aktiviteetteihin."},
+            {"name": "Raamattupiiri nuorille aikuisille", "types": [2, 3], "extract": "Raamattupiiri nuorille aikuisille on tilaisuus, jossa voit tutustua Raamatun opetuksiin yhdessä samanhenkisten nuorten kanssa."},
+            {"name": "Lasten teatteriesitys", "types": [1, 9], "extract": "Lasten teatteriesitys on tapahtuma, jossa voit nauttia lasten esittämästä teatteriesityksestä ja viettää aikaa perheesi kanssa."},
+            {"name": "Diakonia-avustuksen jakotilaisuus", "types": [6], "extract": "Diakonia-avustuksen jakotilaisuus on tilaisuus, jossa voit osallistua diakoniatyöhön ja auttaa niitä, jotka tarvitsevat apua."},
+            {"name": "Kansanlauluilta seurakuntatalolla", "types": [8], "extract": "Kansanlauluilta seurakuntatalolla on tapahtuma, jossa voit laulaa yhdessä muiden ihmisten kanssa ja nauttia musiikista."},
+            {"name": "Leivontakurssi", "types": [4], "extract": "Leivontakurssi on tilaisuus, jossa voit oppia leipomaan erilaisia herkkuja yhdessä muiden leivonnasta kiinnostuneiden kanssa."},
+            {"name": "Rippikoululeiri", "types": [3, 5], "extract": "Rippikoululeiri on leiri, jossa voit oppia lisää uskonnosta ja osallistua erilaisiin opetus- ja koulutustapahtumiin."},
+            {"name": "Seniorien ulkoilupäivä", "types": [1, 7], "extract": "Seniorien ulkoilupäivä on päivä, jolloin voit viettää aikaa muiden ikäihmisten seurassa ulkoillen ja osallistua erilaisiin aktiviteetteihin."},
+            {"name": "Kirkon kerhohuoneen remontti", "types": [4], "extract": "Kirkon kerhohuoneen remontti on tilaisuus, jossa voit auttaa kunnostamaan seurakunnan kerhohuonetta ja tehdä siitä viihtyisämmän paikan."}
         ]
     },
     {
@@ -143,20 +143,20 @@
             ]
         },
         "events": [
-            {"name": "Yhteislauluilta kirkossa", "types": ["Musiikki- ja laulutapahtuma"], "extract": "Yhteislauluilta kirkossa on tapahtuma, jossa voit laulaa yhdessä muiden ihmisten kanssa ja nauttia musiikista. Tule mukaan luomaan unohtumattomia lauluhetkiä ja kokemaan yhteisöllisyyden voima."},
-            {"name": "Diakonia-ateriapalvelu vähäosaisille", "types": ["Jumalanpalvelus"], "extract": "Diakonia-ateriapalvelu vähäosaisille on tilaisuus, jossa voit osallistua diakoniatyöhön ja auttaa niitä, jotka tarvitsevat apua. Tule mukaan levittämään hyvää tahtoa ja välittämistä."},
-            {"name": "Perhepäivä kirkon puistossa", "types": ["Kokoperheen tapahtuma", "Lapset"], "extract": "Perhepäivä kirkon puistossa on tapahtuma, jossa voit viettää aikaa perheesi kanssa ulkoillen ja osallistua erilaisiin aktiviteetteihin. Tule mukaan luomaan iloisia muistoja ja vahvistamaan perhesiteitä."},
-            {"name": "Luento: Uskontojen vertailua", "types": ["Opetus- ja koulutustapahtuma"], "extract": "Luento: Uskontojen vertailua on tilaisuus, jossa voit oppia eri uskontojen eroista ja yhtäläisyyksistä. Tule mukaan avartamaan maailmankuvaasi ja syventämään ymmärrystäsi uskontojen monimuotoisuudesta."},
-            {"name": "Yhteislauluilta kirkossa", "types": ["Musiikki- ja laulutapahtuma"]},
-            {"name": "Diakonia-ateriapalvelu vähäosaisille", "types": ["Jumalanpalvelus"]},
-            {"name": "Perhepäivä kirkon puistossa", "types": ["Kokoperheen tapahtuma", "Lapset"]},
-            {"name": "Luento: Uskontojen vertailua", "types": ["Opetus- ja koulutustapahtuma"]},
-            {"name": "Nuorten musiikki-ilta", "types": ["Musiikki- ja laulutapahtuma", "Nuoret"]},
-            {"name": "Lasten päiväleiri", "types": ["Kokoperheen tapahtuma", "Lapset"]},
-            {"name": "Senioritanssiryhmä", "types": ["Musiikki- ja laulutapahtuma", "Seniorit"]},
-            {"name": "Ystävällisyysviikko", "types": ["Teemailta"]},
-            {"name": "Rippikouluryhmän retki", "types": ["Nuoret", "Opetus- ja koulutustapahtuma"]},
-            {"name": "Pyhäkoulu lastenohjaajakoulutuksessa", "types": ["Kokoperheen tapahtuma", "Opetus- ja koulutustapahtuma"]}
+            {"name": "Yhteislauluilta kirkossa", "types": [8], "extract": "Yhteislauluilta kirkossa on tapahtuma, jossa voit laulaa yhdessä muiden ihmisten kanssa ja nauttia musiikista. Tule mukaan luomaan unohtumattomia lauluhetkiä ja kokemaan yhteisöllisyyden voima."},
+            {"name": "Diakonia-ateriapalvelu vähäosaisille", "types": [6], "extract": "Diakonia-ateriapalvelu vähäosaisille on tilaisuus, jossa voit osallistua diakoniatyöhön ja auttaa niitä, jotka tarvitsevat apua. Tule mukaan levittämään hyvää tahtoa ja välittämistä."},
+            {"name": "Perhepäivä kirkon puistossa", "types": [1, 9], "extract": "Perhepäivä kirkon puistossa on tapahtuma, jossa voit viettää aikaa perheesi kanssa ulkoillen ja osallistua erilaisiin aktiviteetteihin. Tule mukaan luomaan iloisia muistoja ja vahvistamaan perhesiteitä."},
+            {"name": "Luento: Uskontojen vertailua", "types": [5], "extract": "Luento: Uskontojen vertailua on tilaisuus, jossa voit oppia eri uskontojen eroista ja yhtäläisyyksistä. Tule mukaan avartamaan maailmankuvaasi ja syventämään ymmärrystäsi uskontojen monimuotoisuudesta."},
+            {"name": "Yhteislauluilta kirkossa", "types": [8]},
+            {"name": "Diakonia-ateriapalvelu vähäosaisille", "types": [6]},
+            {"name": "Perhepäivä kirkon puistossa", "types": [1, 9]},
+            {"name": "Luento: Uskontojen vertailua", "types": [5]},
+            {"name": "Nuorten musiikki-ilta", "types": [8, 3]},
+            {"name": "Lasten päiväleiri", "types": [1, 9]},
+            {"name": "Senioritanssiryhmä", "types": [8, 7]},
+            {"name": "Ystävällisyysviikko", "types": [4]},
+            {"name": "Rippikouluryhmän retki", "types": [3, 5]},
+            {"name": "Pyhäkoulu lastenohjaajakoulutuksessa", "types": [1, 5]}
         ]
     },
     {
@@ -173,16 +173,16 @@
             ]
         },
         "events": [
-            {"name": "Kuorokonsertti", "types": ["Konsertti"]},
-            {"name": "Nuorten peli-ilta seurakuntasalissa", "types": ["Nuoret", "Varkit"]},
-            {"name": "Vaatekeräys hyväntekeväisyyteen", "types": ["Teemailta"]},
-            {"name": "Kirkkopiiri aikuisille", "types": ["Raamattupiiri"]},
-            {"name": "Perhepiknik puistossa", "types": ["Kokoperheen tapahtuma", "Lapset"]},
-            {"name": "Diakoninen ruokajakelu", "types": ["Jumalanpalvelus"]},
-            {"name": "Taidegallerian näyttely", "types": ["Teemailta"]},
-            {"name": "Seniorien kesäretki", "types": ["Kokoperheen tapahtuma", "Seniorit"]},
-            {"name": "Nuorten retki luontoon", "types": ["Nuoret", "Varkit"]},
-            {"name": "Kehitysvammaisten kerho", "types": ["Teemailta"]}
+            {"name": "Kuorokonsertti", "types": [0]},
+            {"name": "Nuorten peli-ilta seurakuntasalissa", "types": [3, 11]},
+            {"name": "Vaatekeräys hyväntekeväisyyteen", "types": [4]},
+            {"name": "Kirkkopiiri aikuisille", "types": [2]},
+            {"name": "Perhepiknik puistossa", "types": [1, 9]},
+            {"name": "Diakoninen ruokajakelu", "types": [6]},
+            {"name": "Taidegallerian näyttely", "types": [4]},
+            {"name": "Seniorien kesäretki", "types": [1, 7]},
+            {"name": "Nuorten retki luontoon", "types": [3, 11]},
+            {"name": "Kehitysvammaisten kerho", "types": [4]}
         ]
     },
     {
@@ -199,16 +199,15 @@
             ]
         },
         "events": [
-            {"name": "Kuorojen yhteiskonsertti", "types": ["Konsertti"]},
-            {"name": "Diakonia-avustuksen jakotilaisuus", "types": ["Jumalanpalvelus"]},
-            {"name": "Nuorten liikuntatapahtuma", "types": ["Nuoret", "Varkit"]},
-            {"name": "Perheleiri saaristossa", "types": ["Kokoperheen tapahtuma", "Lapset"]},
-            {"name": "Raamattupiiri", "types": ["Raamattupiiri"]},
-            {"name": "Kirkkopäiväkodin joulujuhla", "types": ["Kokoperheen tapahtuma", "Lapset"]},
-            {"name": "Seniorien askartelupiiri", "types": ["Teemailta", "Seniorit"]},
-            {"name": "Nuorten musiikki- ja lauluryhmä", "types": ["Musiikki- ja laulutapahtuma", "Nuoret", "Varkit"]},
-            {"name": "Diakoninen ruokapalvelu", "types": ["Jumalanpalvelus"]},
-            {"name": "Rippikoulun valmisteluilta", "types": ["Nuoret", "Opetus- ja koulutustapahtuma", "Varkit"]}
+            {"name": "Kuorojen yhteiskonsertti", "types": [0]},
+            {"name": "Diakonia-avustuksen jakotilaisuus", "types": [6]},
+            {"name": "Nuorten liikuntatapahtuma", "types": [3, 11]},
+            {"name": "Perheleiri saaristossa", "types": [1, 9]},
+            {"name": "Kirkkopäiväkodin joulujuhla", "types": [1, 9]},
+            {"name": "Seniorien askartelupiiri", "types": [4, 7]},
+            {"name": "Nuorten musiikki- ja lauluryhmä", "types": [8, 3, 11]},
+            {"name": "Diakoninen ruokapalvelu", "types": [6]},
+            {"name": "Rippikoulun valmisteluilta", "types": [3, 5, 11]}
         ]
     },
     {
@@ -225,16 +224,16 @@
             ]
         },
         "events": [
-            {"name": "Konsertti kirkossa", "types": ["Konsertti"]},
-            {"name": "Perhepäivä puistossa", "types": ["Kokoperheen tapahtuma", "Lapset"]},
-            {"name": "Diakonia-ruokajaon jakotilaisuus", "types": ["Jumalanpalvelus"]},
-            {"name": "Raamattuluento", "types": ["Raamattupiiri", "Opetus- ja koulutustapahtuma"]},
-            {"name": "Nuorten retki luontoon", "types": ["Nuoret", "Varkit"]},
-            {"name": "Lasten päiväleiri", "types": ["Kokoperheen tapahtuma", "Lapset", "Varkit"]},
-            {"name": "Senioritanssiryhmä", "types": ["Musiikki- ja laulutapahtuma", "Seniorit"]},
-            {"name": "Kirkkohistoriallinen kierros", "types": ["Opetus- ja koulutustapahtuma"]},
-            {"name": "Musiikkihetki vanhainkodissa", "types": ["Musiikki- ja laulutapahtuma", "Seniorit"]},
-            {"name": "Uskontodialogi-keskusteluryhmä", "types": ["Teemailta"]}
+            {"name": "Konsertti kirkossa", "types": [0]},
+            {"name": "Perhepäivä puistossa", "types": [1, 9]},
+            {"name": "Diakonia-ruokajaon jakotilaisuus", "types": [6]},
+            {"name": "Raamattuluento", "types": [2, 5]},
+            {"name": "Nuorten retki luontoon", "types": [3, 11]},
+            {"name": "Lasten päiväleiri", "types": [1, 9, 11]},
+            {"name": "Senioritanssiryhmä", "types": [8, 7]},
+            {"name": "Kirkkohistoriallinen kierros", "types": [5]},
+            {"name": "Musiikkihetki vanhainkodissa", "types": [8, 7]},
+            {"name": "Uskontodialogi-keskusteluryhmä", "types": [4]}
         ]
     },
     {
@@ -251,16 +250,16 @@
             ]
         },
         "events": [
-            {"name": "Konsertti kirkossa", "types": ["Konsertti"]},
-            {"name": "Nuorten leiri luonnon helmassa", "types": ["Nuoret", "Varkit"]},
-            {"name": "Ystävänpäivän kirkkokahvit", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Diakonia-avustuksen jakotilaisuus", "types": ["Jumalanpalvelus"]},
-            {"name": "Raamattuluento: Jeesuksen opetukset", "types": ["Raamattupiiri", "Opetus- ja koulutustapahtuma"]},
-            {"name": "Kirkkokuoro harjoitusilta", "types": ["Musiikki- ja laulutapahtuma"]},
-            {"name": "Lapsiperheiden retkipäivä", "types": ["Kokoperheen tapahtuma", "Lapset"]},
-            {"name": "Kehitysvammaisten tukiryhmä", "types": ["Teemailta"]},
-            {"name": "Nuorten musiikki-ilta", "types": ["Musiikki- ja laulutapahtuma", "Nuoret", "Varkit"]},
-            {"name": "Lasten pyhäkoulu", "types": ["Kokoperheen tapahtuma", "Lapset", "Varkit"]}
+            {"name": "Konsertti kirkossa", "types": [0]},
+            {"name": "Nuorten leiri luonnon helmassa", "types": [3, 11]},
+            {"name": "Ystävänpäivän kirkkokahvit", "types": [1]},
+            {"name": "Diakonia-avustuksen jakotilaisuus", "types": [6]},
+            {"name": "Raamattuluento: Jeesuksen opetukset", "types": [2, 5]},
+            {"name": "Kirkkokuoro harjoitusilta", "types": [8]},
+            {"name": "Lapsiperheiden retkipäivä", "types": [1, 9]},
+            {"name": "Kehitysvammaisten tukiryhmä", "types": [4]},
+            {"name": "Nuorten musiikki-ilta", "types": [8, 3, 11]},
+            {"name": "Lasten pyhäkoulu", "types": [1, 9, 11]}
         ]
     },
     {
@@ -277,16 +276,16 @@
             ]
         },
         "events": [
-            {"name": "Konsertti kirkossa", "types": ["Konsertti"]},
-            {"name": "Diakoninen neuvontapäivä", "types": ["Jumalanpalvelus"]},
-            {"name": "Perhepiknik puistossa", "types": ["Kokoperheen tapahtuma", "Lapset"]},
-            {"name": "Nuorten musiikki- ja laulupaja", "types": ["Musiikki- ja laulutapahtuma", "Nuoret", "Varkit"]},
-            {"name": "Luontoretki lähimaastoon", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Taidekurssi kirkon taidegalleriassa", "types": ["Teemailta"]},
-            {"name": "Raamatun lukupiiri", "types": ["Raamattupiiri"]},
-            {"name": "Lapsikuorojen konsertti", "types": ["Konsertti"]},
-            {"name": "Perheleiri metsän siimeksessä", "types": ["Kokoperheen tapahtuma", "Lapset"]},
-            {"name": "Ehtoolliskirkko viikottain", "types": ["Jumalanpalvelus"]}
+            {"name": "Konsertti kirkossa", "types": [0]},
+            {"name": "Diakoninen neuvontapäivä", "types": [6]},
+            {"name": "Perhepiknik puistossa", "types": [1, 9]},
+            {"name": "Nuorten musiikki- ja laulupaja", "types": [8, 3, 11]},
+            {"name": "Luontoretki lähimaastoon", "types": [1]},
+            {"name": "Taidekurssi kirkon taidegalleriassa", "types": [4]},
+            {"name": "Raamatun lukupiiri", "types": [2]},
+            {"name": "Lapsikuorojen konsertti", "types": [0]},
+            {"name": "Perheleiri metsän siimeksessä", "types": [1, 9]},
+            {"name": "Ehtoolliskirkko viikottain", "types": [6]}
         ]
     },
     {
@@ -303,17 +302,17 @@
             ]
         },
         "events": [
-            {"name": "Kesäinen ulkoilumessu", "types": ["Jumalanpalvelus"]},
-            {"name": "Nuorten musiikki- ja laulupaja", "types": ["Musiikki- ja laulutapahtuma", "Nuoret", "Varkit"]},
-            {"name": "Vaatekeräys vähäosaisille", "types": ["Teemailta"]},
-            {"name": "Seniorien virkistyspäivä", "types": ["Kokoperheen tapahtuma", "Seniorit"]},
-            {"name": "Seniorien virkistyspäivä", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Luontoretki lähimaastoon", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Taidekurssi kirkon taidegalleriassa", "types": ["Teemailta"]},
-            {"name": "Raamatun lukupiiri", "types": ["Raamattupiiri"]},
-            {"name": "Lapsikuorojen konsertti", "types": ["Konsertti"]},
-            {"name": "Perheleiri metsän siimeksessä", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Ehtoolliskirkko viikottain", "types": ["Jumalanpalvelus"]}
+            {"name": "Kesäinen ulkoilumessu", "types": [6]},
+            {"name": "Nuorten musiikki- ja laulupaja", "types": [8, 3, 11]},
+            {"name": "Vaatekeräys vähäosaisille", "types": [4]},
+            {"name": "Seniorien virkistyspäivä", "types": [1, 7]},
+            {"name": "Seniorien virkistyspäivä", "types": [1]},
+            {"name": "Luontoretki lähimaastoon", "types": [1]},
+            {"name": "Taidekurssi kirkon taidegalleriassa", "types": [4]},
+            {"name": "Raamatun lukupiiri", "types": [2]},
+            {"name": "Lapsikuorojen konsertti", "types": [0]},
+            {"name": "Perheleiri metsän siimeksessä", "types": [1]},
+            {"name": "Ehtoolliskirkko viikottain", "types": [6]}
         ]
     },
     {
@@ -330,18 +329,18 @@
             ]
         },
         "events": [
-            {"name": "Käsityöpiiri seurakuntasalissa", "types": ["Teemailta"]},
-            {"name": "Konsertti kirkossa", "types": ["Konsertti"]},
-            {"name": "Käsityöpiiri seurakuntasalissa", "types": ["Teemailta"]},
-            {"name": "Konsertti kirkossa", "types": ["Konsertti"]},
-            {"name": "Ystävänpäivän juhla seniorikeskuksessa", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Raamattuluento: Kirkkohistoriaa", "types": ["Opetus- ja koulutustapahtuma"]},
-            {"name": "Nuorten yhteisöilta", "types": ["Nuoret"]},
-            {"name": "Ekoystävällinen kirpputori", "types": ["Teemailta"]},
-            {"name": "Diakoninen ruokajakelu", "types": ["Jumalanpalvelus"]},
-            {"name": "Kirkkopäiväkoti lasten taidepaja", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Vanhusten tukiryhmä", "types": ["Teemailta"]},
-            {"name": "Retki saaristoon", "types": ["Kokoperheen tapahtuma"]}
+            {"name": "Käsityöpiiri seurakuntasalissa", "types": [4]},
+            {"name": "Konsertti kirkossa", "types": [0]},
+            {"name": "Käsityöpiiri seurakuntasalissa", "types": [4]},
+            {"name": "Konsertti kirkossa", "types": [0]},
+            {"name": "Ystävänpäivän juhla seniorikeskuksessa", "types": [1]},
+            {"name": "Raamattuluento: Kirkkohistoriaa", "types": [5]},
+            {"name": "Nuorten yhteisöilta", "types": [3]},
+            {"name": "Ekoystävällinen kirpputori", "types": [4]},
+            {"name": "Diakoninen ruokajakelu", "types": [6]},
+            {"name": "Kirkkopäiväkoti lasten taidepaja", "types": [1]},
+            {"name": "Vanhusten tukiryhmä", "types": [4]},
+            {"name": "Retki saaristoon", "types": [1]}
         ]
     },
     {
@@ -358,16 +357,16 @@
             ]
         },
         "events": [
-            {"name": "Konsertti kirkossa", "types": ["Konsertti"]},
-            {"name": "Diakoninen neuvontapäivä", "types": ["Jumalanpalvelus"]},
-            {"name": "Perhepäivä puistossa", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Nuorten musiikki- ja laulupaja", "types": ["Musiikki- ja laulutapahtuma", "Nuoret"]},
-            {"name": "Luontoretki lähimaastoon", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Taidekurssi kirkon taidegalleriassa", "types": ["Teemailta"]},
-            {"name": "Raamatun lukupiiri", "types": ["Raamattupiiri"]},
-            {"name": "Lapsikuorojen konsertti", "types": ["Konsertti"]},
-            {"name": "Perheleiri metsän siimeksessä", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Ehtoolliskirkko viikottain", "types": ["Jumalanpalvelus"]}
+            {"name": "Konsertti kirkossa", "types": [0]},
+            {"name": "Diakoninen neuvontapäivä", "types": [6]},
+            {"name": "Perhepäivä puistossa", "types": [1]},
+            {"name": "Nuorten musiikki- ja laulupaja", "types": [8, 3]},
+            {"name": "Luontoretki lähimaastoon", "types": [1]},
+            {"name": "Taidekurssi kirkon taidegalleriassa", "types": [4]},
+            {"name": "Raamatun lukupiiri", "types": [2]},
+            {"name": "Lapsikuorojen konsertti", "types": [0]},
+            {"name": "Perheleiri metsän siimeksessä", "types": [1]},
+            {"name": "Ehtoolliskirkko viikottain", "types": [6]}
         ]
     },
     {
@@ -384,16 +383,16 @@
             ]
         },
         "events": [
-            {"name": "Kesäinen ulkoilumessu", "types": ["Jumalanpalvelus"]},
-            {"name": "Nuorten musiikki- ja laulupaja", "types": ["Musiikki- ja laulutapahtuma", "Nuoret"]},
-            {"name": "Vaatekeräys vähäosaisille", "types": ["Teemailta"]},
-            {"name": "Seniorien virkistyspäivä", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Luontoretki lähimaastoon", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Taidekurssi kirkon taidegalleriassa", "types": ["Teemailta"]},
-            {"name": "Raamatun lukupiiri", "types": ["Raamattupiiri"]},
-            {"name": "Lapsikuorojen konsertti", "types": ["Konsertti"]},
-            {"name": "Perheleiri metsän siimeksessä", "types": ["Kokoperheen tapahtuma"]},
-            {"name": "Ehtoolliskirkko viikottain", "types": ["Jumalanpalvelus"]}
+            {"name": "Kesäinen ulkoilumessu", "types": [6]},
+            {"name": "Nuorten musiikki- ja laulupaja", "types": [8, 3]},
+            {"name": "Vaatekeräys vähäosaisille", "types": [4]},
+            {"name": "Seniorien virkistyspäivä", "types": [1]},
+            {"name": "Luontoretki lähimaastoon", "types": [1]},
+            {"name": "Taidekurssi kirkon taidegalleriassa", "types": [4]},
+            {"name": "Raamatun lukupiiri", "types": [2]},
+            {"name": "Lapsikuorojen konsertti", "types": [0]},
+            {"name": "Perheleiri metsän siimeksessä", "types": [1]},
+            {"name": "Ehtoolliskirkko viikottain", "types": [6]}
         ]
     }
 ]

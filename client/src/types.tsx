@@ -19,6 +19,10 @@ export type FormattedDate = {
     startTime: string
     endTime: string
 }
+export interface Location {
+    latitude: number,
+    longitude: number
+}
 
 // EVENT
 export interface Event {
@@ -80,22 +84,29 @@ export type SearchResult = {
     data: string
 }
 export interface Filters { // KS Event Schema
-    "meta.denomination"?: 0 | 1 | 2
-    "meta.types"?: number[]
-    "meta.size"?: 0 | 1 | 2
-    "meta.language"?: 0 | 1 | 2
-    "meta.price.value"?: number
-    "meta.online"?: boolean
+    meta?: {
+        "meta.denomination"?: number[],
+        "meta.types"?: number[],
+        "meta.size"?: number[],
+        "meta.language"?: number[]
+    }
+    min_distance?: number,
+    max_distance?: number
+}
+export interface AvailableFilters {
+    denomination: [{ value: number }],
+    types: [{ value: number }],
+    size: [{ value: number }],
+    language: [{ value: number }],
+    price: [{ value: number }],
+    online: [{ value: boolean }]
 }
 export interface SearchQuery {
-    location?: {
-        latitude: number,
-        longitude: number
-    }
+    location?: Location
     search?: [
-        {"address.city": string},
-        {"organization.organization_name": string},
-        {"title": string}
+        { "address.city": string },
+        { "organization.organization_name": string },
+        { "title": string }
     ]
     filters?: Filters
 }
@@ -115,24 +126,24 @@ export interface OrganizationPage {
 }
 export interface Organization {
     address: Address,
-	contact_info: ContactInfo,
-	_id: string,
-	name: string,
-	business_id: string,
-	contact_info_visible: boolean,
-	visible: boolean,
-	organization_users: [
-		{
-			user_id: string,
-			user_name: string,
-			user_email: string,
-			role: "user" | "admin" | "owner",
-			_id: string
-		}
-	],
-	created_by: string,
-	updated_by: string,
-	createdAt: Date,
-	updatedAt: Date,
-	__v: number
+    contact_info: ContactInfo,
+    _id: string,
+    name: string,
+    business_id: string,
+    contact_info_visible: boolean,
+    visible: boolean,
+    organization_users: [
+        {
+            user_id: string,
+            user_name: string,
+            user_email: string,
+            role: "user" | "admin" | "owner",
+            _id: string
+        }
+    ],
+    created_by: string,
+    updated_by: string,
+    createdAt: Date,
+    updatedAt: Date,
+    __v: number
 }

@@ -1,11 +1,11 @@
 {
     "size": [
-        "Pieni",
-        "Keskisuuri",
-        "Suuri"
+        0,
+        1,
+        2
     ],
     "lang": [
-        "Suomi"
+        0
     ],
     "online": [
         true,

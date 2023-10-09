@@ -1,15 +1,7 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { SearchQuery } from "../../types";
+import { Filters, SearchQuery } from "../../types";
 import getSearchQuery from "../functions/getSearchQuery";
 
-interface Filters {
-    "meta.size"?: string
-    "meta.price"?: number,
-    "meta.online"?: boolean,
-    "meta.language"?: string,
-    "meta.types"?: string,
-    "address.coordinates"?: number
-}
 interface Values {
     query: SearchQuery
     search?: string

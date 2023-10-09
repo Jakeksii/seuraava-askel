@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Button, Dialog, Drawer, Fab } from '@mui/material';
 import { lazy, Suspense, useState } from 'react';
 import { useSearchContext } from '../../context/searchContext';
-import Filters from './Filters';
+import Filters from './Filters/Filters';
 import LocationButton from './LocationButton';
 import Loading from '../../partials/Loading';
 

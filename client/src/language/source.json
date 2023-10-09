@@ -1,0 +1,36 @@
+{
+    "filters": {
+        "denomination": [
+            {"key":0, "value":"Evankelis-luterilainen"},
+            {"key":1, "value":"Ortodoksinen"},
+            {"key":2, "value":"Katolinen"},
+            {"key":3, "value":"Helluntaiseurakunta"},
+            {"key":4, "value":"Vapaakirkko"},
+            {"key":5, "value":"Baptistikirkko"},
+            {"key":6, "value":"Metodistikirkko"},
+            {"key":7, "value":"Adventtikirkko"}
+        ],
+        "types": [
+            {"key":0, "value":"Konsertti"},
+            {"key":1, "value":"Kokoperheen tapahtuma"},
+            {"key":2, "value":"Raamattupiiri"},
+            {"key":3, "value":"Nuoret"},
+            {"key":4, "value":"Teemailta"},
+            {"key":5, "value":"Opetus- ja koulutustapahtuma"},
+            {"key":6, "value":"Jumalanpalvelus"},
+            {"key":7, "value":"Seniorit"},
+            {"key":8, "value":"Musiikki- ja laulutapahtuma"},
+            {"key":9, "value":"Lapset"},
+            {"key":10, "value":"Rukouskokous"},
+            {"key":11, "value":"Varkit"}
+        ],
+        "size": [
+            {"key":0, "value":"Pieni"},
+            {"key":1, "value":"Keskisuuri"},
+            {"key":2, "value":"Suuri"}
+        ],
+        "language": [
+            {"key":0, "value":"Suomi"}
+        ]
+    }
+}

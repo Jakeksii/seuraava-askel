@@ -62,8 +62,11 @@ export async function CreateDummyData(req: Request, res: Response) {
                 meta: {
                     types: event.types,
                     size: GetSize(),
-                    language: "Suomi",
-                    price: 0,
+                    language: [0],
+                    price: {
+                        value: 0,
+                        currency: "€"
+                    },
                     online: false,
                 },
                 organization: {

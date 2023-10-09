@@ -74,57 +74,143 @@ export const createEvent = async (req: Request, res: Response) => {
   }
 }
 
+
 export const getFilters = async (req: Request, res: Response) => {
   const filters = req.body.filters
+  if(!filters) return res.status(400).end()
+  const meta = filters.meta ?? {}
 
-  const availableFilters = await Event.aggregate([
-    {
-      $match: filters, // Apply your initial filters
-    },
-    {
-      $facet: {
-        denomination: [
-          { $group: { _id: '$meta.denomination' } },
-          { $project: { _id: 0, value: '$_id' } },
-        ],
-        types: [
-          {
-            $unwind: '$meta.types' // Split the array into individual documents
+  const location = req.body.location
+
+  // we need to check if "meta.types" value is array
+  // because we need to tweak our matching parameter
+  // If we dont use $all mongoose operator, $match operator will strict match meta.types
+  // then if you filter with meta.types[1] mongoDB will only output documents where meta.types: [1]
+  // even though there might be document with meta.types: [1, 2]
+  // now with $all mongoDB will output meta.types[1] and meta.types[1, 2]
+  const match = {
+    ...meta,
+  }
+  if (Array.isArray(meta["meta.types"])) {
+    match["meta.types"] = { $all: meta["meta.types"] };
+  }
+  if (Array.isArray(meta["meta.size"])) {
+    match["meta.size"] = { $nin: meta["meta.size"] };
+  }
+
+  try {
+    if(location){
+      // With geo matching
+      const { latitude, longitude } = location;
+      const { min_distance, max_distance } = filters
+      const availableFilters = await Event.aggregate([
+        {
+          $geoNear: {
+            near: {
+              type: 'Point',
+              coordinates: [longitude, latitude],
+            },
+            distanceField: 'distance',
+            spherical: true,
+            minDistance: min_distance ?? 0,
+            maxDistance: max_distance ?? 5000000 // meters 5k kilometers
           },
-          { $group: { _id: '$meta.types' } },
-          { $project: { _id: 0, value: '$_id' } },
-        ],
-        size: [
-          { $group: { _id: '$meta.size' } },
-          { $project: { _id: 0, value: '$_id' } },
-        ],
-        language: [
-          { $group: { _id: '$meta.language' } },
-          { $project: { _id: 0, value: '$_id' } },
-        ],
-        price: [
-          { $group: { _id: '$meta.price' } },
-          { $project: { _id: 0, value: '$_id' } },
-        ],
-        online: [
-          { $group: { _id: '$meta.online' } },
-          { $project: { _id: 0, value: '$_id' } },
-        ],
-      },
-    },
-  ]).exec();
+        },
+        {
+          $match: match // this will filter aggregate pipeline request
+        },
+        {
+          $facet: {
+            denomination: [
+              { $group: { _id: '$meta.denomination' } },
+              { $project: { _id: 0, value: '$_id' } },
+            ],
+            types: [
+              {
+                $unwind: '$meta.types' // Split the array into individual documents
+              },
+              { $group: { _id: '$meta.types' } },
+              { $project: { _id: 0, value: '$_id' } },
+            ],
+            size: [
+              { $group: { _id: '$meta.size' } },
+              { $project: { _id: 0, value: '$_id' } },
+            ],
+            language: [
+              { $group: { _id: '$meta.language' } },
+              { $project: { _id: 0, value: '$_id' } },
+            ],
+            price: [
+              { $group: { _id: '$meta.price.value' } },
+              { $project: { _id: 0, value: '$_id' } },
+            ]
+          },
+        },
+      ]).exec();
 
-  return res.status(200).json(availableFilters[0])
+      return res.status(200).json(availableFilters[0])
+
+    } else {
+
+      // Without geo matching
+      const availableFilters = await Event.aggregate([
+        {
+          $match: match // this will filter aggregate pipeline request
+        },
+        {
+          $facet: {
+            denomination: [
+              { $group: { _id: '$meta.denomination' } },
+              { $project: { _id: 0, value: '$_id' } },
+            ],
+            types: [
+              {
+                $unwind: '$meta.types' // Split the array into individual documents
+              },
+              { $group: { _id: '$meta.types' } },
+              { $project: { _id: 0, value: '$_id' } },
+            ],
+            size: [
+              { $group: { _id: '$meta.size' } },
+              { $project: { _id: 0, value: '$_id' } },
+            ],
+            language: [
+              { $group: { _id: '$meta.language' } },
+              { $project: { _id: 0, value: '$_id' } },
+            ],
+            price: [
+              { $group: { _id: '$meta.price.value' } },
+              { $project: { _id: 0, value: '$_id' } },
+            ],
+            online: [
+              { $group: { _id: '$meta.online' } },
+              { $project: { _id: 0, value: '$_id' } },
+            ],
+          },
+        },
+      ]).exec();
+
+      return res.status(200).json(availableFilters[0])
+
+    }
+
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({ error: 'An error occurred while fetching filters' })
+  }
+  
 }
 
 export const getEvents = async (req: Request, res: Response) => {
   const location = req.body.location
   const search = req.body.search as [
-    {"address.city": string},
-    {"organization.organization_name": string},
-    {"title": string}
+    { "address.city": string },
+    { "organization.organization_name": string },
+    { "title": string }
   ]
-  const filters = req.body.filters ?? {}
+
+  const filters = req.body.filters
+  const meta = filters?.meta ?? {}
 
   // PAGINATE
   const page = parseInt(req.query.page as string) || 1; // Current page number
@@ -136,7 +222,7 @@ export const getEvents = async (req: Request, res: Response) => {
     let events: IEvent[]
 
     if (location) {
-      const { latitude, longitude } = location;
+      const { latitude, longitude, min_distance, max_distance } = location;
       events = await Event.aggregate([
         {
           $geoNear: {
@@ -146,10 +232,12 @@ export const getEvents = async (req: Request, res: Response) => {
             },
             distanceField: 'distance',
             spherical: true,
+            minDistance: min_distance ?? 0,
+            maxDistance: max_distance ?? 5000000
           },
         },
         {
-          $match: filters
+          $match: meta
         },
         {
           $sort: {
@@ -160,7 +248,7 @@ export const getEvents = async (req: Request, res: Response) => {
         // Additional stages if needed
       ]).skip(skip).limit(limit).exec();
     } else {
-      events = await Event.find({ ...filters, $or: search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
+      events = await Event.find({ ...meta, $or: search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
     }
 
     const data = events.map((event: IEvent) => {

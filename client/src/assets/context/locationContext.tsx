@@ -29,8 +29,11 @@ export function LocationContextProvider({ children }: { children: ReactNode }) {
     const [values, setValues] = useState({
         locationOn: false,
         coords: {
-            longitude: 0,
-            latitude: 0,
+            longitude: 50,
+            latitude: 25,
+        },
+        filter: {
+
         }
     })
 

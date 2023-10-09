@@ -34,11 +34,14 @@ export interface IEvent {
     address: IAddress
     image_id: string
     meta: {
-        denomination?: string
-        types?: string[]
-        size?: string
-        language?: string
-        price?: number
+        denomination?: number
+        types?: number[]
+        size?: number
+        language?: number[]
+        price?: {
+            value: number,
+            currency: string
+        }
         online?: boolean
         speaker?: string
         music?: string

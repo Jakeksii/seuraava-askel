@@ -10,6 +10,6 @@ router.post("/create", verifyToken as any, uploadImage as any, createEvent as an
 
 router.get("/search", searchEvents as any)
 router.get("/:_id", getEventPage as any)
-router.get("/filters", getFilters as any)
+router.post("/filters", getFilters as any)
 
 export default router;
