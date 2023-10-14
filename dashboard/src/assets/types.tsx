@@ -73,18 +73,27 @@ export interface Organization {
 	visible: boolean,
 	organization_users: [
 		{
-			user_id: string,
-			user_name: string,
-			user_email: string,
+			user_id?: string
+			user_name: string | undefined,
+			user_email: string | undefined,
 			role: "user" | "admin" | "owner",
-			_id: string
+			_id: string | undefined
 		}
 	],
-	created_by: string,
-	updated_by: string,
+	created_by: string | undefined,
+	updated_by: string | undefined,
 	createdAt: Date,
 	updatedAt: Date,
 	__v: number
+}
+
+export interface SendOrganization {
+    address: Address,
+	contact_info: ContactInfo,
+	_id: string,
+	name: string,
+	business_id: string,
+	contact_info_visible: boolean,
 }
 
 

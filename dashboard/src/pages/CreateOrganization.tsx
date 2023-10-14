@@ -9,19 +9,82 @@ import TextField from '@mui/material/TextField';
 import Header from "../assets/components/Header";
 import { useAppContext } from '../assets/context/appContext';
 import DragDropFiles from '../assets/components/DragDropFiles';
-
+import { useState } from 'react';
+import { Organization, SendOrganization } from '../assets/types';
 
 export default function CreateOrganization() {
 
 
     const appContext = useAppContext()
+    const [nomination, setNomination] = useState('');
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [leader, setLeader] = useState("");
+    const [street, setStreet] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [zipcode, setZipcode] = useState("");
+    const [country, setCountry] = useState("");
+    const [businessId, setBusinessId] = useState("");
+
+
+    const [coordinates, setCoordinates] = useState([0, 0])
+    // Set coordinates to be [0,0] for now. In handleSubmit just hardvalues for now
+
+    const {user} = useAppContext()
+    // Get current user and send it as organization owner
+
+    const [contact_info_visible, setContact_Info_Visible] = useState(true)
+    const [visible, setVisible] = useState(true)
+    // Send Contact info visible and visible as true for now
+
+
+
+    // TODO:
+    // Make state for organization
+    // Update info in to state
+    // Send state to backend
+    // Recieve data in backend
+    // create a new organization to db
+    // respond with alls gucci
 
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
+
+        const token = user?.token
+
+        // test
+        console.log(nomination)
+
+        // Compile to the organization type
+        const newOrganization: SendOrganization = {
+            address: {
+                street: street,
+                city: city,
+                state: state,
+                zipcode: zipcode,
+                country: country,
+                coordinates: [12.34, 56.78]
+            },
+            contact_info: {
+                email: email,
+                phone: phone
+            },
+            _id: "where does the id come from?",
+            name: name,
+            business_id: businessId,
+            contact_info_visible: contact_info_visible,
+            
+        };
+
+
+        // send to backend
 
     };
+
+
     return (
         <>
         <Header />
@@ -40,6 +103,8 @@ export default function CreateOrganization() {
                                 id="name"
                                 label="Seurakunnan nimi"
                                 name="name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 autoFocus
                             />
 
@@ -52,6 +117,8 @@ export default function CreateOrganization() {
                                 label="Kirkkokunta"
                                 type="text"
                                 id="nomination"
+                                value={nomination}
+                                onChange={(e) => setNomination(e.target.value)}
                                 
                             />
 
@@ -64,8 +131,8 @@ export default function CreateOrganization() {
                                 label="Sähköposti"
                                 type='email'
                                 name="email"
-                                
-                                autoFocus
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                             <TextField
                                 color='info'
@@ -76,7 +143,8 @@ export default function CreateOrganization() {
                                 label="Puhelin numero"
                                 type="text"
                                 id="phone-number"
-                                
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
                             />
 
 
@@ -89,7 +157,8 @@ export default function CreateOrganization() {
                                 label="Johtaja"
                                 type="text"
                                 id="leader"
-                                
+                                value={leader}
+                                onChange={(e) => setLeader(e.target.value)}
                             />
 
                             <TextField
@@ -101,7 +170,8 @@ export default function CreateOrganization() {
                                 label="Katu"
                                 type="street"
                                 id="street"
-                                
+                                value={street}
+                                onChange={(e) => setStreet(e.target.value)}
                             />
                             
                             <TextField
@@ -113,7 +183,8 @@ export default function CreateOrganization() {
                                 label="Kaupunki"
                                 type="city"
                                 id="city"
-                                
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}
                             />
                             
                             <TextField
@@ -125,7 +196,8 @@ export default function CreateOrganization() {
                                 label="Maakunta"
                                 type="state"
                                 id="state"
-                                
+                                value={state}
+                                onChange={(e) => setState(e.target.value)}
                             />
 
                             
@@ -138,7 +210,8 @@ export default function CreateOrganization() {
                                 label="Postinumero"
                                 type="zipcode"
                                 id="zipcode"
-                                
+                                value={zipcode}
+                                onChange={(e) => setZipcode(e.target.value)}
                             />
 
                             <TextField
@@ -150,6 +223,8 @@ export default function CreateOrganization() {
                                 label="Maa"
                                 type="country"
                                 id="country"
+                                value={country}
+                                onChange={(e) => setCountry(e.target.value)}
                             />
                             
                             <h2> koordinaatit pitäis nappaa</h2>
@@ -164,7 +239,8 @@ export default function CreateOrganization() {
                                 label="Y-tunnus"
                                 type="text"
                                 id="business-id"
-                                
+                                value={businessId}
+                                onChange={(e) => setBusinessId(e.target.value)}
                             />
 
                             <div className='drag-container'>
