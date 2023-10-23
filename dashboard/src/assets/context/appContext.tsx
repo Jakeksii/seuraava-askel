@@ -30,6 +30,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | undefined>(userData)
     const [organization, setOrganization] = useState<Organization | undefined>(organizationData)
 
+    
     const logOut = () => {
         setUser(undefined)
         setOrganization(undefined)

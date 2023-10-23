@@ -11,6 +11,7 @@ import { useAppContext } from '../assets/context/appContext';
 import DragDropFiles from '../assets/components/DragDropFiles';
 import { useState } from 'react';
 import { Organization, SendOrganization } from '../assets/types';
+import { useQuery } from 'react-query';
 
 export default function CreateOrganization() {
 
@@ -72,15 +73,26 @@ export default function CreateOrganization() {
                 email: email,
                 phone: phone
             },
-            _id: "where does the id come from?",
             name: name,
             business_id: businessId,
             contact_info_visible: contact_info_visible,
-            
         };
+
+        console.log(user?.token)
 
 
         // send to backend
+        const response = await fetch("api/organizations", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `${token}`
+            },
+            body: JSON.stringify(newOrganization)
+        })
+        const json = await response.json()
+
+        console.log("this comes through", json)
 
     };
 

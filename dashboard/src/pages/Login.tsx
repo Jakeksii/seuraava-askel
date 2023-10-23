@@ -44,6 +44,7 @@ export default function Login() {
         },
             {
                 onSuccess(data) {
+                    // lisää organisaatio sessioStorageen
                     appContext.setUser(data)
                     sessionStorage.setItem('user_data', JSON.stringify(data))
                     location.state?.from ? navigate(location.state.from, { replace: true }) : navigate('/dashboard', { replace: true })

@@ -90,7 +90,6 @@ export interface Organization {
 export interface SendOrganization {
     address: Address,
 	contact_info: ContactInfo,
-	_id: string,
 	name: string,
 	business_id: string,
 	contact_info_visible: boolean,

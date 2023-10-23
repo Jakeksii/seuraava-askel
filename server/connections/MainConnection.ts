@@ -6,7 +6,8 @@ import OrganizationSchema from "../schemas/Organization";
 import OrganizationPageSchema from "../schemas/OrganizationPage";
 
 dotenv.config();
-const url:string = process.env.MONGO_URL_MAIN ?? ""
+// const url:string = process.env.MONGO_URL_MAIN ?? ""
+const url:string = process.env.MONGO_URL_MAIN_LOCAL ?? ""
 const MainConn = mongoose.createConnection(url)
 
 MainConn.model("Event", EventSchema)

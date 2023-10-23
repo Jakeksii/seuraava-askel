@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Header from "../assets/components/Header";
 import { useAppContext } from "../assets/context/appContext";
+import OrganizationPreview from "../assets/components/OrganizationPreview";
 
 
 
@@ -17,11 +18,10 @@ export default function Organization() {
         <>
         <Header />
         <main>
-        <h2 className="text-center p-2">Seurakunnan esikatselu / muokkaus sivu</h2>
-        <h1>täällä näkyy tämä {organization && organization.organization_name}</h1>
-        {/* miksi ei toimi?? */}
-
-        <Link to="/Create" className="btn-primary"> Tee seurakunta </Link>
+          <h2>Kuulut {organization && organization.organization_name} seurakuntaan </h2>
+          <p>Tähän Seurakunnan kuva string </p>
+        <OrganizationPreview />
+        <Link to="/Create" className="btn-primary"> Muokkaa seurakunnan tietoja (Väärä linkki, menee "luo seurakunta") </Link>
         </main>
         </>
     )

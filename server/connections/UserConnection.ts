@@ -6,7 +6,8 @@ import UserSchema from "../schemas/User";
 
 dotenv.config();
 
-const url:string = process.env.MONGO_URL_USER ?? ""
+// const url:string = process.env.MONGO_URL_USER ?? ""
+const url:string = process.env.MONGO_URL_USER_LOCAL ?? ""
 const UserConn = mongoose.createConnection(url)
 
 UserConn.model("User", UserSchema)
