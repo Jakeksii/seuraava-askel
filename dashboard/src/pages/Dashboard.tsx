@@ -8,8 +8,8 @@ export default function Dasboard() {
         <Header />
         <main>
 
-            <h2 className="text-center p-2">Listaa Seurakunta</h2>
-            <h2 className="text-center p-2">Liity Seurakuntaan</h2>
+            <Link to="/create" className="text-center p-2"> Listaa Seurakunta </Link>
+            <Link to="/join-organization" className="text-center p-2"> Liity Seurakuntaan </Link>
             <Link to="/chooseorganization" className="text-center p-2"> Valitse seurakunta </Link>
         </main>
         </>

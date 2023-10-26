@@ -96,8 +96,6 @@ export interface SendOrganization {
 }
 
 
-
-
 export interface User {
     token: string,
     user: {

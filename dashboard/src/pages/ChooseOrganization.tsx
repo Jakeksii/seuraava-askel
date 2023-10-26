@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import Header from "../assets/components/Header";
 import { Organization } from "../assets/types";
 import { Link } from "react-router-dom";
-import { userInfo } from "os";
 import { useAppContext } from "../assets/context/appContext";
+import CheckBoxListSecondary from "../assets/components/OrgList"
 
 export default function CreateOrganization() {
 
@@ -17,9 +17,13 @@ export default function CreateOrganization() {
     const anaStr = currentOrg ? `/${currentOrg.organization_id}/analytics` : "/analytics";
     const orgStr = currentOrg ? `/${currentOrg.organization_id}/organization` : "/organization";
 
+    const [orgList, setOrgList] = useState(user?.user.organizations)
+
+    const test = user?.user.organizations?.[0]
 
     useEffect(()=> {
 
+      console.log("this is orglist", orgList)
 
     }, [])
 
@@ -27,16 +31,11 @@ export default function CreateOrganization() {
         <>
         <Header />
         <main>
-        <ul>
-        {organizations.map((org) => (
-          <li key={org._id}>
-            {org.name} (ID: {org._id})
-            {/* Render additional organization fields as needed */}
-          </li>
-        ))}
-      </ul>
-        <Link to="/chooseorganization" className="btn-primary"> Valitse seurakunta </Link>
-        <p>^Tää näytetään vaan navissa</p>
+         
+        <h2> Valitse Seurakunta</h2>
+          <CheckBoxListSecondary />
+        
+        <p><br></br></p>
         <Link to="/join-organization" className="btn-primary"> Liity seurakuntaan </Link>
         <p><br></br></p>
         <Link to="/Create" className="btn-primary"> Uusi seurakunta </Link>

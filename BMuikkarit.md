@@ -9,6 +9,6 @@ Pitäis user päivittää sen jälkeen kun organisaatio on tehty. Nyt pitää ki
 
 Käyttäjä ei voi olla osa montaa seurakuntaa.
 Joka on hyvä?
-->Poista sit navista ja dashboardista mahollisuus klikkaa täät turhaa nappia.
+->Poista sit dashboardista mahollisuus klikkaa tätä turhaa nappia.
 
 Backendistä pitäis lähettää kans Organisaatio data ja tallentaa se Session storageen, samallai ku user.

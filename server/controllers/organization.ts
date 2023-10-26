@@ -1,5 +1,5 @@
 import { Response, Request } from "../types";
-import { Organization } from "../connections/MainConnection";
+import { Organization, OrganizationPage } from "../connections/MainConnection";
 import { User } from "../connections/UserConnection";
 
 export const createOrganization = async (req:Request, res:Response):Promise<Response> => {
@@ -80,11 +80,12 @@ export const getOrganization = async (req:Request, res:Response):Promise<Respons
 
 // GET all organizations
 export const getAllOrganizations = async (req:Request, res:Response):Promise<Response> => {
+    console.log("this is whats coming from front")
     try {
-        const organizations = await Organization.find()
-        console.log('Fetched organizations:', organizations);
-  
-        return res.status(200).json(organizations)
+        const orgs = await OrganizationPage.find()
+        
+        console.log(orgs)
+        return res.status(200).json(orgs)
 
     } catch (error:any) {
         return res.status(500).json({ error: error.message })
