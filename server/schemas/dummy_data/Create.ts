@@ -60,9 +60,10 @@ export async function CreateDummyData(req: Request, res: Response) {
                 },
                 image_id: GetImage(),
                 meta: {
+                    denomination: event.denomination,
                     types: event.types,
                     size: GetSize(),
-                    language: [0],
+                    language: [GetLang()],
                     price: {
                         value: 0,
                         currency: "€"
@@ -121,4 +122,7 @@ function GetImage() {
 }
 function GetSize() {
     return meta.size[Math.floor(Math.random() * meta.size.length)];
+}
+function GetLang() {
+    return meta.lang[Math.floor(Math.random() * meta.lang.length)];
 }

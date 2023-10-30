@@ -45,10 +45,10 @@ export default new Schema<IEvent>({
     },
     image_id: String,
     meta: {
-        denomination: Number,
+        denomination: String,
         types: {type: [String]},
-        size: Number,
-        language: {type: [Number]},
+        size: String,
+        language: {type: [String]},
         price: {
             value: Number,
             currency: String

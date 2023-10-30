@@ -1,7 +1,7 @@
 import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
 import { Types } from 'mongoose'
 import { Event } from "../connections/MainConnection"
-import { IEvent, Request, Response } from '../types'
+import { Filters, IEvent, Request, Response } from '../types'
 
 // USE ZOD VALIDATOR
 
@@ -76,153 +76,109 @@ export const createEvent = async (req: Request, res: Response) => {
 
 
 export const getFilters = async (req: Request, res: Response) => {
-  const filters = req.body.filters
-  if(!filters) return res.status(400).end()
-  const meta = filters.meta ?? {}
-
-  const location = req.body.location
-
-  // we need to check if "meta.types" value is array
-  // because we need to tweak our matching parameter
-  // If we dont use $all mongoose operator, $match operator will strict match meta.types
-  // then if you filter with meta.types[1] mongoDB will only output documents where meta.types: [1]
-  // even though there might be document with meta.types: [1, 2]
-  // now with $all mongoDB will output meta.types[1] and meta.types[1, 2]
-  const match = {
-    ...meta,
-  }
-  if (Array.isArray(meta["meta.types"])) {
-    match["meta.types"] = { $all: meta["meta.types"] };
-  }
-  if (Array.isArray(meta["meta.size"])) {
-    match["meta.size"] = { $nin: meta["meta.size"] };
-  }
-
   try {
-    if(location){
-      // With geo matching
+    // DESTRUCTURE REQUEST BODY ---------------------
+    const location = req.body.location as { latitude: number, longitude: number }
+    const matchQuery = constructMatchQuery(req.body.filters)
+    if (!matchQuery) return res.status(400).json({ error: "Invalid Filters object" })
+
+    // CONSTRUCT PIPELINE ----------------
+    const pipeline = [];
+
+    // With geo matching
+    if (location) {
       const { latitude, longitude } = location;
-      const { min_distance, max_distance } = filters
-      const availableFilters = await Event.aggregate([
-        {
-          $geoNear: {
-            near: {
-              type: 'Point',
-              coordinates: [longitude, latitude],
-            },
-            distanceField: 'distance',
-            spherical: true,
-            minDistance: min_distance ?? 0,
-            maxDistance: max_distance ?? 5000000 // meters 5k kilometers
+      pipeline.push({
+        $geoNear: {
+          near: {
+            type: 'Point',
+            coordinates: [longitude, latitude] as [number, number],
           },
-        },
-        {
-          $match: match // this will filter aggregate pipeline request
-        },
-        {
-          $facet: {
-            denomination: [
-              { $group: { _id: '$meta.denomination' } },
-              { $project: { _id: 0, value: '$_id' } },
-            ],
-            types: [
-              {
-                $unwind: '$meta.types' // Split the array into individual documents
-              },
-              { $group: { _id: '$meta.types' } },
-              { $project: { _id: 0, value: '$_id' } },
-            ],
-            size: [
-              { $group: { _id: '$meta.size' } },
-              { $project: { _id: 0, value: '$_id' } },
-            ],
-            language: [
-              { $group: { _id: '$meta.language' } },
-              { $project: { _id: 0, value: '$_id' } },
-            ],
-            price: [
-              { $group: { _id: '$meta.price.value' } },
-              { $project: { _id: 0, value: '$_id' } },
-            ]
-          },
-        },
-      ]).exec();
-
-      return res.status(200).json(availableFilters[0])
-
-    } else {
-
-      // Without geo matching
-      const availableFilters = await Event.aggregate([
-        {
-          $match: match // this will filter aggregate pipeline request
-        },
-        {
-          $facet: {
-            denomination: [
-              { $group: { _id: '$meta.denomination' } },
-              { $project: { _id: 0, value: '$_id' } },
-            ],
-            types: [
-              {
-                $unwind: '$meta.types' // Split the array into individual documents
-              },
-              { $group: { _id: '$meta.types' } },
-              { $project: { _id: 0, value: '$_id' } },
-            ],
-            size: [
-              { $group: { _id: '$meta.size' } },
-              { $project: { _id: 0, value: '$_id' } },
-            ],
-            language: [
-              { $group: { _id: '$meta.language' } },
-              { $project: { _id: 0, value: '$_id' } },
-            ],
-            price: [
-              { $group: { _id: '$meta.price.value' } },
-              { $project: { _id: 0, value: '$_id' } },
-            ],
-            online: [
-              { $group: { _id: '$meta.online' } },
-              { $project: { _id: 0, value: '$_id' } },
-            ],
-          },
-        },
-      ]).exec();
-
-      return res.status(200).json(availableFilters[0])
-
+          distanceField: 'distance',
+          spherical: true
+        } as const
+      });
     }
+
+    // Common pipeline stages
+    pipeline.push(
+      {
+        $match: matchQuery
+      },
+      {
+        $facet: {
+          denomination: [
+            { $group: { _id: '$meta.denomination' } },
+            { $project: { _id: 0, value: '$_id' } },
+          ],
+          types: [
+            {
+              $unwind: '$meta.types'
+            },
+            { $group: { _id: '$meta.types' } },
+            { $project: { _id: 0, value: '$_id' } },
+          ],
+          size: [
+            { $group: { _id: '$meta.size' } },
+            { $project: { _id: 0, value: '$_id' } },
+          ],
+          language: [
+            {
+              $unwind: '$meta.language'
+            },
+            { $group: { _id: '$meta.language' } },
+            { $project: { _id: 0, value: '$_id' } },
+          ]
+        }
+      }
+    );
+
+    // FETCH FILTERS ---------------------------------
+    const availableFilters = await Event.aggregate(pipeline).exec();
+
+    // SEND FORMATTED EVENTS ---------------------------
+    return res.status(200).json(availableFilters[0]);
 
   } catch (error) {
     console.error(error)
     return res.status(500).json({ error: 'An error occurred while fetching filters' })
   }
-  
 }
 
+
+
+
 export const getEvents = async (req: Request, res: Response) => {
-  const location = req.body.location
-  const search = req.body.search as [
-    { "address.city": string },
-    { "organization.organization_name": string },
-    { "title": string }
-  ]
-
-  const filters = req.body.filters
-  const meta = filters?.meta ?? {}
-
-  // PAGINATE
-  const page = parseInt(req.query.page as string) || 1; // Current page number
-  const limit = parseInt(req.query.limit as string) || 3; // Number of items per page
-  const skip = (page - 1) * limit
-
   try {
+    // DESTRUCTURE REQUEST BODY ---------------------
+    const location = req.body.location as { latitude: number, longitude: number }
+    const search = req.body.search as [
+      { "address.city": string },
+      { "organization.organization_name": string },
+      { "title": string }
+    ]
+    const matchQuery = constructMatchQuery(req.body.filters)
+    if (!matchQuery) return res.status(400).json({ error: "Invalid Filters object" })
 
+    // QUERY ----------------------------------------
+    const searchQuery = {
+      $and: [
+        matchQuery,
+        {
+          $or: search
+        }
+      ]
+    };
+
+    // PAGINATE ----------------------------------
+    const page = parseInt(req.query.page as string) || 1; // Current page number
+    const limit = parseInt(req.query.limit as string) || 3; // Number of items per page
+    const skip = (page - 1) * limit
+
+    // FETCH EVENTS ---------------------------------
     let events: IEvent[]
-
     if (location) {
-      const { latitude, longitude, min_distance, max_distance } = location;
+      const { latitude, longitude } = location
       events = await Event.aggregate([
         {
           $geoNear: {
@@ -231,13 +187,11 @@ export const getEvents = async (req: Request, res: Response) => {
               coordinates: [longitude, latitude],
             },
             distanceField: 'distance',
-            spherical: true,
-            minDistance: min_distance ?? 0,
-            maxDistance: max_distance ?? 5000000
+            spherical: true
           },
         },
         {
-          $match: meta
+          $match: matchQuery
         },
         {
           $sort: {
@@ -248,9 +202,10 @@ export const getEvents = async (req: Request, res: Response) => {
         // Additional stages if needed
       ]).skip(skip).limit(limit).exec();
     } else {
-      events = await Event.find({ ...meta, $or: search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
+      events = await Event.find(searchQuery).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
     }
 
+    // FORMAT EVENTS ------------------------------------
     const data = events.map((event: IEvent) => {
       return {
         _id: event._id,
@@ -267,6 +222,7 @@ export const getEvents = async (req: Request, res: Response) => {
       }
     })
 
+    // SEND FORMATTED EVENTS ---------------------------
     return res.status(200).json(data)
 
   } catch (error) {
@@ -335,5 +291,22 @@ export const getEventPage = async (req: Request, res: Response) => {
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+function constructMatchQuery(filters: Filters) {
+  try {
+    const meta = filters.meta
+    return {
+      $and: [
+        meta.denomination && meta.denomination.length > 0 ? { 'meta.denomination': { $in: meta.denomination } } : {},
+        meta.types && meta.types.length > 0 ? { 'meta.types': { $in: meta.types } } : {},
+        meta.size && meta.size.length > 0 ? { 'meta.size': { $in: meta.size } } : {},
+        meta.language && meta.language.length > 0 ? { 'meta.language': { $in: meta.language } } : {},
+      ]
+    }
+  } catch (error) {
+    console.error("Error when creating filters", error)
+    return undefined
   }
 }

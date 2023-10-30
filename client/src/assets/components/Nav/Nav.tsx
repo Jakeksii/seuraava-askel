@@ -8,18 +8,28 @@ import Filters from './Filters/Filters';
 import LocationButton from './LocationButton';
 import Loading from '../../partials/Loading';
 
+import { Filters as FiltersType } from "../../../types";
+
 const Search = lazy(() => import('./Search'))
 
 export default function Nav() {
-    const { values: { search } } = useSearchContext()
+    const searchContext = useSearchContext()
 
     // Filter panel
     const [filterPanelOpen, setFilterPanelOpen] = useState(false);
+    const [filters, setFilters] = useState<FiltersType>(searchContext.values.query.filters)
     function openFilterPanel() {
         setFilterPanelOpen(true)
     }
     function closeFilterPanel() {
         setFilterPanelOpen(false)
+        searchContext.setValues({
+            ...searchContext.values,
+            query: {
+                ...searchContext.values.query,
+                filters: filters
+            }
+        })
     }
 
     // Search modal
@@ -41,7 +51,7 @@ export default function Nav() {
                                 className='flex gap-1 w-full'
                                 aria-labelledby='app-search-label'>
                                 <SearchIcon color='info' />
-                                <span id="app-search-label" className='text-info-main whitespace-nowrap overflow-hidden'>{search ?? 'Etsi tapahtumia...'}</span>
+                                <span id="app-search-label" className='text-info-main whitespace-nowrap overflow-hidden'>{searchContext.values.search ?? 'Etsi tapahtumia...'}</span>
                             </Button>
                         </div>
                     </div>
@@ -62,7 +72,7 @@ export default function Nav() {
                 onClose={closeFilterPanel}
             >
                 <div className='h-full bg-primary-main flex flex-col'>
-                <Filters />
+                <Filters filters={filters} setFilters={setFilters}/>
                 <div className='self-center mb-10'>
                     <Fab color='primary' size='small' aria-label="menu-close" onClick={closeFilterPanel} >
                         <CloseIcon />

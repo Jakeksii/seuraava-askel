@@ -17,7 +17,7 @@ export default function getSearchQuery(props: Props): SearchQuery {
     if(props.type==="location"){
         return {
             location: props.location,
-            filters: props.filters
+            filters: props.filters ?? { meta: {} }
         }
     } else {
         return {
@@ -26,7 +26,7 @@ export default function getSearchQuery(props: Props): SearchQuery {
                 {"organization.organization_name": props.type==="organization" ? props.search : ""},
                 {"title": props.type==="title" ? props.search : ""}
             ],
-            filters: props.filters
+            filters: props.filters ?? { meta: {} }
         }
     }
 }

@@ -1,11 +1,13 @@
 {
     "size": [
-        0,
-        1,
-        2
+        "Small",
+        "Medium",
+        "Large"
     ],
     "lang": [
-        0
+        "English",
+        "Finnish",
+        "Swedish"
     ],
     "online": [
         true,

@@ -21,7 +21,14 @@ export interface IAddress {
     country: string
     coordinates: [number, number]
 }
-
+export interface Filters {
+    meta: {
+        denomination?: string[],
+        types?: string[],
+        size?: string[],
+        language?: string[]
+    }
+}
 // Event
 export interface IEvent {
     _id?: Types.ObjectId
@@ -34,10 +41,10 @@ export interface IEvent {
     address: IAddress
     image_id: string
     meta: {
-        denomination?: number
-        types?: number[]
-        size?: number
-        language?: number[]
+        denomination?: string
+        types?: string[]
+        size?: string
+        language?: string[]
         price?: {
             value: number,
             currency: string

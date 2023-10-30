@@ -1,37 +1,44 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import { Autocomplete, Checkbox, TextField } from "@mui/material";
-import { AvailableFilters } from '../../../../types';
-
-import { filters as FilterNames } from "../../../../language/source.json";
-
-type HandleFilterChangeProps = {
-    filter: "meta.denomination" | "meta.size" | "meta.language" | "meta.price.value" | "distance"
-    value: number
-} | {
-    filter: "meta.types"
-    value: any
-}
+import Language from "../../../../language/source.json";
 
 interface Props {
-    onChange(props: HandleFilterChangeProps): void
-    availableFilters?: AvailableFilters
+    onChange(props: {filter:string, value:any}): void
+    filterType: "types" | "denomination" | "size" | "language"
+    availableFilters?: [{value:string}]
+    isLoading: boolean
+    selectedFilters?: string[]
 }
 
 export default function Select(props: Props) {
+    const language:{key:string,value:string}[] = Language.filters[props.filterType]
+    const placeholder:string = Language.filter_names.find(obj => obj.key === props.filterType)?.value ?? ""
+
     function getOptions() {
-        type option = { label: string, id: number, key: number }
-        if (props.availableFilters?.types) {
+        type option = { label: string, id: number, key: string, selected:boolean }
+        if (props.availableFilters) {
             let options: option[] = []
-            props.availableFilters?.types.forEach((type, i) => {
-                options.push({ label: FilterNames.types.find(obj => obj.key === type.value)?.value ?? "", id: i, key: type.value })
+            props.availableFilters.forEach((filter, i) => {
+                options.push({ label: language.find(obj => obj.key === filter.value)?.value ?? "", id: i, key: filter.value, selected:true })
+            })
+            return options
+        }
+        return []
+    }
+    function getSelectedOptions() {
+        type option = { label: string, id: number, key: string }
+        if (props.selectedFilters) {
+            let options: option[] = []
+            props.selectedFilters.forEach((filter, i) => {
+                options.push({ label: language.find(obj => obj.key === filter)?.value ?? "", id: i, key: filter })
             })
             return options
         }
         return []
     }
     function isOptionEqualToValue(option: any, value: any): boolean {
-        if (option.label === value.label) {
+        if (option.key === value.key) {
             return true
         }
         return false
@@ -39,11 +46,16 @@ export default function Select(props: Props) {
     return (
         <Autocomplete
             multiple
+            value={getSelectedOptions()}
             options={getOptions()}
             size="small"
+            noOptionsText="Ei valintoja"
+            id={'Filter'+props.filterType}
             limitTags={1}
+            disabled={props.isLoading}
+            color='secondary'
             disableCloseOnSelect
-            onChange={(_, v) => props.onChange({ filter: "meta.types", value: v })}
+            onChange={(_, v) => props.onChange({ filter: props.filterType, value: v })}
             isOptionEqualToValue={(o, v) => isOptionEqualToValue(o, v)}
             renderOption={(props, option, { selected }) => (
                 <li {...props}>
@@ -56,9 +68,9 @@ export default function Select(props: Props) {
                     {option.label}
                 </li>
             )}
+            autoComplete={false}
             sx={{ width: 300, maxHeight: '200px', }}
-            color="secondary"
-            renderInput={(params) => <TextField {...params} placeholder="Tapahtumatyyppi" />}
+            renderInput={(params) => <TextField {...params} placeholder={placeholder} />}
         />
     )
 }

@@ -83,32 +83,30 @@ export type SearchResult = {
     typeof SEARCH_TYPE_TITLE
     data: string
 }
-export interface Filters { // KS Event Schema
-    meta?: {
-        "meta.denomination"?: number[],
-        "meta.types"?: number[],
-        "meta.size"?: number[],
-        "meta.language"?: number[]
+export interface Filters {
+    meta: {
+        denomination?: string[],
+        types?: string[],
+        size?: string[],
+        language?: string[]
     }
-    min_distance?: number,
-    max_distance?: number
 }
 export interface AvailableFilters {
-    denomination: [{ value: number }],
-    types: [{ value: number }],
-    size: [{ value: number }],
-    language: [{ value: number }],
-    price: [{ value: number }],
-    online: [{ value: boolean }]
+    denomination: [{ value: string }],
+    types: [{ value: string }],
+    size: [{ value: string }],
+    language: [{ value: string }]
 }
-export interface SearchQuery {
-    location?: Location
-    search?: [
+export type SearchQuery = {
+    location: Location
+    filters: Filters
+} | {
+    search: [
         { "address.city": string },
         { "organization.organization_name": string },
         { "title": string }
     ]
-    filters?: Filters
+    filters: Filters
 }
 
 

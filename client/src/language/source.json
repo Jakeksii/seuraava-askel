@@ -1,36 +1,41 @@
 {
+    "filter_names": [
+        {"key":"denomination", "value":"Kirkkokunta"},
+        {"key":"types", "value":"Tapahtumatyyppi"},
+        {"key":"size", "value":"Koko"},
+        {"key":"language", "value":"Kieli"}
+    ],
     "filters": {
         "denomination": [
-            {"key":0, "value":"Evankelis-luterilainen"},
-            {"key":1, "value":"Ortodoksinen"},
-            {"key":2, "value":"Katolinen"},
-            {"key":3, "value":"Helluntaiseurakunta"},
-            {"key":4, "value":"Vapaakirkko"},
-            {"key":5, "value":"Baptistikirkko"},
-            {"key":6, "value":"Metodistikirkko"},
-            {"key":7, "value":"Adventtikirkko"}
+            {"key": "Evangelical Lutheran", "value": "Evankelis-luterilainen"},
+            {"key": "Pentecostal", "value": "Helluntaiseurakunta"},
+            {"key": "Free Church", "value": "Vapaakirkko"},
+            {"key": "Baptist", "value": "Baptistikirkko"},
+            {"key": "Methodist", "value": "Metodistikirkko"},
+            {"key": "Adventist", "value": "Adventtikirkko"}
         ],
         "types": [
-            {"key":0, "value":"Konsertti"},
-            {"key":1, "value":"Kokoperheen tapahtuma"},
-            {"key":2, "value":"Raamattupiiri"},
-            {"key":3, "value":"Nuoret"},
-            {"key":4, "value":"Teemailta"},
-            {"key":5, "value":"Opetus- ja koulutustapahtuma"},
-            {"key":6, "value":"Jumalanpalvelus"},
-            {"key":7, "value":"Seniorit"},
-            {"key":8, "value":"Musiikki- ja laulutapahtuma"},
-            {"key":9, "value":"Lapset"},
-            {"key":10, "value":"Rukouskokous"},
-            {"key":11, "value":"Varkit"}
+            {"key": "Concert", "value": "Konsertti"},
+            {"key": "Family Event", "value": "Kokoperheen tapahtuma"},
+            {"key": "Bible Study Group", "value": "Raamattupiiri"},
+            {"key": "Youth", "value": "Nuoret"},
+            {"key": "Theme Night", "value": "Teemailta"},
+            {"key": "Teaching and Training Event", "value": "Opetus- ja koulutustapahtuma"},
+            {"key": "Worship Service", "value": "Jumalanpalvelus"},
+            {"key": "Seniors", "value": "Seniorit"},
+            {"key": "Music and Singing Event", "value": "Musiikki- ja laulutapahtuma"},
+            {"key": "Children", "value": "Lapset"},
+            {"key": "Prayer Meeting", "value": "Rukouskokous"}
         ],
         "size": [
-            {"key":0, "value":"Pieni"},
-            {"key":1, "value":"Keskisuuri"},
-            {"key":2, "value":"Suuri"}
+            {"key": "Small", "value": "Pieni"},
+            {"key": "Medium", "value": "Keskisuuri"},
+            {"key": "Large", "value": "Suuri"}
         ],
         "language": [
-            {"key":0, "value":"Suomi"}
+            {"key": "Finnish", "value": "Suomi"},
+            {"key": "English", "value": "Englanti"},
+            {"key": "Swedish", "value": "Ruotsi"}
         ]
-    }
+    }    
 }

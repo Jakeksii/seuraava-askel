@@ -1,11 +1,10 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { Filters, SearchQuery } from "../../types";
+import { SearchQuery } from "../../types";
 import getSearchQuery from "../functions/getSearchQuery";
 
 interface Values {
     query: SearchQuery
     search?: string
-    filters?: Filters
 }
 interface SearchContextType {
     values: Values
