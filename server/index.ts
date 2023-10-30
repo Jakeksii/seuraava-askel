@@ -84,7 +84,7 @@ const connect = async () => {
     await StatsConn.asPromise().then(result => {
         console.log('Connected to Stats database at: ' + result.host + ":" + result.port)
     }).catch(error => {
-        console.error('Error connecting to User database: ', error)
+        console.error('Error connecting to Stats database: ', error)
     })
 
     try {
