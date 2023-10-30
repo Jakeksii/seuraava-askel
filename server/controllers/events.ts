@@ -2,6 +2,7 @@ import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
 import { Types } from 'mongoose'
 import { Event } from "../connections/MainConnection"
 import { IEvent, Request, Response } from '../types'
+import { EventStats } from '../connections/StatsConnection'
 
 // USE ZOD VALIDATOR
 
@@ -45,6 +46,23 @@ export const createEvent = async (req: Request, res: Response) => {
     updated_by: req.user._id
   })
 
+  // Create eventstats object
+  const newEventStats = new EventStats( {
+    title: event.title,
+    event_searches: 0,
+    event_views: 0,
+    event_unique_views: 0,
+    event_location_views: 0,
+    event_clicks: 0,
+    event_unique_clicks: 0,
+    event_location_clicks: [
+      {
+          locationType: 'Point',
+          coordinates: [0, 0],
+      },
+  ],
+  })
+
   // validate event object
   const validationError = newEvent.validateSync();
   if (validationError) {
@@ -66,6 +84,8 @@ export const createEvent = async (req: Request, res: Response) => {
     try {
       // save created event to db
       const savedEvent = await newEvent.save()
+      // save created eventstats to db
+      const savedEventStats = await newEventStats.save()
       // return saved event to client
       return res.status(201).json(savedEvent)
     } catch (error) {

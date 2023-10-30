@@ -16,10 +16,12 @@ interface ContactInfo {
 
 // EVENT
 export interface IEvent {
-    _id: string
+    _id: string | undefined
     start_date: Date
     end_date: Date
     title: string
+    description: string
+    contactinfo: ContactInfo
     extract: string
     visible: boolean
     address: Address
@@ -113,4 +115,25 @@ export interface User {
             }
         ]
     }
+}
+
+export interface EventStats {
+    title: string
+    event_searches: number
+    event_views: number
+    event_unique_views: number
+    event_location_views: number
+    event_clicks: number
+    event_unique_clicks: number
+    event_location_clicks: [
+        {
+            locationType: {
+                type: string,
+                enum: ['Point'], // You can specify the type as "Point" for geo coordinates
+            },
+            coordinates: {
+                type: [number], // [longitude, latitude]
+            },
+        },
+    ],
 }

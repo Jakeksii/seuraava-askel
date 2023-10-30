@@ -59,6 +59,7 @@ export const createOrganization = async (req:Request, res:Response):Promise<Resp
     }
 }
 
+
 // GET organization
 export const getOrganization = async (req:Request, res:Response):Promise<Response> => {
     try {

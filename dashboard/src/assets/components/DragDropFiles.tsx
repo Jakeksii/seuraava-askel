@@ -36,7 +36,7 @@ const DragDropFiles: React.FC = () => {
       console.log(Array.from(formData.getAll("Files")));
 
       // heitä data organization pagelle
-      fetch("/api/organizations/", {
+      fetch("/api/http://localhost:3001/api/events/create", {
         method: "POST",
         body: formData
       });

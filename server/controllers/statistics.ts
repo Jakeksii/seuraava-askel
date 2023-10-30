@@ -1,32 +1,60 @@
-import { Organization } from "../connections/MainConnection";
-import { User } from "../connections/UserConnection";
-import { EventStats } from "../connections/StatsConnection";
-import { Request, Response, IUser } from "../types";
-import mongoose from "mongoose";
+import { Response, Request } from "../types";
+
+import { EventStats } from "../connections/StatsConnection"
 
 
-export const postEventClicks = async (req:Request, res:Response):Promise<Response> => {
+// GET Test
+export const getTest = async (req:Request, res:Response):Promise<Response> => {
+    
+    try {
 
-    const data = req.body
+        const stats = await EventStats.find()
 
-    if(typeof data !== "number") {
-        console.log("The data aint numbers, hoe")
+        if(!stats) return res.status(404).json({ message: "Stats not found"});
+
+
+        return res.status(200).json(stats)
+
+    } catch (error:any) {
+        return res.status(500).json({ error: error.message })
     }
+}
+
+export const createEventStats = async (req:Request, res:Response):Promise<Response> => {
+    
+    try {
+
+        const newStatsData = req.body;
+
+        const stats = new EventStats(newStatsData);
+        
+        await stats.save();
+
+        if(!stats) return res.status(404).json({ message: "Stats not found"});
+
+
+        return res.status(200).json(stats)
+
+    } catch (error:any) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+export const updateEventStats = async (req:Request, res:Response):Promise<Response> => {
+    
+    const _id = req.params.id
 
     try {
-        
+
+        const stats = await EventStats.findByIdAndUpdate(_id, req.body, {new: true})
+
+        if(!stats) return res.status(404).json({ message: "Stats not found"});
 
 
-        return res.status(200).json({msg: "yes works"});
+        return res.status(200).json(stats)
+
     } catch (error:any) {
-        return res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message })
     }
 }
 
-export const getTest = async (req:Request, res:Response):Promise<Response> => {
-
-    const data = await EventStats.find()
-
-    return res.status(200).json(data);
-
-}

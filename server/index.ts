@@ -19,12 +19,11 @@ import organizationPageRoutes from "./routes/organizationPage";
 import userRoutes from "./routes/user";
 import { DummyDataRouter } from './schemas/dummy_data/Create';
 
-import statsRouter from "./routes/stats"
+import statsRoutes from "./routes/statistics"
 
 // CONFIGURATIONS
 dotenv.config();
 const app = express();
-
 const limiter = rateLimit({
     windowMs: 5 * 60 * 1000, // 15 minutes
     max: 150, // Limit each IP to 50 requests per `window` (here, per 15 minutes)
@@ -58,7 +57,7 @@ app.use(morgan("common"))
 // ROUTES 
 app.use("/api/dummydata", DummyDataRouter)
 
-app.use("/api/statistics", statsRouter)
+app.use("/api/statistics", statsRoutes)
 
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)

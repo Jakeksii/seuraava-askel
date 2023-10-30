@@ -148,14 +148,24 @@ export interface IEmailVerification {
 // EventStats
 export interface IEventStats {
     _id: typeof Types.ObjectId
-    event_name: String
+    title: String
     event_searches: Number
     event_views: Number
     event_unique_views: Number
     event_location_views: Number
     event_clicks: Number
     event_unique_clicks: Number
-    event_location_clicks: Number
+    event_location_clicks: [
+        {
+            locationType: {
+                type: String,
+                enum: ['Point'], // You can specify the type as "Point" for geo coordinates
+            },
+            coordinates: {
+                type: [Number], // [longitude, latitude]
+            },
+        },
+    ],
     createdAt?: Date
     updatedAt?: Date
 }
