@@ -5,8 +5,7 @@ import EventSchema from "../schemas/STATS/EventStatistics";
 
 dotenv.config();
 
-// const url:string = process.env.MONGO_URL_STATS ?? ""
-const url:string = process.env.MONGO_URL_STATS_LOCAL ?? ""
+const url:string = (process.env.USING_PUBLIC_DB ? process.env.MONGO_URL_STATS : process.env.MONGO_URL_STATS_LOCAL) ?? ""
 const StatsConn = mongoose.createConnection(url)
 
 StatsConn.model("EventStats", EventSchema)
