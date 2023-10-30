@@ -1,55 +1,65 @@
-import { useContext, useEffect, useState } from "react";
-import Header from "../assets/components/Header";
-import { Organization } from "../assets/types";
-import { Link } from "react-router-dom";
+import { Button } from '@mui/material';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import { useEffect } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../assets/context/appContext";
-import CheckBoxListSecondary from "../assets/components/OrgList"
 
 export default function CreateOrganization() {
+  const { user, organization, setOrganization } = useAppContext()
+  const organization_list = user?.user?.organizations
+  const navigate = useNavigate();
 
-    const [organizations, setOrganizations] = useState<Organization[]>([]);
-    const {user} = useAppContext()
+  // CLEAR ORGANIZATION once page is loaded
+  useEffect(() => {
+    setOrganization({})
+  }, [])
 
-    const [currentOrg, setCurrentOrg] = useState(user?.user.organizations?.[0])
-    
-    const eventStr = currentOrg ? `/${currentOrg.organization_id}/events` : "/events";
-    const subStr = currentOrg ? `/${currentOrg.organization_id}/subscription` : "/subscription";
-    const anaStr = currentOrg ? `/${currentOrg.organization_id}/analytics` : "/analytics";
-    const orgStr = currentOrg ? `/${currentOrg.organization_id}/organization` : "/organization";
 
-    const [orgList, setOrgList] = useState(user?.user.organizations)
+  function chooseOrganization(index: number) {
+    if (organization_list === undefined) return // if organization list is empty we wont run this func
 
-    const test = user?.user.organizations?.[0]
+    const _id = organization_list[index].organization_id
+    const name = organization_list[index].organization_name
 
-    useEffect(()=> {
+    // we save choosed organization _id and name to appContext so we can use it across our app.
+    // we wont store organization data in appContext because we use useQuery that stores organization data and handles data caching.
+    setOrganization({
+      ...organization,
+      _id: _id,
+      name: name
+    })
 
-      console.log("this is orglist", orgList)
+    navigate("/" + _id) // We navigate to organization dashboard, "domain.fi/organization_id"
+  }
 
-    }, [])
-
-    return (
-        <>
-        <Header />
-        <main>
-         
-        <h2> Valitse Seurakunta</h2>
-          <CheckBoxListSecondary />
-        
-        <p><br></br></p>
-        <Link to="/join-organization" className="btn-primary"> Liity seurakuntaan </Link>
-        <p><br></br></p>
-        <Link to="/Create" className="btn-primary"> Uusi seurakunta </Link>
-        <p><br></br></p>
-        <Link to={anaStr} className="btn-primary"> Analytiikka </Link>
-        <p><br></br></p>
-        <Link to={subStr} className="btn-primary"> Tiimi ja tilaus </Link>
-        <p><br></br></p>
-        <Link to={eventStr} className="btn-primary"> Tapahtumat </Link>
-        <p><br></br></p>
-        <Link to={orgStr} className="btn-primary"> Muokkaa Seurakuntaa  (tätä ei oo vielä tehty)</Link>
-        
-        </main>
-
-        </>
-    )
+  return (
+    <main className="w-full m-auto mb-6 text-center">
+      <section className='pt-6 text-white'>
+        <h2>Valitse Seurakunta</h2>
+      </section>
+      <section className='pt-6'>
+        <List
+          dense
+          sx={{ width: 'fit-content', margin: 'auto' }}>
+          {organization_list?.map((value, index) => {
+            return (
+              <ListItem
+                key={value.organization_id}
+              >
+                <Button color='info' fullWidth variant='contained' onClick={() => chooseOrganization(index)}><h3>{value.organization_name}</h3></Button>
+              </ListItem>
+            );
+          })}
+        </List>
+      </section>
+      <section className="pt-6 flex flex-col w-fit m-auto justify-center gap-2">
+        <Button color='info' variant='outlined' component={Link} to="/create"><h3>Luo uusi seurakunta</h3></Button>
+      </section>
+      <section className="pt-6 flex flex-col w-fit m-auto justify-center gap-2">
+        <h3><u>Kutsut</u></h3>
+        <p>Tänne voisi listata kaikki käyttäjälle tulleet kutsut ja <br /> kutsujen viereen <u>Hyväksy</u> / <u>Hylkää</u> nappulat</p>
+      </section>
+    </main>
+  )
 }

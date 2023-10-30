@@ -1,28 +1,18 @@
-import { Link } from "react-router-dom";
-import Header from "../assets/components/Header";
-import { useAppContext } from "../assets/context/appContext";
+import { useParams } from "react-router-dom";
 import OrganizationPreview from "../assets/components/OrganizationPreview";
-
-
+import { useAppContext } from "../assets/context/appContext";
+import useDetailedOrganizations from "../assets/hooks/api-hooks/useDetailedOrganisations";
 
 export default function Organization() {
+  // we use these 3 const on every page. we always want to display fresh data.
+  const { organization_id } = useParams()
+  const { user } = useAppContext()
+  const { data } = useDetailedOrganizations({ organization_id: organization_id ?? "", token: user?.token ?? "" })
 
-    const appContext = useAppContext()
-
-    const organization = appContext.user?.user.organizations?.[0]
-
-    // tänne hae kaikki organisaatiot, joissa on käyttäjän id
-
-
-    return (
-        <>
-        <Header />
-        <main>
-          <h2>Kuulut {organization && organization.organization_name} seurakuntaan </h2>
-          <p>Tähän Seurakunnan kuva string </p>
-        <OrganizationPreview />
-        <Link to="/Create" className="btn-primary"> Muokkaa seurakunnan tietoja (Väärä linkki, menee "luo seurakunta") </Link>
-        </main>
-        </>
-    )
+  return (
+    <main className="w-full m-auto mt-6 text-center">
+      <OrganizationPreview
+        name={data?.name} />
+    </main>
+  )
 }

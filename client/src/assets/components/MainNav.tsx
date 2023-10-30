@@ -39,7 +39,7 @@ export default function MainNav() {
             <Button sx={{
               borderRadius: '10px'
             }}
-              color='info' variant='outlined' component={Link} to="/" onClick={closeDrawer}><h6>Listaa seurakuntasi</h6></Button>
+              color='info' variant='outlined' component={Link} to="https://seuraava-askel-dashboard.cyclic.app/" onClick={closeDrawer}><h6>Listaa seurakuntasi</h6></Button>
 
           </nav>
           <div className='self-center mb-10'>

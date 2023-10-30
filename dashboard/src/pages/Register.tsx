@@ -9,7 +9,6 @@ import TextField from '@mui/material/TextField';
 import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Header from '../assets/components/Header';
 import { ERROR_BAD_RESPONSE, ERROR_DEFAULT, ERROR_NETWORK } from '../assets/constants';
 import { useAppContext } from '../assets/context/appContext';
 import { useLogin, useRegister } from '../assets/hooks/api-hooks/useAuthenticate';
@@ -167,18 +166,15 @@ export default function Register() {
     )
 
     return (
-        <>
-            <Header />
-            <main>
-                <Container component="section" maxWidth="xs" className='mt-6'>
-                    <div className='flex flex-col items-center p-2'>
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.dark' }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-                        {isRegistered ? registerSuccessElement : registerElement}
-                    </div>
-                </Container>
-            </main>
-        </>
+        <main>
+            <Container component="section" maxWidth="xs" className='mt-6'>
+                <div className='flex flex-col items-center p-2'>
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.dark' }}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    {isRegistered ? registerSuccessElement : registerElement}
+                </div>
+            </Container>
+        </main>
     );
 }

@@ -9,7 +9,7 @@ interface Props {
 
 export default function useDetailedOrganizations(props: Props) {
     return useQuery({
-        queryKey: ['detailedorganization', props.organization_id],
+        queryKey: ['detailedorganization', props.organization_id, props.token],
         staleTime: 1000 * 60,
         queryFn: async () => {
             // await wait(2000)        //loading testausta varten

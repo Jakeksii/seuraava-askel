@@ -1,1 +1,0 @@
-import{j as a,H as e}from"./index-598b4a4a.js";function s(){return a.jsxs(a.Fragment,{children:[a.jsx(e,{}),a.jsx("main",{children:a.jsx("h2",{className:"text-center p-2",children:"Valitse seurakunta / Liity seurakuntaan / Listaa uusi seurakunta"})})]})}export{s as default};
