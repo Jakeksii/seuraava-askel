@@ -8,6 +8,7 @@ import morgan from "morgan";
 
 import MainConn from "./connections/MainConnection";
 import UserConn from "./connections/UserConnection";
+import StatsConn from "./connections/StatsConnection";
 
 import authRoutes from "./routes/auth";
 import emailRoutes from './routes/email';
@@ -17,6 +18,8 @@ import organizationRoutes from "./routes/organization";
 import organizationPageRoutes from "./routes/organizationPage";
 import userRoutes from "./routes/user";
 import { DummyDataRouter } from './schemas/dummy_data/Create';
+
+import statsRouter from "./routes/stats"
 
 // CONFIGURATIONS
 dotenv.config();
@@ -55,6 +58,8 @@ app.use(morgan("common"))
 // ROUTES 
 app.use("/api/dummydata", DummyDataRouter)
 
+app.use("/api/statistics", statsRouter)
+
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/organizations", organizationRoutes)
@@ -73,6 +78,12 @@ const connect = async () => {
 
     await UserConn.asPromise().then(result => {
         console.log('Connected to User database at: ' + result.host + ":" + result.port)
+    }).catch(error => {
+        console.error('Error connecting to User database: ', error)
+    })
+
+    await StatsConn.asPromise().then(result => {
+        console.log('Connected to Stats database at: ' + result.host + ":" + result.port)
     }).catch(error => {
         console.error('Error connecting to User database: ', error)
     })
