@@ -4,6 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import { useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../assets/context/appContext";
+import Invitations from '../assets/components/Invitations';
 
 export default function CreateOrganization() {
   const { user, organization, setOrganization } = useAppContext()
@@ -59,6 +60,7 @@ export default function CreateOrganization() {
       <section className="pt-6 flex flex-col w-fit m-auto justify-center gap-2">
         <h3><u>Kutsut</u></h3>
         <p>Tänne voisi listata kaikki käyttäjälle tulleet kutsut ja <br /> kutsujen viereen <u>Hyväksy</u> / <u>Hylkää</u> nappulat</p>
+          <Invitations />
       </section>
     </main>
   )

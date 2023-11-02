@@ -2,6 +2,7 @@ import { Button, Modal, Paper } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import EventTable from "../assets/components/EventTable";
+import EventPreviw from "../assets/components/EventPreview";
 
 
 export default function Events() {
@@ -24,7 +25,9 @@ export default function Events() {
                 <Button onClick={() => setModalOpen(true)} color='info' variant='contained'><h3>Luo uusi tapahtuma </h3></Button>
                 
                 <Modal open={modalOpen} onClose={() => setModalOpen(false)} className="flex justify-center h-full">
+                    
                     <Paper elevation={3} className="m-auto p-6">
+                    <EventPreviw />
                         <h2>Luo uusi tapahtuma</h2>
                         <p>Laitetaan tähän tapahtuman luonti sivu popup modaalina eikä omana sivunaan 
                             <br/> on sitte helpompaa käyttää samaa componenttia vaikka tapahtuman muokkaamiseen
