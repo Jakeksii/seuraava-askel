@@ -1,24 +1,25 @@
-_id: req_7dd7a7016b56480882a3dfb161b7b2ad
+_id: req_68b13da80e62476d9ef645c60e208b26
 type: Request
 parentId: fld_e1eb0d26c6414223b049036d7849b665
-modified: 1698968321900
-created: 1692438684207
-url: http://localhost:3001/api/invitations/654406e5d62afba1d70beb73
-name: Decline invitation
-description: ""
-method: DELETE
+modified: 1698957753503
+created: 1698953678510
+url: http://localhost:3001/api/invitations
+name: Check invitations
+description: User only need to provide valid Authorization token to get list of
+  all invitations user has.
+method: GET
 body: {}
 parameters: []
 headers:
   - name: User-Agent
-    value: Insomnia/2023.5.5
-    id: pair_b56d8962ca8b4df4a62e76184e2a473c
-  - id: pair_06e02123dfe746d3b03c373a3dc329c9
+    value: insomnia/2023.5.8
+    id: pair_e3efcd145d4c48ec9db55c346a4d7a07
+  - id: pair_819cc20aa09241ec9d12bd31488f59c0
     name: Authorization
     value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQzZmE4Yjg2OWUwZjZhMGQzOTU4ODciLCJpYXQiOjE2OTg5NTM4NzUsImV4cCI6MTY5OTA0MDI3NX0.mgvLAq5XJn2_qrXv-uYfVmtmF-5jYGvxxjMK8SfsWX8
     description: ""
 authentication: {}
-metaSortKey: -1692177920214
+metaSortKey: -1692177920414
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

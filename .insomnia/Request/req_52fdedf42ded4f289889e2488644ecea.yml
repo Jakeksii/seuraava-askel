@@ -1,7 +1,7 @@
 _id: req_52fdedf42ded4f289889e2488644ecea
 type: Request
 parentId: fld_79c013e8aa8a4ac48f98f6096b66d4d4
-modified: 1687270530957
+modified: 1698705247430
 created: 1686512848286
 url: http://localhost:3001/api/organizations
 name: Create organization
@@ -11,7 +11,7 @@ body:
   mimeType: application/json
   text: |-
     {
-    	"name":"test Järvenpään vapaaseurakunta Arkki",
+    	"name":"Exit bändin organisaatio",
     	"business_id":"Y-12112",
     	"address":{
     		"street":"Wärtsilänkatu 8",
@@ -31,7 +31,7 @@ parameters: []
 headers:
   - id: pair_ee11aad08828498994d38ae4f3d01331
     name: Authorization
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDkxYjQ3NzA1YjQ3NTQzODhhZDU4YzQiLCJpYXQiOjE2ODcyNzA1MjEsImV4cCI6MTY4NzI3MTEyMX0.zS0NpywYTxAn5yU-fxuin5xyEHhK_2KF_Zhh0ww1hl4
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwMmUwNDA2YzY3YmNjZmI3YTlkNDUiLCJpYXQiOjE2OTg3MDQ5MDUsImV4cCI6MTY5ODc5MTMwNX0.ONE4etjbw-QCFzr1wz9qRHMxRUyVs1xGa-JgPT2wves
     description: ""
   - name: Content-Type
     value: application/json

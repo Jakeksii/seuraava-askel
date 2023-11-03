@@ -1,19 +1,36 @@
 _id: req_5a9e7c91f3604a42963132f74904b0d9
 type: Request
 parentId: fld_efb65216d6e74037bbfb0bce97a4fddb
-modified: 1695486696808
+modified: 1698302753770
 created: 1695474898997
 url: http://localhost:3001/api/events/filters
 name: Available filters
-description: ""
-method: GET
+description: >-
+  When fetching available filters you can exclude certain values from output
+  list IE. if i fecth with filters "denomination": ["Free Church"] server will
+  only output filters that also have "Free Church".
+
+
+  Type:
+
+
+  Filters: {
+  	"meta": {
+  		"denominations"?: string[],
+  		"types"?: string[],
+  		"sizes"?: string[],
+  		"languages"?: string[],
+  	}
+  }
+method: POST
 body:
   mimeType: application/json
   text: |-
     {
     	"filters": {
-    		"meta.types": ["Nuoret"],
-    		"meta.size": "Pieni"
+    		"meta": {
+    			"denomination": ["Baptist"]
+    		}
     	}
     }
 parameters: []

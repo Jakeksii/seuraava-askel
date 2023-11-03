@@ -1,18 +1,32 @@
 _id: req_aa23115ec75243b58827e43b15e208ae
 type: Request
 parentId: fld_e1eb0d26c6414223b049036d7849b665
-modified: 1692438680863
+modified: 1698978053059
 created: 1692119557516
-url: http://localhost:3001/api/invitations
+url: http://localhost:3001/api/organizations/users
 name: Create invitation
-description: ""
+description: |+
+  <h2>Requirements</h2>
+  <p>Headers:<p>
+  <ul>
+  	<li>'Authorization' token</li>
+  	<li>'Organization' _id</li>
+  </ul>
+
+  <p>Body:</p>
+  {
+  	"user_email":"y@y.fi",
+  	"role":"admin"
+  }
+
+
 method: POST
 body:
   mimeType: application/json
   text: |-
     {
-    	"organization_id":"6494c3a2eaeb81ae3d792b82",
-    	"user_email":"aaaaaa@a.fi"
+    	"user_email":"y@y.fi",
+    	"role":"admin"
     }
 parameters: []
 headers:
@@ -20,8 +34,12 @@ headers:
     value: application/json
     id: pair_a4214e515e3249a582f040402ea04430
   - name: Authorization
-    value: Insomnia/2023.5.2
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwMmUwNDA2YzY3YmNjZmI3YTlkNDUiLCJpYXQiOjE2OTg5NDE1MzAsImV4cCI6MTY5OTAyNzkzMH0.igxxZ81zKG5cJ83jc47VhVyGWfZbNFlXOFKQVAxA8pM
     id: pair_59f489944b8a4d7d86f34fc996fe6c89
+  - id: pair_c40e3e8c5b104257ba22577f23aa2bbf
+    name: Organization
+    value: 65402f62c4199416f9384a33
+    description: ""
 authentication: {}
 metaSortKey: -1692177920314
 isPrivate: false

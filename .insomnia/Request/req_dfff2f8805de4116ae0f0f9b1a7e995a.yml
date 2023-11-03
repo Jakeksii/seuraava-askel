@@ -1,14 +1,18 @@
 _id: req_dfff2f8805de4116ae0f0f9b1a7e995a
 type: Request
 parentId: fld_efb65216d6e74037bbfb0bce97a4fddb
-modified: 1692438352405
+modified: 1695571056627
 created: 1688634499168
-url: http://localhost:3001/api/events/search?search=hels
+url: http://localhost:3001/api/events/search
 name: Search events
 description: ""
 method: GET
 body: {}
-parameters: []
+parameters:
+  - id: pair_3e76366def854783aa9b3f6e64342759
+    name: s
+    value: joensuu
+    description: ""
 headers: []
 authentication: {}
 metaSortKey: -1692164253239
