@@ -56,7 +56,11 @@ export default new Schema<IOrganization>({
         user_id: {type: Types.ObjectId, ref: 'User'},
         user_name: String,
         user_email: String,
-        role: String
+        role: String,
+        invited_by: Types.ObjectId,
+        updated_by: Types.ObjectId,
+        created_at: Date,
+        updated_at: Date
     }],
     created_by: String, //User _id. Server will set this value
     updated_by: String  //User _id. Server will set this value

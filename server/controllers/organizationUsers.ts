@@ -1,0 +1,110 @@
+import { Types } from "mongoose";
+import { Invitation, Organization } from "../connections/MainConnection";
+import { User } from "../connections/UserConnection";
+import { IOrganizationUser, Request, Response } from "../types";
+
+// This api is for adding or updating organization users
+export async function InviteOrUpdate(req: Request, res: Response) {
+    try {
+        // Validate role
+        if (!['admin', 'user'].includes(req.body.role)) return res.status(400).json({ message: 'Role is not valid' });
+
+        // Get organization
+        // We know that user access role to this organization is atleast 'user', because we have middleware that prevents code reaching here if no.
+        // But we test if role is atleast 'admin'
+        const organization = req.organization
+        if (!new Set(['owner', 'admin']).has(organization.role)) return res.status(403).json({ message: 'Your access role is not high enough' });
+
+        // Get organization users and check if user already exist in that organization
+        const organizationUsers = await Organization.findById(organization._id).select('organization_users').exec() as { organization_users: IOrganizationUser[] }
+
+        const organizationUser = organizationUsers.organization_users.find((user) => user.user_email === req.body.user_email)
+
+        if (organizationUser) {
+            // Check if role is going to change then update
+            if (organizationUser.role !== req.body.role) {
+                await Update(req, res)
+            } else {
+                return res.status(204).end()
+            }
+        } else {
+            await Invite(req, res)
+        }
+    }
+
+    catch (error) {
+        console.error(error)
+        return res.status(500).end()
+    }
+}
+async function Invite(req: Request, res: Response) {
+    // Create invitation
+    const invitationData = {
+        user_email: req.body.user_email,
+        role: req.body.role,
+        organization: {
+            organization_id: req.organization._id,
+            organization_name: req.organization.organization_name
+        },
+        created_by: req.user._id
+    }
+
+    // Validate invitation
+    const validationError = await new Invitation(invitationData).validateSync();
+    if (validationError) {
+        return res.status(400).json({ message: validationError.message });
+    }
+
+    // If an existing invitation is found, replace it with a new one
+    const query = { user_email: req.body.user_email, "organization.organization_id": req.organization._id }
+    const savedInvitation = await Invitation.findOneAndReplace(query, invitationData, {
+        new: true, // To return the updated document
+        upsert: true, // Create a new document if it doesn't exist
+    });
+
+    // send email message of invitation
+    // senEmail(email))
+
+    return res.status(201).json(savedInvitation)
+}
+async function Update(req: Request, res: Response) {
+
+    // UPDATE ORGANIZATION USERS
+    const user = req.user
+    const organization_id = req.organization._id
+
+    const query = {
+        _id: organization_id,
+        'organization_users.user_email': req.body.user_email,
+    }
+    const update = {
+        $set: {
+            'organization_users.$.role': req.body.role,
+            'organization_users.$.updated_at': Date.now(),
+            'organization_users.$.updated_by': user._id,
+        }
+    }
+    const options = {
+        new: true
+    }
+    const updatedOrganization = await Organization.findOneAndUpdate(query, update, options).exec();
+
+
+    // UPDATE USER ORGANIZATIONS
+    const userQuery = {
+        email: req.body.user_email,
+        'organizations.organization_id': organization_id
+    }
+    const userUpdate = {
+        $set: {
+            'organizations.$.role': req.body.role,
+            'organizations.$.updated_at': Date.now(),
+            'organizations.$.updated_by': user._id
+        }
+    }
+    const updatedUser = await User.findOneAndUpdate(userQuery, userUpdate, options).exec()
+
+    // OK
+    return res.status(200).json({ organization: updatedOrganization, user: updatedUser})
+}
+

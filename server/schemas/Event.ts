@@ -38,7 +38,7 @@ export default new Schema<IEvent>({
         zipcode: { type: String, required: true },
         country: { type: String, required: true },
         coordinates: { //Documentation https://www.mongodb.com/docs/manual/reference/operator/query/nearSphere/#-nearsphere
-            type: [Number], // [longitude, latitude]
+            type: [Number, Number], // [longitude, latitude]
             index: '2dsphere',
             required: true
         }

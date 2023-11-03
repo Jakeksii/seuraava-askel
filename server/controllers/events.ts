@@ -1,96 +1,67 @@
 import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
 import { Types } from 'mongoose'
 import { Event } from "../connections/MainConnection"
-import { IEvent, Request, Response } from '../types'
 import { EventStats } from '../connections/StatsConnection'
-
-// USE ZOD VALIDATOR
+import { IEvent, Request, Response } from '../types'
 
 export const createEvent = async (req: Request, res: Response) => {
+  try {
 
-  // Validate image
-  if (!req.file) return res.status(400).end()
-  const image = req.file.buffer
+    // Check if we have image
+    if (!req.file) return res.status(400).end()
+    const image = req.file.buffer
 
-  // Validate user access to organization
-  // Find organization by id from requesting user data
-  // And test if user role is owner, admin or user in that organization
-  const organization = req.user.organizations.find((organization) => organization.organization_id.equals(req.body.organization_id))
-  if (!organization ||
-    (organization.role !== "owner" &&
-      organization.role !== "admin" &&
-      organization.role !== "user")) {
-    //deleteImageFile(imagePath)
-    return res.status(403).end();
-  }
+    // Get organization
+    // We know that user access role to this organization is atleast 'user', because we have middleware that prevents code reaching here if no.
+    const organization = req.organization
 
-  // VALIDATE event
-  const event = JSON.parse(req.body.event)
-
-  // Create event object
-  const newEvent = new Event({
-    start_date: event.start_date,
-    end_date: event.end_date,
-    title: event.title,
-    extract: event.extract,
-    description: event?.description,
-    visible: event.visible,
-    address: event.address,
-    image_id: "", // Set after the image is uploaded to cloudinary
-    meta: event?.meta,
-    organization: {
-      organization_id: organization.organization_id,
-      organization_name: organization.organization_name
-    },
-    created_by: req.user._id,
-    updated_by: req.user._id
-  })
-
-  // Create eventstats object
-  const newEventStats = new EventStats( {
-    title: event.title,
-    event_searches: 0,
-    event_views: 0,
-    event_unique_views: 0,
-    event_location_views: 0,
-    event_clicks: 0,
-    event_unique_clicks: 0,
-    event_location_clicks: [
-      {
-          locationType: 'Point',
-          coordinates: [0, 0],
+    // Create event
+    const event = new Event({
+      ...JSON.parse(req.body.event), // event data that client sended. Any data that is not in IEvent will be discarded.
+      image_id: "", // Set after the image is uploaded to cloudinary
+      organization: {
+        organization_id: organization._id,
+        organization_name: organization.organization_name
       },
-  ],
-  })
+      created_by: req.user._id,
+      updated_by: req.user._id
+    })
 
-  // validate event object
-  const validationError = newEvent.validateSync();
-  if (validationError) {
-    //deleteImageFile(imagePath)
-    return res.status(400).json({ message: validationError.message });
-  }
-
-  // Upload the image to cloudinary
-  cloudinary.uploader.upload_stream({ resource_type: "image" }, uploadDone).end(image)
-
-  async function uploadDone(error: any, result: UploadApiResponse | undefined) {
-    if (error) {
-      console.log("Error in cloudinary.uploader.upload_stream\n", error);
-      return res.status(500).json({ error: error });
+    // Validate event
+    const validationError = await event.validateSync();
+    if (validationError) {
+      return res.status(400).json({ message: validationError.message });
     }
-    // Pass url to newEvent
-    newEvent.image_id = result?.public_id
 
-    try {
+    // Create eventstats
+    // does not need validation because we create it from validated data. 
+    // uses default values declared in schema
+    const eventStats = new EventStats({
+      event_id: event._id,
+      event_title: event.title as string
+    })
+
+    // Upload the image to cloudinary
+    cloudinary.uploader.upload_stream({ resource_type: "image" }, uploadDone).end(image)
+    async function uploadDone(error: any, result: UploadApiResponse | undefined) {
+      if (error) {
+        console.error("Error in cloudinary.uploader.upload_stream\n", error);
+        return res.status(500).json({ error: "Internal Server Error when uploading image" });
+      }
+      // Pass url to newly created event
+      event.image_id = result?.public_id
+
       // save created event to db
-      const savedEvent = await newEvent.save()
+      const savedEvent = await event.save()
       // save created eventstats to db
-      const savedEventStats = await newEventStats.save()
+      const savedEventStats = await eventStats.save()
       // return saved event to client
-      return res.status(201).json(savedEvent)
-    } catch (error) {
-      return res.status(500).json({ error: error });
+      return res.status(201).json({ saved_event: savedEvent, created_event_stats: savedEventStats })
     }
+
+  } catch (error) {
+    console.error(error)
+    return res.status(500).end();
   }
 }
 
@@ -140,9 +111,9 @@ export const getFilters = async (req: Request, res: Response) => {
 export const getEvents = async (req: Request, res: Response) => {
   const location = req.body.location
   const search = req.body.search as [
-    {"address.city": string},
-    {"organization.organization_name": string},
-    {"title": string}
+    { "address.city": string },
+    { "organization.organization_name": string },
+    { "title": string }
   ]
   const filters = req.body.filters ?? {}
 

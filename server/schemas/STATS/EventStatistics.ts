@@ -1,53 +1,43 @@
 import { Schema, Types} from "mongoose";
 import { IEventStats } from "../../types";
 
-
-
 export default new Schema<IEventStats> ({
-    title: {   // link to main/events
+    organization_id: Types.ObjectId, // Link this stat to organization ( only user that has access to this organization can query this stat )
+    event_id: Types.ObjectId, // Link this stat to event ( to make it easy to query only one events stats )
+    event_title: {
         type: String,
-        required: true,
-        minlength: 2,
-        maxlength: 15       
+        required: true, 
     },
     event_searches: {
         type: Number,
-        // required: true,   
+        default: 0
     },
     event_views: {
         type: Number,
-        // required: true,   
+        default: 0
     },
     event_unique_views: {
         type: Number,
-        // required: true,
+        default: 0
     },
     event_location_views: {
         type: Number,
-        // required: true,
+        default: 0
     },
     event_clicks: {
         type: Number,
-        // required: true,   
+        default: 0  
     },
     event_unique_clicks: {
         type: Number,
-        // required: true,   
+        default: 0
     },
     event_location_clicks: [
         {
-            locationType: {
-                type: String,
-                enum: ['Point'], // You can specify the type as "Point" for geo coordinates
-            },
             coordinates: {
-                type: [Number], // [longitude, latitude]
+                type: [Number, Number], // [longitude, latitude]
             },
         },
-    ],
-
-    createdAt: Date,
-    updatedAt: Date
-
+    ]
 }, {timestamps: true});
 

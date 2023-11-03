@@ -13,6 +13,18 @@ interface ContactInfo {
     email: string,
     phone: string
 }
+type Role = 'user' | 'admin' | 'owner'
+
+// INVITATION
+export interface Invitation {
+    _id: string
+    organization: {
+        _id: string
+        name: string
+    }
+    role: Role
+    createdAt: string
+}
 
 // EVENT
 export interface IEvent {
@@ -111,7 +123,6 @@ export interface User {
                 organization_id: string,
                 organization_name: string,
                 role: "user" | "admin" | "owner",
-                _id: string
             }
         ]
     }

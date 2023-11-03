@@ -12,7 +12,6 @@ export const createOrganization = async (req:Request, res:Response):Promise<Resp
             contact_info_visible } = req.body;
 
         const user = req.user;
-        //if(user.organizations[1]) return res.status(409).json({ message: "You have already created or joined organization" })
 
         const newOrganization = new Organization({
             name,
