@@ -1,11 +1,16 @@
 _id: req_813afb492d384489a435a2b538b8463f
 type: Request
 parentId: fld_79c013e8aa8a4ac48f98f6096b66d4d4
-modified: 1699067298464
+modified: 1699139837974
 created: 1687023079315
 url: http://localhost:3001/api/organizations/
 name: Detailed organization
-description: ""
+description: >-
+  <p>Palauttaa kaikki organizaation tiedot. 
+  	<br>Kysyjän pitää tarjota <code>"Authorization":Token</code> sekä <code>"Organization":_id</code> in request headers</p>
+  	<p>Valinnaisesti, mikäli kysyjä haluaa listata organizaation käyttäjä listaan myös organizaatiolle kuuluvat kutsut (Invitations) 
+  	<br/> Tällöin on lisättävä <code>"invitations":true</code> tieto request bodyyn
+  </p>
 method: GET
 body: {}
 parameters: []
