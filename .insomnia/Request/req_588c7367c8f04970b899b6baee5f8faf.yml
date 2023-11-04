@@ -1,0 +1,33 @@
+_id: req_588c7367c8f04970b899b6baee5f8faf
+type: Request
+parentId: fld_e1eb0d26c6414223b049036d7849b665
+modified: 1699067708687
+created: 1699066149990
+url: http://localhost:3001/api/invitations/organization
+name: Check invitations for org
+description: User only need to provide valid Authorization token to get list of
+  all invitations user has.
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: insomnia/2023.5.8
+    id: pair_e3efcd145d4c48ec9db55c346a4d7a07
+  - id: pair_819cc20aa09241ec9d12bd31488f59c0
+    name: Authorization
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwMmUwNDA2YzY3YmNjZmI3YTlkNDUiLCJpYXQiOjE2OTkwNjYxNzEsImV4cCI6MTY5OTE1MjU3MX0.pqwwu_ok1l2UfLHFm_1mFjVCeMJqW_pIV-qkBf0aIPU
+    description: ""
+  - id: pair_3e1fd0043b3242089177375ffe9876a9
+    name: Organization
+    value: 65402e4806c67bccfb7a9d4b
+    description: ""
+authentication: {}
+metaSortKey: -1692177920339
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
