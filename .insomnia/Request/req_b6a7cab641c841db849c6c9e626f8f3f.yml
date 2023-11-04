@@ -1,9 +1,9 @@
 _id: req_b6a7cab641c841db849c6c9e626f8f3f
 type: Request
 parentId: fld_efb65216d6e74037bbfb0bce97a4fddb
-modified: 1692438349433
+modified: 1698949902054
 created: 1688055455969
-url: http://localhost:3001/api/events
+url: http://localhost:3001/api/events/create
 name: Create event
 description: ""
 method: POST
@@ -45,21 +45,19 @@ body:
       description: ""
       type: text
       multiline: application/json
-    - id: pair_2fef0ca65f5847079bc8f0d57a2db962
-      name: organization_id
-      value: 64aac0a3139ebe5158989249
-      description: ""
-      type: text
-      multiline: false
 parameters: []
 headers:
   - id: pair_be3f2e7e93a74673a9d4f5e60d7f96c2
     name: Authorization
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk0YmRkMTM2N2I3NjY0ZTNiODY0YTIiLCJpYXQiOjE2ODk3MjkyNzMsImV4cCI6MTY4OTcyOTg3M30.tPn_AauU0vijPK2d0fMzuuLJn2Qw-HCSa4Yr3-NK8XU
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwMmUwNDA2YzY3YmNjZmI3YTlkNDUiLCJpYXQiOjE2OTg5NDE1MzAsImV4cCI6MTY5OTAyNzkzMH0.igxxZ81zKG5cJ83jc47VhVyGWfZbNFlXOFKQVAxA8pM
     description: ""
   - name: Content-Type
     value: multipart/form-data
     id: pair_88f7d967b6af4d0d80ecb553986acbbe
+  - id: pair_839031d6640f49d78eb653b2e9b3bfd1
+    name: Organization
+    value: 65402e4806c67bccfb7a9d4b
+    description: ""
 authentication: {}
 metaSortKey: -1692164253339
 isPrivate: false

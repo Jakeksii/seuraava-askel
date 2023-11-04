@@ -1,24 +1,22 @@
 _id: req_36627b9833f74b50b4d1dd067feda404
 type: Request
 parentId: fld_e1eb0d26c6414223b049036d7849b665
-modified: 1692438815369
+modified: 1698968289498
 created: 1692438644954
-url: http://localhost:3001/api/invitations/accept/_id
+url: http://localhost:3001/api/invitations/654432c1d62afba1d7317129
 name: Accept invitation
 description: ""
-method: POST
-body:
-  mimeType: application/json
-  text: |-
-    {
-    	"Not": "implemented"
-    }
+method: PATCH
+body: {}
 parameters: []
 headers:
-  - name: Content-Type
-    value: application/json
   - name: User-Agent
     value: Insomnia/2023.5.5
+    id: pair_534338d9bc5240f3af662c541f750a75
+  - id: pair_70c2238cf89c42e2b1b0f31de9003cf9
+    name: Authorization
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQzZmE4Yjg2OWUwZjZhMGQzOTU4ODciLCJpYXQiOjE2OTg5NTM4NzUsImV4cCI6MTY5OTA0MDI3NX0.mgvLAq5XJn2_qrXv-uYfVmtmF-5jYGvxxjMK8SfsWX8
+    description: ""
 authentication: {}
 metaSortKey: -1692177920264
 isPrivate: false

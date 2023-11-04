@@ -1,53 +1,27 @@
 _id: req_813afb492d384489a435a2b538b8463f
 type: Request
 parentId: fld_79c013e8aa8a4ac48f98f6096b66d4d4
-modified: 1694858299053
+modified: 1699139837974
 created: 1687023079315
-url: http://localhost:3001/api/organizations/6491a4cf396d7aa906fbf648/detailed
+url: http://localhost:3001/api/organizations/
 name: Detailed organization
-description: ""
+description: >-
+  <p>Palauttaa kaikki organizaation tiedot. 
+  	<br>Kysyjän pitää tarjota <code>"Authorization":Token</code> sekä <code>"Organization":_id</code> in request headers</p>
+  	<p>Valinnaisesti, mikäli kysyjä haluaa listata organizaation käyttäjä listaan myös organizaatiolle kuuluvat kutsut (Invitations) 
+  	<br/> Tällöin on lisättävä <code>"invitations":true</code> tieto request bodyyn
+  </p>
 method: GET
-body:
-  mimeType: application/json
-  text: |2
-    
-        [
-            {
-                "name": "Järvenpään vapaaseurakunta Arkki",
-                "business_id": "Y-12112",
-                "address": {
-                    "street": "Wärtsilänkatu 8",
-                    "city": "Järvenpää",
-                    "state": "Uusimaa",
-                    "zipcode": "04410",
-                    "country": "Finland",
-                    "coordinates": [
-                            60.48038566303072,
-                            25.081171525458853
-                    ]
-                },
-                "contact_info": {
-                    "email": "arkki@svk.fi",
-                    "phone": "0103289473"
-                },
-                "contact_info_visible": true,
-                "visible": false,
-                "organization_users": [
-                    {
-                        "user_name": "Jaakko Ruhanen",
-                        "user_email": "aa@a.fi",
-                        "role": "owner"
-                    }
-                ]
-            }
-        ]
+body: {}
 parameters: []
 headers:
-  - name: Content-Type
-    value: application/json
   - id: pair_fbb37c0ed7b44be7904656aa4ee29404
     name: Authorization
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTA1Nzg5NWRmY2Y1NGIxODIxZDJjYjEiLCJpYXQiOjE2OTQ4NTczNjgsImV4cCI6MTY5NDk0Mzc2OH0.x_04gA6YZ6OIjIc_Vbj-ke-E6E9DoT4zX5P08YbU0XI
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwMmUwNDA2YzY3YmNjZmI3YTlkNDUiLCJpYXQiOjE2OTkwNjYxNzEsImV4cCI6MTY5OTE1MjU3MX0.pqwwu_ok1l2UfLHFm_1mFjVCeMJqW_pIV-qkBf0aIPU
+    description: ""
+  - id: pair_c4840c6755f649739a478b619279e4bd
+    name: Organization
+    value: 65402e4806c67bccfb7a9d4b
     description: ""
 authentication: {}
 metaSortKey: -1686507004939.5

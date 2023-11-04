@@ -1,7 +1,7 @@
 _id: req_bec9872e35e0409c8ad015b132e06554
 type: Request
 parentId: fld_79c013e8aa8a4ac48f98f6096b66d4d4
-modified: 1692489181675
+modified: 1698950644245
 created: 1689009018874
 url: http://localhost:3001/api/organization-pages
 name: Create organization page
@@ -28,10 +28,6 @@ body:
       description: ""
       type: text
       multiline: application/json
-    - id: pair_3b02356943d54774b18526e503f43b50
-      name: organization_id
-      value: 64aac099139ebe515898923e
-      description: ""
 parameters: []
 headers:
   - name: Content-Type
@@ -40,6 +36,10 @@ headers:
   - id: pair_dc67c0e1c2e64dc1b44a7c8ff4c97463
     name: Authorization
     value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk0YmRkMTM2N2I3NjY0ZTNiODY0YTIiLCJpYXQiOjE2ODkwMTE1NDYsImV4cCI6MTY4OTAxMjE0Nn0.lf5aR19EdqIOa3B9B48JejFde9dD3U3fDeZrkB5TwzE
+    description: ""
+  - id: pair_db6b9a29c68742f287c066d4323a5516
+    name: Organization
+    value: 65402e4806c67bccfb7a9d4b
     description: ""
 authentication: {}
 metaSortKey: -1686512848261

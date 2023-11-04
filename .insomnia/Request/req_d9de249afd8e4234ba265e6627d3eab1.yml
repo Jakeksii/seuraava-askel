@@ -1,33 +1,139 @@
 _id: req_d9de249afd8e4234ba265e6627d3eab1
 type: Request
 parentId: fld_efb65216d6e74037bbfb0bce97a4fddb
-modified: 1695473211623
+modified: 1698309436793
 created: 1688504625977
 url: http://localhost:3001/api/events
 name: Events
-description: ""
-method: GET
+description: >-
+  ---URL QUERIES---
+
+
+  These are for pagination:
+
+
+  page: number // Current page number. Defaults to 1.
+
+
+  limit: number // Number of items per page. Defaults to 3.
+
+
+
+
+  ---BODY---
+
+
+  Request body shape:
+
+
+  {
+  	"location": Location,
+  	"Filters": Filters
+  }
+
+
+  Or:
+
+
+  {
+  	"search": Search,
+  	"Filters": Filters
+  }
+
+
+  // If location is included server will search events based on location object even when search is also included. Server wont use search if location is available.
+
+
+  Where shapes are:
+
+
+  Location: {
+  	"latitude": number,
+  	"longitude": number,
+  }
+
+
+  Search: {
+  	[
+  		{ "address.city": string },
+      { "organization.organization_name": string },
+      { "title": string }
+  	]
+  }
+
+
+  Filters: {
+  	"meta": {
+  		"denominations"?: string[],
+  		"types"?: string[],
+  		"sizes"?: string[],
+  		"languages"?: string[],
+  	}
+  }
+
+
+  Filters are inclusive. Server will discard any empty filter. IE. If i use filter "languages": ["Finnish"] server will output only those events witch have "Finnish" in their meta.language array. but if i use "languages": [] server will output any language.
+
+
+
+  Example request body:
+
+  {
+  	"search": [
+  		{
+  			"organization.organization_name": "Joensuun seurakunta"
+  		}
+  	],
+  	"filters": {
+  		"meta": {
+  			"denominations": [
+  				"Pentecostal"
+  			],
+  			"types": [
+  				"Worship Service",
+  				"Children"
+  			],
+  			"languages": [
+  				"Finnish",
+  				"Swedish"
+  			]
+  		}
+  	}
+  }
+method: POST
 body:
   mimeType: application/json
   text: |-
     {
     	"search": [
-    		{"address.city":""},
-    		{"organization.organization_name": "Joensuun seurakunta"},
-    		{"title": ""}
+    		{
+    			"organization.organization_name": "Joensuun seurakunta"
+    		}
     	],
     	"filters": {
-    		
+    		"meta": {
+    			"denominations": [
+    				"Pentecostal"
+    			],
+    			"types": [
+    				"Worship Service",
+    				"Children"
+    			],
+    			"languages": [
+    				"Finnish"
+    			]
+    		}
     	}
     }
 parameters:
-  - id: pair_31dcc80c5af24998aef726ef15fe8f76
-    name: type
-    value: location
+  - id: pair_26b58c15f5bf45ed87a9b70568835d3f
+    name: page
+    value: "1"
     description: ""
 headers:
   - name: Content-Type
     value: application/json
+    id: pair_863533db8164483ab90830844bdfc9da
 authentication: {}
 metaSortKey: -1692164253289
 isPrivate: false
