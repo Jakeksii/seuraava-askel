@@ -108,38 +108,3 @@ export const check = async (req: Request, res: Response) => {
         return res.status(500).end()
     }
 }
-
-//Checks if there is invitations for organization
-export const checkForOrganization = async (req: Request, res: Response) => {
-    try {
-
-        // We know that user access role to this organization is atleast 'user', because we have middleware that prevents code reaching here if no.
-        // But we test if role is atleast 'admin'
-        const organization = req.organization
-        if (!new Set(['owner', 'admin']).has(organization.role)) return res.status(403).json({ message: 'Your access role is not high enough' });
-
-        // Find invitations with organization id
-        const invitations = await Invitation.find({ 'organization.organization_id': organization._id })
-
-        console.log(invitations)
-
-        // Eextract the "organization" field from each item
-        const mappedInvitations = invitations.map((invitation) => {
-            return {
-                _id: invitation._id,
-                organization: {
-                    _id: invitation.organization.organization_id,
-                    name: invitation.organization.organization_name
-                },
-                role: invitation.role,
-                createdAt: invitation.createdAt
-            }
-        });
-
-        // Return invitations to client
-        return res.status(200).json(mappedInvitations)
-    } catch (error) {
-        console.error(error)
-        return res.status(500).end()
-    }
-}
