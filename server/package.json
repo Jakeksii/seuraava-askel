@@ -13,6 +13,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.4",
+    "nodemon": "^3.0.1",
     "sanitize-html": "^2.11.0",
     "ts-node": "^10.9.1",
     "validator": "^13.9.0"
@@ -24,8 +25,8 @@
   "type": "commonjs",
   "scripts": {
     "build": "npx tsc",
-    "start": "node dist/index.js",
-    "dev": "npx tsc --watch"
+    "start": "node .dist/index.js",
+    "dev": "nodemon index.ts"
   },
   "author": "Jaakko Ruhanen",
   "license": "CC-BY-NC-ND-4.0",

@@ -1,9 +1,23 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { SEARCH_DEFAULT_QUERY } from "../constants";
+import { SearchQuery } from "../../types";
+import getSearchQuery from "../functions/getSearchQuery";
 
+interface Filters {
+    "meta.size"?: string
+    "meta.price"?: number,
+    "meta.online"?: boolean,
+    "meta.language"?: string,
+    "meta.types"?: string,
+    "address.coordinates"?: number
+}
+interface Values {
+    query: SearchQuery
+    search?: string
+    filters?: Filters
+}
 interface SearchContextType {
-    query: string;
-    setQuery: (value: string) => void;
+    values: Values
+    setValues: (value: Values) => void;
 }
 
 const SearchContext = createContext<SearchContextType | undefined>(undefined)
@@ -17,11 +31,13 @@ export function useSearchContext() {
 }
 
 export function SearchContextProvider({ children }: { children: ReactNode }) {
-    const [query, setQuery] = useState(SEARCH_DEFAULT_QUERY)
+    const [values, setValues] = useState({
+        query: getSearchQuery({type:"city", search:"Helsinki"})
+    })
 
     const contextValue: SearchContextType = {
-        query,
-        setQuery
+        values,
+        setValues
     }
 
     return (

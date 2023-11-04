@@ -1,4 +1,4 @@
-import { Request, Response } from "../types/types";
+import { Request, Response } from "../types";
 import nodemailer from 'nodemailer'
 import { readFile } from "fs";
 import { EmailVerification, User } from "../connections/UserConnection";

@@ -1,5 +1,11 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { Organization, User } from "../types";
+import { User } from "../types";
+import { useQueryClient } from "react-query";
+
+type Organization = {
+    _id?: string
+    name?: string
+}
 
 interface AppContextType {
     user?: User
@@ -22,18 +28,16 @@ export function useAppContext() {
 export function AppContextProvider({ children }: { children: ReactNode }) {
     const userFromSession = sessionStorage.getItem('user_data')
     const userData: User = userFromSession ? JSON.parse(userFromSession) : undefined
-
-    const organizationFromSession = sessionStorage.getItem('organization_data')
-    const organizationData = organizationFromSession ? JSON.parse(organizationFromSession) : undefined
     
     const [user, setUser] = useState<User | undefined>(userData)
-    const [organization, setOrganization] = useState<Organization | undefined>(organizationData)
+    const [organization, setOrganization] = useState<Organization | undefined>(undefined)
 
+    
     const logOut = () => {
         setUser(undefined)
         setOrganization(undefined)
         sessionStorage.removeItem('user_data')
-        sessionStorage.removeItem('organization_data')
+        useQueryClient().clear();
     }
     const contextValue: AppContextType = {
         user,

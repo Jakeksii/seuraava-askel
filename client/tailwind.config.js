@@ -8,18 +8,19 @@ export default {
     extend: {
       colors: {
         primary: { //https://coolors.co/palette/FFE8D6-DDBEA9-CB997E
-          light: "#FFE8D6",
-          main: '#DDBEA9',
-          dark: '#CB997E'
+          light: "#5c7876",
+          main: '#455e5d', //vihreesininen pääväri
+          dark: '#364746'
+
       },
       secondary: { //https://coolors.co/palette/B7B7A4-A5A58D-6B705C
           light: '#B7B7A4',
-          main: '#A5A58D',
+          main: '#7d8f88', // harmaa sivuväri
           dark: '#6B705C'
       },
       info: { //https://coolors.co/palette/f6fff8-eaf4f4-cce3de
           light: '#f6fff8',
-          main: '#eaf4f4',
+          main: '#f5cca8',  // beige nappiväri
           dark: '#cce3de'
       },
       success: { //https://coolors.co/palette/73A942-538D22-245501
@@ -40,7 +41,8 @@ export default {
       },
       boxShadow: {
         md: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
-      }
+      },
+      boxShadowColor: '#18181b'
     },
   },
   plugins: [],

@@ -1,48 +1,26 @@
 import { Input } from '@mui/base';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import { Button, CircularProgress, ClickAwayListener, Drawer } from '@mui/material';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { SEARCH_TYPE_LOCATION } from '../../constants';
-import { useLocationContext } from '../../context/locationContext';
+import SearchIcon from '@mui/icons-material/Search';
+import { Button, DialogContent } from '@mui/material';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { SearchResult } from '../../../types';
+import { ERROR_DEFAULT } from '../../constants';
 import { useSearchContext } from '../../context/searchContext';
+import { getHighlightedText, getPrefix } from '../../functions/searchResultFunctions';
 import useGetSearchResults from '../../hooks/api-hooks/useGetSearchResults';
-import Filters from './Filters';
-import LocationButton from './LocationButton';
-import SearchResultsElement from './SearchResultsElement';
+import Loading from '../../partials/Loading';
+import getSearchQuery from '../../functions/getSearchQuery';
 
-const loadingBar = (
-    <div className="m-2 flex justify-center">
-        <CircularProgress size={20} />
-    </div>
-)
+interface Props {
+    open: boolean
+    close: () => void
+}
 
-export default function Search() {
+export default function Search(props: Props) {
     const searchContext = useSearchContext()
-    const locationContext = useLocationContext()
-
-    // Filter panel
-    const [filterPanelOpen, setFilterPanelOpen] = useState(false);
-    function openFilterPanel() {
-        setFilterPanelOpen(true)
-    }
-    function closeFilterPanel() {
-        setFilterPanelOpen(false)
-    }
-
-    // Called from location button
-    const locationSearch = () => {
-        // Handle search
-        const query =
-            '?latitude=' + locationContext.coords.latitude +
-            '&longitude=' + locationContext.coords.longitude +
-            '&type=' + SEARCH_TYPE_LOCATION
-        searchContext.setQuery(query)
-    }
 
     // INPUT
-    // SEARCH
+    const inputRef = useRef<HTMLInputElement>(null)
     const [isTyping, setIsTyping] = useState(true);
-    const [resultsVisible, setResultsVisible] = useState(false)
     const [searchValue, setSearchValue] = useState('')
     let typingTimer: NodeJS.Timeout;
 
@@ -63,89 +41,87 @@ export default function Search() {
         };
     }, [isTyping, searchValue]);
 
-    useEffect(() => {
-        if (locationContext.locationOn) setSearchValue('')
-    }, [locationContext.locationOn])
-
     const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value);
-
-        // If user has typed only 2 characters we dont want to display search results
-        if (event.target.value.length < 3) {
-            setResultsVisible(false)
-        } else {
-            setResultsVisible(true)
-        }
 
         if (!isTyping) {
             setIsTyping(true);
         }
     }
-    const onInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        event.target.select()
-        setResultsVisible(true)
-    }
-    const onSearchResultClick = (search: string, type: string) => {
-        setSearchValue(search)
-        setResultsVisible(false)
-        locationContext.clearLocation()
-        // Handle search
-        const query = '?s=' + search + '&type=' + type
-        searchContext.setQuery(query)
+    function selectInput() {
+        inputRef.current?.select()
     }
 
-    const searchResults = () => {
-        if (isLoading) return loadingBar
-        if (isError) return <SearchResultsElement error={"An error occurred. Try again"} />
-        if (data) return <SearchResultsElement searchValue={searchValue.replace(/\s+/g, ' ').trim()} searchResults={data} searchResultClick={onSearchResultClick} />
-        return <></>
+    // SearchResults
+    const onSearchResultClick = (data: SearchResult) => {
+        // Handle search
+        let query
+        switch(data.type){
+            case "city": query = getSearchQuery({type:"city", search:data.data}); break
+            case "organization": query = getSearchQuery({type:"organization", search:data.data}); break
+            case "title": query = getSearchQuery({type:"title", search:data.data}); break
+        }
+        searchContext.setValues({
+            ...searchContext.values,
+            query: query,
+            search: data.data
+        })
+        props.close()
     }
+    const searchResults = () => {
+        if (isLoading) return <Loading size={40} />
+        if (isError) return <h5 key={0} className='pt-2 text-center text-info-main'> {ERROR_DEFAULT} </h5>
+        if (data && data.length === 0) return <h5 key={0} className='pt-2 text-center text-info-main'> {getHighlightedText(searchValue, searchValue)} {" ei tuottanut tuloksia."} </h5>
+        if (data) return <ul>
+            {
+                data.map((result, index) => {
+                    return (
+                        <li key={index} className='pb-1'>
+                            <Button
+                                variant="contained"
+                                color="info"
+                                fullWidth
+                                onClick={() => onSearchResultClick(result)} >
+                                <div className='flex flex-col md:flex-row'>
+                                    <p className="pl-1 pr-1 text-primary-main">{getPrefix(result.type)}</p>
+                                    <p className="text-primary-main">{getHighlightedText(result.data, searchValue)}</p>
+                                </div>
+                            </Button>
+                        </li>
+                    )
+                })
+            }
+        </ul>
+    }
+
 
     return (
-        <section className='h-14'>
-            <ClickAwayListener onClickAway={() => setResultsVisible(false)}>
-                <div className='relative z-10 p-2 rounded-b-2xl bg-secondary-dark'>
-                    <div className='flex justify-center items-center gap-1'>
-                        <div className='grow'>
-                            <div>
-                                <Input // SEARCH BAR
-                                    className='w-[100%] p-2 rounded-md text-white shadow-md bg-primary-main focus-within:bg-primary-dark transition-colors'
-
-                                    slotProps={{
-                                        input: {
-                                            className:
-                                                'bg-transparent outline-0 w-[100%] placeholder-slate-100 rounded-sm'
-                                        }
-                                    }}
-                                    aria-label='search'
-                                    placeholder='Etsi tapahtumia...'
-                                    onChange={onSearchChange}
-                                    value={searchValue}
-                                    onFocus={onInputFocus} />
-                            </div>
-                        </div>
-                        <LocationButton onSearchByLocation={locationSearch} />
-                        <Button // FILTER BUTTON
-                            aria-label="Filter events"
-                            size='large'
-                            variant="contained"
-                            color='primary'
-                            onClick={openFilterPanel}>
-                            <FilterAltIcon />
-                        </Button>
-                    </div>
-                    <div className='p-1'>
-                        {resultsVisible ? searchResults() : <></>}
-                    </div>
-                </div>
-            </ClickAwayListener>
-            <Drawer
-                anchor={'right'}
-                open={filterPanelOpen}
-                onClose={closeFilterPanel}
-            >
-                <Filters />
-            </Drawer>
-        </section>
+        <DialogContent>
+            <section onClick={selectInput} className='mb-2 w-full flex justify-center items-center p-3 rounded-lg text-info-main shadow-md bg-secondary-main'>
+                <SearchIcon color='info' />
+                <Input
+                    onFocus={selectInput}
+                    className='w-full pl-1'
+                    slotProps={{
+                        input: {
+                            autoFocus: true,
+                            ref: inputRef,
+                            className:
+                                'bg-transparent outline-0 w-full placeholder-[#f5cca8] rounded-sm'
+                        }
+                    }}
+                    aria-label='search'
+                    placeholder='Etsi tapahtumia...'
+                    onChange={onSearchChange}
+                    value={searchValue}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' && data) {
+                            onSearchResultClick(data[0])
+                        }
+                    }}
+                />
+            </section>
+            {searchResults()}
+        </DialogContent>
     )
 }

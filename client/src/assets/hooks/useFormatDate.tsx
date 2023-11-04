@@ -1,9 +1,4 @@
-export type FormattedDate = {
-    startDate: string
-    endDate: string
-    startTime: string
-    endTime: string
-}
+import { FormattedDate } from "../../types";
 
 export default function (startDate: Date, endDate: Date): FormattedDate {
     const startDateTime = new Date(startDate)

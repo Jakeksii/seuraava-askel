@@ -1,5 +1,5 @@
-import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
 import { Button, Drawer, Fab } from "@mui/material";
 import { useState } from "react";
 import { Link } from 'react-router-dom';
@@ -14,7 +14,7 @@ export default function MainNav() {
   }
 
   //const organization_id = appContext.organization?._id
-  const organization_id = "seurakunnan_id"
+  const organization_id = appContext.organization?._id
   const nav = (
     organization_id
       ? <nav className="h-[100%] p-5 flex flex-col justify-center gap-2">
@@ -45,7 +45,7 @@ export default function MainNav() {
         anchor={'left'}
         open={drawerOpen}
         onClose={closeDrawer}
-        variant='persistent'
+        
       >
         <section className='h-[100%] flex flex-col bg-secondary-main'>
           {nav}

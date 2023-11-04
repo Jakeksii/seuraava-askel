@@ -1,31 +1,20 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import useLocation, { Location } from "../hooks/useLocation";
 
-interface LocationState {
+interface Values {
     locationOn: boolean
     coords: {
         longitude: number
         latitude: number
     }
-    error: string | null
-    updateLocation: (longitude: number, latitude: number) => void;
-    clearLocation: () => void;
-    locationError: (error: string) => void
+}
+
+interface LocationContextType {
+    values: Values
     getLocation: () => void
 }
 
-const LocationContext = createContext<LocationState>({
-    locationOn: false,
-    coords: {
-        longitude: 0,
-        latitude: 0,
-    },
-    error: null,
-    updateLocation: () => { },
-    clearLocation: () => { },
-    locationError: () => { },
-    getLocation: () => { }
-});
+const LocationContext = createContext<LocationContextType | undefined>(undefined);
 
 export function useLocationContext() {
     const context = useContext(LocationContext)
@@ -37,72 +26,43 @@ export function useLocationContext() {
 
 export function LocationContextProvider({ children }: { children: ReactNode }) {
 
-    const [state, setState] = useState<LocationState>({
+    const [values, setValues] = useState({
         locationOn: false,
         coords: {
             longitude: 0,
             latitude: 0,
-        },
-        error: null,
-        updateLocation: () => { },
-        clearLocation: () => { },
-        locationError: () => { },
-        getLocation: () => { }
+        }
     })
-
 
     const getLocation = () => {
         const useLocationCallback = (location: Location) => {
             if (!location.error) {
-                setState({
-                    ...state,
+                setValues({
+                    ...values,
                     locationOn: true,
                     coords: {
                         longitude: location.longitude,
                         latitude: location.latitude
                     }
                 })
+                
+                console.log(location)
                 return
             }
-            console.log(location.error);
-            setState({
-                ...state,
-                locationOn: false,
-                coords: {
-                    longitude: 0,
-                    latitude: 0,
-                },
-                error: location.error
-            })
-            
+            console.error(location.error);
         };
         useLocation(useLocationCallback);
     }
 
-    const updateLocation = (longitude: number, latitude: number) => {
-        setState({
-            ...state,
-            locationOn: true,
-            coords: {
-                longitude,
-                latitude
-            }
-        })
+    const contextValue: LocationContextType = {
+        values,
+        getLocation
     }
 
-    const clearLocation = () => {
-        setState({
-            ...state,
-            locationOn: false,
-            error: null
-        })
-    }
 
     return (
         <LocationContext.Provider
-            value={{
-                ...state, updateLocation, clearLocation, getLocation
-            }}>
+            value={contextValue}>
             {children}
         </LocationContext.Provider>
     )

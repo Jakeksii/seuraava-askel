@@ -1,25 +1,8 @@
 import { Schema, Types} from "mongoose";
 import validator from "validator";
+import { IUser } from "../types";
 
-export interface IUser {
-    _id: Types.ObjectId,
-	first_name: string,
-	last_name: string,
-	email: string,
-    password?: string,
-	verified?: boolean,
-	organizations: [{
-        organization_id: Types.ObjectId
-        organization_name: string
-        role: string
-        _id: Types.ObjectId
-    }]
-    createdAt?: Date,
-	updatedAt?: Date,
-	__v?: number,
-}
-
-const User = new Schema<IUser>({
+export default new Schema<IUser>({
     first_name: {
         type: String,
         required: true,
@@ -53,12 +36,14 @@ const User = new Schema<IUser>({
         minlength: 5
     },
     organizations: [{
-        organization_id: { type: Types.ObjectId, ref: 'Organization' },
+        organization_id: { type: Types.ObjectId },
         organization_name: { type: String },
-        role: String,
+        role: { type: String, enum: ['user', 'admin', 'owner'] },
+        invited_by: Types.ObjectId,
+        created_at: Date,
+        updated_at: Date,
+        updated_by: Types.ObjectId
     }],
     verified: {type: Boolean, default: false}
 
 }, {timestamps: true}); //adds createdAt, updatedAt
-
-export default User;

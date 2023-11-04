@@ -1,60 +1,55 @@
-import { Response, Request } from "../types/types";
+import { Response, Request } from "../types";
 import { Organization, OrganizationPage } from "../connections/MainConnection";
 import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
 import { sanitizeHTML } from "../Functions/sanitizeHTML";
 
 export const createOrganizationPage = async (req: Request, res: Response) => {
+    try {
+        // Validate image
+        if (!req.file) return res.status(400).end()
+        const image = req.file.buffer
 
-    // Validate image
-    if (!req.file) return res.status(400).end()
-    const image = req.file.buffer
+        // Get organization
+        // We know that user access role to this organization is atleast 'user', because we have middleware that prevents code reaching here if no.
+        // But we test if role is atleast 'admin'
+        const organization = req.organization
+        if (!new Set(['owner', 'admin']).has(organization.role)) return res.status(403).json({ message: 'Your access role is not high enough' });
 
-    // Validate user access to organization
-    // Find organization by id from requesting user data
-    // And test if user role is owner, admin or user in that organization
-    const organization = req.user.organizations.find((organization) => organization.organization_id.equals(req.body.organization_id))
-    if (!organization ||
-        (organization.role !== "owner" &&
-            organization.role !== "admin" &&
-            organization.role !== "user")) {
-        return res.status(403).end();
-    }
+        const page = sanitizeHTML(req.body.page)
 
-    const page = sanitizeHTML(req.body.page)
+        const newPage = new OrganizationPage({
+            organization_name: organization.organization_name,
+            organization_id: organization._id,
+            image_id: '', // Set after cloudinary upload
+            page_data: page,
+            created_by: req.user._id,
+            updated_by: req.user._id
+        })
 
-    const newPage = new OrganizationPage({
-        organization_name: organization.organization_name,
-        organization_id: organization.organization_id,
-        image_id: '', // Set after cloudinary upload
-        page_data: page,
-        created_by: req.user._id,
-        updated_by: req.user._id
-    })
-
-    const validationError = newPage.validateSync();
-    if (validationError) {
-        return res.status(400).json({ message: validationError.message });
-    }
-
-    // Upload the image to cloudinary
-    cloudinary.uploader.upload_stream({ resource_type: "image" }, uploadDone).end(image)
-
-    async function uploadDone(error: any, result: UploadApiResponse | undefined) {
-        if (error) {
-            console.log("Error in cloudinary.uploader.upload_stream\n", error);
-            return res.status(500).json({ error: error });
+        // Validate organization page
+        const validationError = newPage.validateSync();
+        if (validationError) {
+            return res.status(400).json({ message: validationError.message });
         }
-        // Pass url to newPage
-        newPage.image_id = result?.public_id
 
-        try {
+        // Upload the image to cloudinary
+        cloudinary.uploader.upload_stream({ resource_type: "image" }, uploadDone).end(image)
+        async function uploadDone(error: any, result: UploadApiResponse | undefined) {
+            if (error) {
+                console.error("Error in cloudinary.uploader.upload_stream\n", error);
+                return res.status(500).json({ error: "Internal Server Error when uploading image" });
+            }
+            // Pass url to newPage
+            newPage.image_id = result?.public_id
+
             // save created page to db
             const savedPage = await newPage.save()
             // return saved page to client
             return res.status(201).json(savedPage)
-        } catch (error) {
-            return res.status(500).json({ error: error });
         }
+    } catch (error) {
+        console.error(error)
+        return res.status(500).end();
     }
 }
 
@@ -66,7 +61,7 @@ export const findOrganizationPage = async (req: Request, res: Response): Promise
 
     try {
         const page = await OrganizationPage.findOne(query)
-        if(!page) return res.status(404).end();
+        if (!page) return res.status(404).end();
         const organization = await Organization.findById(page.organization_id)
 
         const data = {

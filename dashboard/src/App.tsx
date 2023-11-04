@@ -7,13 +7,14 @@ import MainNav from './assets/components/MainNav'
 import { useAppContext } from './assets/context/appContext'
 
 // Pages
+import Header from './assets/components/Header'
 import Login from './pages/Login'
-const Register = lazy(() => import('./pages/Register'))
+import Register from './pages/Register'
 const ChooseOrganization = lazy(() => import('./pages/ChooseOrganization'))
 const CreateOrganization = lazy(() => import('./pages/CreateOrganization'))
 const Dasboard = lazy(() => import('./pages/Dashboard'))
+
 const Events = lazy(() => import('./pages/Events'))
-const Event = lazy(() => import('./pages/Event'))
 const Organization = lazy(() => import('./pages/Organization'))
 const Analytics = lazy(() => import('./pages/Analytics'))
 const Subscription = lazy(() => import('./pages/Subscription'))
@@ -31,6 +32,7 @@ function App() {
   // If we are not authenticated we have only login and register page available
   return (
     <ThemeProvider>
+      <Header text={appContext.organization?.name ?? "Seuraava askel"}/>
       <Routes>
         {
           isAuthenticated
@@ -40,7 +42,6 @@ function App() {
                 <Route path='/create' element={<Suspense fallback={loading}><CreateOrganization /></Suspense>} />
                 <Route path='/:organization_id' element={<Suspense fallback={loading}><Dasboard /></Suspense>} />
                 <Route path='/:organization_id/events' element={<Suspense fallback={loading}><Events /></Suspense>} />
-                <Route path='/:organization_id/events/:event_id' element={<Suspense fallback={loading}><Event /></Suspense>} />
                 <Route path='/:organization_id/organization' element={<Suspense fallback={loading}><Organization /></Suspense>} />
                 <Route path='/:organization_id/analytics' element={<Suspense fallback={loading}><Analytics /></Suspense>} />
                 <Route path='/:organization_id/subscription' element={<Suspense fallback={loading}><Subscription /></Suspense>} />
@@ -50,7 +51,7 @@ function App() {
             : (
               <>
                 <Route path='/' element={<Login />} />
-                <Route path='/register' element={<Suspense fallback={loading}><Register /></Suspense>} />
+                <Route path='/register' element={<Register />} />
                 <Route path='*' element={<Navigate to="/" />} />
               </>
             )

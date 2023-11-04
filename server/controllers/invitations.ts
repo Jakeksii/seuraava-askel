@@ -1,76 +1,110 @@
-/*
+import { Types } from "mongoose";
+import { Invitation, Organization } from "../connections/MainConnection";
+import { User } from "../connections/UserConnection";
+import { Request, Response } from "../types";
 
-Implementing an invite/join link system for logged-in users in a MERN stack application involves a few steps. Here's a high-level overview of the best practices you can follow:
-
-1. Generate Unique Join Links: When a user initiates an invitation, generate a unique join link that can be shared with others. This link should contain a unique identifier, such as a token or a random string, that can be used to identify the invitation.
-
-2. Store Invitation Data: Create a database schema to store the invitation details. This schema should include information such as the inviter's ID, the recipient's email or username, the status of the invitation, and any other relevant data.
-
-3. Send Invitations: Use a method to send invitations to the intended recipients, such as sending an email or a notification within your application. Include the generated join link in the invitation message.
-
-4. Handle Link Access: Create an endpoint in your backend API to handle the join link access. When the recipient clicks on the join link, they should be redirected to this endpoint.
-
-5. Verify Link Validity: In the backend, verify the join link's validity by checking if the unique identifier exists in the database and if the invitation is still valid (e.g., not expired or already accepted). Retrieve the invitation details and associate the recipient with the inviter in your database.
-
-6. Implement Join Logic: Once the link is verified, handle the join logic based on your application's requirements. This may involve adding the recipient to a specific group, updating their permissions, or any other relevant actions.
-
-7. Redirect or Notify: After the join logic is executed successfully, you can redirect the user to a specific page within your application or display a notification indicating the successful joining process.
-
-Remember to implement proper error handling and validation throughout the process to ensure the security and reliability of your application. Additionally, you might consider adding additional security measures, such as including an expiration time for the join links or adding authentication checks before executing the join logic.
-
-These are general best practices, and the actual implementation may vary based on your specific application requirements.
-
-*/
-
-import { Invitation } from "../connections/MainConnection";
-import { IInvitation } from "../schemas/Invitation";
-import { Request, Response } from "../types/types";
-
-export const accept = async (req:Request, res:Response) => {
-
-
-    //Deletes invitation
-}
-
-
-export const decline = async (req:Request, res:Response) => {
-
-
-    //Deletes invitation
-}
-
-export const create = async (req:Request, res:Response) => {
+export const accept = async (req: Request, res: Response) => {
     try {
-        if(!req.body.organization_id ||
-            !req.body.user_email) return res.status(400).end()
 
-        const organization = req.user.organizations.find(
-            (organization) => organization.organization_id.equals(
-                req.body.organization_id))
-        
-        // If user organizations returned undefined
-        // then user has no acces to that organization
-        if(!organization) return res.status(403).end()
+        const invitation_id = req.params.id
+        if (!Types.ObjectId.isValid(invitation_id)) return res.status(400).json({ message: 'Id provided is not valid ObjectId' })
 
-        //Check if invitation already exists then delete it and create new
-        const query = { user_email: req.body.user_email, "organization.organization_id": organization.organization_id }
-        await Invitation.findOneAndDelete(query)
+        // Get invitation and delete it from DB
+        const invitation = await Invitation.findByIdAndDelete(invitation_id)
+        if (!invitation) return res.status(404).end()
 
-        const newInvitation = new Invitation ({
-            user_email: req.body.user_email,
-            organization: {
-                organization_id: organization.organization_id,
-                organization_name: organization.organization_name
-            },
-            created_by: req.user._id
+        // Check if user has right to use this invitation object
+        const user = req.user
+        if (invitation.user_email !== user.email) return res.status(403).end()
+
+        // Add user to organization
+        const organization_id = invitation.organization.organization_id
+        const organization = await Organization.findByIdAndUpdate(organization_id, {
+            $push: {
+                organization_users: {
+                    user_id: user._id,
+                    user_name: user.first_name + " " + req.user.last_name,
+                    user_email: user.email,
+                    role: invitation.role,
+                    invited_by: invitation.created_by,
+                    created_at: Date.now()
+                }
+            }
         })
 
-        const invitation = await newInvitation.save()
-        return res.status(201).json(invitation)
-    } 
-    
-    catch (error:any) {
+        // Add organization to user
+        await User.findByIdAndUpdate(user._id, {
+            $push: {
+                organizations: {
+                    organization_id: organization._id,
+                    organization_name: organization.name,
+                    role: invitation.role,
+                    invited_by: invitation.created_by,
+                    created_at: Date.now()
+                }
+            }
+        })
+
+        // OK
+        return res.status(200).json({
+            organization_id: organization._id,
+            organization_name: organization.name,
+            role: invitation.role,
+            created_at: Date.now()
+        })
+
+    } catch (error) {
         console.error(error)
-        return res.status(500).json({ error: error.message })
+        return res.status(500).end()
+    }
+}
+
+export const decline = async (req: Request, res: Response) => {
+    try {
+
+        const invitation_id = req.params.id
+        if (!Types.ObjectId.isValid(invitation_id)) return res.status(400).json({ message: 'Id provided is not valid ObjectId' })
+
+        // Get invitation and delete it from DB
+        const invitation = await Invitation.findByIdAndDelete(invitation_id)
+        if (!invitation) return res.status(404).end()
+
+        // Check if user has right to use this invitation object
+        const user = req.user
+        if (invitation.user_email !== user.email) return res.status(403).end()
+
+        // OK
+        return res.status(204).end()
+
+    } catch (error) {
+        console.error(error)
+        return res.status(500).end()
+    }
+}
+
+//Checks if there is invitations
+export const check = async (req: Request, res: Response) => {
+    try {
+        // Find invitations with user email
+        const invitations = await Invitation.find({ user_email: req.user.email })
+
+        // Eextract the "organization" field from each item
+        const mappedInvitations = invitations.map((invitation) => {
+            return {
+                _id: invitation._id,
+                organization: {
+                    _id: invitation.organization.organization_id,
+                    name: invitation.organization.organization_name
+                },
+                role: invitation.role,
+                createdAt: invitation.createdAt
+            }
+        });
+
+        // Return invitations to client
+        return res.status(200).json(mappedInvitations)
+    } catch (error) {
+        console.error(error)
+        return res.status(500).end()
     }
 }

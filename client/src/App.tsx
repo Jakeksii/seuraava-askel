@@ -4,9 +4,10 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import ThemeProvider from './Theme'
 import MainNav from './assets/components/MainNav'
-import { SearchContextProvider } from './assets/context/searchContext'
 import Home from './pages/Home'
-const EventPage = lazy(() => import('./pages/Event'))
+import { SearchContextProvider } from './assets/context/searchContext'
+import { LocationContextProvider } from './assets/context/locationContext'
+const EventPage = lazy(() => import('./pages/Event/Event'))
 const OrganizationPage = lazy(() => import('./pages/Organization'))
 
 const loading = (
@@ -17,17 +18,19 @@ const loading = (
 
 function App() {
   return (
-    <SearchContextProvider>
     <ThemeProvider>
-      <Routes>
-        <Route path='/' element={<Suspense fallback={loading}><Home /></Suspense>} />
-        <Route path='/:organization_name' element={<Suspense fallback={loading}><OrganizationPage /></Suspense>} />
-        <Route path='/:organization_name/:event_id' element={<Suspense fallback={loading}><EventPage /></Suspense>} />
-        <Route path='*' element={<Navigate to="/" />} />
-      </Routes>
-      <MainNav />
+      <SearchContextProvider>
+        <LocationContextProvider>
+          <Routes>
+            <Route path='/' element={<Suspense fallback={loading}><Home /></Suspense>} />
+            <Route path='/:organization_name' element={<Suspense fallback={loading}><OrganizationPage /></Suspense>} />
+            <Route path='/:organization_name/:event_id' element={<Suspense fallback={loading}><EventPage /></Suspense>} />
+            <Route path='*' element={<Navigate to="/" />} />
+          </Routes>
+          <MainNav />
+        </ LocationContextProvider>
+      </ SearchContextProvider>
     </ThemeProvider>
-    </SearchContextProvider>
   )
 }
 export default App

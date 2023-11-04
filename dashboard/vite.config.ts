@@ -27,7 +27,7 @@ export default defineConfig(({ command }) => {
         APP_VERSION: JSON.stringify(process.env.npm_package_version),
       },
       build: {
-        outDir: './dist'
+        outDir: '../server/public_dashboard'
       }
     }
   }
