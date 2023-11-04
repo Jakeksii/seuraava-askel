@@ -1,4 +1,3 @@
-import { Types } from "mongoose";
 import { Invitation, Organization } from "../connections/MainConnection";
 import { User } from "../connections/UserConnection";
 import { IOrganizationUser, Request, Response } from "../types";
@@ -6,8 +5,12 @@ import { IOrganizationUser, Request, Response } from "../types";
 // This api is for adding or updating organization users
 export async function InviteOrUpdate(req: Request, res: Response) {
     try {
+        // Check if you are trying to change your own role
+        if(!req.body.user_email) return res.status(400).json({ message: 'user_email not provided' });
+        if(req.user.email === req.body.user_email) return res.status(400).json({ message: 'You cannot change your own role' });
+
         // Validate role
-        if (!['admin', 'user'].includes(req.body.role)) return res.status(400).json({ message: 'Role is not valid' });
+        if (!new Set(['user', 'admin']).has(req.body.role)) return res.status(400).json({ message: 'Role is not valid' });
 
         // Get organization
         // We know that user access role to this organization is atleast 'user', because we have middleware that prevents code reaching here if no.
@@ -87,7 +90,7 @@ async function Update(req: Request, res: Response) {
     const options = {
         new: true
     }
-    const updatedOrganization = await Organization.findOneAndUpdate(query, update, options).exec();
+    await Organization.findOneAndUpdate(query, update, options).exec();
 
 
     // UPDATE USER ORGANIZATIONS
@@ -102,9 +105,9 @@ async function Update(req: Request, res: Response) {
             'organizations.$.updated_by': user._id
         }
     }
-    const updatedUser = await User.findOneAndUpdate(userQuery, userUpdate, options).exec()
+    await User.findOneAndUpdate(userQuery, userUpdate, options).exec()
 
     // OK
-    return res.status(200).json({ organization: updatedOrganization, user: updatedUser})
+    return res.status(204).end()
 }
 

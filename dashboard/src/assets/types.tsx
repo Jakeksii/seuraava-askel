@@ -87,15 +87,21 @@ export interface Organization {
 	visible: boolean,
 	organization_users: [
 		{
-			user_id?: string
-			user_name: string | undefined,
-			user_email: string | undefined,
+            invitation: undefined
+			user_id: string
+			user_name: string,
+			user_email: string,
 			role: "user" | "admin" | "owner",
-			_id: string | undefined
-		}
+			_id: string
+		} | {
+            invitation: true
+            user_email: string
+            role: "user" | "admin" | "owner"
+            created_at: Date
+        }
 	],
-	created_by: string | undefined,
-	updated_by: string | undefined,
+	created_by: string,
+	updated_by: string,
 	createdAt: Date,
 	updatedAt: Date,
 	__v: number

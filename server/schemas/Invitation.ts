@@ -17,7 +17,7 @@ export default new Schema<IInvitation>({
     },
     role: { type: String, enum: ['user', 'admin', 'owner'], required: true },
     organization: {
-        organization_id: { type: Types.ObjectId, required: true },
+        organization_id: { type: Types.ObjectId, required: true, index: true },
         organization_name: { type: String, required: true }
     },
     created_by: Types.ObjectId,
