@@ -14,7 +14,7 @@ export default function EventPreviw() {
 
     return (
         <div >
-            <h1> Users organizations, components/EventPreview</h1>
+            <h4> Users organizations, components/EventPreview</h4>
         </div>
     )
 }

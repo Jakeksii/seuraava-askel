@@ -12,18 +12,18 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 
 
-import Header from "../assets/components/Header";
+import Header from "./Header";
 
-import DragDropFiles from '../assets/components/DragDropFiles';
+import DragDropFiles from './DragDropFiles';
 
 import * as React from 'react';
 import { useState } from 'react';
-import { IEvent } from '../assets/types';
-import { useAppContext } from '../assets/context/appContext';
+import { IEvent } from '../types';
+import { useAppContext } from '../context/appContext';
 
 
 
-export default function CreateEvent() {
+export default function VanhaCreateEvent() {
 
     const { user } = useAppContext()
 

@@ -28,22 +28,20 @@ export interface Invitation {
 
 // EVENT
 export interface IEvent {
-    _id: string | undefined
-    start_date: Date
-    end_date: Date
+    _id: string
+    start_date: string
+    end_date: string
     title: string
     description: string
-    contactinfo: ContactInfo
     extract: string
     visible: boolean
     address: Address
     image_id: string
     event_meta: {
-        speaker: string
-        music: string
-        presenter: string
+        speaker?: string
+        music?: string
+        presenter?: string
     }
-    event_page_url: string
     organization: {
         organization_id: string,
         organization_name: string,
