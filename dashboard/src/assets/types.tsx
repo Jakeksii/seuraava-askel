@@ -28,22 +28,21 @@ export interface Invitation {
 
 // EVENT
 export interface IEvent {
-    _id: string | undefined
+    _id: string
     start_date: Date
     end_date: Date
     title: string
-    description: string
+    description?: string
     contactinfo: ContactInfo
     extract: string
     visible: boolean
     address: Address
     image_id: string
     event_meta: {
-        speaker: string
-        music: string
-        presenter: string
+        speaker?: string
+        music?: string
+        presenter?: string
     }
-    event_page_url: string
     organization: {
         organization_id: string,
         organization_name: string,
@@ -87,14 +86,14 @@ export interface Organization {
 	visible: boolean,
 	organization_users: [
 		{
-            invitation: undefined
+            invitation_id: undefined
 			user_id: string
 			user_name: string,
 			user_email: string,
 			role: "user" | "admin" | "owner",
 			_id: string
 		} | {
-            invitation: true
+            invitation_id: string
             user_email: string
             role: "user" | "admin" | "owner"
             created_at: Date

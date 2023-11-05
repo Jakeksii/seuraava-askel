@@ -10,23 +10,25 @@ export async function InviteOrUpdate(req: Request, res: Response) {
         if(req.user.email === req.body.user_email) return res.status(400).json({ message: 'You cannot change your own role' });
 
         // Validate role
-        if (!new Set(['user', 'admin']).has(req.body.role)) return res.status(400).json({ message: 'Role is not valid' });
+        if (!new Set(['user', 'admin', 'owner']).has(req.body.role)) return res.status(400).json({ message: 'Role is not valid' });
 
-        // Get organization
         // We know that user access role to this organization is atleast 'user', because we have middleware that prevents code reaching here if no.
         // But we test if role is atleast 'admin'
-        const organization = req.organization
-        if (!new Set(['owner', 'admin']).has(organization.role)) return res.status(403).json({ message: 'Your access role is not high enough' });
+        if (!new Set(['owner', 'admin']).has(req.organization.role)) return res.status(403).json({ message: 'Your access role is not high enough' })
 
         // Get organization users and check if user already exist in that organization
-        const organizationUsers = await Organization.findById(organization._id).select('organization_users').exec() as { organization_users: IOrganizationUser[] }
+        const organizationUsers = await Organization.findById(req.organization._id).select('organization_users').exec() as { organization_users: IOrganizationUser[] }
 
         const organizationUser = organizationUsers.organization_users.find((user) => user.user_email === req.body.user_email)
 
-        if (organizationUser) {
-            // Check if role is going to change then update
-            if (organizationUser.role !== req.body.role) {
-                await Update(req, res)
+        if (organizationUser) { 
+            if (organizationUser.role !== req.body.role) { // Check if role is going to change then update
+                if(req.body.role === 'owner') { // We are going to change ownership
+                    if(req.organization.role !== 'owner') return res.status(403).json({ message: 'Your access role is not high enough' });
+                    (await ChangeOwner(req, res)).end()
+                } else {
+                    (await Update(req, res)).end()
+                }
             } else {
                 return res.status(204).end()
             }
@@ -108,6 +110,45 @@ async function Update(req: Request, res: Response) {
     await User.findOneAndUpdate(userQuery, userUpdate, options).exec()
 
     // OK
-    return res.status(204).end()
+    return res.status(205).end()
 }
+async function ChangeOwner(req: Request, res: Response) {
 
+    // UPDATE ORGANIZATION USERS
+    const user = req.user
+    const organization_id = req.organization._id
+
+    const query = {
+        _id: organization_id,
+        'organization_users.user_email': req.body.user_email,
+    }
+    const update = {
+        $set: {
+            'organization_users.$.role': req.body.role,
+            'organization_users.$.updated_at': Date.now(),
+            'organization_users.$.updated_by': user._id,
+        }
+    }
+    const options = {
+        new: true
+    }
+    await Organization.findOneAndUpdate(query, update, options).exec();
+
+
+    // UPDATE USER ORGANIZATIONS
+    const userQuery = {
+        email: req.body.user_email,
+        'organizations.organization_id': organization_id
+    }
+    const userUpdate = {
+        $set: {
+            'organizations.$.role': req.body.role,
+            'organizations.$.updated_at': Date.now(),
+            'organizations.$.updated_by': user._id
+        }
+    }
+    await User.findOneAndUpdate(userQuery, userUpdate, options).exec()
+
+    // OK
+    return res.status(205).end()
+}

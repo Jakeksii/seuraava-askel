@@ -9,6 +9,7 @@ import { Organization } from '../types';
 import { ErrorNode } from './partials/Error';
 import Loading from './partials/Loading';
 import { getDateTimeFromUTC } from '../functions/formatDates';
+import { useDeleteInvitation } from '../hooks/api-hooks/useInvitations';
 
 type User = {
     user_id?: string
@@ -24,8 +25,19 @@ type FormData = {
 type CurrentUser = {
     email: string
 }
+type UserCardProps = { 
+    user: User
+    updateUser: (user: User) => void
+    imOwner: boolean
+}
+type UserListProps = { 
+    data: Organization
+    updateUser: (user: User) => void
+    currentUser: CurrentUser
+    deleteInvitation: (invitation_id: string) => void
+}
 
-function User({ user, updateUser, imOwner }: { user: User, updateUser: (user: User) => void, imOwner: boolean }) {
+function UserCard({ user, updateUser, imOwner }: UserCardProps) {
     const [selectedRole, setSelectedRole] = useState<string>(user.role)
     const disabled = selectedRole === user.role
 
@@ -67,7 +79,7 @@ function User({ user, updateUser, imOwner }: { user: User, updateUser: (user: Us
     </>
 }
 
-function UserList({ data, updateUser, currentUser }: { data: Organization, updateUser: (user: User) => void, currentUser: CurrentUser }) {
+function UserList({ data, updateUser, currentUser, deleteInvitation }: UserListProps) {
     return (
         <ul className='text-white text-left'>
             {data.organization_users.map((user, index) => {
@@ -75,7 +87,7 @@ function UserList({ data, updateUser, currentUser }: { data: Organization, updat
                 const me = user.user_email === currentUser.email
                 const imOwner = owner && me
 
-                if (!user.invitation) {
+                if (user.invitation_id === undefined) {
                     return (owner || me) ? (
                         <li key={index} className='mt-2 p-2 pl-4 bg-primary-main shadow-md rounded-md'>
                             <p><b>{user.user_name} {me ? '(minä)' : ''}</b></p>
@@ -84,7 +96,7 @@ function UserList({ data, updateUser, currentUser }: { data: Organization, updat
                         </li>
                     ) : (
                         <li key={index} className='mt-2 p-2 pl-4 flex items-center bg-primary-main shadow-md rounded-md'>
-                            <User user={user} updateUser={updateUser} imOwner={imOwner} />
+                            <UserCard user={user} updateUser={updateUser} imOwner={imOwner} />
                         </li>
                     )
                 } else {
@@ -100,7 +112,10 @@ function UserList({ data, updateUser, currentUser }: { data: Organization, updat
                                 <p><i>Lähetetty {dateTime.date}</i></p>
                                 <p><i>Vanhenee {expires.date}</i></p>
                             </div>
-                            <IconButton color='info' className='h-full'>
+                            <IconButton 
+                                color='info' 
+                                className='h-full'
+                                onClick={() => deleteInvitation(user.invitation_id)}>
                                 <DeleteIcon />
                             </IconButton>
                         </li>
@@ -116,22 +131,34 @@ function UserList({ data, updateUser, currentUser }: { data: Organization, updat
 export default function OrganizationUsers() {
     const { organization_id } = useParams() // We take org_id from URL so that you can always come back to organization with link
     const { user } = useAppContext()
-    const { data, isLoading, isError, refetch } = useDetailedOrganizations({ organization_id: organization_id ?? "", token: user?.token ?? "" })
-    const { mutate } = useAddUpdateUser()
+    const { data, isLoading, isError, refetch } = useDetailedOrganizations({ organization_id: organization_id ?? "", token: user?.token ?? "", queryParams: 'invitations=true' })
+    const { mutate: mutateUser } = useAddUpdateUser()
+    const { mutate: mutateInvitation } = useDeleteInvitation()
     const [formData, setFormData] = useState<FormData>({
         email: '',
         role: 'user'
     })
 
-    function mutateUser(user_email: string, role: "user" | "admin" | "owner"): void {
-        mutate({
+    function deleteInvitation(invitation_id: string) {
+        mutateInvitation({
+            _id: invitation_id,
+            token: user?.token ?? "",
+            organization_id: organization_id
+        }, {
+            onSuccess() {
+                refetch()
+            }
+        })
+    }
+
+    function addUpdateUser(user_email: string, role: "user" | "admin" | "owner"): void {
+        mutateUser({
             organization_id: organization_id ?? "",
             token: user?.token ?? "",
             user_email: user_email,
             role: role
         }, {
             onSuccess() {
-                // We have successfully
                 refetch()
             },
         })
@@ -143,13 +170,13 @@ export default function OrganizationUsers() {
 
         } else {
             // We update user data
-            mutateUser(user.user_email, user.role)
+            addUpdateUser(user.user_email, user.role)
         }
     }
     function addUser(e: BaseSyntheticEvent) {
         e.preventDefault()
         console.error('Need to implement confirmation')
-        mutateUser(formData.email, formData.role)
+        addUpdateUser(formData.email, formData.role)
     }
     function setFormValue(e: BaseSyntheticEvent) {
         setFormData({
@@ -192,7 +219,17 @@ export default function OrganizationUsers() {
 
                 </div>
             </form>
-            {isError ? <ErrorNode /> : ((!isLoading && data) ? <UserList data={data} updateUser={updateUser} currentUser={{ email: user?.user.email ?? "" }} /> : <Loading />)}
+            {isError
+                ? <ErrorNode />
+                : (
+                    (!isLoading && data)
+                        ? <UserList
+                            data={data}
+                            updateUser={updateUser}
+                            currentUser={{ email: user?.user.email ?? "" }}
+                            deleteInvitation={deleteInvitation}
+                        />
+                        : <Loading />)}
         </section>
     )
 }

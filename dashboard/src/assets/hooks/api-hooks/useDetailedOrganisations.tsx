@@ -5,14 +5,15 @@ import { Organization } from "../../types";
 interface Props {
     organization_id: string,
     token: string
+    queryParams?: string
 }
 
 export default function useDetailedOrganizations(props: Props) {
     return useQuery({
-        queryKey: ['detailedorganization', props.organization_id, props.token],
+        queryKey: ['detailedorganization', props.organization_id, props.token, props.queryParams],
         staleTime: 1000 * 60,
         queryFn: async () => {
-            const { data } = await axios.get('/api/organizations', {headers:{"Authorization":props.token, 'Organization':props.organization_id}})
+            const { data } = await axios.get('/api/organizations?'+props.queryParams, {headers:{"Authorization":props.token, 'Organization':props.organization_id}})
             return data as Organization
         },
         onError(error){

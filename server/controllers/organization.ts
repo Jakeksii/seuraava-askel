@@ -1,6 +1,6 @@
-import { Response, Request } from "../types";
-import { Invitation, Organization, OrganizationPage } from "../connections/MainConnection";
+import { Invitation, Organization } from "../connections/MainConnection";
 import { User } from "../connections/UserConnection";
+import { Request, Response } from "../types";
 
 export const createOrganization = async (req: Request, res: Response): Promise<Response> => {
     try {
@@ -92,37 +92,37 @@ export const getDetailedOrganization = async (req: Request, res: Response): Prom
         // Get asked organization from database
         const organization = await Organization.findById(req.organization._id)
 
-        // Get organization invitations
-        const invitations = await Invitation.find({ 'organization.organization_id': req.organization._id })
-
-        // Eextract the "organization" field from each item
-        const mappedInvitations = invitations.map((invitation) => {
-            return {
-                invitation: true,
-                user_email: invitation.user_email,
-                role: invitation.role,
-                created_at: invitation.createdAt
-            }
-        });
-
         const organizationToSend = {
             _id: organization._doc._id,
             name: organization._doc.name,
             business_id: organization._doc.business_id,
             contact_info_visible: organization._doc.contact_info_visible,
             visible: organization._doc.visible,
-            
+
             address: organization._doc.address,
             contact_info: organization._doc.contact_info,
             organization_users: [...organization._doc.organization_users],
 
             created_by: organization._doc.created_by,
-	        updated_by: organization._doc.updated_by,
-	        createdAt: organization._doc.createdAt,
-	        updatedAt: organization._doc.updatedAt,
+            updated_by: organization._doc.updated_by,
+            createdAt: organization._doc.createdAt,
+            updatedAt: organization._doc.updatedAt,
         }
 
-        organizationToSend.organization_users.push(...mappedInvitations)
+        // Get organization invitations if its asked
+        if (req.query.invitations) {
+            const invitations = await Invitation.find({ 'organization.organization_id': req.organization._id })
+            const mappedInvitations = invitations.map((invitation) => {
+                return {
+                    invitation_id: invitation._id,
+                    user_email: invitation.user_email,
+                    role: invitation.role,
+                    created_at: invitation.createdAt
+                }
+            });
+            // pass invitations to organization users list
+            organizationToSend.organization_users.push(...mappedInvitations)
+        }
 
         // Return full organization details
         return res.status(200).json(organizationToSend)

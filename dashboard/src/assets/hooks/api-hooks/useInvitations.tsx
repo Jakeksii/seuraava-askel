@@ -32,11 +32,19 @@ type AcceptResponse = {
 export function useAcceptInvitation() {
     return useMutation({
         mutationFn: async ({ _id, token }: { _id: string, token: string }) => {
-            // we dont need to destructure data from this function because api returns only status and no body
             const { data } = await axios.patch('/api/invitations/' + _id, {}, { headers: { "Authorization": token } })
             return data as AcceptResponse
         }
     })
 }
 
+export function useDeleteInvitation() {
+    return useMutation({
+        mutationFn: async ({ _id, token, organization_id }: { _id: string, token: string, organization_id?: string }) => {
+            // we dont need to destructure data from this function because api returns only status and no body
+            const headers = organization_id ? { "Authorization": token, 'Organization': organization_id } : { "Authorization": token }
+            await axios.delete('/api/invitations/' + _id, { headers: headers })
+        }
+    })
+}
 

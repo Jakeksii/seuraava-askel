@@ -36,7 +36,7 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
 // If this middleware is used it must happen after verifyToken middleware because it depens on it
 // This middleware checks if user has access to organization and saves users role and organization to req obj
 // In controllers you can then access this reliable info from req obj
-export async function verifyOrganizationAccess(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+export async function verifyOrganizationAccess(req: Request, res: Response, next?: NextFunction): Promise<Response | void> {
     try {
         // Check if user has given a organization
         const organization_id = req.header('Organization') as string
@@ -63,7 +63,10 @@ export async function verifyOrganizationAccess(req: Request, res: Response, next
         // Or we can respond to client diffrently according to role
 
         // Continue request processing pipeline
-        return next()
+        if(next){ // if next is undefined we are calling this function from controller
+            return next()
+        }
+        return 
 
     } catch (error) {
         console.error(error)

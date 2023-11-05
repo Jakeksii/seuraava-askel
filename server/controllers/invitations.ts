@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 import { Invitation, Organization } from "../connections/MainConnection";
 import { User } from "../connections/UserConnection";
+import { verifyOrganizationAccess } from "../middleware/auth";
 import { Request, Response } from "../types";
 
 export const accept = async (req: Request, res: Response) => {
@@ -61,20 +62,52 @@ export const accept = async (req: Request, res: Response) => {
 
 export const decline = async (req: Request, res: Response) => {
     try {
-
         const invitation_id = req.params.id
         if (!Types.ObjectId.isValid(invitation_id)) return res.status(400).json({ message: 'Id provided is not valid ObjectId' })
 
-        // Get invitation and delete it from DB
-        const invitation = await Invitation.findByIdAndDelete(invitation_id)
+        // If user gave organization
+        if(req.header('Organization')) return deleteInvitationByOrganization(req, res)
+
+        // Get invitation
+        const invitation = await Invitation.findById(invitation_id)
         if (!invitation) return res.status(404).end()
 
         // Check if user has right to use this invitation object
         const user = req.user
         if (invitation.user_email !== user.email) return res.status(403).end()
 
+        // Delete invitation
+        await Invitation.findByIdAndDelete(invitation_id)
+
         // OK
-        return res.status(204).end()
+        return res.status(205).end()
+
+    } catch (error) {
+        console.error(error)
+        return res.status(500).end()
+    }
+}
+// Invitation deletion invoked by organization
+async function deleteInvitationByOrganization(req: Request, res: Response) {
+    try {
+        await verifyOrganizationAccess(req, res)
+        if (!req.organization) return
+
+        // We test if user role in provided organization is atleast 'admin'
+        const organization = req.organization
+        if (!new Set(['owner', 'admin']).has(organization.role)) return res.status(403).json({ message: 'Your access role is not high enough' })
+
+        // Get invitation
+        const invitation = await Invitation.findById(req.params.id)
+        if (!invitation) return res.status(404).end()
+
+        // We test if this invitation belongs to provided organization
+        if(invitation.organization.organization_id.toString() !== organization._id.toString()) return res.status(403).json({ message: 'Invitation object does not belong to provided organization' })
+
+        // Delete invitation
+        await Invitation.findByIdAndDelete(invitation._id)
+
+        return res.status(205).end()
 
     } catch (error) {
         console.error(error)
@@ -87,8 +120,6 @@ export const check = async (req: Request, res: Response) => {
     try {
         // Find invitations with user email
         const invitations = await Invitation.find({ user_email: req.user.email })
-
-        // Eextract the "organization" field from each item
         const mappedInvitations = invitations.map((invitation) => {
             return {
                 _id: invitation._id,
