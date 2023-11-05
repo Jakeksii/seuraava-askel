@@ -1,11 +1,15 @@
 _id: req_7dd7a7016b56480882a3dfb161b7b2ad
 type: Request
 parentId: fld_e1eb0d26c6414223b049036d7849b665
-modified: 1698968321900
+modified: 1699153926817
 created: 1692438684207
-url: http://localhost:3001/api/invitations/654406e5d62afba1d70beb73
-name: Decline invitation
-description: ""
+url: http://localhost:3001/api/invitations/65470459d62afba1d7adddd4
+name: Decline / Delete invitation
+description: >-
+  Deletes invitation
+
+
+  if organization wants to delete you need to provide Organization:organization_id in headers
 method: DELETE
 body: {}
 parameters: []
@@ -15,7 +19,11 @@ headers:
     id: pair_b56d8962ca8b4df4a62e76184e2a473c
   - id: pair_06e02123dfe746d3b03c373a3dc329c9
     name: Authorization
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQzZmE4Yjg2OWUwZjZhMGQzOTU4ODciLCJpYXQiOjE2OTg5NTM4NzUsImV4cCI6MTY5OTA0MDI3NX0.mgvLAq5XJn2_qrXv-uYfVmtmF-5jYGvxxjMK8SfsWX8
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQwMmUwNDA2YzY3YmNjZmI3YTlkNDUiLCJpYXQiOjE2OTkxNTAyOTUsImV4cCI6MTY5OTIzNjY5NX0.PPvotwb-yYN9iPlvSJJNTpgl_f9msJPOip7xxuKns9o
+    description: ""
+  - id: pair_e1b72f2ee9b44d499dfce29b59fa68f3
+    name: Organization
+    value: 65402e4806c67bccfb7a9d4b
     description: ""
 authentication: {}
 metaSortKey: -1692177920214
