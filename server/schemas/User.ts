@@ -36,9 +36,13 @@ export default new Schema<IUser>({
         minlength: 5
     },
     organizations: [{
-        organization_id: { type: Types.ObjectId, ref: 'Organization' },
+        organization_id: { type: Types.ObjectId },
         organization_name: { type: String },
-        role: String,
+        role: { type: String, enum: ['user', 'admin', 'owner'] },
+        invited_by: Types.ObjectId,
+        created_at: Date,
+        updated_at: Date,
+        updated_by: Types.ObjectId
     }],
     verified: {type: Boolean, default: false}
 

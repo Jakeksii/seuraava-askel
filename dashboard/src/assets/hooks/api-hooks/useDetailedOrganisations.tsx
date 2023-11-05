@@ -9,12 +9,11 @@ interface Props {
 
 export default function useDetailedOrganizations(props: Props) {
     return useQuery({
-        queryKey: ['detailedorganization', props.organization_id],
+        queryKey: ['detailedorganization', props.organization_id, props.token],
         staleTime: 1000 * 60,
         queryFn: async () => {
-            // await wait(2000)        //loading testausta varten
-            const  { data}  = await axios.get('/api/organizations/' + props.organization_id + "/detailed", {headers:{"Authorization":props.token}})
-            return data as Organization         // ^tähän api url
+            const { data } = await axios.get('/api/organizations', {headers:{"Authorization":props.token, 'Organization':props.organization_id}})
+            return data as Organization
         },
         onError(error){
             console.error("Error when fetching detailed organization: ", error)

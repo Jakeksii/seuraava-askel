@@ -15,10 +15,11 @@ export default new Schema<IInvitation>({
             message: 'Invalid email address'
         }
     },
+    role: { type: String, enum: ['user', 'admin', 'owner'], required: true },
     organization: {
-        organization_id: { type: Types.ObjectId, required: true, ref: "Organization" },
+        organization_id: { type: Types.ObjectId, required: true, index: true },
         organization_name: { type: String, required: true }
     },
     created_by: Types.ObjectId,
     updated_by: Types.ObjectId
-}, { timestamps: true, expires: 604800 }); //adds createdAt, updatedAt, 604800 = 1 week
+}, { timestamps: true, expires: 604800 }); //adds createdAt, updatedAt. expires creates TTL (Time-To-Live) index in MongoDB. 604800 = 1 week

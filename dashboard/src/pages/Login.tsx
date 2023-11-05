@@ -10,7 +10,6 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { AxiosError } from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Header from '../assets/components/Header';
 import { ERROR_BAD_RESPONSE, ERROR_DEFAULT, ERROR_NETWORK } from '../assets/constants';
 import { useAppContext } from '../assets/context/appContext';
 import { useLogin } from '../assets/hooks/api-hooks/useAuthenticate';
@@ -44,9 +43,10 @@ export default function Login() {
         },
             {
                 onSuccess(data) {
+                    // lisää organisaatio sessioStorageen
                     appContext.setUser(data)
                     sessionStorage.setItem('user_data', JSON.stringify(data))
-                    location.state?.from ? navigate(location.state.from, { replace: true }) : navigate('/dashboard', { replace: true })
+                    location.state?.from ? navigate(location.state.from, { replace: true }) : navigate('/', { replace: true })
                     console.log(data)
                 },
             }
@@ -54,74 +54,71 @@ export default function Login() {
     };
 
     return (
-        <>
-            <Header />
-            <main>
-                <Container component="section" maxWidth="xs" className='mt-6'>
-                    <div className='flex flex-col items-center p-2'>
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.dark' }}>
-                            <LockOutlinedIcon />
-                        </Avatar >
-                        <div className='m-4 text-error-main text-center'>
-                            {
-                                typedError
-                                    ? <p>{getErrorMessage(typedError)}</p>
-                                    : undefined
-                            }
-                        </div>
-                        <Box component="form" onSubmit={handleSubmit}>
-                            <TextField
-                                color='info'
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Sähköposti"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                            />
-                            <TextField
-                                color='info'
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Salasana"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="info" />}
-                                label="Muista minut"
-                            />
-                            <Button
-                                type="submit"
-                                color="primary"
-                                fullWidth
-                                variant="contained"
-                                disabled={isLoading}
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                {isLoading ? <CircularProgress size={'26px'} color='info' /> : <p>Kirjaudu sisään</p>}
-                            </Button>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Link to="#" className='text-info-main'>
-                                        Unohtuiko salasana?
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <Link to="/register" className='text-info-main'>
-                                        {"Ei tiliä? Rekisteröidy."}
-                                    </Link>
-                                </Grid>
-                            </Grid>
-                        </Box>
+        <main>
+            <Container component="section" maxWidth="xs" className='mt-6'>
+                <div className='flex flex-col items-center p-2'>
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.dark' }}>
+                        <LockOutlinedIcon />
+                    </Avatar >
+                    <div className='m-4 text-error-main text-center'>
+                        {
+                            typedError
+                                ? <p>{getErrorMessage(typedError)}</p>
+                                : undefined
+                        }
                     </div>
-                </Container>
-            </main>
-        </>
+                    <Box component="form" onSubmit={handleSubmit}>
+                        <TextField
+                            color='info'
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Sähköposti"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                        />
+                        <TextField
+                            color='info'
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Salasana"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="info" />}
+                            label="Muista minut"
+                        />
+                        <Button
+                            type="submit"
+                            color="primary"
+                            fullWidth
+                            variant="contained"
+                            disabled={isLoading}
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            {isLoading ? <CircularProgress size={'26px'} color='info' /> : <p>Kirjaudu sisään</p>}
+                        </Button>
+                        <Grid container>
+                            <Grid item xs>
+                                <Link to="#" className='text-info-main'>
+                                    Unohtuiko salasana?
+                                </Link>
+                            </Grid>
+                            <Grid item>
+                                <Link to="/register" className='text-info-main'>
+                                    {"Ei tiliä? Rekisteröidy."}
+                                </Link>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </div>
+            </Container>
+        </main>
     );
 }

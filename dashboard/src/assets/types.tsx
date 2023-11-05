@@ -13,13 +13,27 @@ interface ContactInfo {
     email: string,
     phone: string
 }
+type Role = 'user' | 'admin' | 'owner'
+
+// INVITATION
+export interface Invitation {
+    _id: string
+    organization: {
+        _id: string
+        name: string
+    }
+    role: Role
+    createdAt: string
+}
 
 // EVENT
 export interface IEvent {
-    _id: string
+    _id: string | undefined
     start_date: Date
     end_date: Date
     title: string
+    description: string
+    contactinfo: ContactInfo
     extract: string
     visible: boolean
     address: Address
@@ -73,12 +87,18 @@ export interface Organization {
 	visible: boolean,
 	organization_users: [
 		{
-			user_id: string,
+            invitation: undefined
+			user_id: string
 			user_name: string,
 			user_email: string,
 			role: "user" | "admin" | "owner",
 			_id: string
-		}
+		} | {
+            invitation: true
+            user_email: string
+            role: "user" | "admin" | "owner"
+            created_at: Date
+        }
 	],
 	created_by: string,
 	updated_by: string,
@@ -87,7 +107,13 @@ export interface Organization {
 	__v: number
 }
 
-
+export interface SendOrganization {
+    address: Address,
+	contact_info: ContactInfo,
+	name: string,
+	business_id: string,
+	contact_info_visible: boolean,
+}
 
 
 export interface User {
@@ -103,8 +129,28 @@ export interface User {
                 organization_id: string,
                 organization_name: string,
                 role: "user" | "admin" | "owner",
-                _id: string
             }
         ]
     }
+}
+
+export interface EventStats {
+    title: string
+    event_searches: number
+    event_views: number
+    event_unique_views: number
+    event_location_views: number
+    event_clicks: number
+    event_unique_clicks: number
+    event_location_clicks: [
+        {
+            locationType: {
+                type: string,
+                enum: ['Point'], // You can specify the type as "Point" for geo coordinates
+            },
+            coordinates: {
+                type: [number], // [longitude, latitude]
+            },
+        },
+    ],
 }

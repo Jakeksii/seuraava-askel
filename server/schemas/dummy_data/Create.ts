@@ -16,7 +16,7 @@ export async function CreateDummyData(req: Request, res: Response) {
     let eventDocs = new Array
 
     organization.forEach((org) => {
-        const organizationDoc = new Organization<IOrganization>({
+        const organizationDoc = new Organization({
             name: org.name,
             business_id: "0468712-9",
             address: {
@@ -47,7 +47,7 @@ export async function CreateDummyData(req: Request, res: Response) {
 
         org.events.forEach((event) => {
             const [start_date, end_date] = generateRandomDates();
-            const EventDoc = new Event<IEvent>({
+            const EventDoc = new Event({
                 start_date: start_date,
                 end_date: end_date,
                 title: event.name,

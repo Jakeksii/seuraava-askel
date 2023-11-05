@@ -8,6 +8,7 @@ import ScheduleIcon from '@mui/icons-material/Schedule';
 import { Link } from "react-router-dom";
 import { CLOUDINARY_CLOUDNAME } from "../../constants";
 import useFormatDate from "../../hooks/useFormatDate";
+import incrementClicks from "../../functions/updateEventClicks";
 
 type Props = {
     imageID: string
@@ -66,7 +67,7 @@ export default function Event(props: Props) {
 
     return (
         <div className="m-auto shadow-2xl shadow-zinc-900/60 max-w-[350px] md:max-w-[808px] md:w-auto rounded-2xl bg-white h-[100%] cursor-pointer mb-6">
-            <Link to={eventLink}>
+            <Link to={eventLink} onClick={incrementClicks}>
                 <div className="h-0 relative top-2 left-2">
                     {distance_small_screen}
                 </div>

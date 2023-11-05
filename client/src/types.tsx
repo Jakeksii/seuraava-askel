@@ -145,3 +145,24 @@ export interface Organization {
     updatedAt: Date,
     __v: number
 }
+
+export interface EventStats {
+    title: string
+    event_searches: number
+    event_views: number
+    event_unique_views: number
+    event_location_views: number
+    event_clicks: number
+    event_unique_clicks: number
+    event_location_clicks: [
+        {
+            locationType: {
+                type: string,
+                enum: ['Point'], // You can specify the type as "Point" for geo coordinates
+            },
+            coordinates: {
+                type: [number], // [longitude, latitude]
+            },
+        },
+    ],
+}
