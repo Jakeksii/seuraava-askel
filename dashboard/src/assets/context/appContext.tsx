@@ -3,8 +3,8 @@ import { User } from "../types";
 import { useQueryClient } from "react-query";
 
 type Organization = {
-    _id?: string
-    name?: string
+    _id: string
+    name: string
 }
 
 interface AppContextType {
@@ -26,7 +26,7 @@ export function useAppContext() {
 }
 
 export function AppContextProvider({ children }: { children: ReactNode }) {
-    const userFromSession = sessionStorage.getItem('user_data')
+    const userFromSession = localStorage.getItem('user_data')
     const userData: User = userFromSession ? JSON.parse(userFromSession) : undefined
     
     const [user, setUser] = useState<User | undefined>(userData)
@@ -36,7 +36,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     const logOut = () => {
         setUser(undefined)
         setOrganization(undefined)
-        sessionStorage.removeItem('user_data')
+        localStorage.removeItem('user_data')
         useQueryClient().clear();
     }
     const contextValue: AppContextType = {

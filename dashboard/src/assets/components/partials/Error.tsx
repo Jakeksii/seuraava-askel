@@ -1,19 +1,18 @@
-import { ERROR_DEFAULT } from "../../constants"
-
 interface Props {
-    color?: string
-    message?: string
+    message: string | undefined
     children?: React.ReactNode
     [x:string]: any
 }
-export function ErrorNode({color, message, children, ...props}: Props) {
-    const errorMessage = message ?? ERROR_DEFAULT
+function ErrorNode({message, children, ...props}: Props) {
+    if(!message) return <div className="min-h-[24px] m-4"></div>
     return (
-        <div className={`flex justify-center items-center m-4 text-${color}`} aria-busy={true} {...props}>
+        <div className={`flex justify-center items-center text-error-dark m-4`} aria-busy={true} {...props}>
             <b>
-                {errorMessage}
+                {message}
                 {children}
             </b>
         </div>
     )
 }
+
+export { ErrorNode }
