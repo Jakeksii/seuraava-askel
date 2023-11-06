@@ -52,10 +52,15 @@ export function CreateEvent({ organization }: Props) {
         event_meta: {},
     })*/
 
+
+    // we save image as File to this state
+    // we can then append this data to FormData witch we send to backend
     const [imageData, setImageData] = useState<File>()
 
     function changeEventValue(e: BaseSyntheticEvent) {
         if (e.target.files[0]) {
+            // if e.target has files this func. call came from onChange() of <input type=file /> tag
+            // https://vscode.dev/github/Jakeksii/seuraava-askel/blob/create-event/dashboard/src/assets/components/CreateEvent/Steps.tsx#L21
             setImageData(e.target.files[0])
         } else {
             setEvent({
@@ -80,15 +85,17 @@ export function CreateEvent({ organization }: Props) {
     function submitEvent() {
         console.log('Submitting event', event)
 
-        // lets send this 
-        // http://localhost:3001/api/events/create
-
+        // We create formdata object
         const formData = new FormData()
         formData.append('event', JSON.stringify(event))
         formData.append('image', imageData!)
+
+        // Send data to server
+        console.warn('This request should be using useQuery mutate')
         axios.post("http://localhost:3001/api/events/create", formData, {
             headers: {
-                //'Content-Type': 'multipart/form-data', in Axios we dont need to specify content type because function does it for us based on payload type
+                // in Axios we dont need to specify content type because function does it for us based on payload type
+                // 'Content-Type': 'multipart/form-data',
                 'Authorization': `${user?.token}`,
                 'Organization': organization._id
             }
@@ -101,11 +108,10 @@ export function CreateEvent({ organization }: Props) {
             })
 
     }
+
     function nextStep(e: BaseSyntheticEvent) {
         e.preventDefault()
         console.log("Going to next step. Event object now", event)
-
-
     }
 
     // From
