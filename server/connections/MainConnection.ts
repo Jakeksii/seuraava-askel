@@ -7,8 +7,7 @@ import OrganizationPageSchema from "../schemas/OrganizationPage";
 import { IInvitation } from "../types";
 
 dotenv.config();
-// const url:string = process.env.USING_PUBLIC_DB ? (process.env.MONGO_URL_MAIN ?? "") : (process.env.MONGO_URL_MAIN_LOCAL ?? "")
-const url:string = process.env.MONGO_URL_MAIN ?? ""
+const url:string = process.env.USING_PUBLIC_DB ? (process.env.MONGO_URL_MAIN ?? "") : (process.env.MONGO_URL_MAIN_LOCAL ?? "")
 const MainConn = mongoose.createConnection(url)
 
 MainConn.model("Event", EventSchema)
