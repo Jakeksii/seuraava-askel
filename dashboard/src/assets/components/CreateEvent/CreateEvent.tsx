@@ -1,9 +1,8 @@
+import axios from "axios"
 import { BaseSyntheticEvent, useState } from "react"
+import { useAppContext } from "../../context/appContext"
 import { IEvent, Organization } from "../../types"
 import { FinalStepContent, Step1Content, Step2Content, Step3Content } from "./Steps"
-import axios from "axios"
-import { useAppContext } from "../../context/appContext"
-import fs from 'fs'
 
 
 type Props = {
