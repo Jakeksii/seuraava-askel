@@ -12,35 +12,42 @@ type Props = {
 // we omit (exclude) _id, 'organization'... fields because those are set in server so we dont send those values.
 type Event = Omit<IEvent, '_id' | 'organization' | 'image_id' | 'createdAt' | 'updatedAt'>
 
-// FOR TESTING
-const eventTemplate: Event = {
-    "start_date": "2023-07-19T13:30",
-    "end_date": "2023-07-19T16:00",
-    "title": "Digital Marketing Conference",
-    "extract": "Stay ahead of the digital marketing trends at the Digital Marketing Conference.",
-    "visible": true,
-    "description": '',
-    "address": {
-        "street": "Puistokatu 2",
-        "city": "Oulu",
-        "state": "Pohjois-Pohjanmaa",
-        "zipcode": "90100",
-        "country": "Finland",
-        "coordinates": [
-            25.474613,
-            65.013217
-        ]
-    },
-    "event_meta": {}
-}
+
 
 export function CreateEvent({ organization }: Props) {
     // We need to instantiate event with empty data because changeEventValue() does not like undefined values
 
     const { user } = useAppContext()
 
-
+    // FOR TESTING
+    const start_date = new Date()
+    const end_date = new Date()
+    start_date.setDate(start_date.getDate() + 1)
+    end_date.setDate(end_date.getDate() + 1)
+    end_date.setHours(end_date.getHours() + 2)
+    const eventTemplate: Event = {
+        "start_date": start_date.toISOString().slice(0, 16),
+        "end_date": end_date.toISOString().slice(0, 16),
+        "title": "Digital Marketing Conference",
+        "extract": "Stay ahead of the digital marketing trends at the Digital Marketing Conference.",
+        "visible": true,
+        "description": '',
+        "address": {
+            "street": "Puistokatu 2",
+            "city": "Oulu",
+            "state": "Pohjois-Pohjanmaa",
+            "zipcode": "90100",
+            "country": "Finland",
+            "coordinates": [
+                25.474613,
+                65.013217
+            ]
+        },
+        "event_meta": {}
+    }
     const [event, setEvent] = useState<Event>(eventTemplate)
+    // END TEST
+
     /*const [event, setEvent] = useState<Event>({
         start_date: '',
         end_date: '',
@@ -58,7 +65,7 @@ export function CreateEvent({ organization }: Props) {
     const [imageData, setImageData] = useState<File>()
 
     function changeEventValue(e: BaseSyntheticEvent) {
-        if (e.target.files[0]) {
+        if (e.target.files) {
             // if e.target has files this func. call came from onChange() of <input type=file /> tag
             // https://vscode.dev/github/Jakeksii/seuraava-askel/blob/create-event/dashboard/src/assets/components/CreateEvent/Steps.tsx#L21
             setImageData(e.target.files[0])
