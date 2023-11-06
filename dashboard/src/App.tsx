@@ -15,6 +15,7 @@ const CreateOrganization = lazy(() => import('./pages/CreateOrganization'))
 const Dasboard = lazy(() => import('./pages/Dashboard'))
 
 const Events = lazy(() => import('./pages/Events'))
+
 const Organization = lazy(() => import('./pages/Organization'))
 const Analytics = lazy(() => import('./pages/Analytics'))
 const Subscription = lazy(() => import('./pages/Subscription'))

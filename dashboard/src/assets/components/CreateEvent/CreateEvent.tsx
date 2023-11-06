@@ -1,6 +1,9 @@
 import { BaseSyntheticEvent, useState } from "react"
 import { IEvent, Organization } from "../../types"
 import { FinalStepContent, Step1Content, Step2Content, Step3Content } from "./Steps"
+import axios from "axios"
+import { useAppContext } from "../../context/appContext"
+
 
 type Props = {
     organization: Organization
@@ -9,8 +12,12 @@ type Props = {
 // we omit (exclude) _id, 'organization'... fields because those are set in server so we dont send those values.
 type Event = Omit<IEvent, '_id' | 'organization' | 'image_id' | 'createdAt' | 'updatedAt'>
 
+
 export function CreateEvent({ organization }: Props) {
     // We need to instantiate event with empty data because changeEventValue() does not like undefined values
+    
+   const {user} = useAppContext()
+
     const [event, setEvent] = useState<Event>({
         start_date: '',
         end_date: '',
@@ -43,10 +50,30 @@ export function CreateEvent({ organization }: Props) {
 
     function submitEvent() {
         console.log('Submitting event', event)
+        console.log(user?.token)
+        
+        // lets send this 
+        // http://localhost:3001/api/events/create
+
+        axios.post("http://localhost:3001/api/events/create", event, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': `${user?.token}`
+            }
+          })
+          .then(response => {
+            console.log("File uploaded, all good", response.data)
+          })
+          .catch(error => {
+            console.error("File didnt go through", error)
+          })
+
     }
     function nextStep(e: BaseSyntheticEvent) {
         e.preventDefault()
         console.log("Going to next step. Event object now", event)
+
+
     }
 
     // From

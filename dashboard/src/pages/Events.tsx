@@ -18,6 +18,7 @@ export default function Events() {
 
     if(isLoading) return <Loading />
 
+
     if(organization) return (
         <main className="w-full m-auto mb-6 text-center">
             <section className="pt-6">
@@ -42,7 +43,8 @@ export default function Events() {
             </section>
             <section className="mr-32 ml-32 pt-6">
                 <h4 className="text-center p-2">Tapahtuma lista...</h4>
-                <EventTable />
+                {/* <EventTable /> */}
+                <CreateEvent organization={organization}/>
             </section>
         </main>
     )

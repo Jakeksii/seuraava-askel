@@ -142,7 +142,7 @@ export function FinalStepContent(props: StepContentProps) {
     return (
         <div className="grid">
             <h4>Event Preview</h4>
-            <Button onClick={props.onChange} variant="contained" className="w-fit justify-self-end">Julkaise tapahtuma</Button>
+            <Button onClick={props.onSubmit} variant="contained" className="w-fit justify-self-end">Julkaise tapahtuma</Button>
         </div>
     )
 }
