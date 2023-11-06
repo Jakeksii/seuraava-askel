@@ -18,6 +18,7 @@ export function Step1Content(props: StepContentProps) {
                 id="image"
                 name="image"
                 accept="image/png, image/jpeg"
+                onChange={props.onChange}
                 required />
             <label htmlFor="title">Otsikko</label>
             <input
@@ -44,12 +45,12 @@ export function Step1Content(props: StepContentProps) {
                 required
                 value={props.event.end_date}
                 onChange={props.onChange} />
-            <label htmlFor="description">Lyhyt ote</label>
+            <label htmlFor="extract">Lyhyt ote</label>
             <textarea
-                id="description"
-                name="description"
+                id="extract"
+                name="extract"
                 required
-                value={props.event.description}
+                value={props.event.extract}
                 onChange={props.onChange} />
 
             <Button type="submit" variant="contained" className="w-fit justify-self-end">Seuraava steppi {'>>'}</Button>
@@ -126,7 +127,6 @@ export function Step3Content(props: StepContentProps) {
             <textarea
                 id="description"
                 name="description"
-                required
                 value={props.event.description}
                 onChange={props.onChange} />
             <br />

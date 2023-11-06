@@ -2,7 +2,6 @@ import { Button, Dialog } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { CreateEvent } from "../assets/components/CreateEvent/CreateEvent";
-import EventTable from "../assets/components/EventTable";
 import { ErrorNode } from "../assets/components/partials/Error";
 import Loading from "../assets/components/partials/Loading";
 import { useAppContext } from "../assets/context/appContext";
