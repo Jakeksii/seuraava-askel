@@ -1,7 +1,6 @@
 import { Schema, Types} from "mongoose";
-import { IEventStats } from "../../types";
 
-export default new Schema<IEventStats> ({
+export default new Schema ({
     organization_id: Types.ObjectId, // Link this stat to organization ( only user that has access to this organization can query this stat )
     event_id: Types.ObjectId, // Link this stat to event ( to make it easy to query only one events stats )
     event_title: {

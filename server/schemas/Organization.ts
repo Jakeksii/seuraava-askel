@@ -28,11 +28,11 @@ export default new Schema<IOrganization>({
     },
     contact_info: {
         email: {
-            type: String,         
+            type: String,
             lowercase: true,
             trim: true,
             validate: {
-                validator: function(value:any) {
+                validator: function (value: any) {
                     return value ? validator.isEmail(value) : true;
                 },
                 message: 'Invalid email address'
@@ -42,7 +42,7 @@ export default new Schema<IOrganization>({
             type: String,
             trim: true,
             validate: {
-                validator: (value:any) => {
+                validator: (value: any) => {
                     return value ? validator.isMobilePhone(value) : true;
                 },
                 message: "Invalid phone number"
@@ -50,10 +50,10 @@ export default new Schema<IOrganization>({
         }
     },
 
-    contact_info_visible: {type: Boolean, default: true},
-    visible: {type: Boolean, default: false}, // If Organization passses the validation prosess, value will be set to true.
+    contact_info_visible: { type: Boolean, default: true },
+    visible: { type: Boolean, default: false }, // If Organization passses the validation prosess, value will be set to true.
     organization_users: [{
-        user_id: {type: Types.ObjectId, ref: 'User'},
+        user_id: { type: Types.ObjectId, ref: 'User' },
         user_name: String,
         user_email: String,
         role: String,
@@ -64,5 +64,5 @@ export default new Schema<IOrganization>({
     }],
     created_by: String, //User _id. Server will set this value
     updated_by: String  //User _id. Server will set this value
-    
-}, {timestamps: true}); //adds createdAt, updatedAt
+
+}, { timestamps: true }); //adds createdAt, updatedAt

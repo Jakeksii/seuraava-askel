@@ -24,7 +24,7 @@ export default new Schema<IEvent>({
         minlenght: 25,
     },
     description: {
-        type: String, 
+        type: String,
         maxlength: 10000
     },
     visible: {
@@ -45,24 +45,24 @@ export default new Schema<IEvent>({
     },
     image_id: String,
     meta: {
-        denomination: {type: String, maxlength: 20},
-        types: {type: [String], maxlength: 20},
-        size: {type: String, maxlength: 20},
-        language: {type: String, maxlength: 20},
+        denomination: { type: String, maxlength: 20 },
+        types: { type: [String], maxlength: 20 },
+        size: { type: String, maxlength: 20 },
+        language: { type: String, maxlength: 20 },
         price: {
             value: Number,
             currency: String
         },
-        online: {type: Boolean, default: false},
-        speaker: {type: String, maxlength: 20},
-        music: {type: String, maxlength: 20},
-        presenter: {type: String, maxlength: 20},
+        online: { type: Boolean, default: false },
+        speaker: { type: String, maxlength: 20 },
+        music: { type: String, maxlength: 20 },
+        presenter: { type: String, maxlength: 20 },
     },
     organization: {
         organization_id: Types.ObjectId,
         organization_name: { type: String, index: true }
     },
-    
+
     created_by: Types.ObjectId,
     updated_by: String
-}, {timestamps: true}); //adds createdAt, updatedAt
+}, { timestamps: true }); //adds createdAt, updatedAt

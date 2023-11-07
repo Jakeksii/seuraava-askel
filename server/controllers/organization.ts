@@ -1,51 +1,42 @@
-import { Response, Request } from "../types";
-import { Invitation, Organization, OrganizationPage } from "../connections/MainConnection";
+import { Invitation, Organization } from "../connections/MainConnection";
 import { User } from "../connections/UserConnection";
+import { Request, Response } from "../types";
 
 export const createOrganization = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const {
-            name,
-            business_id,
-            address,
-            contact_info,
-            contact_info_visible } = req.body;
-
-        const user = req.user;
-
         const newOrganization = new Organization({
-            name,
-            business_id,
-            address,
-            contact_info,
-            contact_info_visible,
+            name: req.body.name,
+            business_id: req.body.business_id,
+            address: req.body.address,
+            contact_info: req.body.contact_info,
+            contact_info_visible: req.body.contact_info_visible,
             organization_users: [{
-                user_id: user._id,
-                user_name: user.first_name + " " + user.last_name,
-                user_email: user.email,
+                user_id: req.user._id,
+                user_name: req.user.first_name + " " + req.user.last_name,
+                user_email: req.user.email,
                 role: 'owner'
             }],
-            created_by: user._id,
-            updated_by: user._id
+            created_by: req.user._id,
+            updated_by: req.user._id
         })
 
-        if (await Organization.findOne({ name: name })) {
+        // Check if there is already organization by that name
+        if (await Organization.findOne({ name: newOrganization.name })) {
             return res.status(409).json({
-                message: "Organization with name " + name + " is already created"
+                message: "Organization with name " + newOrganization.name + " is already created"
             })
         }
 
+        // Validate organization
         const validationError = newOrganization.validateSync();
         if (validationError) return res.status(400).json({ message: validationError.message });
 
-
-
-        //Create organization
+        //Save organization to DB
         const savedOrganization = await newOrganization.save();
 
         //Make current user owner of the newly created organization
         await User.findByIdAndUpdate(
-            user._id,
+            req.user._id,
             {
                 $push: {
                     "organizations": {
@@ -57,14 +48,13 @@ export const createOrganization = async (req: Request, res: Response): Promise<R
             },
             { safe: true, upsert: true, new: true })
 
-        return res.status(200).json(savedOrganization);
+        return res.status(201).json(savedOrganization);
 
-    } catch (error: any) {
-        console.log(error)
-        return res.status(500).json({ error: error.message })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).end()
     }
 }
-
 
 // GET organization
 export const getOrganization = async (req: Request, res: Response): Promise<Response> => {
@@ -80,8 +70,9 @@ export const getOrganization = async (req: Request, res: Response): Promise<Resp
         }
         return res.status(200).json(sanitizedOrganization)
 
-    } catch (error: any) {
-        return res.status(500).json({ error: error.message })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).end()
     }
 }
 
@@ -111,15 +102,15 @@ export const getDetailedOrganization = async (req: Request, res: Response): Prom
             business_id: organization._doc.business_id,
             contact_info_visible: organization._doc.contact_info_visible,
             visible: organization._doc.visible,
-            
+
             address: organization._doc.address,
             contact_info: organization._doc.contact_info,
             organization_users: [...organization._doc.organization_users],
 
             created_by: organization._doc.created_by,
-	        updated_by: organization._doc.updated_by,
-	        createdAt: organization._doc.createdAt,
-	        updatedAt: organization._doc.updatedAt,
+            updated_by: organization._doc.updated_by,
+            createdAt: organization._doc.createdAt,
+            updatedAt: organization._doc.updatedAt,
         }
 
         organizationToSend.organization_users.push(...mappedInvitations)
@@ -149,8 +140,8 @@ export const deleteOrganization = async (req: Request, res: Response): Promise<R
 
         return res.status(200).json({ organizationsDeleted: 1, usersUpdated: updatedUsers })
 
-    } catch (error: any) {
+    } catch (error) {
         console.error(error)
-        return res.status(500).json({ error: error.message })
+        return res.status(500).end()
     }
 }

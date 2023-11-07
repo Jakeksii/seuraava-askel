@@ -1,7 +1,7 @@
-import { Response, Request } from "../types";
-import { Organization, OrganizationPage } from "../connections/MainConnection";
-import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
+import { UploadApiResponse, v2 as cloudinary } from 'cloudinary';
 import { sanitizeHTML } from "../Functions/sanitizeHTML";
+import { Organization, OrganizationPage } from "../connections/MainConnection";
+import { Request, Response } from "../types";
 
 export const createOrganizationPage = async (req: Request, res: Response) => {
     try {
@@ -78,7 +78,8 @@ export const findOrganizationPage = async (req: Request, res: Response): Promise
 
         return res.status(200).json(data);
 
-    } catch (error: any) {
-        return res.status(500).json({ error: error.message })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).end()
     }
 }
