@@ -41,7 +41,7 @@ export default function EventContent({ data, formattedDates, organizationLink, d
                 </div>
                 <section className='flex justify-center gap-2 pb-4'>
                     {data.meta['denomination'] && <MetaTag text={data.meta['denomination']} icon={<AccountBalanceIcon fontSize='small' />} />}
-                    {data.meta['types'] && data.meta['types'].map((type) => <MetaTag text={type} icon={<CategoryIcon fontSize='small' />} />)}
+                    {data.meta['types'] && data.meta['types'].map((type, i) => <MetaTag Key={i} text={type} icon={<CategoryIcon fontSize='small' />} />)}
                     {data.meta['size'] && <MetaTag text={data.meta['size']} icon={<GroupsIcon fontSize='small' />} />}
                     {data.meta['language'] && <MetaTag text={data.meta['language']} icon={<TranslateIcon fontSize='small' />} />}
                 </section>

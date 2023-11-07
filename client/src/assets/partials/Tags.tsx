@@ -7,8 +7,8 @@ export function Tag({ icon, text }: { icon: ReactNode, text: string }) {
     </div>
 }
 
-export function MetaTag({ icon, text }: { icon: ReactNode, text: string }) {
-    return <div className="flex items-center justify-center rounded-lg bg-info-dark pr-1 pl-1 text-primary-main">
+export function MetaTag({ icon, text, Key }: { icon: ReactNode, text: string, Key?: React.Key }) {
+    return <div key={Key} className="flex items-center justify-center rounded-lg bg-info-dark pr-1 pl-1 text-primary-main">
         {icon}
         <h6 className="p-1 text-primary-main">{text}</h6>
     </div>
