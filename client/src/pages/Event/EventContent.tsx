@@ -1,11 +1,13 @@
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import CategoryIcon from '@mui/icons-material/Category';
-import EuroIcon from '@mui/icons-material/Euro';
 import EventIcon from '@mui/icons-material/Event';
+import GroupsIcon from '@mui/icons-material/Groups';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ScheduleIcon from '@mui/icons-material/Schedule';
+import TranslateIcon from '@mui/icons-material/Translate';
 import { Link } from "react-router-dom";
 import { PageImage } from "../../assets/components/PageImage";
-import { LOREM_P, LOREM_P_MULTIPLE, SCREEN_WIDTH } from "../../assets/constants";
+import { SCREEN_WIDTH } from "../../assets/constants";
 import { MetaTag, Tag } from "../../assets/partials/Tags";
 import { EventContentProps } from "../../types";
 
@@ -35,18 +37,21 @@ export default function EventContent({ data, formattedDates, organizationLink, d
                     </section>
                 </section>
                 <div className='p-4 pt-4'>
-                    <p className='text-justify'>{LOREM_P}</p>
+                    <p className='text-justify'>{data.extract}</p>
                 </div>
                 <section className='flex justify-center gap-2 pb-4'>
-                    <MetaTag text='20' icon={<EuroIcon fontSize='small' />} />
-                    <MetaTag text='Seminaari' icon={<CategoryIcon fontSize='small' />} />
+                    {data.meta['denomination'] && <MetaTag text={data.meta['denomination']} icon={<AccountBalanceIcon fontSize='small' />} />}
+                    {data.meta['types'] && data.meta['types'].map((type, i) => <MetaTag Key={i} text={type} icon={<CategoryIcon fontSize='small' />} />)}
+                    {data.meta['size'] && <MetaTag text={data.meta['size']} icon={<GroupsIcon fontSize='small' />} />}
+                    {data.meta['language'] && <MetaTag text={data.meta['language']} icon={<TranslateIcon fontSize='small' />} />}
                 </section>
             </div>
-            <section className='bg-white mt-2 p-4 rounded-2xl'>
-                <div className='text-justify'>
-                    {LOREM_P_MULTIPLE}
-                </div>
-            </section>
+            {data.description &&
+                <section className='bg-white mt-2 p-4 rounded-2xl'>
+                    <div className='text-justify' dangerouslySetInnerHTML={{ __html: data.description }}>
+                    </div>
+                </section>
+            }
         </article>
     )
 }

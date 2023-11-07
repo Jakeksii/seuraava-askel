@@ -6,16 +6,16 @@ interface Props {
     _id: string
 }
 
-// This gets the event
 export default function useGetEventPage(props: Props) {
     return useQuery({
         queryKey: ['event_page', props._id],
         staleTime: 1000 * 60,
         queryFn: async () => {
+            // This gets the event
             const { data } = await axios.get('/api/events/' + props._id)
             return data as EventPage
         },
-        onError(error){
+        onError(error) {
             console.error("Error when fetching event: ", error)
         },
         onSuccess(data) {

@@ -1,7 +1,6 @@
-import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
+import EmblaCarousel from "./EmblaCarousel";
 import Nav from "./Nav/Nav";
-const EmblaCarousel = lazy(() => import("./EmblaCarousel"));
 
 type Props = {
     home?: boolean
@@ -10,9 +9,7 @@ type Props = {
 export default function Header(props: Props) {
     if (props.home) return (
         <header>
-            <Suspense fallback={<div className="h-[420px]" />}>
-                <EmblaCarousel />
-            </Suspense>
+            <EmblaCarousel />
             <Nav />
         </header>
     )

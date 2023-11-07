@@ -5,7 +5,6 @@ import { Invitation } from "../../types";
 interface Props {
     token: string
 }
-
 export function useGetInvitations(props: Props) {
     return useQuery({
         queryKey: ['invitations'],
@@ -28,15 +27,11 @@ type AcceptResponse = {
     organization_name: string,
     role: 'user' | 'admin' | 'owner'
 }
-
 export function useAcceptInvitation() {
     return useMutation({
         mutationFn: async ({ _id, token }: { _id: string, token: string }) => {
-            // we dont need to destructure data from this function because api returns only status and no body
             const { data } = await axios.patch('/api/invitations/' + _id, {}, { headers: { "Authorization": token } })
             return data as AcceptResponse
         }
     })
 }
-
-

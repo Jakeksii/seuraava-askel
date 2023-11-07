@@ -1,7 +1,7 @@
-import { Request, Response } from "../types";
-import nodemailer from 'nodemailer'
 import { readFile } from "fs";
+import nodemailer from 'nodemailer';
 import { EmailVerification, User } from "../connections/UserConnection";
+import { Request, Response } from "../types";
 
 const transporter = nodemailer.createTransport({
     service: process.env.MAIL_SERVICE,

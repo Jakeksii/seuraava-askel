@@ -5,8 +5,8 @@ const theme = createTheme({
     palette: {
         primary: { //https://coolors.co/palette/FFE8D6-DDBEA9-CB997E
             light: "#5c7876",
-          main: '#455e5d',
-          dark: '#364746',
+            main: '#455e5d',
+            dark: '#364746',
             contrastText: '#fff',
         },
         secondary: { //https://coolors.co/palette/B7B7A4-A5A58D-6B705C

@@ -1,4 +1,4 @@
-import { Schema, Types} from "mongoose";
+import { Schema, Types } from "mongoose";
 import validator from "validator";
 import { IUser } from "../types";
 
@@ -24,7 +24,7 @@ export default new Schema<IUser>({
         lowercase: true,
         trim: true,
         validate: {
-            validator: function(value:string) {
+            validator: function (value: string) {
                 return validator.isEmail(value);
             },
             message: 'Invalid email address'
@@ -44,6 +44,6 @@ export default new Schema<IUser>({
         updated_at: Date,
         updated_by: Types.ObjectId
     }],
-    verified: {type: Boolean, default: false}
+    verified: { type: Boolean, default: false }
 
-}, {timestamps: true}); //adds createdAt, updatedAt
+}, { timestamps: true }); //adds createdAt, updatedAt

@@ -1,9 +1,8 @@
 import { compare, genSalt, hash } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { Types } from "mongoose";
-import { EmailVerification, User } from "../connections/UserConnection";
-import { NextFunction, Request, Response } from "../types";
-
+import { User } from "../connections/UserConnection";
+import { Request, Response } from "../types";
 
 /* REGISTER USER */
 export const register = async (req: Request, res: Response): Promise<Response> => {
@@ -33,7 +32,7 @@ export const register = async (req: Request, res: Response): Promise<Response> =
         if (await User.findOne({ email: email })) return res.status(409).json({ message: "Email already in use" })
         // Save user to db
         await newUser.save();
-        
+
         return res.status(201).end();
     } catch (error: any) {
         return res.status(500).json({ error: error.message })
@@ -41,7 +40,7 @@ export const register = async (req: Request, res: Response): Promise<Response> =
 }
 
 /* LOGGING IN Gives user jwt token that expires in 10 minutes*/
-export const login = async (req: Request, res: Response, next: NextFunction): Promise<Response> => {
+export const login = async (req: Request, res: Response): Promise<Response> => {
     try {
         //Check if credintials are valid and user exist
         const { email, password } = req.body;

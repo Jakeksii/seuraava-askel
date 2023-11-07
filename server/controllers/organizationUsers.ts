@@ -6,8 +6,8 @@ import { IOrganizationUser, Request, Response } from "../types";
 export async function InviteOrUpdate(req: Request, res: Response) {
     try {
         // Check if you are trying to change your own role
-        if(!req.body.user_email) return res.status(400).json({ message: 'user_email not provided' });
-        if(req.user.email === req.body.user_email) return res.status(400).json({ message: 'You cannot change your own role' });
+        if (!req.body.user_email) return res.status(400).json({ message: 'user_email not provided' });
+        if (req.user.email === req.body.user_email) return res.status(400).json({ message: 'You cannot change your own role' });
 
         // Validate role
         if (!new Set(['user', 'admin']).has(req.body.role)) return res.status(400).json({ message: 'Role is not valid' });

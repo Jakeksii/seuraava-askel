@@ -1,12 +1,12 @@
+import CloseIcon from '@mui/icons-material/Close';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
 import { Button, Dialog, Drawer, Fab } from '@mui/material';
-import { lazy, Suspense, useState } from 'react';
+import { Suspense, lazy, useState } from 'react';
 import { useSearchContext } from '../../context/searchContext';
+import Loading from '../../partials/Loading';
 import Filters from './Filters';
 import LocationButton from './LocationButton';
-import Loading from '../../partials/Loading';
 
 const Search = lazy(() => import('./Search'))
 
@@ -62,12 +62,12 @@ export default function Nav() {
                 onClose={closeFilterPanel}
             >
                 <div className='h-full bg-primary-main flex flex-col'>
-                <Filters />
-                <div className='self-center mb-10'>
-                    <Fab color='primary' size='small' aria-label="menu-close" onClick={closeFilterPanel} >
-                        <CloseIcon />
-                    </Fab>
-                </div>
+                    <Filters />
+                    <div className='self-center mb-10'>
+                        <Fab color='primary' size='small' aria-label="menu-close" onClick={closeFilterPanel} >
+                            <CloseIcon />
+                        </Fab>
+                    </div>
                 </div>
             </Drawer>
             <Dialog open={searchModalOpen} onClose={closeSearchModal} fullWidth maxWidth="md" disableRestoreFocus sx={{ 'div .MuiPaper-root': { alignSelf: 'start', backgroundColor: 'primary.main' } }}>

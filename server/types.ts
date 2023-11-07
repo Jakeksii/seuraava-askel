@@ -1,7 +1,7 @@
 import {
+    NextFunction as ExpressNextFunction,
     Request as ExpressRequest,
-    Response as ExpressResponse,
-    NextFunction as ExpressNextFunction
+    Response as ExpressResponse
 } from "express";
 import { Types } from "mongoose";
 
@@ -30,7 +30,7 @@ export interface IAddress {
     coordinates: [number, number]
 }
 
-// Event
+// EVENT ---------------------------------------
 export interface IEvent {
     _id: Types.ObjectId
     start_date: Date
@@ -63,7 +63,7 @@ export interface IEvent {
     __v: number
 }
 
-// User
+// USER ---------------------------------------------
 export interface IUser {
     _id: Types.ObjectId,
     first_name: string,
@@ -82,7 +82,7 @@ export interface IUser {
     __v?: number,
 }
 
-// Organization
+// ORGANIZATION -----------------------------------------------
 export interface IOrganization {
     name: string,
     business_id: string,
@@ -121,7 +121,7 @@ export interface IOrganizationPage {
     __v?: number
 }
 
-// Invitation
+// INVITATION ---------------------------------------------
 export interface IInvitation {
     _id?: Types.ObjectId
     user_email: string
@@ -138,7 +138,7 @@ export interface IInvitation {
     __v?: number
 }
 
-// Email
+// EMAIL --------------------------------------------------
 export interface IEmailVerification {
     _id?: Types.ObjectId
     user_id: Types.ObjectId
@@ -146,28 +146,3 @@ export interface IEmailVerification {
     updatedAt?: Date
     __v?: number
 }
-
-
-// EventStats
-export interface IEventStats {
-    _id: Types.ObjectId
-    organization_id: Types.ObjectId // Link this stat to organization ( only user that has access to this organization can query this stat )
-    event_id: Types.ObjectId // Link this stat to event ( to make it easy to query only one events stats )
-    event_title: String
-    event_searches: Number
-    event_views: Number
-    event_unique_views: Number
-    event_location_views: Number
-    event_clicks: Number
-    event_unique_clicks: Number
-    event_location_clicks: [
-        {
-            coordinates: {
-                type: [Number, Number], // [longitude, latitude]
-            },
-        },
-    ],
-    createdAt: Date
-    updatedAt: Date
-}
-

@@ -33,14 +33,6 @@ export const createEvent = async (req: Request, res: Response) => {
       return res.status(400).json({ message: validationError.message });
     }
 
-    // Create eventstats
-    // does not need validation because we create it from validated data. 
-    // uses default values declared in schema
-    const eventStats = new EventStats({
-      event_id: event._id,
-      event_title: event.title as string
-    })
-
     // Upload the image to cloudinary
     cloudinary.uploader.upload_stream({ resource_type: "image" }, uploadDone).end(image)
     async function uploadDone(error: any, result: UploadApiResponse | undefined) {
@@ -53,10 +45,9 @@ export const createEvent = async (req: Request, res: Response) => {
 
       // save created event to db
       const savedEvent = await event.save()
-      // save created eventstats to db
-      const savedEventStats = await eventStats.save()
+
       // return saved event to client
-      return res.status(201).json({ saved_event: savedEvent, created_event_stats: savedEventStats })
+      return res.status(201).json({ saved_event: savedEvent })
     }
 
   } catch (error) {

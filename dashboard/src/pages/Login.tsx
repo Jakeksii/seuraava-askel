@@ -3,55 +3,72 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import CircularProgress from "@mui/material/CircularProgress";
 import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { AxiosError } from 'axios';
+import { BaseSyntheticEvent, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ERROR_BAD_RESPONSE, ERROR_DEFAULT, ERROR_NETWORK } from '../assets/constants';
+import { ErrorNode } from '../assets/components/partials/Error';
+import { ERROR_DEFAULT, ERROR_NETWORK } from '../assets/constants';
 import { useAppContext } from '../assets/context/appContext';
 import { useLogin } from '../assets/hooks/api-hooks/useAuthenticate';
 
-function getErrorMessage(error: AxiosError): string {
-    switch (error.code) {
-        case 'ERR_NETWORK': // Network error
+function getErrorMessage(statusCode: number | undefined): string {
+    switch (statusCode) {
+        case undefined: // Ei vastausta
             return ERROR_NETWORK
-        case 'ERR_BAD_RESPONSE': // server did not answer
-            return ERROR_BAD_RESPONSE
+        case 400:
+            return 'Väärä sähköposti tai salasana'
         default:
             return ERROR_DEFAULT
     }
 }
 
+type Values = {
+    email: string
+    password: string
+}
 
 export default function Login() {
     const appContext = useAppContext()
     const navigate = useNavigate()
     const location = useLocation()
-    const { mutate, isLoading, error } = useLogin()
-    const typedError = error as AxiosError
+    const { mutate, isLoading } = useLogin()
+    const [errorMessage, setErrorMessage] = useState<string>()
+    const [values, setValues] = useState<Values>({
+        email: '',
+        password: ''
+    })
+    const [stayLoggedIn, setStayLoggedIn] = useState(false)
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
+    function handleChange(e: BaseSyntheticEvent) {
+        setValues({
+            ...values,
+            [e.target.name]: e.target.value
+        })
+    }
 
-        mutate({
-            email: formData.get('email')?.toString(),
-            password: formData.get('password')?.toString()
-        },
-            {
-                onSuccess(data) {
-                    // lisää organisaatio sessioStorageen
-                    appContext.setUser(data)
+    const handleSubmit = async (e: BaseSyntheticEvent) => {
+        e.preventDefault();
+        mutate({ email: values.email, password: values.password }, {
+            onSuccess(data) {
+                // lisää käyttäjä localStorageen mikäli on valittu 'pysy kirjautuneena'
+                appContext.setUser(data)
+                if (stayLoggedIn) {
+                    localStorage.setItem('user_data', JSON.stringify(data))
+                } else {
                     sessionStorage.setItem('user_data', JSON.stringify(data))
-                    location.state?.from ? navigate(location.state.from, { replace: true }) : navigate('/', { replace: true })
-                    console.log(data)
-                },
+                }
+                location.state?.from ? navigate(location.state.from, { replace: true }) : navigate('/', { replace: true })
+            },
+            onError(error) {
+                const axiosError = error as AxiosError
+                setErrorMessage(getErrorMessage(axiosError.response?.status))
             }
-        )
-    };
+        })
+    }
 
     return (
         <main>
@@ -60,13 +77,7 @@ export default function Login() {
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.dark' }}>
                         <LockOutlinedIcon />
                     </Avatar >
-                    <div className='m-4 text-error-main text-center'>
-                        {
-                            typedError
-                                ? <p>{getErrorMessage(typedError)}</p>
-                                : undefined
-                        }
-                    </div>
+                    <ErrorNode message={errorMessage} />
                     <Box component="form" onSubmit={handleSubmit}>
                         <TextField
                             color='info'
@@ -74,10 +85,13 @@ export default function Login() {
                             required
                             fullWidth
                             id="email"
+                            spellCheck={false}
                             label="Sähköposti"
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            value={values.email}
+                            onChange={handleChange}
                         />
                         <TextField
                             color='info'
@@ -86,13 +100,18 @@ export default function Login() {
                             fullWidth
                             name="password"
                             label="Salasana"
+                            spellCheck={false}
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            value={values.password}
+                            onChange={handleChange}
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="info" />}
-                            label="Muista minut"
+                            label="Pysy kirjautuneena"
+                            value={stayLoggedIn}
+                            onChange={() => setStayLoggedIn(!stayLoggedIn)}
                         />
                         <Button
                             type="submit"
@@ -102,7 +121,7 @@ export default function Login() {
                             disabled={isLoading}
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            {isLoading ? <CircularProgress size={'26px'} color='info' /> : <p>Kirjaudu sisään</p>}
+                            Kirjaudu sisään
                         </Button>
                         <Grid container>
                             <Grid item xs>

@@ -1,4 +1,4 @@
-import { CircularProgress } from '@mui/material'
+// LIBRARIES
 import { Suspense, lazy } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
@@ -6,33 +6,32 @@ import ThemeProvider from './Theme'
 import MainNav from './assets/components/MainNav'
 import { useAppContext } from './assets/context/appContext'
 
-// Pages
+// COMPONENTS
+import Footer from './assets/components/Footer'
 import Header from './assets/components/Header'
+import Loading from './assets/components/partials/Loading'
 import Login from './pages/Login'
 import Register from './pages/Register'
-const ChooseOrganization = lazy(() => import('./pages/ChooseOrganization'))
-const CreateOrganization = lazy(() => import('./pages/CreateOrganization'))
-const Dasboard = lazy(() => import('./pages/Dashboard'))
 
-const Events = lazy(() => import('./pages/Events'))
-const Organization = lazy(() => import('./pages/Organization'))
-const Analytics = lazy(() => import('./pages/Analytics'))
-const Subscription = lazy(() => import('./pages/Subscription'))
+// PAGES
+const ChooseOrganization = lazy(() => import('./pages/Authenticated/ChooseOrganization'))
+const CreateOrganization = lazy(() => import('./pages/Authenticated/CreateOrganization'))
+const Dasboard = lazy(() => import('./pages/Authenticated/Organization/Dashboard'))
+const Events = lazy(() => import('./pages/Authenticated/Organization/Events'))
+const Organization = lazy(() => import('./pages/Authenticated/Organization/Organization'))
+const Analytics = lazy(() => import('./pages/Authenticated/Organization/Analytics'))
+const Subscription = lazy(() => import('./pages/Authenticated/Organization/Subscription'))
 
-const loading = (
-  <div className='h-[100vh] m-auto flex justify-center items-center text-white'>
-    <CircularProgress color="inherit" size={50} />
-  </div>
-)
+const loading = <Loading />
 
 function App() {
   const appContext = useAppContext()
-  const isAuthenticated = appContext.user ? true : false
+  const isAuthenticated = !!appContext.user
 
   // If we are not authenticated we have only login and register page available
   return (
     <ThemeProvider>
-      <Header text={appContext.organization?.name ?? "Seuraava askel"}/>
+      <Header text={appContext.organization?.name ?? "Seuraava askel"} />
       <Routes>
         {
           isAuthenticated
@@ -58,6 +57,7 @@ function App() {
         }
       </Routes>
       {isAuthenticated && <MainNav />}
+      <Footer />
     </ThemeProvider>
   )
 }

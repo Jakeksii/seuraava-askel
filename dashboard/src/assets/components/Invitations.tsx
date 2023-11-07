@@ -5,13 +5,12 @@ import { getDateTimeFromUTC } from "../functions/formatDates";
 import { useAcceptInvitation, useGetInvitations } from "../hooks/api-hooks/useInvitations";
 import { Confirmation } from "./partials/Confirmation";
 
-
 export default function Invitations() {
-    const { user, setUser } = useAppContext()
-    const { data, refetch } = useGetInvitations({ token: user?.token ?? "" })
+    const appContext = useAppContext()
+    const user = appContext.user!
+    const { data, refetch } = useGetInvitations({ token: user.token })
     const { mutate: acceptInvitation } = useAcceptInvitation()
     const [modalOpen, setModalOpen] = useState(false)
-    
 
     const invitations = data?.map((invitation, i) => {
         const date = new Date(invitation.createdAt)
@@ -33,21 +32,20 @@ export default function Invitations() {
 
     function accept(invitation_id: string) {
         acceptInvitation({
-            _id: invitation_id, token: user?.token ?? ""
+            _id: invitation_id, token: user.token
         },
             {
                 onSuccess(list) {
                     // we accepted invitation and server responded with new organization that we now have access
                     // we must set it to our user organizations
-                    if(!user) return
                     let newOrganizationList = user.user.organizations
-                    if(newOrganizationList){
+                    if (newOrganizationList) {
                         newOrganizationList.push(list)
                     } else {
                         newOrganizationList = [list]
                     }
 
-                    setUser({
+                    appContext.setUser({
                         ...user,
                         user: {
                             ...user.user,
@@ -63,9 +61,9 @@ export default function Invitations() {
                 },
             })
     }
-    
+
     function decline() {
-        console.log("kyllä")
+        console.error("Not Implemented")
         setModalOpen(false)
     }
 

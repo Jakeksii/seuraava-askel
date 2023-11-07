@@ -1,5 +1,3 @@
-import { LOCATION_DEFAULT_LATITUDE, LOCATION_DEFAULT_LONGITUDE } from "../constants";
-
 export type Location = {
   latitude: number;
   longitude: number;
@@ -19,18 +17,18 @@ const useLocation = (callback: (location: Location) => void): void => {
       },
       (error) => {
         const location: Location = {
-          latitude: LOCATION_DEFAULT_LATITUDE,
-          longitude: LOCATION_DEFAULT_LONGITUDE,
+          latitude: 0,
+          longitude: 0,
           error: error.message,
         };
-        console.log("Location error: "+error)
+        console.log("Location error: " + error)
         callback(location);
       }
     );
   } else {
     const location: Location = {
-      latitude: LOCATION_DEFAULT_LATITUDE,
-      longitude: LOCATION_DEFAULT_LONGITUDE,
+      latitude: 0,
+      longitude: 0,
       error: 'Geolocation is not supported by this browser.',
     };
     console.log("Location error: Geolocation is not supported by this browser.")

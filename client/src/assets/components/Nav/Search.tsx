@@ -5,10 +5,10 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { SearchResult } from '../../../types';
 import { ERROR_DEFAULT } from '../../constants';
 import { useSearchContext } from '../../context/searchContext';
+import getSearchQuery from '../../functions/getSearchQuery';
 import { getHighlightedText, getPrefix } from '../../functions/searchResultFunctions';
 import useGetSearchResults from '../../hooks/api-hooks/useGetSearchResults';
 import Loading from '../../partials/Loading';
-import getSearchQuery from '../../functions/getSearchQuery';
 
 interface Props {
     open: boolean

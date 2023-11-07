@@ -7,8 +7,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 import MainConn from "./connections/MainConnection";
-import UserConn from "./connections/UserConnection";
 import StatsConn from "./connections/StatsConnection";
+import UserConn from "./connections/UserConnection";
 
 import authRoutes from "./routes/auth";
 import emailRoutes from './routes/email';
@@ -19,7 +19,6 @@ import organizationPageRoutes from "./routes/organizationPage";
 import userRoutes from "./routes/user";
 import { DummyDataRouter } from './schemas/dummy_data/Create';
 
-import statsRoutes from "./routes/statistics"
 
 // CONFIGURATIONS
 dotenv.config();
@@ -56,9 +55,6 @@ app.use(morgan("common"))
 
 // ROUTES 
 app.use("/api/dummydata", DummyDataRouter)
-
-app.use("/api/statistics", statsRoutes)
-
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/organizations", organizationRoutes)
