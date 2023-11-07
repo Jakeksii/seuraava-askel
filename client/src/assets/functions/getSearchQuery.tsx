@@ -14,7 +14,7 @@ type Props = {
 }
 
 export default function getSearchQuery(props: Props): SearchQuery {
-    if(props.type==="location"){
+    if (props.type === "location") {
         return {
             location: props.location,
             filters: props.filters
@@ -22,9 +22,9 @@ export default function getSearchQuery(props: Props): SearchQuery {
     } else {
         return {
             search: [
-                {"address.city": props.type==="city" ? props.search : ""},
-                {"organization.organization_name": props.type==="organization" ? props.search : ""},
-                {"title": props.type==="title" ? props.search : ""}
+                { "address.city": props.type === "city" ? props.search : "" },
+                { "organization.organization_name": props.type === "organization" ? props.search : "" },
+                { "title": props.type === "title" ? props.search : "" }
             ],
             filters: props.filters
         }

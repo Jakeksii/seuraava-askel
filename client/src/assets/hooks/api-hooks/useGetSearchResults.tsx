@@ -9,14 +9,14 @@ interface Props {
 
 export default function useGetSearchResults(props: Props) {
     return useQuery({
-        queryKey: ['search-results',props.query],
+        queryKey: ['search-results', props.query],
         enabled: props.enabled,
         staleTime: 1000 * 60,
         queryFn: async () => {
             const { data } = await axios.get('/api/events/search?s=' + props.query)
             return data as SearchResult[]
         },
-        onError(error){
+        onError(error) {
             console.error("Error when fetching search results: ", error)
         },
         onSuccess(data) {

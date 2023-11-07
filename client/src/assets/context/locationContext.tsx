@@ -18,7 +18,7 @@ const LocationContext = createContext<LocationContextType | undefined>(undefined
 
 export function useLocationContext() {
     const context = useContext(LocationContext)
-    if(!context) {
+    if (!context) {
         throw new Error('useLocationContext must be used within a LocationContextProvider');
     }
     return context
@@ -45,7 +45,7 @@ export function LocationContextProvider({ children }: { children: ReactNode }) {
                         latitude: location.latitude
                     }
                 })
-                
+
                 console.log(location)
                 return
             }

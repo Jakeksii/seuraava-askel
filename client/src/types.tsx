@@ -47,7 +47,7 @@ export interface EventPage {
     image_id: string
     meta: {
         denomination?: string
-        type?: string
+        types?: string[]
         size?: string
         language?: string
         price?: number
@@ -93,13 +93,12 @@ export interface SearchQuery {
         longitude: number
     }
     search?: [
-        {"address.city": string},
-        {"organization.organization_name": string},
-        {"title": string}
+        { "address.city": string },
+        { "organization.organization_name": string },
+        { "title": string }
     ]
     filters?: Filters
 }
-
 
 // Organization
 export interface OrganizationPage {
@@ -115,26 +114,26 @@ export interface OrganizationPage {
 }
 export interface Organization {
     address: Address,
-	contact_info: ContactInfo,
-	_id: string,
-	name: string,
-	business_id: string,
-	contact_info_visible: boolean,
-	visible: boolean,
-	organization_users: [
-		{
-			user_id: string,
-			user_name: string,
-			user_email: string,
-			role: "user" | "admin" | "owner",
-			_id: string
-		}
-	],
-	created_by: string,
-	updated_by: string,
-	createdAt: Date,
-	updatedAt: Date,
-	__v: number
+    contact_info: ContactInfo,
+    _id: string,
+    name: string,
+    business_id: string,
+    contact_info_visible: boolean,
+    visible: boolean,
+    organization_users: [
+        {
+            user_id: string,
+            user_name: string,
+            user_email: string,
+            role: "user" | "admin" | "owner",
+            _id: string
+        }
+    ],
+    created_by: string,
+    updated_by: string,
+    createdAt: Date,
+    updatedAt: Date,
+    __v: number
 }
 
 export interface EventStats {

@@ -31,7 +31,7 @@ export default function LocationButton() {
         if (!mounted) return setMounted(true)
 
         if (locationContext.values.locationOn) {
-            const query = getSearchQuery({type:"location", location:{ latitude:locationContext.values.coords.latitude, longitude:locationContext.values.coords.longitude }})
+            const query = getSearchQuery({ type: "location", location: { latitude: locationContext.values.coords.latitude, longitude: locationContext.values.coords.longitude } })
             searchContext.setValues({
                 ...searchContext.values,
                 query: query,

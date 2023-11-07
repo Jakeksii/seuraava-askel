@@ -14,7 +14,7 @@ export default function useGetOrganizationPage(props: Props) {
             const { data } = await axios.get('/api/organization-pages?name=' + props.query)
             return data as OrganizationPage
         },
-        onError(error){
+        onError(error) {
             console.error("Error when fetching search results: ", error)
         },
         onSuccess(data) {

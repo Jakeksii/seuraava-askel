@@ -4,9 +4,9 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import ThemeProvider from './Theme'
 import MainNav from './assets/components/MainNav'
-import Home from './pages/Home'
-import { SearchContextProvider } from './assets/context/searchContext'
 import { LocationContextProvider } from './assets/context/locationContext'
+import { SearchContextProvider } from './assets/context/searchContext'
+import Home from './pages/Home'
 const EventPage = lazy(() => import('./pages/Event/Event'))
 const OrganizationPage = lazy(() => import('./pages/Organization'))
 

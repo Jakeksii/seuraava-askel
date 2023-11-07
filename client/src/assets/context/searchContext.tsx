@@ -24,7 +24,7 @@ const SearchContext = createContext<SearchContextType | undefined>(undefined)
 
 export function useSearchContext() {
     const context = useContext(SearchContext)
-    if(!context) {
+    if (!context) {
         throw new Error('useSearchContext must be used within a SearchContextProvider');
     }
     return context
@@ -32,7 +32,7 @@ export function useSearchContext() {
 
 export function SearchContextProvider({ children }: { children: ReactNode }) {
     const [values, setValues] = useState({
-        query: getSearchQuery({type:"city", search:"Helsinki"})
+        query: getSearchQuery({ type: "city", search: "Helsinki" })
     })
 
     const contextValue: SearchContextType = {
