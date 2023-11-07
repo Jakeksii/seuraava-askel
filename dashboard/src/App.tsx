@@ -26,7 +26,7 @@ const loading = <Loading />
 
 function App() {
   const appContext = useAppContext()
-  const isAuthenticated = appContext.user ? true : false
+  const isAuthenticated = !!appContext.user
 
   // If we are not authenticated we have only login and register page available
   return (
