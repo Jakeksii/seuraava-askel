@@ -3,9 +3,9 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
-import DragDropFiles from '../assets/components/DragDropFiles';
-import { useAppContext } from '../assets/context/appContext';
-import { SendOrganization } from '../assets/types';
+import DragDropFiles from '../../assets/components/DragDropFiles';
+import { useAppContext } from '../../assets/context/appContext';
+import { SendOrganization } from '../../assets/types';
 
 export default function CreateOrganization() {
     // LAITA NÄÄ STATET YHTEEN STATE OBJEKTIIN { ... }

@@ -1,7 +1,5 @@
-import { SEARCH_TYPE_CITY, SEARCH_TYPE_ORGANIZATION, SEARCH_TYPE_TITLE } from "./constants"
-
 // Sub types
-interface Address {
+type Address = {
     street: string
     city: string
     state: string
@@ -9,13 +7,13 @@ interface Address {
     country: string
     coordinates: [number, number]
 }
-interface ContactInfo {
+type ContactInfo = {
     email: string,
     phone: string
 }
 type Role = 'user' | 'admin' | 'owner'
 
-// INVITATION
+// INVITATION ------------------------------
 export interface Invitation {
     _id: string
     organization: {
@@ -26,7 +24,7 @@ export interface Invitation {
     createdAt: string
 }
 
-// EVENT
+// EVENT ----------------------------
 export interface IEvent {
     _id: string | undefined
     start_date: Date
@@ -52,20 +50,7 @@ export interface IEvent {
     updatedAt: Date,
 }
 
-// SEARCH
-export type SearchResult = {
-    type:
-    typeof SEARCH_TYPE_CITY |
-    typeof SEARCH_TYPE_ORGANIZATION |
-    typeof SEARCH_TYPE_TITLE
-    data: string
-}
-export type SearchResults = {
-    results: SearchResult[]
-    error?: string
-}
-
-// Organization
+// ORGANIZATION -----------------------------
 export interface OrganizationPage {
     organization: {
         name: string,
@@ -79,43 +64,43 @@ export interface OrganizationPage {
 }
 export interface Organization {
     address: Address,
-	contact_info: ContactInfo,
-	_id: string,
-	name: string,
-	business_id: string,
-	contact_info_visible: boolean,
-	visible: boolean,
-	organization_users: [
-		{
+    contact_info: ContactInfo,
+    _id: string,
+    name: string,
+    business_id: string,
+    contact_info_visible: boolean,
+    visible: boolean,
+    organization_users: [
+        {
             invitation: undefined
-			user_id: string
-			user_name: string,
-			user_email: string,
-			role: "user" | "admin" | "owner",
-			_id: string
-		} | {
+            user_id: string
+            user_name: string,
+            user_email: string,
+            role: "user" | "admin" | "owner",
+            _id: string
+        } | {
             invitation: true
             user_email: string
             role: "user" | "admin" | "owner"
             created_at: Date
         }
-	],
-	created_by: string,
-	updated_by: string,
-	createdAt: Date,
-	updatedAt: Date,
-	__v: number
+    ],
+    created_by: string,
+    updated_by: string,
+    createdAt: Date,
+    updatedAt: Date,
+    __v: number
 }
 
 export interface SendOrganization {
     address: Address,
-	contact_info: ContactInfo,
-	name: string,
-	business_id: string,
-	contact_info_visible: boolean,
+    contact_info: ContactInfo,
+    name: string,
+    business_id: string,
+    contact_info_visible: boolean,
 }
 
-
+// USER -----------------------------
 export interface User {
     token: string,
     user: {
@@ -132,25 +117,4 @@ export interface User {
             }
         ]
     }
-}
-
-export interface EventStats {
-    title: string
-    event_searches: number
-    event_views: number
-    event_unique_views: number
-    event_location_views: number
-    event_clicks: number
-    event_unique_clicks: number
-    event_location_clicks: [
-        {
-            locationType: {
-                type: string,
-                enum: ['Point'], // You can specify the type as "Point" for geo coordinates
-            },
-            coordinates: {
-                type: [number], // [longitude, latitude]
-            },
-        },
-    ],
 }

@@ -1,7 +1,7 @@
-import React, { useState, useRef, ChangeEvent, DragEvent } from "react";
-import { styled } from '@mui/material/styles';
-import { Button } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Button } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import React, { ChangeEvent, DragEvent, useRef, useState } from "react";
 
 const DragDropFiles: React.FC = () => {
   const [files, setFiles] = useState<FileList | null>(null);

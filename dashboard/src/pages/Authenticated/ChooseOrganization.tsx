@@ -3,8 +3,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { useAppContext } from "../assets/context/appContext";
-import Invitations from '../assets/components/Invitations';
+import { useAppContext } from "../../assets/context/appContext";
+import Invitations from '../../assets/components/Invitations';
 
 export default function CreateOrganization() {
   const { user, organization, setOrganization } = useAppContext()
@@ -13,7 +13,7 @@ export default function CreateOrganization() {
 
   // CLEAR ORGANIZATION once page is loaded
   useEffect(() => {
-    setOrganization({})
+    setOrganization(undefined)
   }, [])
 
   function chooseOrganization(index: number) {
@@ -34,7 +34,7 @@ export default function CreateOrganization() {
   }
 
   return (
-    <main className="w-full m-auto mb-6 text-center">
+    <main className="m-auto text-center">
       <section className='pt-6 text-white'>
         <h2>Valitse Seurakunta</h2>
       </section>

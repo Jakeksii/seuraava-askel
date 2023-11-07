@@ -56,7 +56,11 @@ export default function Login() {
             onSuccess(data) {
                 // lisää käyttäjä localStorageen mikäli on valittu 'pysy kirjautuneena'
                 appContext.setUser(data)
-                if (stayLoggedIn) localStorage.setItem('user_data', JSON.stringify(data))
+                if (stayLoggedIn) {
+                    localStorage.setItem('user_data', JSON.stringify(data))
+                } else {
+                    sessionStorage.setItem('user_data', JSON.stringify(data))
+                }
                 location.state?.from ? navigate(location.state.from, { replace: true }) : navigate('/', { replace: true })
             },
             onError(error) {
