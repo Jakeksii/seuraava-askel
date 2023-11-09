@@ -163,7 +163,7 @@ export async function wooIntegrationTest(req: Request, res: Response): Promise<R
         // Calculate the expected signature using your webhook secret
         const expectedSignature = crypto
             .createHmac('sha256', process.env.WOO_SECRET!)
-            .update(Buffer.from(JSON.stringify(req.body), 'utf-8'))
+            .update(JSON.stringify(req.body))
             .digest('base64');
 
         if(providedSignature !== expectedSignature) return res.status(401).end()
