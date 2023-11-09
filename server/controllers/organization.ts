@@ -3,6 +3,7 @@ import { Invitation, Organization } from "../connections/MainConnection";
 import { User } from "../connections/UserConnection";
 import { Request, Response, IUser } from "../types";
 import dotenv from "dotenv";
+import crypto from 'crypto'
 
 export const createOrganization = async (req: Request, res: Response): Promise<Response> => {
     try {
@@ -152,45 +153,50 @@ export const deleteOrganization = async (req: Request, res: Response): Promise<R
 dotenv.config();
 export async function wooIntegrationTest(req: Request, res: Response): Promise<Response> {
     try {
-        if(req.header('x-wc-webhook-signature') !== process.env.WOO_SECRET) return res.status(403).end()
+        const woo_secret = req.header('x-wc-webhook-signature')
+        if (!woo_secret) return res.status(401).end()
+
+        const hmac = crypto.createHmac('sha256', process.env.WOO_SECRET??"");
+        hmac.update(req.body);
+        if(woo_secret !== hmac.digest('base64')) return res.status(401).end()
 
         // find user or create
         let user: IUser | null = await User.findOne({ email: req.body.billing.email })
-        if (!user) {  
+        if (!user) {
             //salt and hash
             const salt = await genSalt();
             const passwordHash = await hash('testi', salt);
-    
+
             const newUser = new User({
                 first_name: req.body.billing.first_name,
                 last_name: req.body.billing.last_name,
                 email: req.body.billing.email,
                 password: passwordHash,
             });
-    
+
             const validationError = newUser.validateSync();
             if (validationError) return res.status(400).json({ message: validationError.message });
 
             // Save user to db
             user = await newUser.save();
         }
-        if(!user) return res.status(500).end()
+        if (!user) return res.status(500).end()
 
         // create org for that user
         const newOrganization = new Organization({
             name: req.body.billing.company + " " + Date.now(), // just cause we cannot create 2 org w same name
             business_id: 'Y-12112',
             address: {
-                "street":"Wärtsilänkatu 8",
-                "city":"Järvenpää",
-                "state":"Uusimaa",
-                "zipcode":"04410",
-                "country":"Finland",
-                "coordinates":[60.48038566303072, 25.081171525458853]
+                "street": "Wärtsilänkatu 8",
+                "city": "Järvenpää",
+                "state": "Uusimaa",
+                "zipcode": "04410",
+                "country": "Finland",
+                "coordinates": [60.48038566303072, 25.081171525458853]
             },
-            contact_info:{
-                "email":"arkki@svk.fi",
-                "phone":"0103289473"
+            contact_info: {
+                "email": "arkki@svk.fi",
+                "phone": "0103289473"
             },
             contact_info_visible: false,
             organization_users: [{
