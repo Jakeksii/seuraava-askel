@@ -153,13 +153,6 @@ export const deleteOrganization = async (req: Request, res: Response): Promise<R
 dotenv.config();
 export async function wooIntegrationTest(req: Request, res: Response): Promise<Response> {
     try {
-        const woo_secret = req.header('x-wc-webhook-signature')
-        if (!woo_secret) return res.status(401).end()
-
-        const hmac = crypto.createHmac('sha256', process.env.WOO_SECRET??"");
-        hmac.update(req.body);
-        if(woo_secret !== hmac.digest('base64')) return res.status(401).end()
-
         // find user or create
         let user: IUser | null = await User.findOne({ email: req.body.billing.email })
         if (!user) {
