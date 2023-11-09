@@ -152,25 +152,19 @@ export const deleteOrganization = async (req: Request, res: Response): Promise<R
 dotenv.config();
 export async function wooIntegrationTest(req: Request, res: Response): Promise<Response> {
     try {
-        if(req.header('Woo-Secret') !== process.env.WOO_SECRET) return res.status(403).end()
+        if(req.header('x-wc-webhook-signature') !== process.env.WOO_SECRET) return res.status(403).end()
 
         // find user or create
-        let user: IUser | null = await User.findOne({ email: req.body.email })
-        if (!user) {
-            const {
-                first_name,
-                last_name,
-                email,
-            } = req.body;
-    
+        let user: IUser | null = await User.findOne({ email: req.body.billing.email })
+        if (!user) {  
             //salt and hash
             const salt = await genSalt();
             const passwordHash = await hash('testi', salt);
     
             const newUser = new User({
-                first_name,
-                last_name,
-                email,
+                first_name: req.body.billing.first_name,
+                last_name: req.body.billing.last_name,
+                email: req.body.billing.email,
                 password: passwordHash,
             });
     
@@ -184,7 +178,7 @@ export async function wooIntegrationTest(req: Request, res: Response): Promise<R
 
         // create org for that user
         const newOrganization = new Organization({
-            name: req.body.organization_name,
+            name: req.body.billing.company + " " + Date.now(), // just cause we cannot create 2 org w same name
             business_id: 'Y-12112',
             address: {
                 "street":"Wärtsilänkatu 8",
