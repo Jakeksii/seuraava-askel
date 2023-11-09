@@ -1,6 +1,8 @@
+import { genSalt, hash } from "bcrypt";
 import { Invitation, Organization } from "../connections/MainConnection";
 import { User } from "../connections/UserConnection";
-import { Request, Response } from "../types";
+import { Request, Response, IUser } from "../types";
+import dotenv from "dotenv";
 
 export const createOrganization = async (req: Request, res: Response): Promise<Response> => {
     try {
@@ -140,6 +142,91 @@ export const deleteOrganization = async (req: Request, res: Response): Promise<R
 
         return res.status(200).json({ organizationsDeleted: 1, usersUpdated: updatedUsers })
 
+    } catch (error) {
+        console.error(error)
+        return res.status(500).end()
+    }
+}
+
+// WOO TEST
+dotenv.config();
+export async function wooIntegrationTest(req: Request, res: Response): Promise<Response> {
+    try {
+        if(req.header('Woo-Secret') !== process.env.WOO_SECRET) return res.status(403).end()
+
+        // find user or create
+        let user: IUser | null = await User.findOne({ email: req.body.email })
+        if (!user) {
+            const {
+                first_name,
+                last_name,
+                email,
+            } = req.body;
+    
+            //salt and hash
+            const salt = await genSalt();
+            const passwordHash = await hash('testi', salt);
+    
+            const newUser = new User({
+                first_name,
+                last_name,
+                email,
+                password: passwordHash,
+            });
+    
+            const validationError = newUser.validateSync();
+            if (validationError) return res.status(400).json({ message: validationError.message });
+
+            // Save user to db
+            user = await newUser.save();
+        }
+        if(!user) return res.status(500).end()
+
+        // create org for that user
+        const newOrganization = new Organization({
+            name: req.body.organization_name,
+            business_id: 'Y-12112',
+            address: {
+                "street":"Wärtsilänkatu 8",
+                "city":"Järvenpää",
+                "state":"Uusimaa",
+                "zipcode":"04410",
+                "country":"Finland",
+                "coordinates":[60.48038566303072, 25.081171525458853]
+            },
+            contact_info:{
+                "email":"arkki@svk.fi",
+                "phone":"0103289473"
+            },
+            contact_info_visible: false,
+            organization_users: [{
+                user_id: user._id,
+                user_name: user.first_name + " " + user.last_name,
+                user_email: user.email,
+                role: 'owner'
+            }],
+            created_by: user._id,
+            updated_by: user._id
+        })
+
+        const savedOrganization = await newOrganization.save()
+
+        //Make current user owner of the newly created organization
+        await User.findByIdAndUpdate(
+            user._id,
+            {
+                $push: {
+                    "organizations": {
+                        organization_id: savedOrganization._id,
+                        organization_name: savedOrganization.name,
+                        role: "owner"
+                    }
+                }
+            },
+            { safe: true, upsert: true, new: true })
+
+
+        return res.status(201).end()
     } catch (error) {
         console.error(error)
         return res.status(500).end()

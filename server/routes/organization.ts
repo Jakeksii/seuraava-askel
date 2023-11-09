@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createOrganization, deleteOrganization, getDetailedOrganization, getOrganization } from "../controllers/organization";
+import { createOrganization, deleteOrganization, getDetailedOrganization, getOrganization, wooIntegrationTest } from "../controllers/organization";
 import { InviteOrUpdate } from "../controllers/organizationUsers";
 import { verifyOrganizationAccess, verifyToken } from "../middleware/auth";
 
@@ -15,5 +15,8 @@ router.delete("/:id", verifyToken as any, deleteOrganization as any);
 
 // USERS
 router.post("/users", verifyToken as any, verifyOrganizationAccess as any, InviteOrUpdate as any)
+
+// WOO TEST
+router.post("/woo-test", wooIntegrationTest as any)
 
 export default router;
