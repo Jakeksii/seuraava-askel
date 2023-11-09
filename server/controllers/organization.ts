@@ -153,6 +153,8 @@ export const deleteOrganization = async (req: Request, res: Response): Promise<R
 dotenv.config();
 export async function wooIntegrationTest(req: Request, res: Response): Promise<Response> {
     try {
+        if(!req.body) return res.status(200).end()
+
         const providedSignature = req.header('X-WC-Webhook-Signature');
         console.log(providedSignature)
 
