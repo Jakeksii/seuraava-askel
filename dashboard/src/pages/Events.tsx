@@ -11,7 +11,7 @@ export default function Events() {
     const { organization_id } = useParams() // We take org_id from URL so that you can always come back to organization with link
     const { user } = useAppContext()
     if( !organization_id || !user ) return
-    const { data: organization, isLoading, isError, refetch } = useDetailedOrganizations({ organization_id: organization_id, token: user.token })
+    const { data: organization, isLoading } = useDetailedOrganizations({ organization_id: organization_id, token: user.token })
 
     const [modalOpen, setModalOpen] = useState(false)
 
@@ -22,6 +22,9 @@ export default function Events() {
         <main className="w-full m-auto mb-6 text-center">
             <section className="pt-6">
                 <h2 className="text-center p-2">Tapahtumat listattuna tähän</h2>
+                <p>
+                    vaihda fetch mutateen ja tee success handler
+                </p>
             </section>
             <section className="pt-6">
                 <Button onClick={() => setModalOpen(true)} color='info' variant='contained'><h3>Luo uusi tapahtuma </h3></Button>
@@ -43,7 +46,6 @@ export default function Events() {
             <section className="mr-32 ml-32 pt-6">
                 <h4 className="text-center p-2">Tapahtuma lista...</h4>
                 {/* <EventTable /> */}
-                <CreateEvent organization={organization}/>
             </section>
         </main>
     )

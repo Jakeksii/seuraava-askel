@@ -21,3 +21,8 @@
     background-color: #f6fff8;
 
 }
+
+.scale-half {
+    transform: scale(0.60); /* Scales the element to half of its original size */
+    transform-origin: top center ; /* Sets the transformation origin to the top-left corner */
+}

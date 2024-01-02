@@ -1,7 +1,7 @@
 import { SEARCH_TYPE_CITY, SEARCH_TYPE_ORGANIZATION, SEARCH_TYPE_TITLE } from "./constants"
 
 // Sub types
-interface Address {
+export interface Address {
     street: string
     city: string
     state: string
@@ -14,6 +14,27 @@ interface ContactInfo {
     phone: string
 }
 type Role = 'user' | 'admin' | 'owner'
+export type FormattedDate = {
+    startDate: string
+    endDate: string
+    startTime: string
+    endTime: string
+}
+// GOOGLE PLACES
+interface MainTextMatchedSubstrings {
+    offset: number;
+    length: number;
+}
+interface StructuredFormatting {
+    main_text: string;
+    secondary_text: string;
+    main_text_matched_substrings?: readonly MainTextMatchedSubstrings[];
+}
+export interface PlaceType {
+    description: string;
+    structured_formatting: StructuredFormatting;
+    place_id: string
+}
 
 // INVITATION
 export interface Invitation {

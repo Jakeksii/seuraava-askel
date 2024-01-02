@@ -1,9 +1,17 @@
 import axios from "axios"
 import { BaseSyntheticEvent, useState } from "react"
+import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete"
 import { useAppContext } from "../../context/appContext"
-import { IEvent, Organization } from "../../types"
+import getAddressObject from "../../functions/getAddressObject"
+import { Address, IEvent, Organization, PlaceType } from "../../types"
+import GooglePlacesAutocomplete from "../GooglePlacesAutocomplete"
 import { FinalStepContent, Step1Content, Step2Content, Step3Content } from "./Steps"
 
+import { StepContent } from "@mui/material"
+import Step from '@mui/material/Step'
+import StepLabel from '@mui/material/StepLabel'
+import Stepper from '@mui/material/Stepper'
+import EventPreview from "./Event/EventPreview"
 
 type Props = {
     organization: Organization
@@ -16,39 +24,8 @@ type Event = Omit<IEvent, '_id' | 'organization' | 'image_id' | 'createdAt' | 'u
 
 export function CreateEvent({ organization }: Props) {
     // We need to instantiate event with empty data because changeEventValue() does not like undefined values
-
     const { user } = useAppContext()
-
-    // FOR TESTING
-    const start_date = new Date()
-    const end_date = new Date()
-    start_date.setDate(start_date.getDate() + 1)
-    end_date.setDate(end_date.getDate() + 1)
-    end_date.setHours(end_date.getHours() + 2)
-    const eventTemplate: Event = {
-        "start_date": start_date.toISOString().slice(0, 16),
-        "end_date": end_date.toISOString().slice(0, 16),
-        "title": "Digital Marketing Conference",
-        "extract": "Stay ahead of the digital marketing trends at the Digital Marketing Conference.",
-        "visible": true,
-        "description": '',
-        "address": {
-            "street": "Puistokatu 2",
-            "city": "Oulu",
-            "state": "Pohjois-Pohjanmaa",
-            "zipcode": "90100",
-            "country": "Finland",
-            "coordinates": [
-                25.474613,
-                65.013217
-            ]
-        },
-        "event_meta": {}
-    }
-    const [event, setEvent] = useState<Event>(eventTemplate)
-    // END TEST
-
-    /*const [event, setEvent] = useState<Event>({
+    const [event, setEvent] = useState<Event>({
         start_date: '',
         end_date: '',
         title: '',
@@ -57,7 +34,7 @@ export function CreateEvent({ organization }: Props) {
         visible: true,
         address: organization.address, // we set the address to org adress
         event_meta: {},
-    })*/
+    })
 
 
     // we save image as File to this state
@@ -113,29 +90,33 @@ export function CreateEvent({ organization }: Props) {
             .catch(error => {
                 console.error("File didnt go through", error)
             })
-
     }
 
-    function nextStep(e: BaseSyntheticEvent) {
-        e.preventDefault()
-        console.log("Going to next step. Event object now", event)
+    // GOOGLE AUTOCOMPLETE
+    function onPlaceSelected(place: PlaceType) {
+        geocodeByPlaceId(place.place_id)
+            .then(results => getLatLng(results[0])
+                .then(latLng => {
+                    console.log(results)
+
+                    const address: Address = {
+                        ...getAddressObject(results[0]),
+                        coordinates: [latLng.lng, latLng.lat]
+                    }
+
+                    setEvent({
+                        ...event,
+                        address: address
+                    })
+                })
+                .catch(error => console.error('Error', error)))
     }
 
-    // From
-    return (
-        <div className="overflow-auto">
-            <section className="bg-secondary-main p-4 rounded-md">
-                <p>Käytetään mui stepperiä <a href="https://mui.com/material-ui/react-stepper/" target="_blank"><u>Mui Stepper</u></a>
-                    <br /> Ennenku alat tekemään stepperiä
-                    <br /> tee toiminnallisuus valmiiks.
-                    <br /> mutta koska tullaan käyttää stepperiä ni pilkotaan formi valmiiks
-                    <br /> saat päättää mihin steppiin mikäki data tulee
-                    <br /> Event preview voidaan laittaa viimeseks.
-                </p>
-                <br />
-
-                <h3>Step 1</h3>
-                {imageData && <div className="aspect-[4/3]">
+    const steps = [
+        {
+            stepLabel: "Tapahtuma",
+            stepContent: <>
+                {imageData && <div className="aspect-[4/3] w-[50%]">
                     <img
                         src={URL.createObjectURL(imageData)}
                         alt="Image"
@@ -144,26 +125,76 @@ export function CreateEvent({ organization }: Props) {
                 <Step1Content
                     event={event}
                     onChange={changeEventValue}
+                    onBack={stepBack}
                     onSubmit={nextStep} />
+            </>
 
-                <h3>Step 2 Paikka</h3>
+        },
+        {
+            stepLabel: "Sijainti",
+            stepContent: <>
+                <GooglePlacesAutocomplete onPlaceSelected={onPlaceSelected} />
                 <Step2Content
                     event={event}
                     onChange={changeAddressValue}
+                    onBack={stepBack}
                     onSubmit={nextStep} />
-
-                <h3>Step 3 Lisätiedot</h3>
+            </>
+        },
+        {
+            stepLabel: "Lisätiedot",
+            stepContent: <>
                 <Step3Content
                     event={event}
                     onChange={changeEventValue}
+                    onBack={stepBack}
                     onSubmit={nextStep} />
-
-                <h3>Final step</h3>
+            </>
+        },
+        {
+            stepLabel: "Esikatselu",
+            stepContent: <>
+                <EventPreview
+                    event={event}
+                    organization={organization}
+                    imageData={imageData} />
                 <FinalStepContent
                     event={event}
                     onChange={() => { }}
+                    onBack={stepBack}
                     onSubmit={submitEvent} />
+            </>
+        },
 
+    ];
+    const [activeStep, setActiveStep] = useState(0)
+    const [completedSteps] = useState<number[]>([]);
+    function nextStep(e: BaseSyntheticEvent) {
+        e.preventDefault()
+        completedSteps.push(activeStep)
+        setActiveStep(activeStep + 1)
+    }
+    function stepBack() {
+        setActiveStep(activeStep + -1)
+    }
+    // From
+    return (
+        <div className="overflow-auto">
+            <section className="bg-secondary-main p-2 rounded-md">
+                <Stepper orientation="vertical" activeStep={activeStep}>
+                    {
+                        steps.map((step, i) => {
+                            return (
+                                <Step key={step.stepLabel}>
+                                    <StepLabel onClick={() => {if(i in completedSteps) setActiveStep(i) }}>{step.stepLabel}</StepLabel>
+                                    <StepContent TransitionProps={{ unmountOnExit: false }} sx={{ padding: 0, margin: 0, border: 0 }}>
+                                        {step.stepContent}
+                                    </StepContent>
+                                </Step>
+                            )
+                        })
+                    }
+                </Stepper>
             </section>
         </div>
     )

@@ -6,6 +6,7 @@ type Event = Omit<IEvent, '_id' | 'organization' | 'image_id' | 'createdAt' | 'u
 type StepContentProps = {
     event: Event
     onChange: (e: BaseSyntheticEvent) => void
+    onBack: () => void
     onSubmit: (e: BaseSyntheticEvent) => void
 }
 
@@ -53,7 +54,10 @@ export function Step1Content(props: StepContentProps) {
                 value={props.event.extract}
                 onChange={props.onChange} />
 
-            <Button type="submit" variant="contained" className="w-fit justify-self-end">Seuraava steppi {'>>'}</Button>
+            <br />
+            <div className="flex justify-self-end gap-2">
+                <Button type="submit" variant="contained">Seuraava</Button>
+            </div>
         </form>
     )
 }
@@ -61,7 +65,7 @@ export function Step1Content(props: StepContentProps) {
 export function Step2Content(props: StepContentProps) {
     return (
         <form className="grid" onSubmit={props.onSubmit}>
-
+            <br />
             <label htmlFor="street">Street</label>
             <input
                 type="text"
@@ -71,7 +75,6 @@ export function Step2Content(props: StepContentProps) {
                 value={props.event.address.street}
                 onChange={props.onChange}
             />
-
             <label htmlFor="city">City</label>
             <input
                 type="text"
@@ -81,7 +84,6 @@ export function Step2Content(props: StepContentProps) {
                 value={props.event.address.city}
                 onChange={props.onChange}
             />
-
             <label htmlFor="state">State</label>
             <input
                 type="text"
@@ -91,7 +93,6 @@ export function Step2Content(props: StepContentProps) {
                 value={props.event.address.state}
                 onChange={props.onChange}
             />
-
             <label htmlFor="zipcode">Zipcode</label>
             <input
                 type="text"
@@ -101,7 +102,6 @@ export function Step2Content(props: StepContentProps) {
                 value={props.event.address.zipcode}
                 onChange={props.onChange}
             />
-
             <label htmlFor="country">Country</label>
             <input
                 type="text"
@@ -111,10 +111,12 @@ export function Step2Content(props: StepContentProps) {
                 value={props.event.address.country}
                 onChange={props.onChange}
             />
+            <br />
+            <div className="flex justify-self-end gap-2">
+                <Button onClick={props.onBack}>Takaisin</Button>
+                <Button type="submit" variant="contained">Seuraava</Button>
+            </div>
 
-            <Button type="submit" variant="contained" className="w-fit justify-self-end">
-                Seuraava steppi {'>>'}
-            </Button>
         </form>
     )
 }
@@ -130,10 +132,10 @@ export function Step3Content(props: StepContentProps) {
                 value={props.event.description}
                 onChange={props.onChange} />
             <br />
-            <h4>event meta</h4>
-            <p>Ei kannata viel kauheesti miettii kun työn alla on koko meta homma</p>
-
-            <Button type="submit" variant="contained" className="w-fit justify-self-end">Seuraava steppi {'>>'}</Button>
+            <div className="flex justify-self-end gap-2">
+                <Button onClick={props.onBack}>Takaisin</Button>
+                <Button type="submit" variant="contained">Seuraava</Button>
+            </div>
         </form>
     )
 }
@@ -141,8 +143,10 @@ export function Step3Content(props: StepContentProps) {
 export function FinalStepContent(props: StepContentProps) {
     return (
         <div className="grid">
-            <h4>Event Preview</h4>
-            <Button onClick={props.onSubmit} variant="contained" className="w-fit justify-self-end">Julkaise tapahtuma</Button>
+            <div className="flex justify-self-end gap-2">
+                <Button onClick={props.onBack}>Takaisin</Button>
+                <Button onClick={props.onSubmit} variant="contained" className="w-fit justify-self-end">Julkaise</Button>
+            </div>
         </div>
     )
 }
