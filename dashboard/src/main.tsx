@@ -1,21 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { BrowserRouter } from 'react-router-dom'
-import App from './App'
-import { AppContextProvider } from './assets/context/appContext'
-import './index.css'
+import { Suspense } from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 
-const queryClient = new QueryClient()
+import App from './app';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+// ----------------------------------------------------------------------
+
+const root = ReactDOM.createRoot(document.getElementById('root')!);
+
+root.render(
+  <HelmetProvider>
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <AppContextProvider>
-          <App />
-        </AppContextProvider>
-      </QueryClientProvider>
+      <Suspense>
+        <App />
+      </Suspense>
     </BrowserRouter>
-  </React.StrictMode>
-)
+  </HelmetProvider>
+);
