@@ -4,11 +4,11 @@ import { OrganizationView } from 'src/sections/organization/view';
 
 // ----------------------------------------------------------------------
 
-export default function ChooseOrganizationPage() {
+export default function OrganizationPage() {
   return (
     <>
       <Helmet>
-        <title> Organization | SE-AS </title>
+        <title> Organizaatio | SE-AS </title>
       </Helmet>
       <OrganizationView />
     </>

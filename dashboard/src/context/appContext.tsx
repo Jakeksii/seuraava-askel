@@ -17,18 +17,15 @@ interface Session {
             }
         ]
     }
-}
-
-type Organization = {
-    _id?: string
-    name?: string
+    organization?: { // This is selected organization
+        _id: string,
+        name: string
+    }
 }
 
 type AppContextType = {
     session?: Session
     setSession: (session: Session | undefined) => void
-    organization?: Organization
-    setOrganization: (organization: Organization | undefined) => void
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
@@ -46,14 +43,11 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
     const sessionData: Session | undefined = dataFromSessionStorage ? JSON.parse(dataFromSessionStorage) : undefined
 
     const [session, setSession] = useState<Session | undefined>(sessionData)
-    const [organization, setOrganization] = useState<Organization | undefined>(undefined)
 
     const contextValue = useMemo(() => ({
         session: session,
-        setSession: setSession,
-        organization,
-        setOrganization,
-    }), [session, setSession, organization, setOrganization]);
+        setSession: setSession
+    }), [session, setSession]);
 
     return (
         <AppContext.Provider value={contextValue}>

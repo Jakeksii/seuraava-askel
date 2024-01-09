@@ -10,32 +10,27 @@ const navConfig = [
   {
     title: 'dashboard',
     path: '/',
+    icon: icon('ic_round-dashboard'),
+  },
+  {
+    title: 'tapahtumat',
+    path: '/events',
+    icon: icon('ic_events'),
+  },
+  {
+    title: 'organisaatio',
+    path: '/organization',
+    icon: icon('ic_building-32-filled'),
+  },
+  {
+    title: 'statistiikka',
+    path: '/statistics',
     icon: icon('ic_analytics'),
   },
   {
-    title: 'user',
-    path: '/user',
-    icon: icon('ic_user'),
-  },
-  {
-    title: 'product',
-    path: '/products',
-    icon: icon('ic_cart'),
-  },
-  {
-    title: 'blog',
-    path: '/blog',
-    icon: icon('ic_blog'),
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: icon('ic_disabled'),
+    title: 'tiimi & tilaus',
+    path: '/team&subscription',
+    icon: icon('ic_people-12-filled'),
   },
 ];
 

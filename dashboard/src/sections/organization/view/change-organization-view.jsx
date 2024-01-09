@@ -22,7 +22,7 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 
 // ----------------------------------------------------------------------
 
-export default function UserPage() {
+export default function ChangeOrganizationView() {
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -77,10 +77,10 @@ export default function UserPage() {
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Organizations</Typography>
+        <Typography variant="h4">Organisaatiot</Typography>
 
         <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
-          New Organization
+          Uusi organisaatio
         </Button>
       </Stack>
 

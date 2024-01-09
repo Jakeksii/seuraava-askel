@@ -53,7 +53,7 @@ export default function Nav({ openNav, onCloseNav }) {
     >
       <Box>
         <Typography variant="subtitle1">{organization.displayName}</Typography>
-        <Button variant='text' onClick={() => {navigate('choose-organization')}}>Vaihda</Button>
+        <Button variant='text' onClick={() => {navigate('change-organization')}}>Vaihda</Button>
       </Box>
     </Box>
   );
@@ -77,7 +77,7 @@ export default function Nav({ openNav, onCloseNav }) {
         },
       }}
     >
-      <Typography variant='h2' align='center' >Seuraava Askel</Typography>
+      <Typography color='primary' variant='h2' align='center' >Seuraava Askel</Typography>
 
       {renderOrganization}
 

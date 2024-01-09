@@ -11,29 +11,25 @@ import IconButton from '@mui/material/IconButton';
 
 import { useLogout } from 'src/hooks/api-hooks/useAuthenticate';
 
-import { account } from 'src/_mock/account';
-
+import SvgColor from 'src/components/svg-color';
+import { useAppContext } from 'src/context/appContext';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
-    icon: 'eva:home-fill',
-  },
-  {
-    label: 'Profile',
-    icon: 'eva:person-fill',
-  },
-  {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
-  },
+    label: 'Asetukset',
+    url: '/settings'
+  }
 ];
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
+  const { session: { user } } = useAppContext()
+  const navigate = useNavigate()
+
   const { logout } = useLogout()
   const [open, setOpen] = useState(null);
 
@@ -47,6 +43,7 @@ export default function AccountPopover() {
 
   return (
     <>
+      <SvgColor src={`/assets/icons/person-20-filled.svg`} sx={{ width: 1, height: 1 }} />
       <IconButton
         onClick={handleOpen}
         sx={{
@@ -59,16 +56,18 @@ export default function AccountPopover() {
           }),
         }}
       >
+
         <Avatar
-          src={account.photoURL}
-          alt={account.displayName}
+          alt={user.displayName}
           sx={{
             width: 36,
             height: 36,
+            background: (theme) => `${theme.palette.primary.main}`,
             border: (theme) => `solid 2px ${theme.palette.background.default}`,
+            fontWeight: 'bold'
           }}
         >
-          {account.displayName.charAt(0).toUpperCase()}
+          {user.first_name.charAt(0).toUpperCase()}
         </Avatar>
       </IconButton>
 
@@ -78,28 +77,30 @@ export default function AccountPopover() {
         onClose={handleClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        PaperProps={{
-          sx: {
-            p: 0,
-            mt: 1,
-            ml: 0.75,
-            width: 200,
-          },
+        slotProps={{
+          paper: {
+            sx: {
+              p: 0,
+              mt: 1,
+              ml: 0.75,
+              width: 200,
+            },
+          }
         }}
       >
         <Box sx={{ my: 1.5, px: 2 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {`${user.first_name} ${user.last_name}`}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {user.email}
           </Typography>
         </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         {MENU_OPTIONS.map((option) => (
-          <MenuItem key={option.label} onClick={handleClose}>
+          <MenuItem key={option.label} onClick={() => {navigate(option.url); handleClose}}>
             {option.label}
           </MenuItem>
         ))}
@@ -112,7 +113,7 @@ export default function AccountPopover() {
           onClick={logout}
           sx={{ typography: 'body2', color: 'error.main', py: 1.5 }}
         >
-          Logout
+          Kirjaudu ulos
         </MenuItem>
       </Popover>
     </>

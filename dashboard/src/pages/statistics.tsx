@@ -1,17 +1,16 @@
 import { Helmet } from 'react-helmet-async';
 
-import { LoginView } from 'src/sections/login';
+import { StatisticsView } from 'src/sections/statistics/view';
 
 // ----------------------------------------------------------------------
 
-export default function LoginPage() {
+export default function StatisticsPage() {
   return (
     <>
       <Helmet>
-        <title> Login | SE-AS </title>
+        <title> Statistiikka | SE-AS </title>
       </Helmet>
-
-      <LoginView />
+      <StatisticsView />
     </>
   );
 }

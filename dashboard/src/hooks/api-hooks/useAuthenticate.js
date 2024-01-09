@@ -14,12 +14,12 @@ export function useLogin() {
 
 export function useLogout() {
     const client = useQueryClient()
-    const { setUser } = useAppContext()
+    const { setSession } = useAppContext()
 
     const logout = () => {
         sessionStorage.removeItem('user_data')
         client.clear();
-        setUser()
+        setSession()
     }
     return { logout }
 }
