@@ -8,7 +8,7 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title> Login | SE-AS </title>
+        <title> Kirjaudu | SE-AS </title>
       </Helmet>
 
       <LoginView />

@@ -8,7 +8,7 @@ export default function RegisterPage() {
   return (
     <>
       <Helmet>
-        <title> Register | SE-AS </title>
+        <title> Rekisteröidy | SE-AS </title>
       </Helmet>
 
       <RegisterView />
