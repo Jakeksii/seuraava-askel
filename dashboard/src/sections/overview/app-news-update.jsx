@@ -11,7 +11,7 @@ import CardHeader from '@mui/material/CardHeader';
 
 import { fToNow } from 'src/utils/format-time';
 
-import Iconify from 'src/components/iconify';
+import SvgColor from 'src/components/svg-color';
 import Scrollbar from 'src/components/scrollbar';
 
 // ----------------------------------------------------------------------
@@ -35,7 +35,7 @@ export default function AppNewsUpdate({ title, subheader, list, ...other }) {
         <Button
           size="small"
           color="inherit"
-          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
+          endIcon={<SvgColor src={'/assets/icons/navbar/ic_arrow-ios-forward-fill.svg'} sx={{ width: 1, height: 1 }} />}
         >
           View all
         </Button>

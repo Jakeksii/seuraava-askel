@@ -1,1 +1,0 @@
-import{j as i,y as n}from"./index-87635f2d.js";import{u as t,N as o}from"./NotFound-89aa2031.js";import"./useQuery-7105b008.js";function d(){const{useQueryResults:{data:s,isLoading:r,isError:a}}=t();return r?i.jsx("main",{children:i.jsx(n,{})}):!s||a?i.jsx(o,{}):i.jsx("main",{children:i.jsx("h2",{className:"p-2",children:"Analytiikka sivu"})})}export{d as default};

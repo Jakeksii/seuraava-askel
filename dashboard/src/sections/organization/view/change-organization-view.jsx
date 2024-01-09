@@ -10,9 +10,8 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import { organizations } from 'src/_mock/orgnizations';
+import AddIcon from '@mui/icons-material/Add';
 
-import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
 import TableEmptyRows from '../table-empty-rows';
@@ -23,6 +22,8 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 // ----------------------------------------------------------------------
 
 export default function ChangeOrganizationView() {
+  const [organizations] = useState([])
+
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -79,7 +80,7 @@ export default function ChangeOrganizationView() {
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Organisaatiot</Typography>
 
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
+        <Button variant="contained" color="inherit" startIcon={<AddIcon />}>
           Uusi organisaatio
         </Button>
       </Stack>

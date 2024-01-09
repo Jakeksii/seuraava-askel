@@ -7,7 +7,9 @@ import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 
-import Iconify from 'src/components/iconify';
+import SearchIcon from '@mui/icons-material/Search';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 // ----------------------------------------------------------------------
 
@@ -36,10 +38,7 @@ export default function UserTableToolbar({ numSelected, filterName, onFilterName
           placeholder="Search user..."
           startAdornment={
             <InputAdornment position="start">
-              <Iconify
-                icon="eva:search-fill"
-                sx={{ color: 'text.disabled', width: 20, height: 20 }}
-              />
+              <SearchIcon />
             </InputAdornment>
           }
         />
@@ -48,13 +47,13 @@ export default function UserTableToolbar({ numSelected, filterName, onFilterName
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton>
-            <Iconify icon="eva:trash-2-fill" />
+          <DeleteOutlineIcon />
           </IconButton>
         </Tooltip>
       ) : (
         <Tooltip title="Filter list">
           <IconButton>
-            <Iconify icon="ic:round-filter-list" />
+            <FilterListIcon />
           </IconButton>
         </Tooltip>
       )}

@@ -29,7 +29,8 @@ export default defineConfig(({ command }) => {
     server: {
       port: 3030,
       proxy: {}
-    }
+    },
+    build: {}
   }
 
   if (command === 'serve') {
@@ -39,6 +40,10 @@ export default defineConfig(({ command }) => {
         changeOrigin: true,
         secure: false,
       }
+    }
+  } else {
+    config.build = {
+      outDir: '../server/public_dashboard'
     }
   }
 

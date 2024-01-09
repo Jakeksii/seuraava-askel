@@ -16,12 +16,10 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import { bgBlur } from 'src/theme/css';
 import { ColorModeContext } from 'src/context/colormode-context';
 
-import Iconify from 'src/components/iconify';
-
 import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
 import LanguagePopover from './common/language-popover';
-
+import SvgColor from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +32,7 @@ export default function Header({ onOpenNav }) {
     <>
       {!lgUp && (
         <IconButton onClick={onOpenNav} sx={{ mr: 1 }}>
-          <Iconify icon="eva:menu-2-fill" />
+          <SvgColor src={'/assets/icons/navbar/ic_menu-2-fill.svg'} sx={{ width: 30, height: 30 }} />
         </IconButton>
       )}
 

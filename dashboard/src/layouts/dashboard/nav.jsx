@@ -15,8 +15,6 @@ import { RouterLink } from 'src/routes/components';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
-import { organization } from 'src/_mock/orgnization';
-
 import Scrollbar from 'src/components/scrollbar';
 
 import { NAV } from './config-layout';
@@ -52,7 +50,7 @@ export default function Nav({ openNav, onCloseNav }) {
       }}
     >
       <Box>
-        <Typography variant="subtitle1">{organization.displayName}</Typography>
+        <Typography variant="subtitle1">{"Järvenpään Vapaaseurakunta"}</Typography>
         <Button variant='text' onClick={() => {navigate('change-organization')}}>Vaihda</Button>
       </Box>
     </Box>

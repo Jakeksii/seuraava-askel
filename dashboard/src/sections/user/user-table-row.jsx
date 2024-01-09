@@ -11,8 +11,11 @@ import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -64,7 +67,7 @@ export default function UserTableRow({
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
-            <Iconify icon="eva:more-vertical-fill" />
+            <MoreVertIcon />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -80,12 +83,12 @@ export default function UserTableRow({
         }}
       >
         <MenuItem onClick={handleCloseMenu}>
-          <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
+          <EditIcon sx={{ mr: 2 }} />
           Edit
         </MenuItem>
 
         <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
-          <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
+          <DeleteOutlineIcon sx={{ mr: 2 }} />
           Delete
         </MenuItem>
       </Popover>

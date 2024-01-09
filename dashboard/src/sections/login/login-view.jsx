@@ -11,6 +11,9 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { alpha, useTheme } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 import { useRouter } from 'src/routes/hooks';
 
 import { useLogin } from 'src/hooks/api-hooks/useAuthenticate';
@@ -20,7 +23,6 @@ import { useAppContext } from 'src/context/appContext';
 import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
-import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -78,7 +80,7 @@ export default function LoginView() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  {showPassword ? <VisibilityIcon/> : <VisibilityOffIcon/>}
                 </IconButton>
               </InputAdornment>
             ),
