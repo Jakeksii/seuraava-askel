@@ -17,6 +17,7 @@ import invitationRoutes from "./routes/invitation";
 import organizationRoutes from "./routes/organization";
 import userRoutes from "./routes/user";
 import { DummyDataRouter } from './schemas/dummy_data/Create';
+import path from 'path';
 
 
 // CONFIGURATIONS
@@ -60,7 +61,13 @@ app.use("/api/organizations", organizationRoutes)
 app.use("/api/invitations", invitationRoutes)
 app.use("/api/events", eventRoutes)
 app.use("/api/email", emailRoutes)
-app.use("/", express.static(process.env.DASHBOARD ? 'public_dashboard' : 'public'))
+// Serve static files from the build folder
+const URL = process.env.DASHBOARD ? 'public_dashboard' : 'public'
+app.use(express.static(path.join(__dirname, URL)));
+// Catch all routes
+app.get('*', (_, res) => {
+    res.sendFile(path.join(__dirname, URL+'/index.html'));
+});
 
 const connect = async () => {
     await MainConn.asPromise().then(result => {
