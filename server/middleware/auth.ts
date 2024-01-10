@@ -11,10 +11,10 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
         try {
             // Verify provided token
             const secret: string = process.env.JWT_SECRET ?? ""
-            const verified = verify(token, secret) as string
+            const payload = verify(token, secret) as any
 
             // Find user from DB with id that came from decrypted token
-            const user = await User.findById(verified)
+            const user = await User.findById(payload._id)
             if (!user) return res.status(401).json({ message: "Access Denied: Bad authorization token" });
 
             // Save user to req obj so that we can use it troughout our request processing pipeline

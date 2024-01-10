@@ -15,7 +15,6 @@ import emailRoutes from './routes/email';
 import eventRoutes from "./routes/event";
 import invitationRoutes from "./routes/invitation";
 import organizationRoutes from "./routes/organization";
-import organizationPageRoutes from "./routes/organizationPage";
 import userRoutes from "./routes/user";
 import { DummyDataRouter } from './schemas/dummy_data/Create';
 
@@ -60,7 +59,6 @@ app.use("/api/users", userRoutes)
 app.use("/api/organizations", organizationRoutes)
 app.use("/api/invitations", invitationRoutes)
 app.use("/api/events", eventRoutes)
-app.use("/api/organization-pages", organizationPageRoutes)
 app.use("/api/email", emailRoutes)
 app.use("/", express.static(process.env.DASHBOARD ? 'public_dashboard' : 'public'))
 
