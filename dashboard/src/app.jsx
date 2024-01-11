@@ -1,3 +1,4 @@
+import ThemeProvider from 'src/theme';
 import 'src/global.css';
 
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -5,7 +6,6 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
 
 import Router from 'src/routes/sections';
-import ThemeProvider from 'src/theme';
 
 import ColorModeContextProvider from './context/colormode-context';
 import { AppContextProvider } from './context/appContext';

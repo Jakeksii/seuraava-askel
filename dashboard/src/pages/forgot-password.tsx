@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { RegisterView } from 'src/sections/auth';
+import { ForgotPasswordView } from 'src/sections/auth';
 
 // ----------------------------------------------------------------------
 
-export default function RegisterPage() {
+export default function ForgotPasswordPage() {
   return (
     <>
       <Helmet>
-        <title> Rekisteröidy | SE-AS </title>
+        <title> Salasanan nollaus | SE-AS </title>
       </Helmet>
 
-      <RegisterView />
+      <ForgotPasswordView />
     </>
   );
 }

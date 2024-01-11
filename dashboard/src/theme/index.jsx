@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useMemo, useContext } from 'react';
 
-import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as MUIThemeProvider, createTheme } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
 
 import { ColorModeContext } from 'src/context/colormode-context';
 

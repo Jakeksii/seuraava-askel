@@ -27,8 +27,24 @@ export function useLogout() {
 export function useRegister() {
     return useMutation({
         mutationFn: async ({ first_name, last_name, email, password }) => {
-            // we dont need to destructure data from this function because api returns only status and no body
-            await axios.post('/api/auth/register', { first_name, last_name, email, password })
+            const { data } = await axios.post('/api/auth/register', { first_name, last_name, email, password })
+            return data
+        },
+    })
+}
+
+export function useForgotPassword() {
+    return useMutation({
+        mutationFn: async ({ email }) => {
+            await axios.post('/api/auth/forgot-password', { email })
+        },
+    })
+}
+
+export function useResetPassword() {
+    return useMutation({
+        mutationFn: async ({ reset_token, password }) => {
+            await axios.post('/api/auth/reset-password', { reset_token, password })
         },
     })
 }

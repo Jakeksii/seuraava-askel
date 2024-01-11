@@ -5,13 +5,17 @@ import { useAppContext } from 'src/context/appContext';
 import DashboardLayout from 'src/layouts/dashboard';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
-export const LoginPage = lazy(() => import('src/pages/login'));
-export const RegisterPage = lazy(() => import('src/pages/register'));
+
 export const ChangeOrganizationPage = lazy(() => import('src/pages/change-organization'))
 export const EventsPage = lazy(() => import('src/pages/events'));
 export const OrganizationPage = lazy(() => import('src/pages/organization'));
 export const StatisticsPage = lazy(() => import('src/pages/statistics'));
 export const TeamAndSubscriptionPage = lazy(() => import('src/pages/team-and-subscription'));
+
+export const LoginPage = lazy(() => import('src/pages/login'));
+export const RegisterPage = lazy(() => import('src/pages/register'));
+export const ForgotPasswordPage = lazy(() => import('src/pages/forgot-password'))
+export const ResetPasswordPage = lazy(() => import('src/pages/reset-password'))
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 export const UserPage = lazy(() => import('src/pages/user'));
@@ -51,6 +55,14 @@ export default function Router() {
     {
       path: 'register',
       element: <RegisterPage />,
+    },
+    {
+      path: 'forgot-password',
+      element: <ForgotPasswordPage />,
+    },
+    {
+      path: 'reset-password',
+      element: <ResetPasswordPage />,
     },
     session ? {
       element: (
