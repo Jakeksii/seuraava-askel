@@ -53,6 +53,9 @@ app.use(express.json({ limit: '10kb' }))
 app.use(helmet(helmetOptions))
 app.use(morgan("common"))
 
+// Trust the first proxy
+app.set('trust proxy', 1);
+
 // ROUTES 
 app.use("/api/dummydata", DummyDataRouter)
 app.use("/api/auth", authRoutes)
@@ -62,11 +65,12 @@ app.use("/api/invitations", invitationRoutes)
 app.use("/api/events", eventRoutes)
 app.use("/api/email", emailRoutes)
 // Serve static files from the build folder
+const FOLDER = process.env.PRODUCTION ? '' : '.dist/'
 const URL = process.env.DASHBOARD ? 'public_dashboard' : 'public'
-app.use(express.static(path.join(__dirname, URL)));
+app.use(express.static(path.join(__dirname, FOLDER+URL)));
 // Catch all routes
 app.get('*', (_, res) => {
-    res.sendFile(path.join(__dirname, URL+'/index.html'));
+    res.sendFile(path.join(__dirname, FOLDER+URL+'/index.html'));
 });
 
 const connect = async () => {
