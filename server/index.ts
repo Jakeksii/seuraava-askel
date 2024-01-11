@@ -46,9 +46,6 @@ cloudinary.config({
     secure: true
 });
 
-// Trust proxy
-app.set('trust proxy', true);
-
 // Apply the rate limiting middleware to all requests
 app.use(limiter)
 app.use(cors())
