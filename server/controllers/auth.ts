@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import { compare, genSalt, hash } from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
 import { Types } from "mongoose";
@@ -5,6 +6,8 @@ import { User } from "../connections/UserConnection";
 import { Request, Response } from "../types";
 import nodemailer from 'nodemailer';
 import { validatePassword } from "../Functions/test-password";
+
+dotenv.config();
 
 /* REGISTER USER */
 export const register = async (req: Request, res: Response): Promise<Response> => {
@@ -105,7 +108,7 @@ export const forgotPassword = async (req: Request, res: Response): Promise<Respo
         const token = sign({ reset_token: {_id: user._id }}, secret, { expiresIn: '1d' });
 
         // create reset link
-        const resetLink = `http://localhost:3030/reset-password?reset_token=${token}`
+        const resetLink = `${process.env.APP_URL}/reset-password?reset_token=${token}`
 
         // send link via email
         const mailOptions = {
