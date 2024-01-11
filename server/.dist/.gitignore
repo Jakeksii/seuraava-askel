@@ -1,9 +1,13 @@
 # Ignore everything in the repository
 *
 
-# Allow .gitignore file
+# Allow files
 !.gitignore
+!package.json
 
 # Allow folders
-!public_dashboard/
 !public/
+!public_dashboard/
+!public/**
+!public_dashboard/**
+
