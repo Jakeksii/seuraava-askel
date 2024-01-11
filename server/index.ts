@@ -11,7 +11,7 @@ import StatsConn from "./connections/StatsConnection";
 import UserConn from "./connections/UserConnection";
 
 import authRoutes from "./routes/auth";
-import emailRoutes from './routes/email';
+//import emailRoutes from './routes/email';
 import eventRoutes from "./routes/event";
 import invitationRoutes from "./routes/invitation";
 import organizationRoutes from "./routes/organization";
@@ -60,7 +60,7 @@ app.use("/api/users", userRoutes)
 app.use("/api/organizations", organizationRoutes)
 app.use("/api/invitations", invitationRoutes)
 app.use("/api/events", eventRoutes)
-app.use("/api/email", emailRoutes)
+//app.use("/api/email", emailRoutes)
 // Serve static files from the build folder
 const FOLDER = process.env.PRODUCTION ? '' : '.dist/'
 const URL = process.env.DASHBOARD ? 'public_dashboard' : 'public'

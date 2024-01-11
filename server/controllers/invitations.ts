@@ -10,7 +10,7 @@ export const accept = async (req: Request, res: Response) => {
         if (!Types.ObjectId.isValid(invitation_id)) return res.status(400).json({ message: 'Id provided is not valid ObjectId' })
 
         // Get invitation and delete it from DB
-        const invitation = await Invitation.findByIdAndDelete(invitation_id)
+        const {value: invitation} = await Invitation.findByIdAndDelete(invitation_id)
         if (!invitation) return res.status(404).end()
 
         // Check if user has right to use this invitation object
@@ -66,7 +66,7 @@ export const decline = async (req: Request, res: Response) => {
         if (!Types.ObjectId.isValid(invitation_id)) return res.status(400).json({ message: 'Id provided is not valid ObjectId' })
 
         // Get invitation and delete it from DB
-        const invitation = await Invitation.findByIdAndDelete(invitation_id)
+        const {value: invitation} = await Invitation.findByIdAndDelete(invitation_id)
         if (!invitation) return res.status(404).end()
 
         // Check if user has right to use this invitation object

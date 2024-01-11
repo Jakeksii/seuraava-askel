@@ -54,7 +54,7 @@ export const verifyEmail = async (req:Request, res:Response):Promise<Response> =
         if(!_id) return res.status(400).end()
 
         // get verification object with id provided by url
-        const verfication = await EmailVerification.findByIdAndDelete(_id)
+        const {value: verfication} = await EmailVerification.findByIdAndDelete(_id)
         if(!verfication) return res.status(404).end() // return not found
         // get user with id provided by verification object and update that user to be verified
         await User.findByIdAndUpdate(verfication.user_id, {verified: true})

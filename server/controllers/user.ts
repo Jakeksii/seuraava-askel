@@ -19,7 +19,7 @@ export const getCurrentUser = async (req: Request, res: Response): Promise<Respo
 export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
     try {
         //Find and Delete user from DB
-        const deletedUser: IUser | null = await User.findByIdAndDelete(req.user._id);
+        const { value: deletedUser } = await User.findByIdAndDelete(req.user._id);
         if (!deletedUser) return res.status(404).json({ message: "User not found" })
 
         // Find all organizations that user was owner in

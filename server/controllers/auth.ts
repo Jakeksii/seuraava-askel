@@ -3,8 +3,10 @@ import { sign, verify } from "jsonwebtoken";
 import { Types } from "mongoose";
 import { User } from "../connections/UserConnection";
 import { Request, Response } from "../types";
-import nodemailer from 'nodemailer';
 import { validatePassword } from "../Functions/test-password";
+import mail from "@sendgrid/mail";
+
+mail.setApiKey(process.env.SENDGRID_KEY!)
 
 /* REGISTER USER */
 export const register = async (req: Request, res: Response): Promise<Response> => {
@@ -85,14 +87,6 @@ export const refreshToken = async (req: Request, res: Response): Promise<Respons
     }
 }
 
-const transporter = nodemailer.createTransport({
-    service: process.env.MAIL_SERVICE,
-    auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS
-    }
-})
-
 export const forgotPassword = async (req: Request, res: Response): Promise<Response> => {
     try {
         // test email
@@ -108,20 +102,19 @@ export const forgotPassword = async (req: Request, res: Response): Promise<Respo
         const resetLink = `http://localhost:3030/reset-password?reset_token=${token}`
 
         // send link via email
-        const mailOptions = {
-            from: 'Seuraava Askel <no-reply@seuraava-askel.fi>',
+        const options = {
+            from: 'jaakko.ruhanen@outlook.com',
             to: email,
             subject: 'Salasanan vaihtaminen',
             html: `<a href="${resetLink}" target="_blank">Vaihda salasana</a>`
         }
-
-        // Send the email
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.log('Error:', error);
-            } else {
-                console.log('Email sent:', info.response);
-            }
+        
+        // send email using SendGrid API
+        mail.send(options).then(() => {
+            console.log('Email sent')
+        }).catch((error) => {
+            console.error(error)
+            return res.status(503).end()
         })
 
         return res.status(202).end()
