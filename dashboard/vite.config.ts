@@ -43,7 +43,7 @@ export default defineConfig(({ command }) => {
     }
   } else {
     config.build = {
-      outDir: '../server/public_dashboard'
+      outDir: '../server/.dist/public_dashboard'
     }
   }
 

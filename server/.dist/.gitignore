@@ -6,5 +6,8 @@
 !package.json
 
 # Allow folders
-!public_dashboard/
 !public/
+!public_dashboard/
+!public/**
+!public_dashboard/**
+
