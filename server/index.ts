@@ -46,15 +46,15 @@ cloudinary.config({
     secure: true
 });
 
+// Trust proxy
+app.set('trust proxy', true);
+
 // Apply the rate limiting middleware to all requests
 app.use(limiter)
 app.use(cors())
 app.use(express.json({ limit: '10kb' }))
 app.use(helmet(helmetOptions))
 app.use(morgan("common"))
-
-// Trust the first proxy
-app.set('trust proxy', 1);
 
 // ROUTES 
 app.use("/api/dummydata", DummyDataRouter)
