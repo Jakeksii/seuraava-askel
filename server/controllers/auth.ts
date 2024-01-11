@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import { compare, genSalt, hash } from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
 import { Types } from "mongoose";
@@ -6,6 +7,7 @@ import { Request, Response } from "../types";
 import { validatePassword } from "../Functions/test-password";
 import mail from "@sendgrid/mail";
 
+dotenv.config()
 mail.setApiKey(process.env.SENDGRID_KEY!)
 
 /* REGISTER USER */
@@ -98,8 +100,10 @@ export const forgotPassword = async (req: Request, res: Response): Promise<Respo
         const secret: string = process.env.JWT_SECRET ?? ""
         const token = sign({ reset_token: {_id: user._id }}, secret, { expiresIn: '1d' });
 
+        const URL = process.env.APP_URL
+
         // create reset link
-        const resetLink = `http://localhost:3030/reset-password?reset_token=${token}`
+        const resetLink = `${URL}/reset-password?reset_token=${token}`
 
         // send link via email
         const options = {
