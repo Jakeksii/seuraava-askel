@@ -109,15 +109,15 @@ export const forgotPassword = async (req: Request, res: Response): Promise<Respo
             html: `<a href="${resetLink}" target="_blank">Vaihda salasana</a>`
         }
         
-        // send email using SendGrid API
-        mail.send(options).then(() => {
-            console.log('Email sent')
-        }).catch((error) => {
+        // Send Mail
+        try {
+            const response = await mail.send(options)
+            console.log('Email sent', response[0].body)
+            return res.status(202).end()
+        } catch (error) {
             console.error(error)
             return res.status(503).end()
-        })
-
-        return res.status(202).end()
+        }
 
     } catch (error) {
         return res.status(500).end();
