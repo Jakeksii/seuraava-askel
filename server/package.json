@@ -25,6 +25,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "npx tsc",
+    "postbuild": "cp package.json .dist/package.json && cd .dist && npm install --only=production",
     "start": "node .dist/index.js",
     "dev": "nodemon index.ts"
   },
