@@ -1,0 +1,9 @@
+# Ignore everything in the repository
+*
+
+# Allow .gitignore file
+!.gitignore
+
+# Allow folders
+!public_dashboard/
+!public/
