@@ -1,11 +1,11 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 import Box from '@mui/material/Box';
 
-import Nav from './nav';
-import Main from './main';
 import Header from './header';
+import Main from './main';
+import Nav from './nav';
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +25,9 @@ export default function DashboardLayout({ children }) {
       >
         <Nav openNav={openNav} onCloseNav={() => setOpenNav(false)} />
 
-        <Main>{children}</Main>
+        <Main>
+            {children}
+        </Main>
       </Box>
     </>
   );

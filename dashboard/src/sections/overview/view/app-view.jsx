@@ -10,15 +10,18 @@ import AppWidgetSummary from '../app-widget-summary';
 import AppCurrentSubject from '../app-current-subject';
 import AppConversionRates from '../app-conversion-rates';
 import { useAppContext } from 'src/context/appContext';
+import { useGetUser } from 'src/hooks/api-hooks/useAuthenticate';
 
 // ----------------------------------------------------------------------
 
 export default function AppView() {
   const { session } = useAppContext()
+  const { data: user } = useGetUser(session.token)
+  
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
-        Hei {session.user.first_name}, Tervetuloa takaisin 👋
+        Hei {user.first_name}, Tervetuloa takaisin 👋
       </Typography>
 
       <Grid container spacing={3}>

@@ -77,8 +77,8 @@ export default function RegisterView() {
         onSuccess: (data) => {
           // Login success store data to context and session
           setSession(data)
-          sessionStorage.setItem('session_data', JSON.stringify(data))
-          router.push('/')
+          localStorage.setItem('token', data.token)
+          router.push('/verify-email')
         },
         onError: (error) => {
           // Register error

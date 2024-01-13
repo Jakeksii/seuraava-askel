@@ -1,7 +1,20 @@
 import axios from "axios";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import { useAppContext } from "src/context/appContext";
+
+export function useGetUser(token, retry = false) {
+    return useQuery({
+        queryKey: ['user', token],
+        staleTime: 1000 * 60,
+        enabled: !!token,
+        retry: retry,
+        queryFn: async () => {
+            const { data } = await axios.get('/api/users/', {headers:{ Authorization: token }})
+            return data
+        }
+    })
+}
 
 export function useLogin() {
     return useMutation({
@@ -17,7 +30,7 @@ export function useLogout() {
     const { setSession } = useAppContext()
 
     const logout = () => {
-        sessionStorage.removeItem('user_data')
+        localStorage.removeItem('token')
         client.clear();
         setSession()
     }
@@ -45,6 +58,23 @@ export function useResetPassword() {
     return useMutation({
         mutationFn: async ({ reset_token, password }) => {
             await axios.post('/api/auth/reset-password', { reset_token, password })
+        },
+    })
+}
+
+export function useVerifyEmail({ verification_token }) {
+    return useQuery({
+        retry: false,
+        queryFn: async () => {
+            await axios.post('/api/auth/verify-email', { verification_token })
+        }
+    })
+}
+
+export function useCreateVerifyEmail() {
+    return useMutation({
+        mutationFn: async ({ token }) => {
+            await axios.get('/api/auth/create-verify-email', {headers: { Authorization: token }})
         },
     })
 }

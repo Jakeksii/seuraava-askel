@@ -1,26 +1,7 @@
 import { useMemo, useState, useContext, createContext } from "react";
 
 interface Session {
-    token: string,
-    user: {
-        _id: string,
-        first_name: string,
-        last_name: string,
-        email: string,
-        verified: boolean,
-        organizations?: [
-            {
-                organization_id: string,
-                organization_name: string,
-                role: "user" | "admin" | "owner",
-                _id: string
-            }
-        ]
-    }
-    organization?: { // This is selected organization
-        _id: string,
-        name: string
-    }
+    token: string
 }
 
 type AppContextType = {
@@ -39,9 +20,8 @@ export function useAppContext() {
 }
 
 export function AppContextProvider({ children }: { children: React.ReactNode }) {
-    const dataFromSessionStorage = sessionStorage.getItem('session_data')
-    const sessionData: Session | undefined = dataFromSessionStorage ? JSON.parse(dataFromSessionStorage) : undefined
-
+    const token = localStorage.getItem('token')
+    const sessionData: Session | undefined = token ? { token: token } : undefined
     const [session, setSession] = useState<Session | undefined>(sessionData)
 
     const contextValue = useMemo(() => ({

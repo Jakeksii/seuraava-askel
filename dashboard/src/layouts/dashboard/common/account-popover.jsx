@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
-import { useLogout } from 'src/hooks/api-hooks/useAuthenticate';
+import { useGetUser, useLogout } from 'src/hooks/api-hooks/useAuthenticate';
 
 import SvgColor from 'src/components/svg-color';
 import { useAppContext } from 'src/context/appContext';
@@ -27,7 +27,8 @@ const MENU_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
-  const { session: { user } } = useAppContext()
+  const { session } = useAppContext()
+  const { data: user } = useGetUser(session.token)
   const navigate = useNavigate()
 
   const { logout } = useLogout()

@@ -26,7 +26,7 @@ import { validatePassword } from 'src/utils/test-password';
 
 // ----------------------------------------------------------------------
 
-export default function LoginView() {
+export default function ResetPasswordView() {
   const theme = useTheme();
   const router = useRouter();
   const [searchParams] = useSearchParams()
@@ -159,7 +159,7 @@ export default function LoginView() {
           {error401 &&
             <>
               <Typography variant="h5" color='error' sx={{ mt: 2, mb: 5 }}>
-                Pääsytunnuksen vahvistus epäonnistui. Linkki on voinut vanhentua.
+                Tunnuksen vahvistus epäonnistui. Linkki on voinut vanhentua.
               </Typography>
               <LoadingButton
                 fullWidth
