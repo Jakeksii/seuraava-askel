@@ -1,7 +1,6 @@
 import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
 import { Types } from 'mongoose'
 import { Event } from "../connections/MainConnection"
-import { EventStats } from '../connections/StatsConnection'
 import { IEvent, Request, Response } from '../types'
 
 export const createEvent = async (req: Request, res: Response) => {

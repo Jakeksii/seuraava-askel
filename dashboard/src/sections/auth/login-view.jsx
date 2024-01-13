@@ -74,18 +74,23 @@ export default function LoginView() {
         onSuccess: (data) => {
           // Login success store data to context and session
           setSession(data)
-          sessionStorage.setItem('session_data', JSON.stringify(data))
-          router.push('/')
+          localStorage.setItem('token', data.token)
+
+          const url = data.user.verified ? '/' : '/verify-email'
+          router.push(url)
         },
         onError: (error) => {
           // Login error
           if(!error.response) return setError('Tarkista verkkoyhteytesi')
           switch(error.response.status) {
             case 400:
-              setError("Väärä sähköposti tai salasana")
+              setError("Väärä sähköposti tai salasana.")
+              break
+            case 429:
+              setError('Olet yrittänyt liian monta kertaa. Odota hetki ja yritä uudestaan.')
               break
             default:
-              setError('Oho, jokin meni vikaan')
+              setError('Oho, jokin meni vikaan.')
               break
           }
         }
