@@ -1,7 +1,7 @@
 import { Schema, Types } from "mongoose";
 import { IEvent } from "../types";
 
-export default new Schema<IEvent>({
+const EventSchema = new Schema<IEvent>({
     start_date: {
         type: Date,
         require: true
@@ -66,3 +66,7 @@ export default new Schema<IEvent>({
     created_by: Types.ObjectId,
     updated_by: String
 }, { timestamps: true }); //adds createdAt, updatedAt
+
+EventSchema.index({title: 'text', 'address.city': 'text'})
+
+export default EventSchema

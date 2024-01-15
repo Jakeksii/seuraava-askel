@@ -3,17 +3,17 @@ import { useInfiniteQuery } from "react-query";
 import { Event, SearchQuery } from "../../../types";
 
 type Props = {
-    query: SearchQuery
+    search: string
     page: number
 }
 
 export default function useGetEvents(props: Props) {
 
     return useInfiniteQuery({
-        queryKey: ['events', props.query],
+        queryKey: ['events', props.search],
         staleTime: 1000 * 60 * 5,
         queryFn: async ({ pageParam = 1 }) => {
-            const { data } = await axios.post("api/events?page=" + pageParam, props.query)
+            const { data } = await axios.post(`api/events?s=${props.search}&p=${pageParam}`, {})
             return data as Event[]
         },
         onError(error) {

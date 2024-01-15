@@ -20,9 +20,9 @@ const loading = (
 )
 
 export default function EventFeed(props: Props) {
-    const { values: { query } } = useSearchContext()
+    const { values: { query, search } } = useSearchContext()
     const { values: { locationOn, coords }, getLocation } = useLocationContext()
-    const { isLoading, data, isError, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetEvents({ query: props.query ?? query, page: 1 }) // if query is passed as a prop we use it to fetch events
+    const { isLoading, data, isError, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetEvents({ search: search ?? '', page: 1 })
     const lastEventRef = useRef<HTMLDivElement | null>(null)
     const { ref, entry } = useIntersection({
         root: lastEventRef.current,

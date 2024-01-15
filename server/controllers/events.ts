@@ -99,50 +99,52 @@ export const getFilters = async (req: Request, res: Response) => {
 }
 
 export const getEvents = async (req: Request, res: Response) => {
-  const location = req.body.location
-  const search = req.body.search as [
-    { "address.city": string },
-    { "organization.organization_name": string },
-    { "title": string }
-  ]
-  const filters = req.body.filters ?? {}
-
-  // PAGINATE
-  const page = parseInt(req.query.page as string) || 1; // Current page number
-  const limit = parseInt(req.query.limit as string) || 3; // Number of items per page
-  const skip = (page - 1) * limit
-
   try {
+    const location = req.body.location
+    // const search = req.body.search as [
+    //   { "address.city": string },
+    //   { "organization.organization_name": string },
+    //   { "title": string }
+    // ]
+    const search = req.query.s as string
+    const filters = req.body.filters ?? {}
+
+    // PAGINATE
+    const page = parseInt(req.query.p as string) || 1; // Current page number
+    const limit = parseInt(req.query.limit as string) || 3; // Number of items per page
+    const skip = (page - 1) * limit
 
     let events: IEvent[]
 
-    if (location) {
-      const { latitude, longitude } = location;
-      events = await Event.aggregate([
-        {
-          $geoNear: {
-            near: {
-              type: 'Point',
-              coordinates: [longitude, latitude],
-            },
-            distanceField: 'distance',
-            spherical: true,
-          },
-        },
-        {
-          $match: filters
-        },
-        {
-          $sort: {
-            distance: 1,  // Sort by distance in ascending order (closest first)
-            start_date: 1, // Then sort by start_date in ascending order
-          },
-        },
-        // Additional stages if needed
-      ]).skip(skip).limit(limit).exec();
-    } else {
-      events = await Event.find({ ...filters, $or: search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
-    }
+    events = await Event.find({$text: {$search: search}}).skip(skip).limit(limit).exec()
+
+    // if (location) {
+    //   const { latitude, longitude } = location;
+    //   events = await Event.aggregate([
+    //     {
+    //       $geoNear: {
+    //         near: {
+    //           type: 'Point',
+    //           coordinates: [longitude, latitude],
+    //         },
+    //         distanceField: 'distance',
+    //         spherical: true,
+    //       },
+    //     },
+    //     {
+    //       $match: filters
+    //     },
+    //     {
+    //       $sort: {
+    //         distance: 1,  // Sort by distance in ascending order (closest first)
+    //         start_date: 1, // Then sort by start_date in ascending order
+    //       },
+    //     },
+    //     // Additional stages if needed
+    //   ]).skip(skip).limit(limit).exec();
+    // } else {
+    //   events = await Event.find({ ...filters, $or: search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
+    // }
 
     const data = events.map((event: IEvent) => {
       return {
@@ -169,26 +171,30 @@ export const getEvents = async (req: Request, res: Response) => {
 }
 
 export const searchEvents = async (req: Request, res: Response) => {
-  const search = req.query.s as string;
-  const searchTerm = search.toLowerCase();
-  if (searchTerm.length < 3) return res.status(400).json({ message: "search term needs to be atleast 3 char long" })
-
-  const regex = { $regex: searchTerm, $options: 'i' };
-  const endDateFilter = { end_date: { $gte: new Date() } }
-  const cityFilter = { 'address.city': regex }
-  const organizationFilter = { 'organization.organization_name': regex }
-  const titleFilter = { title: regex }
   try {
-    const [distinctCities, distinctOrgNames, distinctTitles] = await Promise.all([
-      Event.find({ $and: [cityFilter, endDateFilter] }).distinct('address.city').exec(),
-      Event.find({ $and: [organizationFilter, endDateFilter] }).distinct('organization.organization_name').exec(),
-      Event.find({ $and: [titleFilter, endDateFilter] }).distinct('title').exec(),
-    ]);
+    const search = req.query.s as string;
+    if (search.length < 3) return res.status(400).json({ message: "search term needs to be atleast 3 char long" })
+
+    const regex = { $regex: search, $options: 'i' };
+    const endDateFilter = { end_date: { $lte: new Date() } }
+    const cityFilter = { 'address.city': regex }
+    const organizationFilter = { 'organization.organization_name': regex }
+    const titleFilter = { title: regex }
+    const typesFilter = { 'meta.types': regex }
+
+    const distinctCities = await Event.find({ $and: [cityFilter, endDateFilter] }).distinct('address.city').exec()
+    const distinctTypes = await Event.find({ $and: [typesFilter, endDateFilter] }).distinct('meta.types').exec()
+    const distinctOrgNames = await Event.find({ $and: [organizationFilter, endDateFilter] }).distinct('organization.organization_name').exec()
+    const distinctTitles = await Event.find({ $and: [titleFilter, endDateFilter] }).distinct('title').exec()
+
+    console.log(distinctTypes)
+
     const cities = distinctCities.map((data) => ({ type: 'city', data: data }))
+    const types = distinctTypes.filter(item => new RegExp(search, 'i').test(item)).map((data) => ({ type: 'type', data: data }))
     const organizations = distinctOrgNames.map((data) => ({ type: 'organization', data: data }))
     const titles = distinctTitles.map((data) => ({ type: 'title', data: data }))
 
-    const results = [...cities, ...organizations, ...titles]
+    const results = [...cities, ...types, ...organizations, ...titles]
 
     return res.status(200).json(results);
 
@@ -197,6 +203,107 @@ export const searchEvents = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'An error occurred while fetching events' });
   }
 }
+// export const searchEvents = async (req: Request, res: Response) => {
+//   try {
+//     const search = req.query.s as string;
+//     const searchTerm = search.toLowerCase();
+//     if (searchTerm.length < 3) return res.status(400).json({ message: "search term needs to be atleast 3 char long" })
+
+//     const regexPattern = new RegExp(`\\b${searchTerm}`, 'i');
+//     const regex = { $regex: regexPattern };
+//     const endDateFilter = { end_date: { $lte: new Date() } }
+//     const cityFilter = { 'address.city': regex }
+//     const organizationFilter = { 'organization.organization_name': regex }
+//     const titleFilter = { title: regex }
+//     const typesFilter = { 'meta.types': { $elemMatch: regex } };
+
+//     const data = await Event.aggregate([
+//       {
+//         $match: endDateFilter
+//       },
+//       {
+//         $facet: {
+//           // distinctCities: [
+//           //   { $match: cityFilter },
+//           //   {
+//           //     $group: {
+//           //       _id: null,
+//           //       values: { $addToSet: '$address.city' }
+//           //     }
+//           //   },
+//           //   {
+//           //     $project: {
+//           //       _id: 0,
+//           //       values: { $slice: ['$values', 5] }
+//           //     }
+//           //   }
+//           // ],
+//           distinctTypes: [
+//             { $match: typesFilter },
+//             {
+//               $group: {
+//                 _id: null,
+//                 values: { $addToSet: '$meta.types' }
+//               }
+//             },
+//             {
+//               $project: {
+//                 _id: 0,
+//                 values: { $slice: ['$values', 5] }
+//               }
+//             }
+//           ],
+//           // distinctOrgNames: [
+//           //   { $match: organizationFilter },
+//           //   {
+//           //     $group: {
+//           //       _id: null,
+//           //       values: { $addToSet: '$organization.organization_name' }
+//           //     }
+//           //   },
+//           //   {
+//           //     $project: {
+//           //       _id: 0,
+//           //       values: { $slice: ['$values', 5] }
+//           //     }
+//           //   }
+//           // ],
+//           // distinctTitles: [
+//           //   { $match: titleFilter },
+//           //   {
+//           //     $group: {
+//           //       _id: null,
+//           //       values: { $addToSet: '$title' }
+//           //     }
+//           //   },
+//           //   {
+//           //     $project: {
+//           //       _id: 0,
+//           //       values: { $slice: ['$values', 5] }
+//           //     }
+//           //   }
+//           // ]
+//         }
+//       }
+//     ]).exec();
+
+//     const { distinctCities, distinctTypes, distinctOrgNames, distinctTitles } = data[0];
+
+//     console.log(distinctTypes[0])
+
+//     // const cities = distinctCities[0] ? distinctCities[0].values.map((data: string) => ({ type: 'city', data: data })) : []
+//     const types = distinctTypes[0] ? distinctTypes[0].values.map((data: string) => ({ type: 'type', data: data })) : []
+//     // const organizations = distinctOrgNames[0] ? distinctOrgNames[0].values.map((data: string) => ({ type: 'organization', data: data })) : []
+//     // const titles = distinctTitles[0] ? distinctTitles[0].values.map((data: string) => ({ type: 'title', data: data })) : []
+
+//     const results = [...types]
+//     return res.status(200).json(results.slice(0, 8));
+
+//   } catch (error) {
+//     console.error('Error fetching events:', error);
+//     return res.status(500).json({ error: 'An error occurred while fetching events' });
+//   }
+// }
 
 // Event page
 export const getEventPage = async (req: Request, res: Response) => {
