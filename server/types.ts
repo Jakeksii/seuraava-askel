@@ -40,6 +40,10 @@ export interface IEvent {
     description?: string //HTML
     visible: boolean
     address: IAddress
+    location: {
+        type: String,
+        coordinates: [Number, Number] // [longitude, latitude]
+    }
     image_id: string
     meta: {
         denomination?: string

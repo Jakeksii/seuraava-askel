@@ -43,6 +43,17 @@ const EventSchema = new Schema<IEvent>({
             required: true
         }
     },
+    location: {
+        type: {
+            type: String,
+            default: 'Point',
+            required: true
+        },
+        coordinates: {
+            type: [Number, Number],
+            required: true
+        }
+    },
     image_id: String,
     meta: {
         denomination: { type: String, maxlength: 20 },
@@ -67,6 +78,6 @@ const EventSchema = new Schema<IEvent>({
     updated_by: String
 }, { timestamps: true }); //adds createdAt, updatedAt
 
-EventSchema.index({title: 'text', 'address.city': 'text'})
+EventSchema.index({ title: 'text', 'address.city': 'text' })
 
 export default EventSchema

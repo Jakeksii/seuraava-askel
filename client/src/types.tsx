@@ -35,6 +35,7 @@ export interface Event {
     }
     createdAt: Date
     updatedAt: Date
+    recommended?: boolean
 }
 export interface EventPage {
     _id: string

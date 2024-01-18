@@ -5,6 +5,10 @@ import { Event, SearchQuery } from "../../../types";
 type Props = {
     search: string
     page: number
+    coords?: {
+        longitude: number
+        latitude: number
+    }
 }
 
 export default function useGetEvents(props: Props) {
@@ -13,7 +17,7 @@ export default function useGetEvents(props: Props) {
         queryKey: ['events', props.search],
         staleTime: 1000 * 60 * 5,
         queryFn: async ({ pageParam = 1 }) => {
-            const { data } = await axios.post(`api/events?s=${props.search}&p=${pageParam}`, {})
+            const { data } = await axios.post(`api/events?s=${props.search}&p=${pageParam}`, {location: props.coords})
             return data as Event[]
         },
         onError(error) {

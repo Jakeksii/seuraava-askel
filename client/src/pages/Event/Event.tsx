@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { useParams } from "react-router-dom";
-import Footer from "../../assets/components/Footer";
 import Header from "../../assets/components/Header";
 import { useLocationContext } from "../../assets/context/locationContext";
 import calculateDistance from "../../assets/functions/calculateDistance";
@@ -38,25 +37,21 @@ export default function EventPage() {
     // Render page
     return (
         <>
-            <Header />
-            <main className='m-[6px] pt-2 text-center'>
-                {
-                    isMobile
-                        ? <EventMobileContent
-                            data={data}
-                            formattedDates={formattedDates}
-                            organizationLink={organizationLink}
-                            distance={distance}
-                            mapLink={mapLink} />
-                        : <EventContent
-                            data={data}
-                            formattedDates={formattedDates}
-                            organizationLink={organizationLink}
-                            distance={distance}
-                            mapLink={mapLink} />
-                }
-            </main>
-            <Footer />
+            {
+                isMobile
+                    ? <EventMobileContent
+                        data={data}
+                        formattedDates={formattedDates}
+                        organizationLink={organizationLink}
+                        distance={distance}
+                        mapLink={mapLink} />
+                    : <EventContent
+                        data={data}
+                        formattedDates={formattedDates}
+                        organizationLink={organizationLink}
+                        distance={distance}
+                        mapLink={mapLink} />
+            }
         </>
     )
 }
