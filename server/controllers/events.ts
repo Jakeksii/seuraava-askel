@@ -98,51 +98,109 @@ export const getFilters = async (req: Request, res: Response) => {
   return res.status(200).json(availableFilters[0])
 }
 
+type Options = {
+  limit: number
+  skip: number
+}
+const getRecommendedEvents = async ({limit, skip}: Options) => {
+  const events = await Event.find({}).skip(skip).limit(limit).exec()
+  const data = events.map((event: IEvent) => {
+    return {
+      _id: event._id,
+      start_date: event.start_date,
+      end_date: event.end_date,
+      title: event.title,
+      extract: event.extract,
+      address: event.address,
+      image_id: event.image_id,
+      meta: event.meta,
+      organization: event.organization,
+      createdAt: event.createdAt,
+      updatedAt: event.updatedAt,
+    }
+  })
+  return data
+}
+
 export const getEvents = async (req: Request, res: Response) => {
-  const location = req.body.location
-  const search = req.body.search as [
-    { "address.city": string },
-    { "organization.organization_name": string },
-    { "title": string }
-  ]
-  const filters = req.body.filters ?? {}
-
-  // PAGINATE
-  const page = parseInt(req.query.page as string) || 1; // Current page number
-  const limit = parseInt(req.query.limit as string) || 3; // Number of items per page
-  const skip = (page - 1) * limit
-
   try {
+    const search = req.query.s as string
+    const latitude = parseFloat(req.query.lat as string) || 0
+    const longitude = parseFloat(req.query.lon as string) || 0
+
+    // PAGINATE
+    const page = parseInt(req.query.p as string) || 1; // Current page number
+    const limit = parseInt(req.query.limit as string) || 3; // Number of items per page
+    const skip = (page - 1) * limit
+
+    // If no query provided give recommended
+    if(!(latitude || longitude) && !search) {
+      const data = await getRecommendedEvents({limit, skip})
+      return res.status(200).json(data)
+    }
+      
+    // confif for text based search
+    const textSearch = {
+      text: {
+        query: search,
+        path: {
+          wildcard: "*"
+        },
+        fuzzy: {
+          maxEdits: 2,
+          prefixLength: 2
+        }
+      }
+    }
+
+    // config for location based search
+    const locationSearch = {
+      near: {
+        origin: {
+          type: "Point",
+          coordinates: [longitude, latitude]
+        }, // pivot / (pivot + abs(fieldValue - origin))
+        pivot: 100000,
+        path: "location",
+        score: {boost: {value: 5}}
+      }
+    }
+
+    // // THIS IS SO NICE
+    // // config for preferences
+    // const preferencesSearch = {
+    //   moreLikeThis: {
+    //     like: [{
+    //       'meta.denomination': ['Free church'],
+    //       'meta.types': ['Seniors', 'Youth'],
+    //     }]
+    //   }
+    // }
+
+    let compound = {} as any
+    if (search) compound.must = {
+      ...textSearch
+    }
+    if (latitude && longitude) compound.should = {
+      ...locationSearch
+    }
+    // compound.should = {
+    //   ...preferencesSearch
+    // }
+
+
+    const pipeline = [{
+      $search: {
+        index: "search",
+        compound: compound
+      }
+    }]
+
+    // "compound.should" only one of [autocomplete, compound, embeddedDocument, equals, exists, geoShape, geoWithin, in, knnBeta, moreLikeThis, near, phrase, queryString, range, regex, search, span, term, text, wildcard] may be present
 
     let events: IEvent[]
-
-    if (location) {
-      const { latitude, longitude } = location;
-      events = await Event.aggregate([
-        {
-          $geoNear: {
-            near: {
-              type: 'Point',
-              coordinates: [longitude, latitude],
-            },
-            distanceField: 'distance',
-            spherical: true,
-          },
-        },
-        {
-          $match: filters
-        },
-        {
-          $sort: {
-            distance: 1,  // Sort by distance in ascending order (closest first)
-            start_date: 1, // Then sort by start_date in ascending order
-          },
-        },
-        // Additional stages if needed
-      ]).skip(skip).limit(limit).exec();
-    } else {
-      events = await Event.find({ ...filters, $or: search }).skip(skip).limit(limit).sort({ start_date: 1 }).exec()
-    }
+    events = await Event.aggregate(pipeline).skip(skip).limit(limit).exec()
+    let recommended = false
 
     const data = events.map((event: IEvent) => {
       return {
@@ -156,7 +214,8 @@ export const getEvents = async (req: Request, res: Response) => {
         meta: event.meta,
         organization: event.organization,
         createdAt: event.createdAt,
-        updatedAt: event.updatedAt
+        updatedAt: event.updatedAt,
+        recommended: recommended
       }
     })
 
@@ -165,36 +224,6 @@ export const getEvents = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error)
     return res.status(500).json({ error: 'An error occurred while fetching events' })
-  }
-}
-
-export const searchEvents = async (req: Request, res: Response) => {
-  const search = req.query.s as string;
-  const searchTerm = search.toLowerCase();
-  if (searchTerm.length < 3) return res.status(400).json({ message: "search term needs to be atleast 3 char long" })
-
-  const regex = { $regex: searchTerm, $options: 'i' };
-  const endDateFilter = { end_date: { $gte: new Date() } }
-  const cityFilter = { 'address.city': regex }
-  const organizationFilter = { 'organization.organization_name': regex }
-  const titleFilter = { title: regex }
-  try {
-    const [distinctCities, distinctOrgNames, distinctTitles] = await Promise.all([
-      Event.find({ $and: [cityFilter, endDateFilter] }).distinct('address.city').exec(),
-      Event.find({ $and: [organizationFilter, endDateFilter] }).distinct('organization.organization_name').exec(),
-      Event.find({ $and: [titleFilter, endDateFilter] }).distinct('title').exec(),
-    ]);
-    const cities = distinctCities.map((data) => ({ type: 'city', data: data }))
-    const organizations = distinctOrgNames.map((data) => ({ type: 'organization', data: data }))
-    const titles = distinctTitles.map((data) => ({ type: 'title', data: data }))
-
-    const results = [...cities, ...organizations, ...titles]
-
-    return res.status(200).json(results);
-
-  } catch (error) {
-    console.error('Error fetching events:', error);
-    return res.status(500).json({ error: 'An error occurred while fetching events' });
   }
 }
 

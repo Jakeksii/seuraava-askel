@@ -1,0 +1,5 @@
+a:-webkit-any-link:not(.MuiButtonBase-root) {
+    color: inherit;
+    text-decoration: inherit;
+    cursor: pointer;
+}
