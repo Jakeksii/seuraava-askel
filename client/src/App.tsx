@@ -1,19 +1,16 @@
-import './App.css'
+import './globals.css'
 import Router from './Router'
-import ThemeProvider from './Theme'
-import MainNav from './assets/components/MainNav'
-import { LocationContextProvider } from './assets/context/locationContext'
-import { SearchContextProvider } from './assets/context/searchContext'
+import ThemeProvider from './theme'
+import Nav from './components/Nav'
+import { SearchContextProvider } from './context/searchContext'
 
 function App() {
   return (
     <ThemeProvider>
       <SearchContextProvider>
-        <LocationContextProvider>
-          <Router />
-          <MainNav />
-        </ LocationContextProvider>
-      </ SearchContextProvider>
+        <Router />
+        <Nav />
+      </SearchContextProvider>
     </ThemeProvider>
   )
 }

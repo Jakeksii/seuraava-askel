@@ -1,7 +1,11 @@
+import { Box } from "@mui/material";
+
 export default function Footer() {
     return (
         <footer>
-            <div className="pb-16" />
+            <Box pt={10}>
+                
+            </Box>
         </footer>
     )
 }

@@ -20,7 +20,7 @@ export default function Router() {
             ),
             children: [
                 { element: <IndexPage />, index: true },
-                { path: '/:organization_name/:event_id', element: <EventPage /> },
+                { path: '/event/:event_id', element: <EventPage /> },
             ]
         },
         { path: '*', element: <Navigate to="/" replace /> }

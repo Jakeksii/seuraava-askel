@@ -98,55 +98,47 @@ export const getFilters = async (req: Request, res: Response) => {
   return res.status(200).json(availableFilters[0])
 }
 
-const getRecommendedEvents = async (req: Request) => {
-  // PAGINATE
-  const page = parseInt(req.query.p as string) || 1; // Current page number
-  const limit = parseInt(req.query.limit as string) || 3; // Number of items per page
-  const skip = (page - 1) * limit
-
-  // confif for recommendations
-  const recommendationSearch = {
-    text: {
-      query: "Jyväskylä",
-      path: {
-        wildcard: "*"
-      },
-      fuzzy: {
-        maxEdits: 2,
-        prefixLength: 2
-      }
+type Options = {
+  limit: number
+  skip: number
+}
+const getRecommendedEvents = async ({limit, skip}: Options) => {
+  const events = await Event.find({}).skip(skip).limit(limit).exec()
+  const data = events.map((event: IEvent) => {
+    return {
+      _id: event._id,
+      start_date: event.start_date,
+      end_date: event.end_date,
+      title: event.title,
+      extract: event.extract,
+      address: event.address,
+      image_id: event.image_id,
+      meta: event.meta,
+      organization: event.organization,
+      createdAt: event.createdAt,
+      updatedAt: event.updatedAt,
     }
-  }
-
-
-  const pipeline = [{
-    $search: {
-      index: "search",
-      compound: {
-        should: [
-          recommendationSearch
-        ]
-      }
-    }
-  }]
-
-  const events = await Event.aggregate(pipeline).skip(skip).limit(limit).exec()
-  return events
+  })
+  return data
 }
 
 export const getEvents = async (req: Request, res: Response) => {
   try {
-
-    const location = req.body.location as { longitude: number, latitude: number }
     const search = req.query.s as string
-    const filters = req.body.filters ?? {}
-    const sort = req.body.sort
+    const latitude = parseFloat(req.query.lat as string) || 0
+    const longitude = parseFloat(req.query.lon as string) || 0
 
     // PAGINATE
     const page = parseInt(req.query.p as string) || 1; // Current page number
     const limit = parseInt(req.query.limit as string) || 3; // Number of items per page
     const skip = (page - 1) * limit
 
+    // If no query provided give recommended
+    if(!(latitude || longitude) && !search) {
+      const data = await getRecommendedEvents({limit, skip})
+      return res.status(200).json(data)
+    }
+      
     // confif for text based search
     const textSearch = {
       text: {
@@ -166,35 +158,35 @@ export const getEvents = async (req: Request, res: Response) => {
       near: {
         origin: {
           type: "Point",
-          coordinates: [location?.longitude, location?.latitude]
+          coordinates: [longitude, latitude]
         }, // pivot / (pivot + abs(fieldValue - origin))
-        pivot: 10000000000000000,
+        pivot: 100000,
         path: "location",
-        score: { boost: { value: 200 } }
+        score: {boost: {value: 5}}
       }
     }
 
-    // THIS IS SO NICE
-    // config for preferences
-    const preferencesSearch = {
-      moreLikeThis: {
-        like: [{
-          'meta.denomination': ['Free church'],
-          'meta.types': ['Seniors', 'Youth'],
-        }]
-      }
-    }
+    // // THIS IS SO NICE
+    // // config for preferences
+    // const preferencesSearch = {
+    //   moreLikeThis: {
+    //     like: [{
+    //       'meta.denomination': ['Free church'],
+    //       'meta.types': ['Seniors', 'Youth'],
+    //     }]
+    //   }
+    // }
 
     let compound = {} as any
-    // if (search) compound.should = {
-    //   ...textSearch
-    // }
-    if (location) compound.should = {
+    if (search) compound.must = {
+      ...textSearch
+    }
+    if (latitude && longitude) compound.should = {
       ...locationSearch
     }
-    compound.should = {
-      ...preferencesSearch
-    }
+    // compound.should = {
+    //   ...preferencesSearch
+    // }
 
 
     const pipeline = [{
@@ -209,18 +201,6 @@ export const getEvents = async (req: Request, res: Response) => {
     let events: IEvent[]
     events = await Event.aggregate(pipeline).skip(skip).limit(limit).exec()
     let recommended = false
-    // if (!location && !search) {
-    //   events = await getRecommendedEvents(req)
-    //   recommended = true
-    // } else {
-    //   events = await Event.aggregate(pipeline).skip(skip).limit(limit).exec()
-    // }
-
-    // // Jos tapahtumat lista on tyhjä haetaan tapahtumia recommended functiolla
-    // if (events.length === 0) {
-    //   events = await getRecommendedEvents(req)
-    //   recommended = true
-    // }
 
     const data = events.map((event: IEvent) => {
       return {

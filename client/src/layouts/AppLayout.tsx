@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
-import Header from "../assets/components/Header"
-import AppBar from "../assets/components/AppBar/AppBar"
+import Header from "./Header"
+import AppBar from "../components/AppBar/AppBar"
 import Main from "./Main"
 import Footer from "./Footer"
 

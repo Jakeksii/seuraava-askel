@@ -1,14 +1,15 @@
 import { Helmet } from "react-helmet-async";
-import Events from "../assets/components/Feed/Events";
+import FeedView from "src/views/feed/FeedView";
 
 export default function IndexPage() {
+
     return (
         <>
             <Helmet>
                 <title> Seuraava Askel </title>
             </Helmet>
             
-            <Events />
+            <FeedView />
         </>
     )
 }
