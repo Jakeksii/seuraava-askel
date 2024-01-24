@@ -61,8 +61,8 @@ const Event = memo(({ event }: Props) => {
 
             <Card>
                 <Link to={eventLink}>
-                    <Box sx={{ aspectRatio: '1/1', width: '100%' }}>
-                        <Image image_id={event.image_id} aspectRatio={1 / 1} sx={{ maskImage: "linear-gradient(to bottom, rgba(255, 255, 255, 1.0) 60%, transparent 100%)" }} />
+                    <Box sx={{ aspectRatio: '1/1', width: '100%', backgroundImage: "linear-gradient(to top, rgba(255, 255, 255, 1.0) 0%, rgba(255, 255, 255, 0.5) 20%, transparent 50%)" }}>
+                        <Image image_id={event.image_id} aspectRatio={1 / 1} sx={{ position: 'relative', zIndex: -1 }} />
                     </Box>
                     <Box position={'absolute'} top={10} right={10} height={0}>
                         {distanceTag}
@@ -102,8 +102,8 @@ const Event = memo(({ event }: Props) => {
                         {distanceTag}
                     </Box>
                     <Stack direction={'row'}>
-                        <Box sx={{ aspectRatio: '1/1', width: '40%', flexShrink: 0 }}>
-                            <Image image_id={event.image_id} aspectRatio={1 / 1} />
+                        <Box sx={{ aspectRatio: '1/1', width: '40%', flexShrink: 0, backgroundImage: "linear-gradient(to left, rgba(255, 255, 255, 1.0) 0%, rgba(255, 255, 255, 0.5) 1%, transparent 50%)" }}>
+                            <Image image_id={event.image_id} aspectRatio={1 / 1} sx={{ position: 'relative', zIndex: -1 }} />
                         </Box>
                         <CardContent sx={{ pt: 0, alignSelf: 'center' }}>
                             <Typography variant="body2">
