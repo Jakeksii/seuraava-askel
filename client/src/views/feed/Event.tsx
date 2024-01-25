@@ -58,28 +58,22 @@ const Event = memo(({ event }: Props) => {
 
     if (isMobile) {
         return (
-
             <Card>
                 <Link to={eventLink}>
-                    <Box sx={{ aspectRatio: '1/1', width: '100%', backgroundImage: "linear-gradient(to top, rgba(255, 255, 255, 1.0) 0%, rgba(255, 255, 255, 0.5) 20%, transparent 50%)" }}>
+                    <Box sx={{ aspectRatio: '1/1', width: '100%', backgroundImage: "linear-gradient(to top, rgba(255, 255, 255, 1.0) 0%, rgba(255, 255, 255, 0.5) 1%, transparent 30%)" }}>
                         <Image image_id={event.image_id} aspectRatio={1 / 1} sx={{ position: 'relative', zIndex: -1 }} />
                     </Box>
                     <Box position={'absolute'} top={10} right={10} height={0}>
                         {distanceTag}
                     </Box>
 
-                    <Box position={'relative'}>
-                        <Box position={'absolute'} bottom={0} width={'100%'} sx={{ pl: 2, pr: 2 }}>
-                            <Typography variant="body2">
-                                {event.organization.organization_name}
-                            </Typography>
-                            <Typography variant="h3">
-                                {event.title}
-                            </Typography>
-                        </Box>
-                    </Box>
-
                     <CardContent sx={{ pt: 0 }}>
+                        <Typography variant="body2">
+                            {event.organization.organization_name}
+                        </Typography>
+                        <Typography variant="h3">
+                            {event.title}
+                        </Typography>
                         <Stack direction={'row'} gap={1} sx={{ pb: 1, pt: 1, flexWrap: 'wrap' }}>
                             <Chip color='secondary' icon={<EventIcon />} label={date} />
                             <Chip color='secondary' icon={<ScheduleIcon />} label={time} />
@@ -90,19 +84,16 @@ const Event = memo(({ event }: Props) => {
                     </CardContent>
                 </Link>
             </Card>
-
         )
-
     } else {
         return (
-
             <Card>
                 <Link to={eventLink}>
                     <Box position={'absolute'} top={10} right={10} height={0}>
                         {distanceTag}
                     </Box>
                     <Stack direction={'row'}>
-                        <Box sx={{ aspectRatio: '1/1', width: '40%', flexShrink: 0, backgroundImage: "linear-gradient(to left, rgba(255, 255, 255, 1.0) 0%, rgba(255, 255, 255, 0.5) 1%, transparent 50%)" }}>
+                        <Box sx={{ aspectRatio: '1/1', width: '40%', flexShrink: 0, backgroundImage: "linear-gradient(to left, rgba(255, 255, 255, 1.0) 0%, rgba(255, 255, 255, 0.5) 1%, transparent 30%)" }}>
                             <Image image_id={event.image_id} aspectRatio={1 / 1} sx={{ position: 'relative', zIndex: -1 }} />
                         </Box>
                         <CardContent sx={{ pt: 0, alignSelf: 'center' }}>

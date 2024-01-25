@@ -58,7 +58,7 @@ export default function EventMobileContent({ data, formattedDates, distance, map
             {distance && distanceTag}
             <Box padding={2}>
                 <Typography variant='h5' >{data.organization.organization_name}</Typography>
-                <Typography variant='h2' gutterBottom>{data.title}</Typography>
+                <Typography variant='h2' sx={{overflowWrap: 'anywhere'}} gutterBottom>{data.title}</Typography>
                 <Stack direction={'row'} gap={1} flexWrap={'wrap'} paddingBottom={2}>
                     <Chip color='secondary' icon={<EventIcon />} label={date} />
                     <Chip color='secondary' icon={<ScheduleIcon />} label={time} />

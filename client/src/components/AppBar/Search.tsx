@@ -3,6 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Stack, styled, useTheme } from '@mui/material';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useSearchContext } from 'src/context/searchContext';
+import { useIsTiny } from 'src/hooks/useResponsive';
 
 const StyledInput = styled(Input)(({ theme }) => ({
     width: '100%',
@@ -26,9 +27,11 @@ const StyledInput = styled(Input)(({ theme }) => ({
 
 export default function Search() {
     // INPUT
+    const isTiny = useIsTiny()
     const theme = useTheme()
     const searchContext = useSearchContext()
     const inputRef = useRef<HTMLInputElement>(null)
+    const [inputSelected, setInputSelected] = useState(false)
     const [isTyping, setIsTyping] = useState(true);
     const [searchValue, setSearchValue] = useState(searchContext.values.search ?? "")
 
@@ -58,7 +61,8 @@ export default function Search() {
         }
     }
     function selectInput() {
-        inputRef.current?.select()
+        !inputSelected && inputRef.current?.select()
+        setInputSelected(true)
     }
 
     return (
@@ -66,7 +70,7 @@ export default function Search() {
             sx={{
                 width: '100%',
                 alignItems: 'center',
-                p: 1,
+                p: isTiny ? 0.5 : 1,
                 borderRadius: 1,
                 color: theme.palette.primary.main,
                 background: theme.palette.secondary.main,
@@ -75,6 +79,7 @@ export default function Search() {
             <SearchIcon />
             <StyledInput
                 onFocus={selectInput}
+                onBlur={() => setInputSelected(false)}
                 slotProps={{
                     input: {
                         autoFocus: true,

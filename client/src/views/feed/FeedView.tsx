@@ -1,4 +1,4 @@
-import { useIntersection } from "@mantine/hooks/"
+import { useIntersection } from "@mantine/hooks"
 import { Box, Stack } from "@mui/material"
 import { useEffect, useRef } from "react"
 import Error from "src/components/partials/Error"

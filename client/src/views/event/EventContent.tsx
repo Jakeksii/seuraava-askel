@@ -50,7 +50,7 @@ export default function EventContent({ data, formattedDates, distance, mapLink }
                 <Stack padding={2} gap={2} alignContent={'center'}>
                     <Box>
                         <Typography variant='h5'>{data.organization.organization_name}</Typography>
-                        <Typography variant='h2' gutterBottom>{data.title}</Typography>
+                        <Typography variant='h2' sx={{overflowWrap: 'anywhere'}} gutterBottom>{data.title}</Typography>
                         <Stack direction={'row'} gap={1} flexWrap={'wrap'}>
                             <Chip color='secondary' icon={<EventIcon />} label={date} />
                             <Chip color='secondary' icon={<ScheduleIcon />} label={time} />
@@ -60,7 +60,7 @@ export default function EventContent({ data, formattedDates, distance, mapLink }
 
                     <Button variant='contained' component={Link} to={mapLink} target='blank'><DirectionsIcon /> {data.address.street}, {data.address.city}</Button>
 
-                    <Typography variant='body1' >{data.extract}</Typography>
+                    <Typography variant='body1'>{data.extract}</Typography>
                     <Box height={'100%'}>
                         <Stack direction={'row'} gap={1} sx={{ pt: 2 }} flexWrap={'wrap'}>
                             <Chips data={chips} />
