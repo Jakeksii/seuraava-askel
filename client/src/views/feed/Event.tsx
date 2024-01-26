@@ -22,10 +22,12 @@ const Event = memo(({ event }: Props) => {
     const { values: { location } } = useSearchContext()
 
     const dist = location.on ? Math.round(calculateDistance(
-        location.coordinates.longitude,
+
         location.coordinates.latitude,
-        event.address.coordinates[0],
-        event.address.coordinates[1])) : null
+        location.coordinates.longitude,
+        event.location.coordinates[1],
+        event.location.coordinates[0],
+    )) : null
 
     const distanceTag = dist ? (
         <Chip

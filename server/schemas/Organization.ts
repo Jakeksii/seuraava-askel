@@ -20,9 +20,15 @@ export default new Schema<IOrganization>({
         state: { type: String, required: true },
         zipcode: { type: String, required: true },
         country: { type: String, required: true },
-        coordinates: { //Documentation https://www.mongodb.com/docs/manual/reference/operator/query/nearSphere/#-nearsphere
-            type: [Number], // [longitude, latitude]
-            index: '2dsphere',
+    },
+    location: {
+        type: {
+            type: String,
+            default: 'Point',
+            required: true
+        },
+        coordinates: {
+            type: [Number, Number],
             required: true
         }
     },

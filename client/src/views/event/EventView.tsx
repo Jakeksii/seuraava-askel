@@ -28,10 +28,11 @@ export default function EventView({ event }: Props) {
 
     const distance = location.on
         ? Math.round(calculateDistance(
-            location.coordinates.longitude,
             location.coordinates.latitude,
-            event.address.coordinates[0],
-            event.address.coordinates[1]))
+            location.coordinates.longitude,
+            event.location.coordinates[1],
+            event.location.coordinates[0],
+            ))
         : undefined
 
     const mapLink = "https://www.google.com/maps/dir/?api=1&destination="

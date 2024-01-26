@@ -91,6 +91,10 @@ export interface IOrganization {
     name: string,
     business_id: string,
     address: IAddress
+    location: {
+        type: String,
+        coordinates: [Number, Number] // [longitude, latitude]
+    }
     contact_info: {
         email: string,
         phone: string

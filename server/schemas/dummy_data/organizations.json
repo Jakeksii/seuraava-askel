@@ -6,7 +6,10 @@
             "city": "Helsinki",
             "state": "Uusimaa",
             "zipcode": "00170",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 24.947615,
                 60.169365
@@ -32,7 +35,10 @@
             "city": "Tampere",
             "state": "Pirkanmaa",
             "zipcode": "33100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 23.761579,
                 61.498564
@@ -58,7 +64,10 @@
             "city": "Turku",
             "state": "Varsinais-Suomi",
             "zipcode": "20100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 22.273809,
                 60.448583
@@ -84,7 +93,10 @@
             "city": "Oulu",
             "state": "Pohjois-Pohjanmaa",
             "zipcode": "90100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 25.470188,
                 65.012271
@@ -110,7 +122,10 @@
             "city": "Jyväskylä",
             "state": "Keski-Suomi",
             "zipcode": "40100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 25.750617,
                 62.241591
@@ -136,7 +151,10 @@
             "city": "Kuopio",
             "state": "Pohjois-Savo",
             "zipcode": "70100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 27.678315,
                 62.892666
@@ -166,7 +184,10 @@
             "city": "Pori",
             "state": "Satakunta",
             "zipcode": "28100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 21.796991,
                 61.484282
@@ -192,7 +213,10 @@
             "city": "Kotka",
             "state": "Kymenlaakso",
             "zipcode": "48100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 26.945998,
                 60.468056
@@ -218,7 +242,10 @@
             "city": "Vaasa",
             "state": "Pohjanmaa",
             "zipcode": "65100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 21.614568,
                 63.096595
@@ -244,7 +271,10 @@
             "city": "Kajaani",
             "state": "Kainuu",
             "zipcode": "87100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 27.729376,
                 64.227154
@@ -270,7 +300,10 @@
             "city": "Joensuu",
             "state": "Pohjois-Karjala",
             "zipcode": "80100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 29.760155,
                 62.601619
@@ -296,7 +329,10 @@
             "city": "Rovaniemi",
             "state": "Lappi",
             "zipcode": "96100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 25.724011,
                 66.501235
@@ -323,7 +359,10 @@
             "city": "Lappeenranta",
             "state": "Etelä-Karjala",
             "zipcode": "53100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 28.100322,
                 61.062496
@@ -351,7 +390,10 @@
             "city": "Seinäjoki",
             "state": "Etelä-Pohjanmaa",
             "zipcode": "60100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 22.844821,
                 62.791456
@@ -377,7 +419,10 @@
             "city": "Kemi",
             "state": "Lappi",
             "zipcode": "94100",
-            "country": "Suomi",
+            "country": "Suomi"
+        },
+        "location": {
+            "type": "Point",
             "coordinates": [
                 24.546642,
                 65.734074

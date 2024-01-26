@@ -24,7 +24,7 @@ export async function CreateDummyData(req: Request, res: Response) {
                 state: org.address.state,
                 zipcode: org.address.zipcode,
                 country: org.address.country,
-                coordinates: [org.address.coordinates[0], org.address.coordinates[1]]
+                coordinates: [org.location.coordinates[0], org.location.coordinates[1]]
             },
             contact_info: {
                 email: "info@seurakunta.fi",
@@ -54,8 +54,10 @@ export async function CreateDummyData(req: Request, res: Response) {
                 description: GetDescription(),
                 visible: true,
                 address: {
-                    ...org.address,
-                    coordinates: [org.address.coordinates[0], org.address.coordinates[1]]
+                    ...org.address
+                },
+                location: {
+                    ...org.location
                 },
                 image_id: GetImage(),
                 meta: {
