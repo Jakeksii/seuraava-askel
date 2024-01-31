@@ -34,7 +34,7 @@ const helmetOptions = {
     contentSecurityPolicy: {
         directives: {
             ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-            'img-src': ["'self'", "data:", "https://res.cloudinary.com"]
+            'img-src': ["'self'", "data:", "https://res.cloudinary.com", "https://flagcdn.com"]
         }
     }
 }

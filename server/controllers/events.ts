@@ -220,7 +220,7 @@ export const getEvents = async (req: Request, res: Response) => {
         }, // pivot / (pivot + abs(distnce)) 50km
         pivot: 50000, // mitä pienempi pivotti sitä vähemmän sijainnin läheisyydellä on väliä
         path: "location",
-        score: { boost: { value: 2 } }
+        score: { boost: { value: search ? 8 : 2 } }
       }
     } : undefined
 
@@ -231,8 +231,7 @@ export const getEvents = async (req: Request, res: Response) => {
       }
     } : undefined
 
-
-
+    
     // construct compound.should clause
     let should = []
     should.push(dateSearch) // always use date search default value 1 week
@@ -247,12 +246,14 @@ export const getEvents = async (req: Request, res: Response) => {
     }
     compound.should = should
 
+    // construct pipeline
     const pipeline = [{
       $search: {
         index: "search",
         compound: compound
       }
     }]
+
 
     // fetch events from DB
     let events: IEvent[]

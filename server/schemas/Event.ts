@@ -49,6 +49,7 @@ const EventSchema = new Schema<IEvent>({
             required: true
         }
     },
+    dummydata: String,
     image_id: String,
     meta: {
         denomination: { type: String, maxlength: 20 },

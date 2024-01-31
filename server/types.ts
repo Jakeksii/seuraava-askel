@@ -44,6 +44,7 @@ export interface IEvent {
         type: String,
         coordinates: [Number, Number] // [longitude, latitude]
     }
+    dummydata: string
     image_id: string
     meta: {
         denomination?: string
@@ -99,6 +100,7 @@ export interface IOrganization {
         email: string,
         phone: string
     },
+    dummydata: string
     contact_info_visible: boolean,
     visible?: boolean,
     organization_users: [IOrganizationUser],
