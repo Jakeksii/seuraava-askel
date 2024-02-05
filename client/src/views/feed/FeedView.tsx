@@ -8,7 +8,7 @@ import useGetEvents from "src/hooks/useGetEvents"
 import Event from "src/views/feed/Event"
 
 export default function FeedView() {
-    const { values: { search, location } } = useSearchContext()
+    const { values: { search, location, preferences } } = useSearchContext()
 
     const {
         isLoading,
@@ -16,7 +16,7 @@ export default function FeedView() {
         isError,
         fetchNextPage,
         isFetchingNextPage,
-        hasNextPage } = useGetEvents({ search, page: 1, location: location.on ? location.coordinates : undefined })
+        hasNextPage } = useGetEvents({ search, page: 1, location: location.on ? location.coordinates : undefined, preferences })
 
     const lastEventRef = useRef<HTMLDivElement | null>(null)
     const { ref, entry } = useIntersection({

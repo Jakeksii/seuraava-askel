@@ -57,17 +57,15 @@ export async function CreateDummyData(req: Request, res: Response) {
                 address: {
                     ...org.address
                 },
+
                 location: {
                     ...org.location
                 },
                 dummydata: 'dummy1',
                 image_id: GetImage(),
                 meta: {
-                    types: event.types,
-                    size: GetSize(),
-                    language: "Suomi",
-                    price: 0,
-                    online: false,
+                    category: event.category,
+                    language: GetLanguage(),
                 },
                 organization: {
                     organization_id: organizationDoc._id,
@@ -119,8 +117,8 @@ function GetDescription() {
 function GetImage() {
     return images[Math.floor(Math.random() * images.length)];
 }
-function GetSize() {
-    return meta.size[Math.floor(Math.random() * meta.size.length)];
+function GetLanguage() {
+    return meta.language[Math.floor(Math.random() * meta.language.length)];
 }
 
 

@@ -103,84 +103,28 @@ type Options = {
   skip: number
   preferences?: any
 }
-const getRecommendedEvents = async ({ limit, skip, preferences }: Options) => {
-  // filter old events
-  const dateFilter = {
-    range: {
-      path: 'end_date',
-      gt: new Date()
-    }
-  }
-  const dateSearch = { // in week
-    near: {
-      path: 'start_date',
-      origin: new Date(), // this date
-      pivot: 86450679 * 7 // day in ms *7 = week
-    }
-  }
 
-  // THIS IS SO NICE
-  // config for preferences
-  const preferencesSearch = preferences ? {
-    moreLikeThis: {
-      like: [{
-        'meta.denomination': preferences.meta.denomination,
-        'meta.types': preferences.meta.types,
-      }]
-    }
-  } : {}
-
-  let compound = {} as any
-  compound.filter = {
-    ...dateFilter
-  }
-  compound.should = {
-    ...dateSearch,
-    ...preferencesSearch
-  }
-
-  const pipeline = [{
-    $search: {
-      index: "search",
-      compound: compound
-    }
-  }]
-
-  let events: IEvent[]
-  events = await Event.aggregate(pipeline).skip(skip).limit(limit).exec()
-  let recommended = false
-
-  const data = events.map((event: IEvent) => {
-    return {
-      _id: event._id,
-      start_date: event.start_date,
-      end_date: event.end_date,
-      title: event.title,
-      extract: event.extract,
-      address: event.address,
-      location: event.location,
-      image_id: event.image_id,
-      meta: event.meta,
-      organization: event.organization,
-      createdAt: event.createdAt,
-      updatedAt: event.updatedAt,
-      recommended: recommended
-    }
-  })
-  return data
+type Preferences = {
+  age_group: string[]
+  language: string[]
+  denomination: string[]
+  category: string[]
+  date_origin: Date
 }
-
 export const getEvents = async (req: Request, res: Response) => {
   try {
+    /* DECLARING VARIABLES */
     const search = req.query.s as string
     const latitude = parseFloat(req.query.lat as string) || 0
     const longitude = parseFloat(req.query.lon as string) || 0
-    const preferences = req.body.preferences
+    const preferences = req.body.preferences as Preferences
 
     // PAGINATE
     const page = parseInt(req.query.p as string) || 1; // Current page number
     const limit = parseInt(req.query.limit as string) || 3; // Number of items per page
     const skip = (page - 1) * limit
+
+    /* SEARCH CONFIGURATION */
 
     // filter expired events
     const dateFilter = {
@@ -189,11 +133,26 @@ export const getEvents = async (req: Request, res: Response) => {
         gt: new Date()
       }
     }
+
+    // filter by max distance
+    const locationFilter = (latitude && longitude) ? {
+      geoWithin: {
+        path: "location",
+        circle: {
+          center: {
+            type: "Point",
+            coordinates: [longitude, latitude]
+          },
+          radius: 6000000
+        },
+      }
+    } : undefined
+
     const dateSearch = { // in week
       near: {
         path: 'start_date',
-        origin: new Date(), // this date
-        pivot: 86450679 * 7 // day in ms *7 = week
+        origin: new Date(preferences.date_origin), // this date
+        pivot: 86450679 * 7, // day in ms *7 = week
       }
     }
 
@@ -217,33 +176,48 @@ export const getEvents = async (req: Request, res: Response) => {
         origin: {
           type: "Point",
           coordinates: [longitude, latitude]
-        }, // pivot / (pivot + abs(distnce)) 50km
-        pivot: 50000, // mitä pienempi pivotti sitä vähemmän sijainnin läheisyydellä on väliä
+        },
+        pivot: 10000, // mitä pienempi pivotti sitä vähemmän sijainnin läheisyydellä on väliä
         path: "location",
-        score: { boost: { value: search ? 8 : 2 } }
+        score: { boost: { value: 1.5 } } // pivot / (pivot + abs(distance)) 50km
       }
     } : undefined
 
+    // testaa equals
+    // mapataan like componentti jokasesta categoriasta
     // config for preferences
+    const test = preferences.category.map((cat) => ({'meta.types': cat}))
     const preferencesSearch = preferences ? {
       moreLikeThis: {
-        like: [preferences]
+        like: {
+            'meta.denomination': preferences.denomination,
+            'meta.language': preferences.language,
+            'meta.category': preferences.category,
+          },
+        //score: { boost: { value: 0.8 } }
       }
     } : undefined
 
-    
+
+    /* SEARCH CONSTRUCTION */
+    let compound = {} as any
+
     // construct compound.should clause
     let should = []
     should.push(dateSearch) // always use date search default value 1 week
     locationSearch && should.push(locationSearch) // if location available allways use it
-    preferencesSearch && should.push(preferencesSearch) // NOT yet implemented
+    preferencesSearch && should.push(preferencesSearch)
 
-    // construct compound
-    let compound = {} as any
-    compound.filter = dateFilter // filter expired events
+    // construct filter clause
+    let filter = []
+    filter.push(dateFilter)
+    locationFilter && filter.push(locationFilter)
+
     if (search) {
       compound.must = textSearch // if search is given put it in must clause
     }
+
+    compound.filter = filter
     compound.should = should
 
     // construct pipeline
@@ -254,6 +228,7 @@ export const getEvents = async (req: Request, res: Response) => {
       }
     }]
 
+    /* SEARCH AND RESPONSE */
 
     // fetch events from DB
     let events: IEvent[]

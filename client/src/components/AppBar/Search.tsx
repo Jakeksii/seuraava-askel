@@ -34,7 +34,7 @@ export default function Search() {
     const searchContext = useSearchContext()
     const inputRef = useRef<HTMLInputElement>(null)
     const [inputSelected, setInputSelected] = useState(false)
-    const [isTyping, setIsTyping] = useState(true);
+    const [isTyping, setIsTyping] = useState(false);
     const [searchValue, setSearchValue] = useState(searchContext.values.search ?? "")
 
     const typingTimer = useRef<NodeJS.Timeout>()

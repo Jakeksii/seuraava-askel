@@ -1,0 +1,1 @@
+import{ae as o,r as a}from"./index-os0jSHay.js";function s(){const e=o();return a.useMemo(()=>({back:()=>e(-1),forward:()=>e(1),reload:()=>window.location.reload(),push:r=>e(r),replace:r=>e(r,{replace:!0})}),[e])}export{s as u};

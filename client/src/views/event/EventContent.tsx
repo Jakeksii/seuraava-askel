@@ -41,6 +41,12 @@ export default function EventContent({ data, formattedDates, distance, mapLink }
         types: data.meta['types']
     }
 
+    const dates = [
+        "12",
+        "124",
+        "48"
+    ]
+
     return (
         <>
             <Stack direction={'row'} alignItems={'center'} >
@@ -65,6 +71,12 @@ export default function EventContent({ data, formattedDates, distance, mapLink }
                         <Stack direction={'row'} gap={1} sx={{ pt: 2 }} flexWrap={'wrap'}>
                             <Chips data={chips} />
                         </Stack>
+                    </Box>
+
+                    <Box>
+                        {
+                            dates.map((date) => <Button key={date}>{date}</Button>)
+                        }
                     </Box>
                 </Stack>
             </Stack>

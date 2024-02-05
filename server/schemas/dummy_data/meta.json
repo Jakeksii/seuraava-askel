@@ -1,22 +1,17 @@
 {
-    "size": [
-        "Pieni",
-        "Keskisuuri",
-        "Suuri"
+    "age_group": [
+        "lapset", 
+        "nuoret", 
+        "nuoret aikuiset", 
+        "aikuiset"
     ],
-    "lang": [
-        "Suomi"
-    ],
-    "online": [
-        true,
-        false
-    ],
-    "registration": [
-        true,
-        false
-    ],
-    "paid": [
-        true,
-        false
+    "language": [
+        "FI",
+        "GB",
+        "SE",
+        "RU",
+        "ES",
+        "SA",
+        "DE"
     ]
 }

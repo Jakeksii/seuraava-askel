@@ -44,9 +44,10 @@ export default function Nav() {
         open={drawerOpen}
         onClose={closeDrawer}
         sx={{color: theme.palette.primary.contrastText}}
+        PaperProps={{sx: {backgroundColor: theme.palette.secondary.main}}}
       >
-        <Box height={'100%'} display={'grid'} justifyItems={'center'} sx={{ background: theme.palette.secondary.main}}>
-          <Typography variant='h1' textAlign={'center'} p={2} color={'whitesmoke'}>Seuraava<br/>Askel</Typography>
+        <Box height={'100%'} display={'grid'} justifyItems={'center'}>
+          <Typography variant='h1' textAlign={'center'} p={2} color={'whitesmoke'}>NexTep</Typography>
           <Stack component='nav' gap={5} p={2} width={'100%'}>
             <Stack gap={1} alignItems={'center'}>
               {

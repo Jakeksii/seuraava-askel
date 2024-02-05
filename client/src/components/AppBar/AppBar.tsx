@@ -1,7 +1,7 @@
 import TuneIcon from '@mui/icons-material/Tune';
 import { Button, Stack } from '@mui/material';
 import { useState } from 'react';
-import Filters from '../Filters';
+import Filters from '../Filters/Filters';
 import LocationButton from './LocationButton';
 import Search from './Search';
 import { useIsTiny } from 'src/hooks/useResponsive';
@@ -9,6 +9,7 @@ import { useIsTiny } from 'src/hooks/useResponsive';
 export default function AppBar() {
     const isTiny = useIsTiny()
     const padding = isTiny ? 0.5 : 1
+
     // Filter panel
     const [filterPanelOpen, setFilterPanelOpen] = useState(false);
     function openFilterPanel() {
