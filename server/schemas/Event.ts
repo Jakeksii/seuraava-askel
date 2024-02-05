@@ -52,18 +52,18 @@ const EventSchema = new Schema<IEvent>({
     dummydata: String,
     image_id: String,
     meta: {
-        denomination: { type: String, maxlength: 200 },
+        denomination: { type: [String], maxlength: 200 },
         category: { type: [String], maxlength: 200 },
-        age_group: { type: String, maxlength: 200 },
-        language: { type: String, maxlength: 200 },
+        age_group: { type: [String], maxlength: 200 },
+        language: { type: [String], maxlength: 200 },
         price: {
             value: Number,
             currency: String
         },
         online: { type: Boolean, default: false },
         speaker: { type: String, maxlength: 20 },
-        music: { type: String, maxlength: 20 },
-        presenter: { type: String, maxlength: 20 },
+        music: { type: String, maxlength: 50 },
+        presenter: { type: String, maxlength: 50 },
     },
     organization: {
         organization_id: Types.ObjectId,
