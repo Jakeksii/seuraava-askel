@@ -143,7 +143,7 @@ export const getEvents = async (req: Request, res: Response) => {
             type: "Point",
             coordinates: [longitude, latitude]
           },
-          radius: 6000000
+          radius: 100000
         },
       }
     } : undefined

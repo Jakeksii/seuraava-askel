@@ -6,7 +6,7 @@ import { Box, Button, Chip, Stack, Typography } from '@mui/material';
 import { Link } from "react-router-dom";
 import { Image } from 'src/components/Image';
 import { EventPage, FormattedDate } from "src/types";
-import { Chips } from './Chips';
+// import { Chips } from './Chips';
 import { alpha } from '@mui/material/styles';
 import { secondary } from 'src/theme/palette';
 
@@ -42,12 +42,12 @@ export default function EventMobileContent({ data, formattedDates, distance, map
             {formattedDates.startTime} - {formattedDates.endTime}
         </Typography>
     )
-    const chips = {
-        denomination: data.meta['denomination'],
-        language: data.meta['language'],
-        size: data.meta['size'],
-        types: data.meta['types']
-    }
+    // const chips = {
+    //     denomination: data.meta['denomination'],
+    //     language: data.meta['language'],
+    //     size: data.meta['size'],
+    //     types: data.meta['types']
+    // }
 
     return (
         <>
@@ -67,14 +67,14 @@ export default function EventMobileContent({ data, formattedDates, distance, map
 
                 <Typography variant='body1' sx={{ pt: 2 }}>{data.extract}</Typography>
                 <Stack direction={'row'} gap={1} sx={{ pt: 4 }} flexWrap={'wrap'}>
-                    <Chips data={chips} />
+                    {/* <Chips data={chips} /> */}
                 </Stack>
             </Box>
-            {data.description &&
+            {/* {data.description &&
                 <Box p={2} sx={{ pt: 3 }}>
                     <Typography variant='h3' gutterBottom>Kuvaus</Typography>
                     <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
-                </Box>}
+                </Box>} */}
         </>
     )
 }

@@ -6,7 +6,7 @@ import { Box, Button, Chip, Stack, Typography } from '@mui/material';
 import { Link } from "react-router-dom";
 import { Image } from 'src/components/Image';
 import { EventPage, FormattedDate } from "src/types";
-import { Chips } from './Chips';
+// import { Chips } from './Chips';
 
 type Props = {
     data: EventPage
@@ -34,18 +34,12 @@ export default function EventContent({ data, formattedDates, distance, mapLink }
             {formattedDates.startTime} - {formattedDates.endTime}
         </Typography>
     )
-    const chips = {
-        denomination: data.meta['denomination'],
-        language: data.meta['language'],
-        size: data.meta['size'],
-        types: data.meta['types']
-    }
-
-    const dates = [
-        "12",
-        "124",
-        "48"
-    ]
+    // const chips = {
+    //     denomination: data.meta['denomination'],
+    //     language: data.meta['language'],
+    //     size: data.meta['size'],
+    //     types: data.meta['types']
+    // }
 
     return (
         <>
@@ -69,21 +63,15 @@ export default function EventContent({ data, formattedDates, distance, mapLink }
                     <Typography variant='body1'>{data.extract}</Typography>
                     <Box height={'100%'}>
                         <Stack direction={'row'} gap={1} sx={{ pt: 2 }} flexWrap={'wrap'}>
-                            <Chips data={chips} />
+                            {/* <Chips data={chips} /> */}
                         </Stack>
-                    </Box>
-
-                    <Box>
-                        {
-                            dates.map((date) => <Button key={date}>{date}</Button>)
-                        }
                     </Box>
                 </Stack>
             </Stack>
-            {data.description && <Box p={2} sx={{ pt: 3 }}>
+            {/* {data.description && <Box p={2} sx={{ pt: 3 }}>
                 <Typography variant='h3' gutterBottom>Lisätietoja</Typography>
                 <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
-            </Box>}
+            </Box>} */}
         </>
     )
 }
