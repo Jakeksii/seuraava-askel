@@ -62,8 +62,8 @@ const EventSchema = new Schema<IEvent>({
         },
         online: { type: Boolean, default: false },
         speaker: { type: String, maxlength: 20 },
-        music: { type: String, maxlength: 20 },
-        presenter: { type: String, maxlength: 20 },
+        music: { type: String, maxlength: 50 },
+        presenter: { type: String, maxlength: 50 },
     },
     organization: {
         organization_id: Types.ObjectId,
