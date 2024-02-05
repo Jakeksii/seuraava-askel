@@ -52,10 +52,10 @@ const EventSchema = new Schema<IEvent>({
     dummydata: String,
     image_id: String,
     meta: {
-        denomination: { type: String, maxlength: 200 },
+        denomination: { type: [String], maxlength: 200 },
         category: { type: [String], maxlength: 200 },
-        age_group: { type: String, maxlength: 200 },
-        language: { type: String, maxlength: 200 },
+        age_group: { type: [String], maxlength: 200 },
+        language: { type: [String], maxlength: 200 },
         price: {
             value: Number,
             currency: String
