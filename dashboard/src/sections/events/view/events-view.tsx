@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 
 import { useAppContext } from 'src/context/appContext';
 import { useGetUser } from 'src/hooks/api-hooks/useAuthenticate';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import axios from 'axios';
 // ----------------------------------------------------------------------
@@ -27,15 +27,13 @@ export default function EventsView() {
   
   const orgId = "65c0bf6d2ca0a78bc63b3e20";
 
-  const getEvents = async () => {
+  const getEvents = useCallback(async () => {
     try {
-      // Assuming you have the 'token' and 'organization_id' variables defined
-
       const response = await axios.get(`http://localhost:3001/api/events/banjo/${orgId}`, {
         headers: {
           "Authorization": session!.token,
-          "Organization": orgId
-        }
+          "Organization": orgId,
+        },
       });
 
       // Set the events in state
@@ -44,11 +42,12 @@ export default function EventsView() {
       console.error("Error fetching events:", error);
       // Handle error appropriately, e.g., set state to show an error message
     }
-  }
+  }, [orgId, session]); // Add dependencies to the dependency array
 
   useEffect(() => {
-    getEvents()
-  },)
+    getEvents(); // Call the getEvents function inside useEffect
+  }, [getEvents]); // Add getEvents to the dependency array to satisfy the exhaustive-deps rule
+
   return (
     <Container>
       <Typography variant="h4" pb={5}>Katsele ja muokkaa tapahtumia</Typography>
