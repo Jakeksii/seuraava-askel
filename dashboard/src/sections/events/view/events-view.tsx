@@ -24,7 +24,7 @@ export default function EventsView() {
 
   const [events, setEvents] = useState<Event[]>([]);
   
-  
+  // Mistä saa user tiedot?
   const orgId = "65c0bf6d2ca0a78bc63b3e20";
 
   const getEvents = useCallback(async () => {
