@@ -78,6 +78,8 @@ export default function AppView() {
                 '09/01/2003',
                 '10/01/2003',
                 '11/01/2003',
+                '12/01/2003',
+                '01/01/2004',
               ],
               series: [
                 {
@@ -96,7 +98,13 @@ export default function AppView() {
                   name: 'Team C',
                   type: 'line',
                   fill: 'solid',
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 50, 20],
+                },
+                {
+                  name: 'Team D',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [20, 13, 45, 60, 43, 20, 0, 52, 14, 21, 32, 20, 40],
                 },
               ],
             }}
