@@ -1,56 +1,72 @@
+
+
 import Container from '@mui/material/Container';
+
 import Typography from '@mui/material/Typography';
-import { BigCalendar } from './big-calendar';
+
+import { useAppContext } from 'src/context/appContext';
+import { useGetUser } from 'src/hooks/api-hooks/useAuthenticate';
+import { useEffect, useState } from 'react';
+
+import axios from 'axios';
 // ----------------------------------------------------------------------
 
-
-type Event = {
-  _id: number
-  title: string,
-  start: Date,
-  end: Date,
-  allDay: boolean 
+interface Event {
+  _id: string;
+  title: string;
+  start_date: string;
+  // Add more properties as needed
 }
 
-const now = new Date();
-
-const events: Event[] = [
-  {
-    _id: 1,
-    title: "Meeting with Team",
-    start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10, 0), // Today at 10:00 AM
-    end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 11, 0),   // Today at 11:00 AM
-    allDay: false
-  },
-  {
-    _id: 2,
-    title: "Lunch with Client",
-    start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 30), // Today at 12:30 PM
-    end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13, 30),   // Today at 1:30 PM
-    allDay: true
-  },
-  {
-    _id: 3,
-    title: "Webinar on Technology Trends",
-    start: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 15, 0), // Tomorrow at 3:00 PM
-    end: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 17, 0),   // Tomorrow at 5:00 PM
-    allDay: false
-  },
-  {
-    _id: 4,
-    title: "Project Deadline",
-    start: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2, 9, 0),  // Day after tomorrow at 9:00 AM
-    end: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2, 17, 0),  // Day after tomorrow at 5:00 PM
-    allDay: true
-  },
-];
-
 export default function EventsView() {
+  const { session } = useAppContext()
+  const { data: user } = useGetUser(session!.token)
 
+  const [events, setEvents] = useState<Event[]>([]);
+  
+  
+  const orgId = "65c0bf6d2ca0a78bc63b3e20";
+
+  const getEvents = async () => {
+    try {
+      // Assuming you have the 'token' and 'organization_id' variables defined
+
+      const response = await axios.get(`http://localhost:3001/api/events/banjo/${orgId}`, {
+        headers: {
+          "Authorization": session!.token,
+          "Organization": orgId
+        }
+      });
+
+      // Set the events in state
+      setEvents(response.data);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      // Handle error appropriately, e.g., set state to show an error message
+    }
+  }
+
+  useEffect(() => {
+    getEvents()
+  },)
   return (
     <Container>
       <Typography variant="h4" pb={5}>Katsele ja muokkaa tapahtumia</Typography>
-      <BigCalendar events={events} />
+      <Typography variant="h4" sx={{ mb: 5 }}>
+        Hei {user.first_name}, Tässä tapahtumasi👋
+      </Typography>
+      <div>
+      <h1>Events</h1>
+      <ul>
+        {events.map(event => (
+          <li key={event._id}>
+            <p>Title: {event.title}</p>
+            <p>Start Date: {event.start_date}</p>
+            {/* Add more event properties as needed */}
+          </li>
+        ))}
+      </ul>
+    </div>
     </Container>
   );
 }

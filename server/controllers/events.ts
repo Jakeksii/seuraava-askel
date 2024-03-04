@@ -292,3 +292,46 @@ export const getEventPage = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 }
+
+type EventList = IEvent[];
+
+// GET Events from one Organization
+export const getOrgEvents = async (req: Request, res: Response) => {
+
+// get org id
+const { _id } = req.params
+
+if (!Types.ObjectId.isValid(_id)) {
+  return res.status(400).json({ message: "Invalid Id" });
+}
+
+// search events with organization id
+try {
+  const events : EventList | null = await Event.find({ 'organization.organization_id': `${_id}`});
+
+  if (!events || events.length === 0) {
+    return res.status(404).json({ message: "No events found for the organization" });
+  }
+
+  const eventData = events.map(event => ({
+    _id: event._id,
+    start_date: event.start_date,
+    end_date: event.end_date,
+    title: event.title,
+    extract: event.extract,
+    description: event.description,
+    address: event.address,
+    location: event.location,
+    image_id: event.image_id,
+    meta: event.meta,
+    organization: event.organization,
+    createdAt: event.createdAt,
+    updatedAt: event.updatedAt
+  }));
+  // send events as response
+  return res.status(200).json(eventData);
+} catch (error) {
+  return res.status(500).json({ message: "Internal Server Error" });
+}
+
+}
