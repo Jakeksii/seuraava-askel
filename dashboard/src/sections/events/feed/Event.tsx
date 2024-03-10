@@ -4,6 +4,9 @@ import { Box, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Image } from "src/components/Image";
+import Grid from '@mui/material/Unstable_Grid2';
+import AppWidgetSummary from 'src/sections/overview/app-widget-summary';
+import AppWebsiteVisits from 'src/sections/overview/app-website-visits';
 
 import useFormatDate from "src/functions/formatDate";
 import { useIsMobile } from 'src/hooks/useResponsive';
@@ -13,6 +16,7 @@ import { Event as EventType } from 'src/types';
 type Props = {
     event: EventType
 }
+
 
 const Event = memo(({ event }: Props) => {
     const isMobile = useIsMobile()
@@ -60,6 +64,17 @@ const Event = memo(({ event }: Props) => {
                         </Typography>
                     </CardContent>
                 </Link>
+
+                <Grid xs={12} sm={6} md={3}>
+                    <AppWidgetSummary
+                        title="New Users"
+                        total={1352831}
+                        color="info"
+                        icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
+                        sx={{ /* your custom styles here */ }}
+                    />
+                </Grid>
+
             </Card>
         )
     } else {
@@ -84,9 +99,108 @@ const Event = memo(({ event }: Props) => {
                             <Typography variant="body2">
                                 {event.extract}
                             </Typography>
+                            <Stack direction={'row'} gap={1} sx={{ width: "100%", justifyContent: 'space-around'}}>
+                                <Grid >
+                                    <AppWebsiteVisits
+                                        title="Impressiot"
+                                        subheader="(+43%) than last year"
+                                        chart={{
+                                            labels: [
+                                            '01/01/2003',
+                                            '02/01/2003',
+                                            '03/01/2003',
+                                            '04/01/2003',
+                                            '05/01/2003',
+                                            '06/01/2003'
+
+
+                                            ],
+                                            series: [
+                                            {
+                                                name: 'Team A',
+                                                type: 'column',
+                                                fill: 'solid',
+                                                data: [23, 11, 22, 27, 13, 50],
+                                            },
+                                            {
+                                                name: 'Team B',
+                                                type: 'area',
+                                                fill: 'gradient',
+                                                data: [44, 55, 41, 67, 22, 45],
+                                            },
+                                            {
+                                                name: 'Team C',
+                                                type: 'line',
+                                                fill: 'solid',
+                                                data: [30, 25, 36, 30, 45, 12],
+                                            },
+                                            {
+                                                name: 'Team D',
+                                                type: 'line',
+                                                fill: 'solid',
+                                                data: [20, 13, 45, 60, 43, 100],
+                                            },
+                                            ],
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid >
+                                    <AppWebsiteVisits
+                                        title="Impressiot"
+                                        subheader="(+43%) than last year"
+                                        chart={{
+                                            labels: [
+                                            '01/01/2003',
+                                            '02/01/2003',
+                                            '03/01/2003',
+                                            '04/01/2003',
+                                            '05/01/2003',
+
+
+                                            ],
+                                            series: [
+                                            {
+                                                name: 'Team A',
+                                                type: 'column',
+                                                fill: 'solid',
+                                                data: [23, 11, 22, 27, 13],
+                                            },
+                                            {
+                                                name: 'Team B',
+                                                type: 'area',
+                                                fill: 'gradient',
+                                                data: [44, 55, 41, 67, 22],
+                                            },
+                                            {
+                                                name: 'Team C',
+                                                type: 'line',
+                                                fill: 'solid',
+                                                data: [30, 25, 36, 30, 45],
+                                            },
+                                            {
+                                                name: 'Team D',
+                                                type: 'line',
+                                                fill: 'solid',
+                                                data: [20, 13, 45, 60, 43],
+                                            },
+                                            ],
+                                        }}
+                                    />
+                                </Grid>
+                            </Stack>
                         </CardContent>
                     </Stack>
                 </Link>
+                {/* <Grid xs={12} sm={6} md={3}>
+                    <AppWidgetSummary
+                        title="Total Impressions"
+                        total={50462}
+                        color="info"
+                        icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
+                        sx={{ }}
+                    />
+                </Grid> */}
+
             </Card>
 
         )
