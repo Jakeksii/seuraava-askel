@@ -298,15 +298,16 @@ type EventList = IEvent[];
 // GET Events from one Organization
 export const getOrgEvents = async (req: Request, res: Response) => {
 
-// get org id
+
+
+// search events with organization id
+try {
+  // get org id
 const { _id } = req.params
 
 if (!Types.ObjectId.isValid(_id)) {
   return res.status(400).json({ message: "Invalid Id" });
 }
-
-// search events with organization id
-try {
   const events : EventList | null = await Event.find({ 'organization.organization_id': `${_id}`});
 
   if (!events || events.length === 0) {

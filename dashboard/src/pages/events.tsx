@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import { EventsView } from 'src/sections/events/view';
+import { EventsView } from 'src/sections/events/feed';
 
 // ----------------------------------------------------------------------
 
