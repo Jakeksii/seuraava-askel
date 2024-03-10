@@ -99,7 +99,7 @@ const Event = memo(({ event }: Props) => {
                             <Typography variant="body2">
                                 {event.extract}
                             </Typography>
-                            <Stack direction={'row'} gap={1} sx={{ width: "100%", justifyContent: 'space-around'}}>
+                            <Stack direction={'row'} gap={1} sx={{ justifyContent: 'space-around'}}>
                                 <Grid >
                                     <AppWebsiteVisits
                                         title="Impressiot"
