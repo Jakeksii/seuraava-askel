@@ -18,10 +18,17 @@ import TableEmptyRows from '../table-empty-rows';
 import OrganizationTableRow from '../organization-table-row';
 import OrganizationTableHead from '../organization-table-head';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+import useCurrentUser from 'src/hooks/api-hooks/useCurrentUser';
+import { useAppContext } from 'src/context/appContext';
 
 // ----------------------------------------------------------------------
 
 export default function ChangeOrganizationView() {
+  // GET CURRENT USER DATA
+  const token = useAppContext().session.token
+  const { data: currentUser } = useCurrentUser({ token })
+
+  // SET CURRENT USER DATA
   const [organizations] = useState([])
 
   const [page, setPage] = useState(0);
