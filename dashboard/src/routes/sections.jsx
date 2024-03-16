@@ -8,7 +8,8 @@ import DashboardLayout from 'src/layouts/dashboard';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 
-export const ChangeOrganizationPage = lazy(() => import('src/pages/change-organization'))
+export const SwitchOrganizationPage = lazy(() => import('src/pages/organization-switch'))
+export const NewOrganizationPage = lazy(() => import('src/pages/organization-new'))
 export const EventsPage = lazy(() => import('src/pages/events'));
 export const OrganizationPage = lazy(() => import('src/pages/organization'));
 export const StatisticsPage = lazy(() => import('src/pages/statistics'));
@@ -59,9 +60,12 @@ export default function Router() {
           ),
           children: [
             { element: <IndexPage />, index: true },
-            { path: 'change-organization', element: <ChangeOrganizationPage /> },
-            { path: 'events', element: <EventsPage /> },
+            { path: 'organization/new', element: <NewOrganizationPage /> },
+            { path: 'organization/switch', element: <SwitchOrganizationPage /> },
             { path: 'organization', element: <OrganizationPage /> },
+
+
+            { path: 'events', element: <EventsPage /> },
             { path: 'statistics', element: <StatisticsPage /> },
             { path: 'team&subscription', element: <TeamAndSubscriptionPage /> },
             { path: 'settings', element: <SettingsPage /> }

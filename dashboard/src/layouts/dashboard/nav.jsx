@@ -51,7 +51,7 @@ export default function Nav({ openNav, onCloseNav }) {
     >
       <Box>
         <Typography variant="subtitle1">{"Järvenpään Vapaaseurakunta"}</Typography>
-        <Button variant='text' onClick={() => {navigate('change-organization')}}>Vaihda</Button>
+        <Button variant='text' onClick={() => {navigate('organization/switch')}}>Vaihda</Button>
       </Box>
     </Box>
   );
@@ -75,7 +75,7 @@ export default function Nav({ openNav, onCloseNav }) {
         },
       }}
     >
-      <Typography color='primary' variant='h2' align='center' >Seuraava Askel</Typography>
+      <Typography color='primary' variant='h2' align='center' >NexTep</Typography>
 
       {renderOrganization}
 
