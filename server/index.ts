@@ -7,11 +7,9 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 import MainConn from "./connections/MainConnection";
-import StatsConn from "./connections/StatsConnection";
 import UserConn from "./connections/UserConnection";
 
 import authRoutes from "./routes/auth";
-import imageRoutes from './routes/images';
 import eventRoutes from "./routes/event";
 import invitationRoutes from "./routes/invitation";
 import organizationRoutes from "./routes/organization";
@@ -55,7 +53,6 @@ app.use(morgan("common"))
 
 // ROUTES 
 app.use("/api/dummydata", DummyDataRouter)
-app.use("/api/image", imageRoutes)
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/organizations", organizationRoutes)
@@ -81,12 +78,6 @@ const connect = async () => {
         console.log('Connected to User database at: ' + result.host + ":" + result.port)
     }).catch(error => {
         console.error('Error connecting to User database: ', error)
-    })
-
-    await StatsConn.asPromise().then(result => {
-        console.log('Connected to Stats database at: ' + result.host + ":" + result.port)
-    }).catch(error => {
-        console.error('Error connecting to Stats database: ', error)
     })
 
     try {

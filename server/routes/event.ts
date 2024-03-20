@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createEvent, getEventPage, getEvents, getFilters } from "../controllers/events";
+import { createEvent, getEventPage, getEvents } from "../controllers/events";
 import { verifyOrganizationAccess, verifyToken } from "../middleware/auth";
 import { uploadImage } from "../middleware/storage";
 
@@ -9,6 +9,5 @@ router.post("/create", verifyToken as any, verifyOrganizationAccess as any, uplo
 
 router.post("", getEvents as any)
 router.get("/:_id", getEventPage as any)
-router.get("/filters", getFilters as any)
 
 export default router;

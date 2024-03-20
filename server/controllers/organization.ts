@@ -100,6 +100,7 @@ export const getDetailedOrganization = async (req: Request, res: Response): Prom
         const organizationToSend = {
             _id: organization._id,
             name: organization.name,
+            status: organization.status,
             business_id: organization.business_id,
             contact_info_visible: organization.contact_info_visible,
             visible: organization.visible,

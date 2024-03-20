@@ -50,11 +50,9 @@ export default function Nav({ openNav, onCloseNav }) {
   const renderSelectedOrganization = (
     <Box>
       <Typography variant="subtitle1">{data?.name}</Typography>
-      {
-        data?.verified
-        ? <Chip size='small' color='success' label={'Vahvistettu'}/>
-        : <Chip size='small' color='warning' label={'Tarkistuksessa'}/>
-      }
+      { data?.status === 'verified' && <Chip size='small' color='success' label={'Vahvistettu'}/> }
+      { data?.status === 'inreview' && <Chip size='small' color='warning' label={'Tarkistuksessa'}/>}
+      { data?.status === 'suspended' && <Chip size='small' color='error' label={'Keskeytetty'}/>}
       
       
       <Button variant='text' onClick={() => { navigate('organization/switch') }}>Vaihda</Button>
