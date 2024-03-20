@@ -25,15 +25,12 @@ import { Link, useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
-export default function ChangeOrganizationView() {
-  // GET CURRENT USER DATA
-  const token = useAppContext().session.token
-  const { data: currentUser } = useCurrentUser({ token })
+export default function ChangeOrganizationView({organizations}) {
 
   const navigate = useRouter()
 
   const [page, setPage] = useState(0);
- 
+
 
   const [order, setOrder] = useState('asc');
 
@@ -79,45 +76,10 @@ export default function ChangeOrganizationView() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: [],
+    inputData: organizations,
     comparator: getComparator(order, orderBy),
     filterName: '',
   });
-
-  const OrganizationTableContent = currentUser?.organizations && (
-    <>
-      <OrganizationTableHead
-        order={order}
-        orderBy={orderBy}
-        rowCount={currentUser.organizations.length}
-        onRequestSort={handleSort}
-        headLabel={[
-          { id: 'organization_name', label: 'Name' },
-          { id: 'role', label: 'Your role' },
-          { id: 'isVerified', label: 'Verified', align: 'center' },
-          { id: '' },
-        ]}
-      />
-      <TableBody>
-        {dataFiltered
-          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          .map((row) => (
-            <OrganizationTableRow
-              key={row.id}
-              name={row.name}
-              role={row.role}
-              isVerified={row.isVerified}
-              handleClick={(event) => handleClick(event, row.name)}
-            />
-          ))}
-
-        <TableEmptyRows
-          height={77}
-          emptyRows={emptyRows(page, rowsPerPage, currentUser.organizations.length)}
-        />
-      </TableBody>
-    </>
-  )
 
   return (
     <Container>
@@ -133,7 +95,36 @@ export default function ChangeOrganizationView() {
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
+              <OrganizationTableHead
+                order={order}
+                orderBy={orderBy}
+                rowCount={organizations.length}
+                onRequestSort={handleSort}
+                headLabel={[
+                  { id: 'organization_name', label: 'Name' },
+                  { id: 'role', label: 'Your role' },
+                  { id: 'isVerified', label: 'Verified', align: 'center' },
+                  { id: '' },
+                ]}
+              />
+              <TableBody>
+                {dataFiltered
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => (
+                    <OrganizationTableRow
+                      key={row.id}
+                      name={row.organization_name}
+                      role={row.role}
+                      isVerified={row.isVerified}
+                      handleClick={(event) => handleClick(event, row.name)}
+                    />
+                  ))}
 
+                <TableEmptyRows
+                  height={77}
+                  emptyRows={emptyRows(page, rowsPerPage, organizations.length)}
+                />
+              </TableBody>
             </Table>
           </TableContainer>
         </Scrollbar>
@@ -141,7 +132,7 @@ export default function ChangeOrganizationView() {
         <TablePagination
           page={page}
           component="div"
-          count={0}
+          count={organizations.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

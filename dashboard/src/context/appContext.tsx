@@ -24,6 +24,8 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
     const sessionData: Session | undefined = token ? { token: token } : undefined
     const [session, setSession] = useState<Session | undefined>(sessionData)
 
+    const [selectedOrganization, setSelectedOrganization] = useState(localStorage.getItem('selected_organization'))
+
     const contextValue = useMemo(() => ({
         session: session,
         setSession: setSession
