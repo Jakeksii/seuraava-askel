@@ -55,55 +55,6 @@ export const createEvent = async (req: Request, res: Response) => {
   }
 }
 
-export const getFilters = async (req: Request, res: Response) => {
-  const filters = req.body.filters
-
-  const availableFilters = await Event.aggregate([
-    {
-      $match: filters, // Apply your initial filters
-    },
-    {
-      $facet: {
-        denomination: [
-          { $group: { _id: '$meta.denomination' } },
-          { $project: { _id: 0, value: '$_id' } },
-        ],
-        types: [
-          {
-            $unwind: '$meta.types' // Split the array into individual documents
-          },
-          { $group: { _id: '$meta.types' } },
-          { $project: { _id: 0, value: '$_id' } },
-        ],
-        size: [
-          { $group: { _id: '$meta.size' } },
-          { $project: { _id: 0, value: '$_id' } },
-        ],
-        language: [
-          { $group: { _id: '$meta.language' } },
-          { $project: { _id: 0, value: '$_id' } },
-        ],
-        price: [
-          { $group: { _id: '$meta.price' } },
-          { $project: { _id: 0, value: '$_id' } },
-        ],
-        online: [
-          { $group: { _id: '$meta.online' } },
-          { $project: { _id: 0, value: '$_id' } },
-        ],
-      },
-    },
-  ]).exec();
-
-  return res.status(200).json(availableFilters[0])
-}
-
-type Options = {
-  limit: number
-  skip: number
-  preferences?: any
-}
-
 type Preferences = {
   age_group: string[]
   language: string[]
