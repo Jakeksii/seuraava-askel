@@ -25,13 +25,19 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
     const [session, setSession] = useState<Session | undefined>(sessionData)
 
     const [selectedOrganization, setSelectedOrganization] = useState(localStorage.getItem('selected_organization'))
+    const switchOrganization = useMemo(() => (
+        (organization_id: string) => {
+            setSelectedOrganization(organization_id)
+            localStorage.setItem('organization_id', organization_id)
+        }
+    ), [])
 
     const contextValue = useMemo(() => ({
         session: session,
         setSession: setSession,
         selectedOrganization: selectedOrganization,
-        setSelectedOrganization: setSelectedOrganization
-    }), [session, setSession, selectedOrganization, setSelectedOrganization]);
+        switchOrganization: switchOrganization
+    }), [session, setSession, selectedOrganization, switchOrganization]);
 
     return (
         <AppContext.Provider value={contextValue}>

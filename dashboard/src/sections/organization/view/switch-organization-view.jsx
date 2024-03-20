@@ -26,7 +26,7 @@ import { emptyRows } from '../utils';
 
 export default function SwitchOrganizationView({ organizations }) {
 
-  const { selectedOrganization, setSelectedOrganization } = useAppContext()
+  const { selectedOrganization, switchOrganization } = useAppContext()
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -44,8 +44,26 @@ export default function SwitchOrganizationView({ organizations }) {
   };
 
   const handleOrganizationSwitch = (organization_id) => {
-    setSelectedOrganization(organization_id)
+    switchOrganization(organization_id)
   }
+
+  if (organizations.length <= 0) return (
+    <Container>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <Typography variant="h4">Organisaatiot</Typography>
+
+        <Button variant="contained" color="inherit" component={Link} to={'/organization/new'} startIcon={<AddIcon />}>
+          Uusi organisaatio
+        </Button>
+      </Stack>
+      <Card sx={{margin: 'auto', padding: 10}}>
+        <Typography pb={2} variant="h4">Sinulla ei ole vielä yhtään organisaatiota!</Typography>
+        <Button variant="contained" size='large' component={Link} to={'/organization/new'}>
+          Luo uusi organisaatio
+        </Button>
+      </Card>
+    </Container>
+  )
 
   return (
     <Container>
@@ -111,5 +129,5 @@ export default function SwitchOrganizationView({ organizations }) {
 }
 
 SwitchOrganizationView.propTypes = {
-  organizations: PropTypes.object
+  organizations: PropTypes.array
 };

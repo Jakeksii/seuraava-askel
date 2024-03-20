@@ -9,16 +9,19 @@ import Button from '@mui/material/Button';
 import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import ListItemButton from '@mui/material/ListItemButton';
+import Chip from '@mui/material/Chip';
 
 import { usePathname } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
 import { useResponsive } from 'src/hooks/use-responsive';
+import useDetailedOrganizations from 'src/hooks/api-hooks/useDetailedOrganisations'
 
 import Scrollbar from 'src/components/scrollbar';
 
 import { NAV } from './config-layout';
 import navConfig from './config-navigation';
+import { CircularProgress } from '@mui/material';
 
 
 
@@ -29,12 +32,40 @@ export default function Nav({ openNav, onCloseNav }) {
   const navigate = useNavigate()
   const upLg = useResponsive('up', 'lg');
 
+  const { data, isLoading } = useDetailedOrganizations()
+  console.log(data)
+
   useEffect(() => {
     if (openNav) {
       onCloseNav();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  const renderLoading = (
+    <Box m='auto'>
+      <CircularProgress />
+    </Box>
+  )
+  const renderSelectedOrganization = (
+    <Box>
+      <Typography variant="subtitle1">{data?.name}</Typography>
+      {
+        data?.verified
+        ? <Chip size='small' color='success' label={'Vahvistettu'}/>
+        : <Chip size='small' color='error' label={'Tarkistuksessa'}/>
+      }
+      
+      
+      <Button variant='text' onClick={() => { navigate('organization/switch') }}>Vaihda</Button>
+    </Box>
+  )
+
+  const renderSelectOrganization = (
+    <Box m={'auto'}>
+      <Button variant='text' onClick={() => { navigate('organization/switch') }}>Valitse organisaatio</Button>
+    </Box>
+  )
 
   const renderOrganization = (
     <Box
@@ -49,10 +80,9 @@ export default function Nav({ openNav, onCloseNav }) {
         bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
       }}
     >
-      <Box>
-        <Typography variant="subtitle1">{"Järvenpään Vapaaseurakunta"}</Typography>
-        <Button variant='text' onClick={() => {navigate('organization/switch')}}>Vaihda</Button>
-      </Box>
+      {isLoading && renderLoading}
+      {data && renderSelectedOrganization}
+      {!data && !isLoading && renderSelectOrganization}
     </Box>
   );
 
