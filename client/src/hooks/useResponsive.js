@@ -7,6 +7,10 @@ export function useIsMobile() {
   return useResponsive('down', 'md')
 }
 
+export function useIsTiny() {
+  return useResponsive('down', 'xs')
+}
+
 export function useResponsive(query, start, end) {
   const theme = useTheme();
 

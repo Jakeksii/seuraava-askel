@@ -7,7 +7,6 @@ export default new Schema<IOrganization>({
         type: String,
         required: true,
         unique: true,
-        minlength: 5,
         index: true
     },
     business_id: { //Y-koodi
@@ -20,9 +19,15 @@ export default new Schema<IOrganization>({
         state: { type: String, required: true },
         zipcode: { type: String, required: true },
         country: { type: String, required: true },
-        coordinates: { //Documentation https://www.mongodb.com/docs/manual/reference/operator/query/nearSphere/#-nearsphere
-            type: [Number], // [longitude, latitude]
-            index: '2dsphere',
+    },
+    location: {
+        type: {
+            type: String,
+            default: 'Point',
+            required: true
+        },
+        coordinates: {
+            type: [Number, Number],
             required: true
         }
     },
@@ -49,7 +54,7 @@ export default new Schema<IOrganization>({
             }
         }
     },
-
+    dummydata: { type: String },
     contact_info_visible: { type: Boolean, default: true },
     visible: { type: Boolean, default: false }, // If Organization passses the validation prosess, value will be set to true.
     organization_users: [{

@@ -4,6 +4,8 @@ import { useMemo } from 'react';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider as MUIThemeProvider, createTheme } from '@mui/material/styles';
 
+import { fiFI as dateLocale } from '@mui/x-date-pickers';
+import { fiFI as materialLocale } from '@mui/material/locale';
 
 import { customShadows } from './custom-shadows';
 import { overrides } from './overrides';
@@ -38,7 +40,11 @@ export default function ThemeProvider({ children }) {
     []
   );
 
-  const theme = createTheme(memoizedValue);
+  const theme = createTheme(
+    memoizedValue,
+    materialLocale,
+    dateLocale
+  );
 
   theme.components = overrides(theme);
 
@@ -51,5 +57,5 @@ export default function ThemeProvider({ children }) {
 }
 
 ThemeProvider.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.nodeLike,
 };

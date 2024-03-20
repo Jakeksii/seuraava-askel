@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useInfiniteQuery } from "react-query";
+import { Preferences } from "src/context/searchContext";
 import { Event } from "src/types";
 
 type Props = {
@@ -9,10 +10,11 @@ type Props = {
         longitude: number
         latitude: number
     }
+    preferences: Preferences
 }
 
 export default function useGetEvents(props: Props) {
-    return useInfiniteQuery(['events', props.search, props.location], {
+    return useInfiniteQuery(['events', props.search, props.location, props.preferences], {
         staleTime: 1000 * 60 * 5,
         queryFn: async ({ pageParam = 1 }) => {
             let query = 'api/events?'
@@ -20,7 +22,7 @@ export default function useGetEvents(props: Props) {
             query += `p=${pageParam}&`
             query += props.location ? `lon=${props.location.longitude}&lat=${props.location.latitude}` : ''
 
-            const { data } = await axios.get(query)
+            const { data } = await axios.post(query, { preferences: props.preferences })
             return data as Event[]
         },
         onSuccess() {

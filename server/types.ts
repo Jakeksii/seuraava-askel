@@ -44,6 +44,7 @@ export interface IEvent {
         type: String,
         coordinates: [Number, Number] // [longitude, latitude]
     }
+    dummydata: string
     image_id: string
     meta: {
         denomination?: string
@@ -91,10 +92,15 @@ export interface IOrganization {
     name: string,
     business_id: string,
     address: IAddress
+    location: {
+        type: String,
+        coordinates: [Number, Number] // [longitude, latitude]
+    }
     contact_info: {
         email: string,
         phone: string
     },
+    dummydata: string
     contact_info_visible: boolean,
     visible?: boolean,
     organization_users: [IOrganizationUser],

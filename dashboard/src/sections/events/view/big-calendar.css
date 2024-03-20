@@ -1,0 +1,9 @@
+.rbc-time-slot {
+    border: none !important;
+}
+.rbc-today {
+    background-color: transparent;
+}
+.rbc-current-time-indicator {
+    height: 3px;
+}

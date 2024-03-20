@@ -20,8 +20,8 @@ const EventSchema = new Schema<IEvent>({
     extract: {
         type: String,
         required: true,
-        maxlength: 260,
-        minlenght: 25,
+        maxlength: 1000,
+        minlenght: 100,
     },
     description: {
         type: String,
@@ -37,11 +37,6 @@ const EventSchema = new Schema<IEvent>({
         state: { type: String, required: true },
         zipcode: { type: String, required: true },
         country: { type: String, required: true },
-        coordinates: { //Documentation https://www.mongodb.com/docs/manual/reference/operator/query/nearSphere/#-nearsphere
-            type: [Number, Number], // [longitude, latitude]
-            index: '2dsphere',
-            required: true
-        }
     },
     location: {
         type: {
@@ -54,20 +49,21 @@ const EventSchema = new Schema<IEvent>({
             required: true
         }
     },
+    dummydata: String,
     image_id: String,
     meta: {
-        denomination: { type: String, maxlength: 20 },
-        types: { type: [String], maxlength: 20 },
-        size: { type: String, maxlength: 20 },
-        language: { type: String, maxlength: 20 },
+        denomination: { type: [String], maxlength: 200 },
+        category: { type: [String], maxlength: 200 },
+        age_group: { type: [String], maxlength: 200 },
+        language: { type: [String], maxlength: 200 },
         price: {
             value: Number,
             currency: String
         },
         online: { type: Boolean, default: false },
         speaker: { type: String, maxlength: 20 },
-        music: { type: String, maxlength: 20 },
-        presenter: { type: String, maxlength: 20 },
+        music: { type: String, maxlength: 50 },
+        presenter: { type: String, maxlength: 50 },
     },
     organization: {
         organization_id: Types.ObjectId,
@@ -78,6 +74,6 @@ const EventSchema = new Schema<IEvent>({
     updated_by: String
 }, { timestamps: true }); //adds createdAt, updatedAt
 
-EventSchema.index({ title: 'text', 'address.city': 'text' })
+EventSchema.index({ location: "2dsphere" })
 
 export default EventSchema
