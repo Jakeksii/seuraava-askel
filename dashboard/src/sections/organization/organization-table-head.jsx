@@ -14,11 +14,7 @@ export default function OrganizationTableHead({
   order,
   orderBy,
   headLabel,
-  onRequestSort,
 }) {
-  const onSort = (property) => (event) => {
-    onRequestSort(event, property);
-  };
 
   return (
     <TableHead>
@@ -35,7 +31,6 @@ export default function OrganizationTableHead({
               hideSortIcon
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={onSort(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
@@ -55,5 +50,4 @@ OrganizationTableHead.propTypes = {
   order: PropTypes.oneOf(['asc', 'desc']),
   orderBy: PropTypes.string,
   headLabel: PropTypes.array,
-  onRequestSort: PropTypes.func,
 };

@@ -1,16 +1,16 @@
 import { Helmet } from 'react-helmet-async';
 
-import { ChangeOrganizationView } from 'src/sections/organization/view';
+import { NewOrganizationView } from 'src/sections/organization/view';
 
 // ----------------------------------------------------------------------
 
-export default function ChangeOrganizationPage() {
+export default function NewOrganizationPage() {
   return (
     <>
       <Helmet>
         <title> Organisaatio | SE-AS </title>
       </Helmet>
-      <ChangeOrganizationView />
+      <NewOrganizationView />
     </>
   );
 }

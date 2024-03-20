@@ -1,64 +1,38 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
+import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
-import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
+import Typography from '@mui/material/Typography';
 
 import AddIcon from '@mui/icons-material/Add';
 
 import Scrollbar from 'src/components/scrollbar';
 
-import TableEmptyRows from '../table-empty-rows';
-import OrganizationTableRow from '../organization-table-row';
+import { Link } from 'react-router-dom';
+import { useAppContext } from 'src/context/appContext';
 import OrganizationTableHead from '../organization-table-head';
-import { emptyRows, applyFilter, getComparator } from '../utils';
+import OrganizationTableRow from '../organization-table-row';
+import TableEmptyRows from '../table-empty-rows';
+import { emptyRows } from '../utils';
 
 // ----------------------------------------------------------------------
 
-export default function ChangeOrganizationView() {
-  const [organizations] = useState([])
+export default function SwitchOrganizationView({ organizations }) {
+
+  const { selectedOrganization, switchOrganization } = useAppContext()
 
   const [page, setPage] = useState(0);
-
-  const [order, setOrder] = useState('asc');
-
-  const [selected, setSelected] = useState([]);
-
-  const [orderBy, setOrderBy] = useState('name');
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleSort = (event, id) => {
-    const isAsc = orderBy === id && order === 'asc';
-    if (id !== '') {
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(id);
-    }
-  };
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
-  };
+  const order = 'asc'
+  const orderBy = 'name'
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -69,18 +43,34 @@ export default function ChangeOrganizationView() {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
-  const dataFiltered = applyFilter({
-    inputData: organizations,
-    comparator: getComparator(order, orderBy),
-    filterName: '',
-  });
+  const handleOrganizationSwitch = (organization_id) => {
+    switchOrganization(organization_id)
+  }
+
+  if (organizations.length <= 0) return (
+    <Container>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <Typography variant="h4">Organisaatiot</Typography>
+
+        <Button variant="contained" color="inherit" component={Link} to={'/organization/new'} startIcon={<AddIcon />}>
+          Uusi organisaatio
+        </Button>
+      </Stack>
+      <Card sx={{margin: 'auto', padding: 10}}>
+        <Typography pb={2} variant="h4">Sinulla ei ole vielä yhtään organisaatiota!</Typography>
+        <Button variant="contained" size='large' component={Link} to={'/organization/new'}>
+          Luo uusi organisaatio
+        </Button>
+      </Card>
+    </Container>
+  )
 
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Organisaatiot</Typography>
 
-        <Button variant="contained" color="inherit" startIcon={<AddIcon />}>
+        <Button variant="contained" color="inherit" component={Link} to={'/organization/new'} startIcon={<AddIcon />}>
           Uusi organisaatio
         </Button>
       </Stack>
@@ -93,24 +83,25 @@ export default function ChangeOrganizationView() {
                 order={order}
                 orderBy={orderBy}
                 rowCount={organizations.length}
-                onRequestSort={handleSort}
                 headLabel={[
-                  { id: 'name', label: 'Name' },
+                  { id: 'organization_name', label: 'Name' },
                   { id: 'role', label: 'Your role' },
                   { id: 'isVerified', label: 'Verified', align: 'center' },
                   { id: '' },
                 ]}
               />
               <TableBody>
-                {dataFiltered
+                {organizations
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <OrganizationTableRow
-                      key={row.id}
-                      name={row.name}
+                      key={row._id}
+                      selected={selectedOrganization === row.organization_id}
+                      organization_id={row.organization_id}
+                      name={row.organization_name}
                       role={row.role}
                       isVerified={row.isVerified}
-                      handleClick={(event) => handleClick(event, row.name)}
+                      onClick={handleOrganizationSwitch}
                     />
                   ))}
 
@@ -136,3 +127,7 @@ export default function ChangeOrganizationView() {
     </Container>
   );
 }
+
+SwitchOrganizationView.propTypes = {
+  organizations: PropTypes.array
+};
