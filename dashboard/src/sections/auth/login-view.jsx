@@ -31,7 +31,7 @@ export default function LoginView() {
   const theme = useTheme();
   const router = useRouter();
   const { mutate, isLoading } = useLogin()
-  const { setSession } = useAppContext()
+  const { setSession, switchOrganization } = useAppContext()
   const formRef = useRef()
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('')
@@ -69,6 +69,9 @@ export default function LoginView() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    localStorage.clear() // clear session values
+    switchOrganization(undefined) // clear organization
+    
     if (formRef.current.checkValidity()) {
       mutate(credintials, {
         onSuccess: (data) => {
