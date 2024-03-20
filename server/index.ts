@@ -11,7 +11,6 @@ import StatsConn from "./connections/StatsConnection";
 import UserConn from "./connections/UserConnection";
 
 import authRoutes from "./routes/auth";
-import imageRoutes from './routes/images';
 import eventRoutes from "./routes/event";
 import invitationRoutes from "./routes/invitation";
 import organizationRoutes from "./routes/organization";
@@ -55,7 +54,6 @@ app.use(morgan("common"))
 
 // ROUTES 
 app.use("/api/dummydata", DummyDataRouter)
-app.use("/api/image", imageRoutes)
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/organizations", organizationRoutes)
