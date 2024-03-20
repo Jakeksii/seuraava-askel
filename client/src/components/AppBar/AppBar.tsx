@@ -1,11 +1,15 @@
 import TuneIcon from '@mui/icons-material/Tune';
 import { Button, Stack } from '@mui/material';
 import { useState } from 'react';
-import Filters from '../Filters';
+import Filters from '../Filters/Filters';
 import LocationButton from './LocationButton';
 import Search from './Search';
+import { useIsTiny } from 'src/hooks/useResponsive';
 
 export default function AppBar() {
+    const isTiny = useIsTiny()
+    const padding = isTiny ? 0.5 : 1
+
     // Filter panel
     const [filterPanelOpen, setFilterPanelOpen] = useState(false);
     function openFilterPanel() {
@@ -17,14 +21,14 @@ export default function AppBar() {
 
     return (
         <>
-            <Stack direction='row' width='100%' gap={1} sx={{ pl: 1, pr: 1, scrollMarginTop: 5 }} id='AppBar'>
+            <Stack direction='row' width='100%' gap={padding} sx={{ pl: padding, pr: padding, scrollMarginTop: 5 }} id='AppBar'>
                 <Search />
                 <LocationButton />
                 <Button // FILTER BUTTON
                     aria-label="Filter events"
-                    size='large'
                     variant="contained"
                     color='primary'
+                    sx={{minWidth: '50px'}}
                     onClick={openFilterPanel}>
                     <TuneIcon />
                 </Button>

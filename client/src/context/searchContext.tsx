@@ -11,6 +11,14 @@ type Location = {
     isError: true
 }
 
+export type Preferences = {
+    age_group: string[]
+    language: string[]
+    denomination: string[]
+    category: string[]
+    date_origin: Date
+}
+
 type Values = {
     search: string | undefined
     location: {
@@ -26,6 +34,7 @@ type Values = {
         isError: boolean
         on: false
     }
+    preferences: Preferences
 }
 interface SearchContextType {
     values: Values
@@ -44,17 +53,30 @@ export function useSearchContext() {
 }
 
 export function SearchContextProvider({ children }: { children: ReactNode }) {
+    const preferencesFromLocalStorage = localStorage.getItem('preferences')
+    const preferences: Preferences = preferencesFromLocalStorage 
+    ? JSON.parse(preferencesFromLocalStorage)
+    : {
+        age_group: [],
+        language: [],
+        denomination: [],
+        category: [],
+        date_origin: new Date(),
+    }
+    preferences.date_origin = new Date() // we reset date origin
+
     const [values, setValues] = useState<Values>({
         search: undefined,
         location: {
             isLoading: false,
             isError: false,
             on: false,
-        }
+        },
+        preferences: preferences
     })
 
     const locationCallback = (location: Location) => {
-        if(location.isError){
+        if (location.isError) {
             setValues({
                 ...values,
                 location: {

@@ -1,5 +1,4 @@
 import { alpha } from '@mui/material/styles';
-import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 
 // ----------------------------------------------------------------------
 
@@ -99,9 +98,22 @@ export function overrides(theme) {
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          [`& .${outlinedInputClasses.notchedOutline}`]: {
-            borderColor: alpha(theme.palette.grey[500], 0.24),
+          color: theme.palette.primary.main,
+          '&:hover': {
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.primary.main,
+            },
           },
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.primary.main,
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: theme.palette.primary.main,
         },
       },
     },

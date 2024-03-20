@@ -29,7 +29,7 @@ export default function LocationButton() {
     }
 
     return (
-        <Button onClick={locationClick} variant='contained'>
+        <Button onClick={locationClick} variant='contained' sx={{minWidth: '50px'}}>
             {locationIcon()}
         </Button>
     )

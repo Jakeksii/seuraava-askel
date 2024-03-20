@@ -37,37 +37,37 @@ export const typography = {
   h1: {
     fontWeight: 800,
     lineHeight: 80 / 64,
-    fontSize: pxToRem(40),
-    ...responsiveFontSizes({ sm: 52, md: 58, lg: 64 }),
+    fontSize: pxToRem(38),
+    ...responsiveFontSizes({ sm: 46, md: 52, lg: 58 }),
   },
   h2: {
     fontWeight: 800,
     lineHeight: 64 / 48,
-    fontSize: pxToRem(32),
-    ...responsiveFontSizes({ sm: 40, md: 44, lg: 48 }),
+    fontSize: pxToRem(30),
+    ...responsiveFontSizes({ sm: 36, md: 40, lg: 44 }),
   },
   h3: {
     fontWeight: 700,
     lineHeight: 1.2,
-    fontSize: pxToRem(26), // increased from 24
+    fontSize: pxToRem(24), // increased from 24
     ...responsiveFontSizes({ sm: 28, md: 32, lg: 34 }), // adjusted sizes
   },
   h4: {
     fontWeight: 700,
     lineHeight: 1.2,
-    fontSize: pxToRem(22), // increased from 20
+    fontSize: pxToRem(20), // increased from 20
     ...responsiveFontSizes({ sm: 22, md: 26, lg: 26 }), // adjusted sizes
   },
   h5: {
     fontWeight: 700,
     lineHeight: 1.2,
-    fontSize: pxToRem(20), // increased from 18
+    fontSize: pxToRem(18), // increased from 18
     ...responsiveFontSizes({ sm: 21, md: 22, lg: 22 }), // adjusted sizes
   },
   h6: {
     fontWeight: 700,
     lineHeight: 28 / 18,
-    fontSize: pxToRem(19), // increased from 17
+    fontSize: pxToRem(17), // increased from 17
     ...responsiveFontSizes({ sm: 20, md: 20, lg: 20 }), // adjusted sizes
   },
   subtitle1: {
@@ -82,7 +82,7 @@ export const typography = {
   },
   body1: {
     lineHeight: 1.5,
-    fontSize: pxToRem(18), // increased from 16
+    fontSize: pxToRem(16), // increased from 16
   },
   body2: {
     lineHeight: 22 / 14,

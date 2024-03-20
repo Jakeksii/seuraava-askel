@@ -5,7 +5,6 @@ export type Address = {
     state: string
     zipcode: string
     country: string
-    coordinates: [number, number]
 }
 export type FormattedDate = {
     startDate: string
@@ -22,6 +21,9 @@ export type Event = {
     title: string
     extract: string
     address: Address
+    location: {
+        coordinates: [number, number]
+    }
     image_id: string
     organization: {
         organization_id: string
@@ -38,6 +40,9 @@ export type EventPage = {
     extract: string
     description?: string
     address: Address
+    location: {
+        coordinates: [number, number]
+    }
     image_id: string
     meta: {
         denomination?: string
