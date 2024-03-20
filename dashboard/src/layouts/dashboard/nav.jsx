@@ -53,7 +53,7 @@ export default function Nav({ openNav, onCloseNav }) {
       {
         data?.verified
         ? <Chip size='small' color='success' label={'Vahvistettu'}/>
-        : <Chip size='small' color='error' label={'Tarkistuksessa'}/>
+        : <Chip size='small' color='warning' label={'Tarkistuksessa'}/>
       }
       
       
@@ -74,7 +74,6 @@ export default function Nav({ openNav, onCloseNav }) {
         mx: 2.5,
         py: 2,
         px: 2.5,
-        display: 'flex',
         borderRadius: 1.5,
         alignItems: 'center',
         bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
