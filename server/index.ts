@@ -7,7 +7,6 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 import MainConn from "./connections/MainConnection";
-import StatsConn from "./connections/StatsConnection";
 import UserConn from "./connections/UserConnection";
 
 import authRoutes from "./routes/auth";
@@ -79,12 +78,6 @@ const connect = async () => {
         console.log('Connected to User database at: ' + result.host + ":" + result.port)
     }).catch(error => {
         console.error('Error connecting to User database: ', error)
-    })
-
-    await StatsConn.asPromise().then(result => {
-        console.log('Connected to Stats database at: ' + result.host + ":" + result.port)
-    }).catch(error => {
-        console.error('Error connecting to Stats database: ', error)
     })
 
     try {
