@@ -90,6 +90,7 @@ export interface IUser {
 // ORGANIZATION -----------------------------------------------
 export interface IOrganization {
     name: string,
+    status: 'verified' | 'inreview' | 'suspended'
     business_id: string,
     address: IAddress
     location: {

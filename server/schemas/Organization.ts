@@ -9,6 +9,12 @@ export default new Schema<IOrganization>({
         unique: true,
         index: true
     },
+    status: {
+        type: String,
+        required: true,
+        default: 'inreview',
+        enum: ['verified', 'inreview', 'suspended']
+    },
     business_id: { //Y-koodi
         type: String,
         required: true,
