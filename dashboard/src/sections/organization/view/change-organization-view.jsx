@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import Button from '@mui/material/Button';
@@ -14,57 +15,24 @@ import AddIcon from '@mui/icons-material/Add';
 
 import Scrollbar from 'src/components/scrollbar';
 
+import { Link } from 'react-router-dom';
 import { useAppContext } from 'src/context/appContext';
-import useCurrentUser from 'src/hooks/api-hooks/useCurrentUser';
-import { useRouter } from 'src/routes/hooks';
 import OrganizationTableHead from '../organization-table-head';
 import OrganizationTableRow from '../organization-table-row';
 import TableEmptyRows from '../table-empty-rows';
-import { applyFilter, emptyRows, getComparator } from '../utils';
-import { Link, useNavigate } from 'react-router-dom';
+import { emptyRows } from '../utils';
 
 // ----------------------------------------------------------------------
 
-export default function ChangeOrganizationView({organizations}) {
+export default function SwitchOrganizationView({ organizations }) {
 
-  const navigate = useRouter()
+  const { selectedOrganization, setSelectedOrganization } = useAppContext()
 
   const [page, setPage] = useState(0);
-
-
-  const [order, setOrder] = useState('asc');
-
-  const [selected, setSelected] = useState([]);
-
-  const [orderBy, setOrderBy] = useState('name');
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleSort = (event, id) => {
-    const isAsc = orderBy === id && order === 'asc';
-    if (id !== '') {
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(id);
-    }
-  };
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
-  };
+  const order = 'asc'
+  const orderBy = 'name'
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -75,11 +43,9 @@ export default function ChangeOrganizationView({organizations}) {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
-  const dataFiltered = applyFilter({
-    inputData: organizations,
-    comparator: getComparator(order, orderBy),
-    filterName: '',
-  });
+  const handleOrganizationSwitch = (organization_id) => {
+    setSelectedOrganization(organization_id)
+  }
 
   return (
     <Container>
@@ -99,7 +65,6 @@ export default function ChangeOrganizationView({organizations}) {
                 order={order}
                 orderBy={orderBy}
                 rowCount={organizations.length}
-                onRequestSort={handleSort}
                 headLabel={[
                   { id: 'organization_name', label: 'Name' },
                   { id: 'role', label: 'Your role' },
@@ -108,15 +73,17 @@ export default function ChangeOrganizationView({organizations}) {
                 ]}
               />
               <TableBody>
-                {dataFiltered
+                {organizations
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <OrganizationTableRow
-                      key={row.id}
+                      key={row._id}
+                      selected={selectedOrganization === row.organization_id}
+                      organization_id={row.organization_id}
                       name={row.organization_name}
                       role={row.role}
                       isVerified={row.isVerified}
-                      handleClick={(event) => handleClick(event, row.name)}
+                      onClick={handleOrganizationSwitch}
                     />
                   ))}
 
@@ -142,3 +109,7 @@ export default function ChangeOrganizationView({organizations}) {
     </Container>
   );
 }
+
+SwitchOrganizationView.propTypes = {
+  organizations: PropTypes.object
+};

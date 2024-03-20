@@ -1,4 +1,4 @@
-import { useMemo, useState, useContext, createContext } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 interface Session {
     token: string
@@ -28,8 +28,10 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
 
     const contextValue = useMemo(() => ({
         session: session,
-        setSession: setSession
-    }), [session, setSession]);
+        setSession: setSession,
+        selectedOrganization: selectedOrganization,
+        setSelectedOrganization: setSelectedOrganization
+    }), [session, setSession, selectedOrganization, setSelectedOrganization]);
 
     return (
         <AppContext.Provider value={contextValue}>
