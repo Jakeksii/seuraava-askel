@@ -22,7 +22,7 @@ export const ResetPasswordPage = lazy(() => import('src/pages/reset-password'))
 export const VerifyEmailPage = lazy(() => import('src/pages/verify-email'))
 export const VerifiedEmailPage = lazy(() => import('src/pages/verified-email'))
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
-
+export const MediaPage = lazy(() => import('src/pages/media'))
 export const SettingsPage = lazy(() => import('src/pages/settings'));
 // ----------------------------------------------------------------------
 
@@ -66,6 +66,7 @@ export default function Router() {
 
 
             { path: 'events', element: <EventsPage /> },
+            { path: 'media', element: <MediaPage /> },
             { path: 'statistics', element: <StatisticsPage /> },
             { path: 'team&subscription', element: <TeamAndSubscriptionPage /> },
             { path: 'settings', element: <SettingsPage /> }
