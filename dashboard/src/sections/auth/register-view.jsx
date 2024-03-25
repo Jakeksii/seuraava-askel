@@ -73,7 +73,7 @@ export default function RegisterView() {
   const handleSubmit = (e) => {
     e.preventDefault()
     localStorage.clear() // clear session values
-    switchOrganization(undefined) // clear organization
+    switchOrganization() // clear organization
 
     if (formRef.current.checkValidity()) {
       mutate(credintials, {

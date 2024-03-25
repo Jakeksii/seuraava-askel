@@ -26,9 +26,9 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
 
     const [selectedOrganization, setSelectedOrganization] = useState(localStorage.getItem('selected_organization'))
     const switchOrganization = useMemo(() => (
-        (organization_id: string) => {
-            setSelectedOrganization(organization_id)
-            localStorage.setItem('selected_organization', organization_id)
+        (organization_id?: string) => {
+            setSelectedOrganization(organization_id ?? null)
+            if(organization_id) localStorage.setItem('selected_organization', organization_id)
         }
     ), [])
 

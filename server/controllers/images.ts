@@ -87,10 +87,11 @@ export async function Delete(req: Request, res: Response) {
     try {
         // Get organization
         const organization = req.organization
+        const image_object_ids = JSON.parse(req.header('Images') ?? "[]") as string[]
+        console.log(image_object_ids)
 
-        if(!isStringArrayNotEmpty(req.body)) return res.status(400).json({message:'body needs to contain string array'})
-        const image_ids = req.body.map((_id: string) => `${organization._id}/${_id}`) as string[]
-        const image_object_ids = req.body as string[]
+        if(!isStringArrayNotEmpty(image_object_ids)) return res.status(400).json({message:'Header Images needs to contain string array'})
+        const image_ids = image_object_ids.map((_id: string) => `${organization._id}/${_id}`) as string[]
 
         cloudinary.api
             .delete_resources(image_ids)

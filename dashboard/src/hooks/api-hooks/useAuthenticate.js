@@ -30,7 +30,7 @@ export function useLogout() {
     const { setSession } = useAppContext()
 
     const logout = () => {
-        localStorage.removeItem('token')
+        localStorage.clear()
         client.clear();
         setSession()
     }

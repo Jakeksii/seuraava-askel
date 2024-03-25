@@ -29,18 +29,38 @@ export const SettingsPage = lazy(() => import('src/pages/settings'));
 const loading = (<main aria-busy style={{ display: 'flex', height: '100%', width: '100%', justifyContent: 'center' }} ><CircularProgress sx={{ alignSelf: 'center' }} /></main>)
 
 export default function Router() {
-  const { session } = useAppContext()
+  const { session, selectedOrganization } = useAppContext()
   const { data: user, isLoading } = useGetUser(session?.token)
+
+  const authenticatedAndVerifiedRoutes = selectedOrganization
+    ? [
+      { element: <IndexPage />, index: true },
+      { path: 'organization/new', element: <NewOrganizationPage /> },
+      { path: 'organization/switch', element: <SwitchOrganizationPage /> },
+
+
+      { path: 'organization', element: <OrganizationPage /> },
+      { path: 'events', element: <EventsPage /> },
+      { path: 'media', element: <MediaPage /> },
+      { path: 'statistics', element: <StatisticsPage /> },
+      { path: 'team&subscription', element: <TeamAndSubscriptionPage /> },
+      { path: 'settings', element: <SettingsPage /> }
+    ]
+    : [
+      { element: <SwitchOrganizationPage />, index: true },
+      { path: 'organization/new', element: <NewOrganizationPage /> },
+      { path: 'organization/switch', element: <SwitchOrganizationPage /> },
+    ]
 
   const routes = useRoutes([
     ...getRoutes(),
 
     // Common routes these are shared between states
-    { path: 'verified-email',element: <Suspense fallback={loading}><VerifiedEmailPage /></Suspense> },
+    { path: 'verified-email', element: <Suspense fallback={loading}><VerifiedEmailPage /></Suspense> },
     { path: 'reset-password', element: <Suspense fallback={loading}><ResetPasswordPage /></Suspense> },
 
     // Catch all routes
-    { path: '*',element: <Navigate to="/" replace />}
+    { path: '*', element: <Navigate to="/" replace /> }
   ]);
 
   if (isLoading) return loading
@@ -48,7 +68,7 @@ export default function Router() {
   function getRoutes() {
     if (user) {
       // we have user lets test if user is verified
-      if(user.verified) {
+      if (user.verified) {
         // return authenticated and verified routes
         return [{
           element: (
@@ -58,19 +78,7 @@ export default function Router() {
               </Suspense>
             </DashboardLayout>
           ),
-          children: [
-            { element: <IndexPage />, index: true },
-            { path: 'organization/new', element: <NewOrganizationPage /> },
-            { path: 'organization/switch', element: <SwitchOrganizationPage /> },
-            { path: 'organization', element: <OrganizationPage /> },
-
-
-            { path: 'events', element: <EventsPage /> },
-            { path: 'media', element: <MediaPage /> },
-            { path: 'statistics', element: <StatisticsPage /> },
-            { path: 'team&subscription', element: <TeamAndSubscriptionPage /> },
-            { path: 'settings', element: <SettingsPage /> }
-          ]
+          children: authenticatedAndVerifiedRoutes
         }]
 
       } else {
@@ -79,7 +87,7 @@ export default function Router() {
           { element: <Suspense fallback={loading}><VerifyEmailPage /></Suspense>, index: true }
         ]
       }
-      
+
     } else {
       // We dont have user
       // return unauthenticated routes

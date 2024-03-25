@@ -1,21 +1,49 @@
-import { Container, Paper, Card, CardContent, CardMedia, Button, Typography, Stack } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { Card, CardContent, CardMedia, Paper, Stack, Typography } from '@mui/material';
+import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useUploadImage } from 'src/hooks/api-hooks/useImages';
 
-export default function UploadImages(props) {
+export default function UploadImages() {
+  // STATE
+  const [files, setFiles] = useState([])
+
+  const onDrop = useCallback(acceptedFiles => {
+    setFiles([...acceptedFiles])
+  }, [])
+
+  const clearFiles = () => {
+    setFiles([])
+  }
+
   const {
     acceptedFiles,
-    fileRejections,
     getRootProps,
     getInputProps
   } = useDropzone({
-    maxFiles: 5,
+    maxFiles: 1,
+    multiple: false,
     accept: {
       'image/jpeg': [],
       'image/png': []
-    }
+    },
+    onDrop
   });
 
-  const acceptedFileItems = acceptedFiles.map(file => (
+  
+  // UPLOAD
+  const {mutate, isLoading} = useUploadImage()
+
+  const uploadImages = () => {
+    const formData = new FormData()
+    formData.append('image', acceptedFiles[0])
+    formData.append('name', acceptedFiles[0].name);
+    mutate(formData, { onSuccess: clearFiles })
+  }
+
+  
+  // RENDER
+  const acceptedFileItems = files.map(file => (
     <Card key={file.path} sx={{ maxWidth: 150, m: 1 }}>
       <CardMedia>
         <img src={URL.createObjectURL(file)} alt={file.name} style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
@@ -25,18 +53,6 @@ export default function UploadImages(props) {
       </CardContent>
     </Card>
   ));
-
-  const fileRejectionItems = fileRejections.map(({ file, errors }) => {
-    return (
-      <li key={file.path}>
-        <img src={URL.createObjectURL(file)} alt={file.name} style={{ width: '100px', height: '100px' }} />
-        {file.path} - {file.size} bytes
-        <ul>
-          {errors.map(e => <li key={e.code}>{e.message}</li>)}
-        </ul>
-      </li>
-    )
-  });
 
 
   return (
@@ -48,8 +64,8 @@ export default function UploadImages(props) {
         <input {...getInputProps()} />
         <Stack>
           {
-            acceptedFiles.length < 1
-            && <Typography textAlign={'center'} variant='subtitle1'>Raahaa ja pudota kuvia tähän tai klikkaa valitaksesi kuvia</Typography>
+            files.length < 1
+            && <Typography textAlign={'center'} variant='subtitle1'>Raahaa ja pudota kuva tähän tai klikkaa valitaksesi kuva</Typography>
           }
         </Stack>
         <Stack direction="row" gap={1} justifyContent={'center'} >
@@ -58,8 +74,8 @@ export default function UploadImages(props) {
       </Card>
       <Stack pt={2}>
         {
-          acceptedFiles.length > 0
-          && <Button variant='contained' color='success'>Lataa valitut kuvat palvelimelle</Button>
+          files.length > 0
+          && <LoadingButton loading={isLoading} variant='contained' color='success' onClick={uploadImages}>Lataa palvelimelle</LoadingButton>
         }
       </Stack>
     </Paper>

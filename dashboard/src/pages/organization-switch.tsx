@@ -11,13 +11,11 @@ export default function ChangeOrganizationPage() {
   // GET CURRENT USER DATA
   const token = useAppContext().session?.token
   const { data } = useCurrentUser({ token })
-  console.log(data)
-
 
   return (
     <>
       <Helmet>
-        <title> Organisaatio | SE-AS </title>
+        <title> Organisaatio </title>
       </Helmet>
       {
         data

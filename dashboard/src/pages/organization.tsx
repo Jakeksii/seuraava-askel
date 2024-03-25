@@ -8,7 +8,7 @@ export default function OrganizationPage() {
   return (
     <>
       <Helmet>
-        <title> Organisaatio | SE-AS </title>
+        <title> Organisaatio </title>
       </Helmet>
       <OrganizationView />
     </>
