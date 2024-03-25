@@ -25,12 +25,6 @@ export default function MediaView() {
 
   return (
     <Container>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Media näkymä</Typography>
-        <Button variant="contained" color="inherit" component={Link} to={'/media/new'} startIcon={<AddIcon />}>
-          Lisää kuva
-        </Button>
-      </Stack>
       <UploadImages />
       <MediaLibrary images={images} />
     </Container>

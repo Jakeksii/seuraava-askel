@@ -40,7 +40,7 @@ export default function UploadImages(props) {
 
 
   return (
-    <Paper sx={{ p: 4, mb: 5 }}>
+    <Paper sx={{ p: 4, mb: 5, mt: 2 }}>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography variant="h4" gutterBottom>Lataa kuvia</Typography>
       </Stack>
