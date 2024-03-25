@@ -134,7 +134,7 @@ export interface IOrganizationPage {
 
 // IMAGE ---------------------------------------------
 export interface IImage {
-    _id?: Types.ObjectId
+    _id: Types.ObjectId
     organization_id: Types.ObjectId
     name: string
 
