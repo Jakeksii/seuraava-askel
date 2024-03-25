@@ -49,7 +49,7 @@ export default function UploadImages(props) {
         <Stack>
           {
             acceptedFiles.length < 1
-            && <Typography textAlign={'center'} variant='subtitle1'>Raahaa ja pudota tiedostoja tähän tai klikkaa valitaksesi tiedostoja</Typography>
+            && <Typography textAlign={'center'} variant='subtitle1'>Raahaa ja pudota kuvia tähän tai klikkaa valitaksesi kuvia</Typography>
           }
         </Stack>
         <Stack direction="row" gap={1} justifyContent={'center'} >

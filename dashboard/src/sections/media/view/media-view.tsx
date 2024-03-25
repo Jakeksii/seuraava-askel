@@ -1,12 +1,5 @@
-import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 import MediaLibrary from '../media-library';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import { Link } from 'react-router-dom';
-import { Fade } from '@mui/material';
-import Dropzone from 'react-dropzone';
 import UploadImages from '../upload-images';
 
 // ----------------------------------------------------------------------
