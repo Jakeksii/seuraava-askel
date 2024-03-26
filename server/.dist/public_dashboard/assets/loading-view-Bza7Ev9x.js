@@ -1,0 +1,1 @@
+import{j as r,m as a,ad as s}from"./index-B3jCW4Fb.js";import{C as i}from"./Container-Bx1dlT7v.js";function e(){return r.jsx(i,{margin:"auto",children:r.jsx(a,{alignItems:"center",children:r.jsx(s,{})})})}export{e as L};
