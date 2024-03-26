@@ -5,6 +5,7 @@ import { usePathname } from '.';
 
 const titles = [
   { path: '/events', title: 'Tapahtumat' },
+  { path: '/media', title: 'Media' },
   { path: '/organization', title: 'Organisaatio' },
   { path: '/organization/switch', title: 'Vaihda organisaatio' },
   { path: '/organization/new', title: 'Uusi organisaatio' },

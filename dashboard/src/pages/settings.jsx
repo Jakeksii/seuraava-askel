@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 
 import { UserView } from 'src/sections/settings/view';
 
@@ -8,9 +9,12 @@ export default function SettingsPage() {
   return (
     <>
       <Helmet>
-        <title> Settings | SE-AS </title>
+        <title> Asetukset </title>
       </Helmet>
-      <UserView />
+
+      <ErrorBoundary>
+        <UserView />
+      </ErrorBoundary>
     </>
   );
 }

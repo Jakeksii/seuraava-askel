@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import EventSchema from "../schemas/Event";
+import ImageSchema from "../schemas/Image";
 import InvitationSchema from "../schemas/Invitation";
 import OrganizationSchema from "../schemas/Organization";
 
@@ -9,10 +10,12 @@ const url = process.env.USING_PUBLIC_DB ? (process.env.MONGO_URL_MAIN!) : (proce
 const MainConn = mongoose.createConnection(url)
 
 MainConn.model("Event", EventSchema)
+MainConn.model("Image", ImageSchema)
 MainConn.model("Invitation", InvitationSchema)
 MainConn.model("Organization", OrganizationSchema)
 
 export const Event = MainConn.models.Event
+export const Image = MainConn.models.Image
 export const Invitation = MainConn.models.Invitation
 export const Organization = MainConn.models.Organization
 

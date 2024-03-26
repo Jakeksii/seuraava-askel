@@ -132,6 +132,19 @@ export interface IOrganizationPage {
     __v?: number
 }
 
+// IMAGE ---------------------------------------------
+export interface IImage {
+    _id: Types.ObjectId
+    organization_id: Types.ObjectId
+    name: string
+
+    created_by: Types.ObjectId
+    updated_by: Types.ObjectId
+    createdAt?: Date
+    updatedAt?: Date
+    __v?: number
+}
+
 // INVITATION ---------------------------------------------
 export interface IInvitation {
     _id?: Types.ObjectId

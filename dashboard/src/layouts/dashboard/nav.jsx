@@ -33,7 +33,6 @@ export default function Nav({ openNav, onCloseNav }) {
   const upLg = useResponsive('up', 'lg');
 
   const { data, isLoading } = useDetailedOrganizations()
-  console.log(data)
 
   useEffect(() => {
     if (openNav) {
