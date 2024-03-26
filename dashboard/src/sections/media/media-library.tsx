@@ -3,7 +3,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import CloudImage from 'src/components/images/image';
 import { useGetImages } from 'src/hooks/api-hooks/useImages';
-import { useResponsive } from 'src/hooks/use-responsive';
+import { useWidth } from 'src/hooks/use-responsive';
 import LoadingView from '../loading/loading-view';
 import DeleteImageButton from './delete-image-button';
 
@@ -20,7 +20,7 @@ type ImageObject = {
 }
 
 export default function MediaLibrary() {
-  const mobile = useResponsive('down', 'md')
+  const width = useWidth()
   const { data, isLoading } = useGetImages()
 
   if (!data || isLoading) return <LoadingView />
@@ -31,13 +31,23 @@ export default function MediaLibrary() {
     <Typography textAlign='center' variant='h3'>Tyhjältä näyttää</Typography>
   )
 
-  
+  const cols = () => {
+    switch (width) {
+      case 'xs': return 1
+      case 'sm': return 2
+      case 'md': return 3
+      case 'lg': return 3
+      case 'xl': return 4
+      default: return 1
+    }
+  }
+
   const renderImages = (
-    imageObjects.map((object) => (
+    imageObjects.slice().reverse().map((object) => (
       <ImageListItem key={object._id}>
         <Card>
-          <CardMedia>
-            <CloudImage image_id={`${object.organization_id}/${object._id}`} width={300} height={300} />
+          <CardMedia sx={{ display: 'flex', justifyContent: 'center' }}>
+            <CloudImage image_id={`${object.organization_id}/${object._id}`} width={400} height={400} />
           </CardMedia>
           <CardContent>
             <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
@@ -53,7 +63,7 @@ export default function MediaLibrary() {
   return (
     <>
       {imageObjects.length < 1 && renderEmpty}
-      <ImageList cols={mobile ? 2 : 4} gap={10} sx={{ m: 'auto' }}>
+      <ImageList cols={cols()} gap={10} sx={{ m: 'auto' }}>
         {data && renderImages}
       </ImageList>
     </>

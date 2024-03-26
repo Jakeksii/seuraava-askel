@@ -65,7 +65,7 @@ export default function UploadImages() {
         <Stack>
           {
             files.length < 1
-            && <Typography textAlign={'center'} variant='subtitle1'>Raahaa ja pudota kuva tähän tai klikkaa valitaksesi kuva</Typography>
+            && <Typography textAlign={'center'} variant='subtitle1'>Pudota kuva tai klikkaa valitaksesi kuva</Typography>
           }
         </Stack>
         <Stack direction="row" gap={1} justifyContent={'center'} >

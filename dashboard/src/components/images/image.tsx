@@ -14,7 +14,7 @@ type Props = {
     width: number
     height: number
 }
-export default function CloudImage({image_id, width, height}: Props) {
+export default function CloudImage({ image_id, width, height }: Props) {
     // Instantiate a CloudinaryImage object for the image with the public ID, 'docs/models'.
     const myImage = cld.image(image_id);
 
@@ -23,8 +23,6 @@ export default function CloudImage({image_id, width, height}: Props) {
 
     // Render the image in a React component.
     return (
-        <div>
-            <AdvancedImage cldImg={myImage} />
-        </div>
+        <AdvancedImage cldImg={myImage}/>
     )
 }
