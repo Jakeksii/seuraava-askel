@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 
 import { NewOrganizationView } from 'src/sections/organization/view';
 
@@ -8,9 +9,12 @@ export default function NewOrganizationPage() {
   return (
     <>
       <Helmet>
-        <title> Organisaatio </title>
+        <title> Uusi organisaatio </title>
       </Helmet>
-      <NewOrganizationView />
+
+      <ErrorBoundary>
+        <NewOrganizationView />
+      </ErrorBoundary>
     </>
   );
 }

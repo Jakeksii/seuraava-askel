@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 
 import { ForgotPasswordView } from 'src/sections/auth';
 
@@ -8,10 +9,11 @@ export default function ForgotPasswordPage() {
   return (
     <>
       <Helmet>
-        <title> Salasanan nollaus | SE-AS </title>
+        <title> Salasanan nollaus </title>
       </Helmet>
-
-      <ForgotPasswordView />
+      <ErrorBoundary>
+        <ForgotPasswordView />
+      </ErrorBoundary>
     </>
   );
 }

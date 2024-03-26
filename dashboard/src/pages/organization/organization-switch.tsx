@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 import { useAppContext } from 'src/context/appContext';
 import useCurrentUser from 'src/hooks/api-hooks/useCurrentUser';
 import LoadingView from 'src/sections/loading/loading-view';
@@ -15,13 +16,16 @@ export default function ChangeOrganizationPage() {
   return (
     <>
       <Helmet>
-        <title> Organisaatio </title>
+        <title> Vaihda organisaatio </title>
       </Helmet>
-      {
-        data
-        ? <ChangeOrganizationView organizations={data.organizations} />
-        : <LoadingView />
-      }
+
+      <ErrorBoundary>
+        {
+          data
+            ? <ChangeOrganizationView organizations={data.organizations} />
+            : <LoadingView />
+        }
+      </ErrorBoundary>
     </>
   );
 }

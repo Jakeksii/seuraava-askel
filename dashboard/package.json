@@ -17,6 +17,7 @@
     "@mui/icons-material": "^5.15.3",
     "@mui/lab": "^5.0.0-alpha.147",
     "@mui/material": "^5.15.3",
+    "@tanstack/react-query-devtools": "^4.36.1",
     "apexcharts": "^3.43.0",
     "axios": "^1.6.4",
     "date-fns": "^2.30.0",

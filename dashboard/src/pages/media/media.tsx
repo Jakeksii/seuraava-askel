@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 import { MediaLibraryView } from 'src/sections/media/view';
 
 // ----------------------------------------------------------------------
@@ -9,7 +10,10 @@ export default function StatisticsPage() {
       <Helmet>
         <title> Media </title>
       </Helmet>
-      <MediaLibraryView />
+      
+      <ErrorBoundary>
+        <MediaLibraryView />
+      </ErrorBoundary>
     </>
   );
 }

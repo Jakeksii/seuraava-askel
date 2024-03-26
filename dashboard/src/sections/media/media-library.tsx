@@ -31,6 +31,7 @@ export default function MediaLibrary() {
     <Typography textAlign='center' variant='h3'>Tyhjältä näyttää</Typography>
   )
 
+  
   const renderImages = (
     imageObjects.map((object) => (
       <ImageListItem key={object._id}>

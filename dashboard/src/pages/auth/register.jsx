@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 
 import { RegisterView } from 'src/sections/auth';
 
@@ -8,10 +9,12 @@ export default function RegisterPage() {
   return (
     <>
       <Helmet>
-        <title> Rekisteröidy | SE-AS </title>
+        <title> Rekisteröidy </title>
       </Helmet>
 
-      <RegisterView />
+      <ErrorBoundary>
+        <RegisterView />
+      </ErrorBoundary>
     </>
   );
 }
