@@ -3,7 +3,6 @@ import ScheduleIcon from '@mui/icons-material/Schedule';
 import { Box, Card, CardContent, Chip, Stack, Typography } from "@mui/material";
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { Image } from "src/components/Image";
 import CloudImage from 'src/components/images/image';
 
 import useFormatDate from "src/functions/formatDate";
@@ -41,9 +40,6 @@ const Event = memo(({ event }: Props) => {
                     </Box>
 
                     <CardContent sx={{ pt: 0, alignSelf: 'center' }}>
-                        <Typography variant="body1">
-                            {event.organization.organization_name}
-                        </Typography>
                         <Typography variant="h3">
                             {event.title}
                         </Typography>
