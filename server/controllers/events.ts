@@ -1,15 +1,9 @@
-import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
 import { Types } from 'mongoose'
 import { Event } from "../connections/MainConnection"
 import { IEvent, Request, Response } from '../types'
 
 export const createEvent = async (req: Request, res: Response) => {
   try {
-
-    // Check if we have image
-    if (!req.file) return res.status(400).end()
-    const image = req.file.buffer
-
     // Get organization
     // We know that user access role to this organization is atleast 'user', because we have middleware that prevents code reaching here if no.
     const organization = req.organization
@@ -17,7 +11,6 @@ export const createEvent = async (req: Request, res: Response) => {
     // Create event
     const event = new Event({
       ...JSON.parse(req.body.event), // event data that client sended. Any data that is not in IEvent will be discarded.
-      image_id: "", // Set after the image is uploaded to cloudinary
       organization: {
         organization_id: organization._id,
         organization_name: organization.organization_name
@@ -32,22 +25,13 @@ export const createEvent = async (req: Request, res: Response) => {
       return res.status(400).json({ message: validationError.message });
     }
 
-    // Upload the image to cloudinary
-    cloudinary.uploader.upload_stream({ resource_type: "image" }, uploadDone).end(image)
-    async function uploadDone(error: any, result: UploadApiResponse | undefined) {
-      if (error) {
-        console.error("Error in cloudinary.uploader.upload_stream\n", error);
-        return res.status(500).json({ error: "Internal Server Error when uploading image" });
-      }
-      // Pass url to newly created event
-      event.image_id = result?.public_id
+    // Prefix image_id with organization_id (this way client can only use its own organization images)
+    // images will be queried from cloudinary with this event.image_id (this image is already uploaded to cloudinary)
+    event.image_id = organization._id + "/" + event.image_id
 
-      // save created event to db
-      const savedEvent = await event.save()
-
-      // return saved event to client
-      return res.status(201).json({ saved_event: savedEvent })
-    }
+    // save created event to db and return saved event to client
+    const savedEvent = await event.save()
+    return res.status(201).json({ saved_event: savedEvent })
 
   } catch (error) {
     console.error(error)
