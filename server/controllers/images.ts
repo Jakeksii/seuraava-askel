@@ -1,80 +1,122 @@
+import { Request, Response } from '../types';
+import { Image } from "../connections/MainConnection"
+import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
 
-import { BlobServiceClient } from '@azure/storage-blob';
-import dotenv from 'dotenv';
-import { Request, Response } from "../types";
 
-dotenv.config()
-const AZURE_STORAGE_CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STRING;
-if (!AZURE_STORAGE_CONNECTION_STRING) {
-    throw Error('Azure Storage Connection string not found');
-}
-// Create the BlobServiceClient object with connection string
-const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
-
-export async function createContainer(req: Request, res: Response) {
+export async function Upload(req: Request, res: Response) {
     try {
-        // Create a unique name for the container
-        const containerName = 'images'
+        // Check if we have image
+        if (!req.file) return res.status(400).end()
 
-        console.log('\nCreating container...');
-        console.log('\t', containerName);
+        // Check if we have name
+        if (!req.body.name) return res.status(400).end()
 
-        // Get a reference to a container
-        const containerClient = blobServiceClient.getContainerClient(containerName);
-        // Create the container
-        const response = await containerClient.create();
+        // Get organization
+        // We know that user access role to this organization is atleast 'user', because we have middleware that prevents code reaching here if no.
+        const organization = req.organization
 
-        return res.status(201).json({ message: `Container was created successfully.\n\trequestId:${response.requestId}\n\tURL: ${containerClient.url}` })
+        // Create image object
+        const image = new Image({
+            name: req.body.name,
+            organization_id: organization._id,
+            created_by: req.user._id,
+            updated_by: req.user._id
+        })
+
+        // Validate image
+        const validationError = await image.validateSync();
+        if (validationError) {
+            return res.status(400).json({ message: validationError.message });
+        }
+
+        // Upload the image to cloudinary and after that save image object to db
+        const image_public_id = `${organization._id}/${image._id}`
+
+        cloudinary.uploader.upload_stream({ resource_type: "image", public_id: image_public_id }, uploadDone).end(req.file.buffer)
+        async function uploadDone(error: any, result: UploadApiResponse | undefined) {
+            if (error) {
+                console.error("Error in cloudinary.uploader.upload_stream\n", error);
+                return res.status(500).json({ error: "Internal Server Error when uploading image" });
+            }
+
+            // save created image object to db
+            const saved_image = await image.save()
+
+            // return saved event to client
+            return res.status(201).json(saved_image)
+        }
+
     } catch (error) {
         console.error(error)
         return res.status(500).end();
     }
 }
 
-export async function getImage(req: Request, res: Response) {
+
+export async function Get(req: Request, res: Response) {
     try {
-        const image_id = req.params._id
-        const extension = image_id.split('.').at(-1)
-        console.log(extension)
-        const containerName = 'organization-ef307fec-ed51-4a47-b4ba-bf94f4f02cd5'
-        const containerClient = blobServiceClient.getContainerClient(containerName);
-        const blockBlobClient = containerClient.getBlockBlobClient(image_id);
-        const downloadBlockBlobResponse = await blockBlobClient.download(0);
+        // Get organization
+        // We know that user access role to this organization is atleast 'user', because we have middleware that prevents code reaching here if no.
+        const organization = req.organization
 
-        res.setHeader('Content-Type', downloadBlockBlobResponse.contentType ?? 'application/octet-stream');
-        return downloadBlockBlobResponse.readableStreamBody?.pipe(res).status(200)
+        // Get all image objects with provided org _id
+        const images = await Image.find({ organization_id: organization._id })
 
-    } catch (error: any) {
-        if(error.statusCode === 404) return res.status(404).end()
+        // Send images to client
+        return res.status(200).json(images)
+
+    } catch (error) {
         console.error(error)
         return res.status(500).end();
     }
 }
 
-export async function createImage(req: Request, res: Response) {
+function isStringArrayNotEmpty(variable: any) {
+    // Check if the variable is an array
+    if (Array.isArray(variable)) {
+        // Check if the array is not empty
+        if (variable.length > 0) {
+            // Check if all elements in the array are strings
+            return variable.every(element => typeof element === 'string');
+        }
+    }
+    return false;
+}
+
+export async function Delete(req: Request, res: Response) {
     try {
-        // Check if we have image
-        const organization_id = req.header('Organization') as string
-        if (!req.file || !organization_id) return res.status(400).end()
+        // Get organization
+        const organization = req.organization
+        const image_object_ids = JSON.parse(req.header('Images') ?? "[]") as string[]
+        console.log(image_object_ids)
 
-        // create virtual folder structure
-        const blobName = organization_id+'/'+req.file.originalname
-        const containerClient = blobServiceClient.getContainerClient('images');
-        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+        if(!isStringArrayNotEmpty(image_object_ids)) return res.status(400).json({message:'Header Images needs to contain string array'})
+        const image_ids = image_object_ids.map((_id: string) => `${organization._id}/${_id}`) as string[]
 
-        // Set content type in blobHTTPHeaders
-        const blobHTTPHeaders = {
-            blobContentType: req.file.mimetype, // Assuming 'mimetype' contains the content type of the image
-        };
+        cloudinary.api
+            .delete_resources(image_ids)
+            .then(async () => {
+                
+                // Delete image objects also from DB
+                await Image.deleteMany({ _id: { $in: image_object_ids }})
+                return res.status(204).end()
+            })
+            .catch((error) => {
+                console.error(error)
+                return res.status(500).end();
+            })
 
-        // Upload blob with content type specified
-        const uploadBlobResponse = await blockBlobClient.upload(
-            req.file.buffer,
-            req.file.buffer.length,
-            { blobHTTPHeaders }
-        );
-        
-        return res.status(201).end()
+    } catch (error) {
+        console.error(error)
+        return res.status(500).end();
+    }
+}
+
+
+
+export async function Update(req: Request, res: Response) {
+    try {
+        return res.status(501).end() // NOT IMPLEMENTED
     } catch (error) {
         console.error(error)
         return res.status(500).end();

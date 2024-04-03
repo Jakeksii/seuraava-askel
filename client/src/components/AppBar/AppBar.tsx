@@ -21,7 +21,7 @@ export default function AppBar() {
 
     return (
         <>
-            <Stack direction='row' width='100%' gap={padding} sx={{ pl: padding, pr: padding, scrollMarginTop: 5 }} id='AppBar'>
+            <Stack direction='row' width='100%' gap={padding} sx={{ pl: padding, pr: padding, scrollMarginTop: 5, pt: 1 }} id='AppBar'>
                 <Search />
                 <LocationButton />
                 <Button // FILTER BUTTON

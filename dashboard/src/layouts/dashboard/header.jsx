@@ -20,6 +20,7 @@ import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
 import LanguagePopover from './common/language-popover';
 import SvgColor from 'src/components/svg-color';
+import { usePathtitle } from 'src/routes/hooks/use-pathtitle';
 
 // ----------------------------------------------------------------------
 
@@ -27,6 +28,7 @@ export default function Header({ onOpenNav }) {
   const theme = useTheme();
   const { toggleColorMode } = useContext(ColorModeContext);
   const lgUp = useResponsive('up', 'lg');
+  const pathtitle = usePathtitle()
 
   const renderContent = (
     <>
@@ -36,7 +38,7 @@ export default function Header({ onOpenNav }) {
         </IconButton>
       )}
 
-      <Typography color={'primary'} variant='h3'>Seuraava Askel</Typography>
+      <Typography color={'primary'} variant='h3'>{pathtitle}</Typography>
 
       <Box sx={{ flexGrow: 1 }} />
 

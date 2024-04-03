@@ -1,14 +1,13 @@
-import dotenv from "dotenv";
 import { compare, genSalt, hash } from "bcrypt";
+import dotenv from "dotenv";
 import { sign, verify } from "jsonwebtoken";
 import { Types } from "mongoose";
+import { SendEmailVerificationEmail, SendResetPasswordEmail } from "../Functions/send-mail";
+import { validatePassword } from "../Functions/test-password";
 import { User } from "../connections/UserConnection";
 import { Request, Response } from "../types";
-import { validatePassword } from "../Functions/test-password";
-import mail from "@sendgrid/mail";
 
 dotenv.config()
-mail.setApiKey(process.env.SENDGRID_KEY!)
 
 /* REGISTER USER */
 export const register = async (req: Request, res: Response): Promise<Response> => {
@@ -102,28 +101,18 @@ export const forgotPassword = async (req: Request, res: Response): Promise<Respo
         const secret: string = process.env.JWT_SECRET!
         const token = sign({ reset_token: {_id: user._id }}, secret, { expiresIn: '1d' });
 
-        const URL = process.env.APP_URL
-
-        // create reset link
-        const resetLink = `${URL}/reset-password?reset_token=${token}`
-
-        // send link via email
-        const options = {
-            from: 'jaakko.ruhanen@outlook.com',
-            to: email,
-            subject: 'Salasanan vaihtaminen',
-            html: `<a href="${resetLink}" target="_blank">Vaihda salasana</a>`
+        // send email
+        const contact = {
+            EMAIL: user.email,
+            FIRSTNAME: user.first_name,
+            LASTNAME: user.last_name
         }
+        const reset_url = 'https://dashboard.nextep.fi/reset-password?reset_token='+token
+
+        const sent = await SendResetPasswordEmail(contact, reset_url)
         
-        // Send Mail
-        try {
-            await mail.send(options)
-            console.log('Email sent')
-            return res.status(202).end()
-        } catch (error) {
-            console.error(error)
-            return res.status(503).end()
-        }
+        if(!sent) return res.status(503).end()
+        return res.status(200).end()
 
     } catch (error) {
         console.error(error)
@@ -178,27 +167,19 @@ export const createVerifyEmail = async (req: Request, res: Response): Promise<Re
         const secret: string = process.env.JWT_SECRET!
         const token = sign({ verification_token: payload }, secret, { expiresIn: '1d' });
 
-        // create reset link
-        const URL = process.env.APP_URL
-        const verificationLink = `${URL}/verified-email?verification_token=${token}`
+        // send email
+        const contact = {
+            TOKEN: token,
+            EMAIL: req.user.email,
+            FIRSTNAME: req.user.first_name,
+            LASTNAME: req.user.last_name
+        }
+        const verification_url = 'https://dashboard.nextep.fi/verified-email?verification_token='+token
 
-        // send link via email
-        const options = {
-            from: 'jaakko.ruhanen@outlook.com',
-            to: req.user.email,
-            subject: 'Sähköpostin vahvistaminen - Seuraava Askel',
-            html: `<a href="${verificationLink}" target="_blank">Vahvista sähköpostiosoitteesi</a>`
-        }
-        
-        // Send Mail
-        try {
-            await mail.send(options)
-            console.log('Email sent')
-            return res.status(202).end()
-        } catch (error) {
-            console.error(error)
-            return res.status(503).end()
-        }
+        const sent = await SendEmailVerificationEmail(contact, verification_url)
+        if(!sent) return res.status(503).end()
+        return res.status(200).end()
+
     } catch (error) {
         console.error(error)
         return res.status(500).end();

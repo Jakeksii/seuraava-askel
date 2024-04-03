@@ -30,7 +30,7 @@ export default function RegisterView() {
   const theme = useTheme();
   const router = useRouter();
   const { mutate, isLoading } = useRegister()
-  const { setSession } = useAppContext()
+  const { setSession, switchOrganization } = useAppContext()
   const formRef = useRef()
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('')
@@ -72,6 +72,9 @@ export default function RegisterView() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    localStorage.clear() // clear session values
+    switchOrganization() // clear organization
+
     if (formRef.current.checkValidity()) {
       mutate(credintials, {
         onSuccess: (data) => {

@@ -82,6 +82,7 @@ export const getDetailedOrganization = async (req: Request, res: Response): Prom
 
         // Get asked organization from database
         const organization = await Organization.findById(req.organization._id)
+        if(!organization) return res.status(404).end()
 
         // Get organization invitations
         const invitations = await Invitation.find({ 'organization.organization_id': req.organization._id })
@@ -97,20 +98,21 @@ export const getDetailedOrganization = async (req: Request, res: Response): Prom
         });
 
         const organizationToSend = {
-            _id: organization._doc._id,
-            name: organization._doc.name,
-            business_id: organization._doc.business_id,
-            contact_info_visible: organization._doc.contact_info_visible,
-            visible: organization._doc.visible,
+            _id: organization._id,
+            name: organization.name,
+            status: organization.status,
+            business_id: organization.business_id,
+            contact_info_visible: organization.contact_info_visible,
+            visible: organization.visible,
 
-            address: organization._doc.address,
-            contact_info: organization._doc.contact_info,
-            organization_users: [...organization._doc.organization_users],
+            address: organization.address,
+            contact_info: organization.contact_info,
+            organization_users: [...organization.organization_users],
 
-            created_by: organization._doc.created_by,
-            updated_by: organization._doc.updated_by,
-            createdAt: organization._doc.createdAt,
-            updatedAt: organization._doc.updatedAt,
+            created_by: organization.created_by,
+            updated_by: organization.updated_by,
+            createdAt: organization.createdAt,
+            updatedAt: organization.updatedAt,
         }
 
         organizationToSend.organization_users.push(...mappedInvitations)

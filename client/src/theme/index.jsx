@@ -57,5 +57,5 @@ export default function ThemeProvider({ children }) {
 }
 
 ThemeProvider.propTypes = {
-  children: PropTypes.nodeLike,
+  children: PropTypes.object,
 };

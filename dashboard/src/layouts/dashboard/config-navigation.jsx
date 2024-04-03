@@ -18,6 +18,11 @@ const navConfig = [
     icon: icon('ic_events'),
   },
   {
+    title: 'media',
+    path: '/media',
+    icon: icon('ic_media'),
+  },
+  {
     title: 'organisaatio',
     path: '/organization',
     icon: icon('ic_building-32-filled'),

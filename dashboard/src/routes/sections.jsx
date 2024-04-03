@@ -8,38 +8,58 @@ import DashboardLayout from 'src/layouts/dashboard';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 
-export const ChangeOrganizationPage = lazy(() => import('src/pages/change-organization'))
-export const EventsPage = lazy(() => import('src/pages/events'));
-export const OrganizationPage = lazy(() => import('src/pages/organization'));
-export const StatisticsPage = lazy(() => import('src/pages/statistics'));
-export const TeamAndSubscriptionPage = lazy(() => import('src/pages/team-and-subscription'));
+export const SwitchOrganizationPage = lazy(() => import('src/pages/organization/organization-switch'))
+export const NewOrganizationPage = lazy(() => import('src/pages/organization/organization-new'))
+export const EventsPage = lazy(() => import('src/pages/events/events'));
+export const OrganizationPage = lazy(() => import('src/pages/organization/organization'));
+export const StatisticsPage = lazy(() => import('src/pages/statistics/statistics'));
+export const TeamAndSubscriptionPage = lazy(() => import('src/pages/team-and-subscription/team-and-subscription'));
 
-export const LoginPage = lazy(() => import('src/pages/login'));
-export const RegisterPage = lazy(() => import('src/pages/register'));
-export const ForgotPasswordPage = lazy(() => import('src/pages/forgot-password'))
-export const ResetPasswordPage = lazy(() => import('src/pages/reset-password'))
-export const VerifyEmailPage = lazy(() => import('src/pages/verify-email'))
-export const VerifiedEmailPage = lazy(() => import('src/pages/verified-email'))
-export const Page404 = lazy(() => import('src/pages/page-not-found'));
-
+export const LoginPage = lazy(() => import('src/pages/auth/login'));
+export const RegisterPage = lazy(() => import('src/pages/auth/register'));
+export const ForgotPasswordPage = lazy(() => import('src/pages/auth/forgot-password'))
+export const ResetPasswordPage = lazy(() => import('src/pages/auth/reset-password'))
+export const VerifyEmailPage = lazy(() => import('src/pages/auth/verify-email'))
+export const VerifiedEmailPage = lazy(() => import('src/pages/auth/verified-email'))
+export const MediaPage = lazy(() => import('src/pages/media/media'))
 export const SettingsPage = lazy(() => import('src/pages/settings'));
 // ----------------------------------------------------------------------
 
 const loading = (<main aria-busy style={{ display: 'flex', height: '100%', width: '100%', justifyContent: 'center' }} ><CircularProgress sx={{ alignSelf: 'center' }} /></main>)
 
 export default function Router() {
-  const { session } = useAppContext()
+  const { session, selectedOrganization } = useAppContext()
   const { data: user, isLoading } = useGetUser(session?.token)
+
+  const authenticatedAndVerifiedRoutes = selectedOrganization
+    ? [
+      { element: <IndexPage />, index: true },
+      { path: 'organization/new', element: <NewOrganizationPage /> },
+      { path: 'organization/switch', element: <SwitchOrganizationPage /> },
+
+
+      { path: 'organization', element: <OrganizationPage /> },
+      { path: 'events', element: <EventsPage /> },
+      { path: 'media', element: <MediaPage /> },
+      { path: 'statistics', element: <StatisticsPage /> },
+      { path: 'team&subscription', element: <TeamAndSubscriptionPage /> },
+      { path: 'settings', element: <SettingsPage /> }
+    ]
+    : [
+      { element: <SwitchOrganizationPage />, index: true },
+      { path: 'organization/new', element: <NewOrganizationPage /> },
+      { path: 'organization/switch', element: <SwitchOrganizationPage /> },
+    ]
 
   const routes = useRoutes([
     ...getRoutes(),
 
     // Common routes these are shared between states
-    { path: 'verified-email',element: <Suspense fallback={loading}><VerifiedEmailPage /></Suspense> },
+    { path: 'verified-email', element: <Suspense fallback={loading}><VerifiedEmailPage /></Suspense> },
     { path: 'reset-password', element: <Suspense fallback={loading}><ResetPasswordPage /></Suspense> },
 
     // Catch all routes
-    { path: '*',element: <Navigate to="/" replace />}
+    { path: '*', element: <Navigate to="/" replace /> }
   ]);
 
   if (isLoading) return loading
@@ -47,7 +67,7 @@ export default function Router() {
   function getRoutes() {
     if (user) {
       // we have user lets test if user is verified
-      if(user.verified) {
+      if (user.verified) {
         // return authenticated and verified routes
         return [{
           element: (
@@ -57,15 +77,7 @@ export default function Router() {
               </Suspense>
             </DashboardLayout>
           ),
-          children: [
-            { element: <IndexPage />, index: true },
-            { path: 'change-organization', element: <ChangeOrganizationPage /> },
-            { path: 'events', element: <EventsPage /> },
-            { path: 'organization', element: <OrganizationPage /> },
-            { path: 'statistics', element: <StatisticsPage /> },
-            { path: 'team&subscription', element: <TeamAndSubscriptionPage /> },
-            { path: 'settings', element: <SettingsPage /> }
-          ]
+          children: authenticatedAndVerifiedRoutes
         }]
 
       } else {
@@ -74,7 +86,7 @@ export default function Router() {
           { element: <Suspense fallback={loading}><VerifyEmailPage /></Suspense>, index: true }
         ]
       }
-      
+
     } else {
       // We dont have user
       // return unauthenticated routes
