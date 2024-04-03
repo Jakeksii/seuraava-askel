@@ -40,7 +40,7 @@ const Event = memo(({ event }: Props) => {
                     </Box>
 
                     <CardContent sx={{ pt: 0, alignSelf: 'center' }}>
-                        <Typography variant="h3">
+                        <Typography variant="h5">
                             {event.title}
                         </Typography>
                         <Stack direction={'row'} gap={1} sx={{ pb: 1, pt: 1, flexWrap: 'wrap' }}>
