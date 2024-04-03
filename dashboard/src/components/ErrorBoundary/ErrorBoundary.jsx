@@ -35,7 +35,7 @@ export class ErrorBoundary extends Component {
             // Otherwise, render a default fallback UI
             return (
                 <div className='error-boundary-default'>
-                    <h2>Jokin meni vikaan.</h2>
+                    <h2>Oho, jokin meni vikaan.</h2>
                     <code>{this.state.errorMessage}</code>
                 </div>
             );

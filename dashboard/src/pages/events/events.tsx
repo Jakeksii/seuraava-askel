@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 
-import { EventsView } from 'src/sections/events/feed';
+import { EventsView } from 'src/sections/events/view';
 
 // ----------------------------------------------------------------------
 

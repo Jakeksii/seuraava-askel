@@ -1,5 +1,5 @@
 import { Types } from 'mongoose'
-import { Event } from "../connections/MainConnection"
+import { Event, Image } from "../connections/MainConnection"
 import { IEvent, Request, Response } from '../types'
 
 export const createEvent = async (req: Request, res: Response) => {
@@ -10,7 +10,7 @@ export const createEvent = async (req: Request, res: Response) => {
 
     // Create event
     const event = new Event({
-      ...JSON.parse(req.body.event), // event data that client sended. Any data that is not in IEvent will be discarded.
+      ...req.body, // event data that client sended. Any data that is not in IEvent will be discarded.
       organization: {
         organization_id: organization._id,
         organization_name: organization.organization_name
@@ -25,9 +25,15 @@ export const createEvent = async (req: Request, res: Response) => {
       return res.status(400).json({ message: validationError.message });
     }
 
+    // TEST if image exist
+    if (!Types.ObjectId.isValid(event.image_id)) return res.status(400).json({ message: "Image_id is not valid Object_id" })
+    const image = await Image.findById(new Types.ObjectId(event.image_id))
+    if (!(image.organization_id === organization._id)) return res.status(403).json({ message: "Image does not belong to provided organization" })
+    if (!image) return res.status(400).json({ message: "Image not found with provided image_id" })
+
     // Prefix image_id with organization_id (this way client can only use its own organization images)
     // images will be queried from cloudinary with this event.image_id (this image is already uploaded to cloudinary)
-    event.image_id = organization._id + "/" + event.image_id
+    event.image_id = organization._id + "/" + image._id
 
     // save created event to db and return saved event to client
     const savedEvent = await event.save()
@@ -121,14 +127,14 @@ export const getEvents = async (req: Request, res: Response) => {
     // testaa equals
     // mapataan like componentti jokasesta categoriasta
     // config for preferences
-    const test = preferences.category.map((cat) => ({'meta.types': cat}))
+    const test = preferences.category.map((cat) => ({ 'meta.types': cat }))
     const preferencesSearch = preferences ? {
       moreLikeThis: {
         like: {
-            'meta.denomination': preferences.denomination,
-            'meta.language': preferences.language,
-            'meta.category': preferences.category,
-          },
+          'meta.denomination': preferences.denomination,
+          'meta.language': preferences.language,
+          'meta.category': preferences.category,
+        },
         //score: { boost: { value: 0.8 } }
       }
     } : undefined
@@ -198,7 +204,7 @@ export const getEvents = async (req: Request, res: Response) => {
 export const getEventPage = async (req: Request, res: Response) => {
   const { _id } = req.params
   if (!Types.ObjectId.isValid(_id)) {
-    return res.status(400).json({ message: "Invalid Id" });
+    return res.status(400).json({ message: "Invalid event page Id" });
   }
 
   try {
@@ -228,46 +234,12 @@ export const getEventPage = async (req: Request, res: Response) => {
   }
 }
 
-type EventList = IEvent[];
-
 // GET Events from one Organization
 export const getOrgEvents = async (req: Request, res: Response) => {
-
-
-
-// search events with organization id
-try {
-  // get org id
-const { _id } = req.params
-
-if (!Types.ObjectId.isValid(_id)) {
-  return res.status(400).json({ message: "Invalid Id" });
-}
-  const events : EventList | null = await Event.find({ 'organization.organization_id': `${_id}`});
-
-  if (!events || events.length === 0) {
-    return res.status(404).json({ message: "No events found for the organization" });
+  try {
+    const events = await Event.find({ 'organization.organization_id': req.organization });
+    return res.status(200).json(events);
+  } catch (error) {
+    return res.status(500).end();
   }
-
-  const eventData = events.map(event => ({
-    _id: event._id,
-    start_date: event.start_date,
-    end_date: event.end_date,
-    title: event.title,
-    extract: event.extract,
-    description: event.description,
-    address: event.address,
-    location: event.location,
-    image_id: event.image_id,
-    meta: event.meta,
-    organization: event.organization,
-    createdAt: event.createdAt,
-    updatedAt: event.updatedAt
-  }));
-  // send events as response
-  return res.status(200).json(eventData);
-} catch (error) {
-  return res.status(500).json({ message: "Internal Server Error" });
-}
-
 }

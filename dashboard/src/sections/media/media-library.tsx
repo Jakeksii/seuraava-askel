@@ -4,7 +4,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import CloudImage from 'src/components/images/image';
 import { useGetImages } from 'src/hooks/api-hooks/useImages';
 import { useWidth } from 'src/hooks/use-responsive';
-import LoadingView from '../loading/loading-view';
+import LoadingView from '../../components/loading/loading-view';
 import DeleteImageButton from './delete-image-button';
 
 // ----------------------------------------------------------------------

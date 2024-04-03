@@ -50,7 +50,7 @@ const EventSchema = new Schema<IEvent>({
         }
     },
     dummydata: String,
-    image_id: String,
+    image_id: { type: String, required: true },
     meta: {
         denomination: { type: [String], maxlength: 200 },
         category: { type: [String], maxlength: 200 },
@@ -60,10 +60,7 @@ const EventSchema = new Schema<IEvent>({
             value: Number,
             currency: String
         },
-        online: { type: Boolean, default: false },
-        speaker: { type: String, maxlength: 20 },
-        music: { type: String, maxlength: 50 },
-        presenter: { type: String, maxlength: 50 },
+        online: { type: Boolean, default: false }
     },
     organization: {
         organization_id: Types.ObjectId,

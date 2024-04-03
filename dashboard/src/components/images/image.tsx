@@ -23,6 +23,6 @@ export default function CloudImage({ image_id, width, height }: Props) {
 
     // Render the image in a React component.
     return (
-        <AdvancedImage cldImg={myImage}/>
+        <AdvancedImage cldImg={myImage} style={{objectFit: 'cover'}}/>
     )
 }
