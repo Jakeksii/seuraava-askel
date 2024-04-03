@@ -1,3 +1,5 @@
+// Routes for state: selected organization
+
 import { lazy } from 'react';
 
 export const IndexPage = lazy(() => import('src/pages/app'))
@@ -13,10 +15,14 @@ export const SettingsPage = lazy(() => import('src/pages/settings'))
 // EXPORT ROUTES
 export default [
     { element: <IndexPage/>, index: true },
+
     { path: 'organization/new', element: <NewOrganizationPage /> },
     { path: 'organization/switch', element: <SwitchOrganizationPage /> },
     { path: 'organization', element: <OrganizationPage /> },
+
+    { path: 'events/new', element: <EventsPage /> },
     { path: 'events', element: <EventsPage /> },
+
     { path: 'media', element: <MediaPage /> },
     { path: 'statistics', element: <StatisticsPage /> },
     { path: 'team&subscription', element: <TeamAndSubscriptionPage /> },

@@ -1,8 +1,6 @@
 import { CircularProgress } from '@mui/material';
 import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
-import { useAppContext } from 'src/context/appContext';
-import { useGetUser } from 'src/hooks/api-hooks/useAuthenticate';
 
 // Layout
 import DashboardLayout from 'src/layouts/dashboard';
@@ -18,39 +16,34 @@ import shared from './routes-by-state/shared';
 
 // ----------------------------------------------------------------------
 
-const loading = (<main aria-busy style={{ display: 'flex', height: '100%', width: '100%', justifyContent: 'center' }} ><CircularProgress sx={{ alignSelf: 'center' }} /></main>)
+const loading = (
+  <main aria-busy style={{ display: 'flex', height: '100%', width: '100%', justifyContent: 'center' }}>
+    <CircularProgress sx={{ alignSelf: 'center' }} />
+  </main>
+);
 
-export default function Router() {
-  const { session, selectedOrganization } = useAppContext()
-  const { data: user, isLoading } = useGetUser(session?.token)
+export default function Sections({user, selectedOrganization}) {
 
-  let routes = []
-
-  // Unauthenticated State
-  routes = {
-    element: (
-      <Suspense fallback={loading}>
-        <Outlet />
-      </Suspense>
-    ),
-    children: [...unauthenticated, ...shared]
-  }
-
-  // Authenticated State
-  if (Boolean(user)) {
-    routes = {
+  const routes = [
+    {
       element: (
         <Suspense fallback={loading}>
           <Outlet />
         </Suspense>
       ),
+      children: [...unauthenticated, ...shared]
+    },
+    {
+      element: (
+        <DashboardLayout>
+          <Suspense fallback={loading}>
+            <Outlet />
+          </Suspense>
+        </DashboardLayout>
+      ),
       children: [...authenticated, ...shared]
-    }
-  }
-
-  // Verified email State
-  if (Boolean(user && user.verified)) {
-    routes = {
+    },
+    {
       element: (
         <DashboardLayout>
           <Suspense fallback={loading}>
@@ -59,12 +52,8 @@ export default function Router() {
         </DashboardLayout>
       ),
       children: [...verified, ...shared]
-    }
-  }
-
-  // Selected organization State
-  if (Boolean(user && user.verified && selectedOrganization)) {
-    routes = {
+    },
+    {
       element: (
         <DashboardLayout>
           <Suspense fallback={loading}>
@@ -74,7 +63,17 @@ export default function Router() {
       ),
       children: [...selected, ...shared]
     }
-  }
+  ];
 
-  return useRoutes([routes])
+  const userAuthenticated = Boolean(user);
+  const userVerified = Boolean(user && user.verified);
+  const organizationSelected = Boolean(user && user.verified && selectedOrganization);
+
+  let index = 0;
+  if (userAuthenticated) index = 1;
+  if (userVerified) index = 2;
+  if (organizationSelected) index = 3;
+
+
+  return useRoutes(routes.slice(index));
 }
