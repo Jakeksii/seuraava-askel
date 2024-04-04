@@ -1,12 +1,12 @@
 import { createContext, useContext, useMemo, useState } from "react";
 
 interface Session {
-    token: string
+    token: string | null
 }
 
 type AppContextType = {
-    session?: Session
-    setSession: (session: Session | undefined) => void
+    session: Session
+    setSession: (session: Session) => void
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
@@ -21,8 +21,8 @@ export function useAppContext() {
 
 export function AppContextProvider({ children }: { children: React.ReactNode }) {
     const token = localStorage.getItem('token')
-    const sessionData: Session | undefined = token ? { token: token } : undefined
-    const [session, setSession] = useState<Session | undefined>(sessionData)
+    const sessionData: Session = { token: token }
+    const [session, setSession] = useState<Session>(sessionData)
 
     const [selectedOrganization, setSelectedOrganization] = useState(localStorage.getItem('selected_organization'))
     const switchOrganization = useMemo(() => (

@@ -1,19 +1,19 @@
 import { useState } from 'react';
 
-import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import Popover from '@mui/material/Popover';
-import { alpha } from '@mui/material/styles';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
+import { alpha } from '@mui/material/styles';
 
-import { useGetUser, useLogout } from 'src/hooks/api-hooks/useAuthenticate';
+import { useLogout, useUser } from 'src/hooks/api-hooks/useAuthenticate';
 
-import SvgColor from 'src/components/svg-color';
-import { useAppContext } from 'src/context/appContext';
 import { useNavigate } from 'react-router-dom';
+import SvgColor from 'src/components/svg-color';
+import LoadingView from 'src/components/loading/loading-view';
 
 // ----------------------------------------------------------------------
 
@@ -27,12 +27,13 @@ const MENU_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
-  const { session } = useAppContext()
-  const { data: user } = useGetUser(session.token)
+  const { data: user, isLoading } = useUser()
   const navigate = useNavigate()
 
   const { logout } = useLogout()
   const [open, setOpen] = useState(null);
+
+  if(isLoading || !user) { return <LoadingView /> }
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);

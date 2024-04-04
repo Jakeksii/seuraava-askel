@@ -1,13 +1,15 @@
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-
 import { useAppContext } from "src/context/appContext";
 
-export function useGetUser(token, retry = false) {
+export function useUser(retry = false) {
+    const { session } = useAppContext()
+    const token = session?.token
+
     return useQuery({
         queryKey: ['user', token],
         staleTime: 1000 * 60,
-        enabled: !!token,
+        enabled: Boolean(token),
         retry: retry,
         queryFn: async () => {
             const { data } = await axios.get('/api/users/', {headers:{ Authorization: token }})

@@ -8,23 +8,20 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 import Feed from '../Feed';
+import { BackButton } from 'src/components/buttons/back-button';
 
 // ----------------------------------------------------------------------
 
-export default function EventsView() {
+export default function NewEventsView() {
   return (
     <Container>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Tapahtuma lista</Typography>
-
-        <Button variant="contained" color="inherit" component={Link} to={'/events/new'} startIcon={<AddIcon />}>
-          Uusi tapahtuma
-        </Button>
+      <Stack direction="row" alignItems="center" gap={2} mb={5}>
+      <BackButton />
+        <Typography variant="h4">Uusi tapahtuma</Typography>
       </Stack>
 
-        <ErrorBoundary>
-          <Feed/>
-        </ErrorBoundary>
+      <ErrorBoundary>
+      </ErrorBoundary>
     </Container>
   );
 }

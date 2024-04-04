@@ -13,14 +13,14 @@ import { LoadingButton } from '@mui/lab';
 import { CircularProgress } from '@mui/material';
 import Logo from 'src/components/logo';
 import { useAppContext } from 'src/context/appContext';
-import { useCreateVerifyEmail, useGetUser, useLogout } from 'src/hooks/api-hooks/useAuthenticate';
+import { useCreateVerifyEmail, useUser, useLogout } from 'src/hooks/api-hooks/useAuthenticate';
 
 // ----------------------------------------------------------------------
 
 export default function VerifyEmailView() {
   const theme = useTheme()
   const { session } = useAppContext()
-  const { data: user } = useGetUser(session.token)
+  const { data: user } = useUser(session.token)
   const { mutate, isLoading, isSuccess, isError } = useCreateVerifyEmail()
   const { logout } = useLogout()
   const [error, setError] = useState('')

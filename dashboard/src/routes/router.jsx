@@ -1,6 +1,6 @@
 import { CircularProgress } from '@mui/material';
 import { useAppContext } from 'src/context/appContext';
-import { useGetUser } from 'src/hooks/api-hooks/useAuthenticate';
+import { useUser } from 'src/hooks/api-hooks/useAuthenticate';
 import Sections from './sections';
 
 const loading = (
@@ -10,8 +10,8 @@ const loading = (
 );
 
 export default function Router () {
-    const { session, selectedOrganization } = useAppContext();
-    const { data: user, isLoading } = useGetUser(session?.token);
+    const { selectedOrganization } = useAppContext();
+    const { data: user, isLoading } = useUser();
 
     if(isLoading) {
         return loading

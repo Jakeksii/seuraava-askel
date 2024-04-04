@@ -4,8 +4,9 @@ import { useAppContext } from 'src/context/appContext';
 
 export default function useGetEvents() {
     // We fetch organization using details in appContext
-    const { selectedOrganization: organization_id, session: { token } } = useAppContext()
-    const enabled = Boolean((organization_id && token))
+    const { selectedOrganization: organization_id, session } = useAppContext()
+    const enabled = Boolean((organization_id && session?.token))
+    const token = session.token
 
     return useQuery({
         enabled: enabled,

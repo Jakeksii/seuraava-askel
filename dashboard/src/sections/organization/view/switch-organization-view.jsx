@@ -22,14 +22,19 @@ import OrganizationTableRow from '../organization-table-row';
 import TableEmptyRows from '../table-empty-rows';
 import { emptyRows } from '../utils';
 
+import { useUser } from 'src/hooks/api-hooks/useAuthenticate';
+import LoadingView from 'src/components/loading/loading-view';
 // ----------------------------------------------------------------------
 
-export default function SwitchOrganizationView({ organizations }) {
-
+export default function SwitchOrganizationView() {
+  // GET CURRENT USER DATA
   const { selectedOrganization, switchOrganization } = useAppContext()
-
+  const { data: { organizations }, isLoading } = useUser()
+  
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  if(isLoading) return <LoadingView />
 
   const order = 'asc'
   const orderBy = 'name'

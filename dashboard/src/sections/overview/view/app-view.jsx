@@ -10,13 +10,13 @@ import AppWidgetSummary from '../app-widget-summary';
 import AppCurrentSubject from '../app-current-subject';
 import AppConversionRates from '../app-conversion-rates';
 import { useAppContext } from 'src/context/appContext';
-import { useGetUser } from 'src/hooks/api-hooks/useAuthenticate';
+import { useUser } from 'src/hooks/api-hooks/useAuthenticate';
 
 // ----------------------------------------------------------------------
 
 export default function AppView() {
   const { session } = useAppContext()
-  const { data: user } = useGetUser(session.token)
+  const { data: user } = useUser(session.token)
 
  
   return (

@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
 
 import { EventsView } from 'src/sections/events/view';
-import OrganizationPage from '../organization/organization';
+import NewEventsView from 'src/sections/events/view/new-events-view';
 
 // ----------------------------------------------------------------------
 
@@ -13,14 +13,14 @@ export default function EventsPage() {
       <Helmet>
         <title> Tapahtumat </title>
       </Helmet>
-      
+
       <ErrorBoundary>
-        <EventsView />
+        <Routes>
+          <Route index element={<EventsView />} />
+          <Route path=':id/edit' element={<NewEventsView />} />
+          <Route path='new' element={<NewEventsView />} />
+        </Routes>
       </ErrorBoundary>
-      
-      <Routes>
-        <Route path='new' element={<OrganizationPage/>}/>
-      </Routes>
     </>
   );
 }

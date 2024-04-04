@@ -74,6 +74,5 @@ export default function Sections({user, selectedOrganization}) {
   if (userVerified) index = 2;
   if (organizationSelected) index = 3;
 
-
-  return useRoutes(routes.slice(index));
+  return useRoutes([routes.at(index)]);
 }
