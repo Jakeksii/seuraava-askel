@@ -1,6 +1,6 @@
-import { Request, Response } from "../types";
 import { PaytrailClient } from "@paytrail/paytrail-js-sdk";
-import { randomUUID, createHmac } from "crypto";
+import { randomUUID } from "crypto";
+import { Request, Response } from "../types";
 
 // https://docs.paytrail.com/#/
 const paytrail = new PaytrailClient({
@@ -50,16 +50,16 @@ export async function SuccessCallback(req: Request, res: Response) {
     try {
         // SIGNATURE VALIDATION
         // We copy request query payload and delete signature from that payload so that we can validate Hmac signature
-        const params = {...req.query};
+        const params = { ...req.query };
         delete params.signature
         // This function creates new Hmac signature from our payload: params, body using secret and then compares it to provided signature
         const validated = paytrail.validateHmac(params as any, "", req.query.signature as any, 'SAIPPUAKAUPPIAS')
-        if(!validated) return res.status(401).end() // Unauthorized, Hmac calculation failed
-    
+        if (!validated) return res.status(401).end() // Unauthorized, Hmac calculation failed
+
         // HANDLE CALLBACK REQUEST
         console.log('validated', validated)
 
-        
+
         return res.status(200).end()
 
     } catch (error) {
@@ -70,6 +70,21 @@ export async function SuccessCallback(req: Request, res: Response) {
 
 // https://docs.paytrail.com/#/?id=redirect-and-callback-url-parameters
 export async function CancelCallback(req: Request, res: Response) {
-    console.log('/payment/callback/cancel', req.query)
-    return res.status(200).end()
+
+    try {
+        // SIGNATURE VALIDATION
+        // We copy request query payload and delete signature from that payload so that we can validate Hmac signature
+        const params = { ...req.query };
+        delete params.signature
+        // This function creates new Hmac signature from our payload: params, body using secret and then compares it to provided signature
+        const validated = paytrail.validateHmac(params as any, "", req.query.signature as any, 'SAIPPUAKAUPPIAS')
+        if (!validated) return res.status(401).end() // Unauthorized, Hmac calculation failed
+    
+        // HANDLE CALLBACK REQUEST
+        
+        return res.status(200).end()
+    } catch (error) {
+        console.error(error)
+        return res.status(500).end()
+    }
 }
