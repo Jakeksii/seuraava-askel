@@ -1,6 +1,8 @@
 import { Request, Response } from "../types";
 import { PaytrailClient } from "@paytrail/paytrail-js-sdk";
+import { UUID, randomUUID } from "crypto";
 
+// https://docs.paytrail.com/#/
 const paytrail = new PaytrailClient({
     merchantId: 375917,
     secretKey: 'SAIPPUAKAUPPIAS',
@@ -11,17 +13,21 @@ export async function PaytrailCreatePayment(req: Request, res: Response) {
     try {
 
         const payment = await paytrail.createPayment({
-            stamp: "d2568f2a-e4c6-40ba-a7cd-d573382ce548",
-            reference: "1234",
+            stamp: randomUUID(),
+            reference: "Tuote #1", // tuotenumero esimerkiksi
             amount: 50,
             currency: "EUR",
             language: "FI",
-            redirectUrls: {
-                success: "https://ecom.example.org/success",
-                cancel: "https://ecom.example.org/cancel"
-            },
             customer: {
-                email: "erja.esimerkki@example.org"
+                email: ""
+            },
+            redirectUrls: {
+                success: "https://dashboard.nextep.fi/team&subscription",
+                cancel: "https://dashboard.nextep.fi/statistics"
+            },
+            callbackUrls: { // CALL BACK API
+                success: "https://dashboard.nextep.fi/api/payment/callback/success",
+                cancel: "https://dashboard.nextep.fi/api/payment/callback/cancel"
             }
         })
 
@@ -37,4 +43,16 @@ export async function PaytrailCreatePayment(req: Request, res: Response) {
         console.error(error)
         return res.status(500).end()
     }
+}
+
+// https://docs.paytrail.com/#/?id=redirect-and-callback-url-parameters
+export async function SuccessCallback(req: Request, res: Response) {
+    console.log('/payment/callback/success', req.query)
+    return res.status(200).end()
+}
+
+// https://docs.paytrail.com/#/?id=redirect-and-callback-url-parameters
+export async function CancelCallback(req: Request, res: Response) {
+    console.log('/payment/callback/cancel', req.query)
+    return res.status(200).end()
 }
