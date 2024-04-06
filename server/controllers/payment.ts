@@ -1,6 +1,6 @@
 import { Request, Response } from "../types";
 import { PaytrailClient } from "@paytrail/paytrail-js-sdk";
-import { UUID, randomUUID } from "crypto";
+import { randomUUID } from "crypto";
 
 // https://docs.paytrail.com/#/
 const paytrail = new PaytrailClient({
