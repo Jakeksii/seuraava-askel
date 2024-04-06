@@ -4,15 +4,21 @@ import { usePathname } from '.';
 // ----------------------------------------------------------------------
 
 const titles = [
-  { path: '/events', title: 'Tapahtumat' },
-  { path: '/events/:_id', title: 'Tapahtuma' },
-  { path: '/events/:_id/edit', title: 'Muokkaa tapahtumaa' },
-  { path: '/media', title: 'Media' },
   { path: '/organization', title: 'Organisaatio' },
   { path: '/organization/switch', title: 'Vaihda organisaatio' },
   { path: '/organization/new', title: 'Uusi organisaatio' },
+
+  { path: '/events', title: 'Tapahtumat' },
+  { path: '/events/new', title: 'Uusi tapahtuma' },
+  { path: '/events/:_id', title: 'Tapahtuma' },
+  { path: '/events/:_id/edit', title: 'Muokkaa tapahtumaa' },
+
+  { path: '/media', title: 'Media' },
+
   { path: '/statistics', title: 'Statistiikka' },
+
   { path: '/team&subscription', title: 'Tiimi & Tilaus' }
+
 ];
 
 export function usePathtitle() {
