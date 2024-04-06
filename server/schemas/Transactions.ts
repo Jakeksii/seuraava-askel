@@ -5,6 +5,7 @@ export default new Schema({
     organization_id: { type: String, required: true, index: true },
 
     // PAYMENT INFO
+    stamp: { type: String, required: true },
     transaction_id: { type: String, required: true, index: true },
     reference: { type: String, required: true },
     status: { type: String, required: true },

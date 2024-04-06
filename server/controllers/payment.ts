@@ -1,6 +1,6 @@
 import { Request, Response } from "../types";
 import { PaytrailClient } from "@paytrail/paytrail-js-sdk";
-import { randomUUID } from "crypto";
+import { randomUUID, createHmac } from "crypto";
 
 // https://docs.paytrail.com/#/
 const paytrail = new PaytrailClient({
@@ -31,7 +31,7 @@ export async function PaytrailCreatePayment(req: Request, res: Response) {
             }
         })
 
-        if(payment.status === 200) {
+        if (payment.status === 200) {
             // CREATE PAYMET SUCCESFULL
             return res.status(201).json(payment)
         } else {
@@ -47,8 +47,25 @@ export async function PaytrailCreatePayment(req: Request, res: Response) {
 
 // https://docs.paytrail.com/#/?id=redirect-and-callback-url-parameters
 export async function SuccessCallback(req: Request, res: Response) {
-    console.log('/payment/callback/success', req.query)
-    return res.status(200).end()
+    try {
+        // SIGNATURE VALIDATION
+        // We copy request query payload and delete signature from that payload so that we can validate Hmac signature
+        const params = {...req.query};
+        delete params.signature
+        // This function creates new Hmac signature from our payload: params, body using secret and then compares it to provided signature
+        const validated = paytrail.validateHmac(params as any, "", req.query.signature as any, 'SAIPPUAKAUPPIAS')
+        if(!validated) return res.status(401).end() // Unauthorized, Hmac calculation failed
+    
+        // HANDLE CALLBACK REQUEST
+        console.log('validated', validated)
+
+        
+        return res.status(200).end()
+
+    } catch (error) {
+        console.error(error)
+        return res.status(500).end()
+    }
 }
 
 // https://docs.paytrail.com/#/?id=redirect-and-callback-url-parameters
