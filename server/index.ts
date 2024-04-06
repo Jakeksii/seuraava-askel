@@ -15,7 +15,9 @@ import imageRoutes from "./routes/image";
 import invitationRoutes from "./routes/invitation";
 import organizationRoutes from "./routes/organization";
 import userRoutes from "./routes/user";
+import paymentRoutes from "./routes/payment"
 import { DummyDataRouter } from './schemas/dummy_data/Create';
+
 import path from 'path';
 
 
@@ -60,6 +62,7 @@ app.use("/api/organizations", organizationRoutes)
 app.use("/api/invitations", invitationRoutes)
 app.use("/api/events", eventRoutes)
 app.use("/api/image", imageRoutes)
+app.use("/api/payment", paymentRoutes)
 // Serve static files from the build folder
 const FOLDER = process.env.PRODUCTION ? '' : '.dist/'
 const URL = process.env.DASHBOARD ? 'public_dashboard' : 'public'
