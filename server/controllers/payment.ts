@@ -11,7 +11,8 @@ const paytrail = new PaytrailClient({
 
 export async function PaytrailCreatePayment(req: Request, res: Response) {
     try {
-        const payment = await paytrail.createPayment({
+
+        const payload = { // THIS PAYLOAD IS DUMMY DATA
             stamp: randomUUID(),
             reference: "Tuote #1", // tuotenumero esimerkiksi
             amount: 50,
@@ -28,7 +29,10 @@ export async function PaytrailCreatePayment(req: Request, res: Response) {
                 success: "https://dashboard.nextep.fi/api/payment/callback/success",
                 cancel: "https://dashboard.nextep.fi/api/payment/callback/cancel"
             }
-        })
+        }
+
+        // CALL FOR PAYTRAIL API TO CREATE PAYMENT
+        const payment = await paytrail.createPayment(payload)
 
         if (payment.status === 200) {
             // CREATE PAYMET SUCCESFULL
@@ -39,6 +43,7 @@ export async function PaytrailCreatePayment(req: Request, res: Response) {
             // 4. PAYTRAIL API WILL CALL PROVIDED SUCCESS/CANCEL CALLBACKS WHERE OUR API WILL HANDLE PAYMENT
             return res.status(201).json({ href: payment.data.href }) 
         } else {
+            
             // CREATE PAYMENT FAILED
             return res.status(500).json({ error: "Payment creation failed" });
         }
