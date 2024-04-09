@@ -11,7 +11,6 @@ const paytrail = new PaytrailClient({
 
 export async function PaytrailCreatePayment(req: Request, res: Response) {
     try {
-
         const payment = await paytrail.createPayment({
             stamp: randomUUID(),
             reference: "Tuote #1", // tuotenumero esimerkiksi
@@ -56,10 +55,18 @@ export async function SuccessCallback(req: Request, res: Response) {
         const validated = paytrail.validateHmac(params as any, "", req.query.signature as any, 'SAIPPUAKAUPPIAS')
         if (!validated) return res.status(401).end() // Unauthorized, Hmac calculation failed
 
+
+
         // HANDLE CALLBACK REQUEST
-        console.log('validated', validated)
+        // -----------------------
+        // (Write payment info into database)
+        // -----------------------
+        // -----------------------
+        console.log('validated', req.query)
 
 
+        
+        // RETURN 2** TO PAYTRAIL
         return res.status(200).end()
 
     } catch (error) {
@@ -80,7 +87,17 @@ export async function CancelCallback(req: Request, res: Response) {
         const validated = paytrail.validateHmac(params as any, "", req.query.signature as any, 'SAIPPUAKAUPPIAS')
         if (!validated) return res.status(401).end() // Unauthorized, Hmac calculation failed
     
+
+
         // HANDLE CALLBACK REQUEST
+        // -----------------------
+        // (Write payment info into database)
+        // -----------------------
+        // -----------------------
+        console.log('validated', req.query)
+
+
+        
         
         return res.status(200).end()
     } catch (error) {
