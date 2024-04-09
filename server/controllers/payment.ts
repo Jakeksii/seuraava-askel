@@ -32,7 +32,12 @@ export async function PaytrailCreatePayment(req: Request, res: Response) {
 
         if (payment.status === 200) {
             // CREATE PAYMET SUCCESFULL
-            return res.status(201).json(payment)
+
+            // 1. WE SEND PAYTRAIL CHECKOUT LINK TO CLIENT
+            // 2. CLIENT WILL REDIRECT BROWSER TO PAYTRAIL CHECKOUT
+            // 3. PAYTRAIL WILL REDIRECT CLIENT BROWSER BACK TO PROVIDED SUCCESS/CANCEL REDIRECT-URLS
+            // 4. PAYTRAIL API WILL CALL PROVIDED SUCCESS/CANCEL CALLBACKS WHERE OUR API WILL HANDLE PAYMENT
+            return res.status(201).json({ href: payment.data.href }) 
         } else {
             // CREATE PAYMENT FAILED
             return res.status(500).json({ error: "Payment creation failed" });
@@ -98,8 +103,9 @@ export async function CancelCallback(req: Request, res: Response) {
 
 
         
-        
+        // RETURN 2** TO PAYTRAIL
         return res.status(200).end()
+
     } catch (error) {
         console.error(error)
         return res.status(500).end()
