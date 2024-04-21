@@ -3,7 +3,7 @@ import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 import { useEffect, useState } from "react"
 import LoadingView from "src/components/loading/loading-view"
-import useDetailedOrganizations from "src/hooks/api-hooks/useDetailedOrganisations"
+import useDetailedOrganizations from "src/hooks/api-hooks/useOrganisations"
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete"
 import GooglePlacesAutocomplete, { PlaceType } from "src/components/GooglePlacesAutocomplete"
 import getAddressObject from "src/functions/getAddressObject"
@@ -13,9 +13,10 @@ type Props = {
     mode: 'edit' | 'new'
     formData: any
     setFormData: (data: any) => void
+    onSubmit: (e: any) => void
 }
 
-export default function OrganizationForm({ mode, formData, setFormData }: Props) {
+export default function OrganizationForm({ mode, formData, setFormData, onSubmit }: Props) {
     // If edit mode, use fetched data. If new mode, use empty data
     const { data, isLoading } = useDetailedOrganizations(mode === 'new')
 
@@ -87,9 +88,8 @@ export default function OrganizationForm({ mode, formData, setFormData }: Props)
 
     // render new
     return (
-        <form>
-            
-            <Stack spacing={4} m={4}>
+        <form id="organization-form" onSubmit={onSubmit}>
+            <Stack spacing={4}>
                 <Stack direction={'row'} spacing={2}>
                     <TextField
                         name={'name'}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import { useAppContext } from "src/context/appContext";
 
 export default function useDetailedOrganizations(disabled=false) {
@@ -25,4 +25,15 @@ export default function useDetailedOrganizations(disabled=false) {
     })
 }
 
+export function useCreateOrganization() {
+    const { session } = useAppContext()
+    const token = session.token
+
+    return useMutation({
+        mutationFn: async (organization) => {
+            const { data } = await axios.post('/api/organizations', organization, {headers:{"Authorization":token}})
+            return data
+        }
+    })
+}
 

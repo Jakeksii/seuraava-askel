@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import Box from '@mui/material/Box';
+import { SnackbarProvider } from 'notistack';
 
 import Header from './header';
 import Main from './main';
@@ -26,7 +27,9 @@ export default function DashboardLayout({ children }) {
         <Nav openNav={openNav} onCloseNav={() => setOpenNav(false)} />
 
         <Main>
+          <SnackbarProvider maxSnack={3}>
             {children}
+          </SnackbarProvider>
         </Main>
       </Box>
     </>

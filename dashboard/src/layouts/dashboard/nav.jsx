@@ -15,7 +15,7 @@ import { usePathname } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
 import { useResponsive } from 'src/hooks/use-responsive';
-import useDetailedOrganizations from 'src/hooks/api-hooks/useDetailedOrganisations'
+import useDetailedOrganizations from 'src/hooks/api-hooks/useOrganisations'
 
 import Scrollbar from 'src/components/scrollbar';
 
