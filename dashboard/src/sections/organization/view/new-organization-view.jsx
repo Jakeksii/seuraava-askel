@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 
 import { BackButton } from 'src/components/buttons/back-button';
+import OrganizationForm from '../organization-form';
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +17,7 @@ export default function NewOrganizationView() {
       </Stack>
 
       <Card>
-
+        <OrganizationForm mode="new" />
       </Card>
     </Container>
   );

@@ -38,6 +38,7 @@ export default new Schema<IOrganization>({
         }
     },
     contact_info: {
+        visible: { type: Boolean, default: true },
         email: {
             type: String,
             lowercase: true,
