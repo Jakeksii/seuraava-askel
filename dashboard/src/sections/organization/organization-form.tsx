@@ -1,37 +1,28 @@
-
 import { Checkbox, Typography } from "@mui/material"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 import { useEffect, useState } from "react"
 import LoadingView from "src/components/loading/loading-view"
 import useDetailedOrganizations from "src/hooks/api-hooks/useDetailedOrganisations"
+import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete"
+import GooglePlacesAutocomplete, { PlaceType } from "src/components/GooglePlacesAutocomplete"
+import getAddressObject from "src/functions/getAddressObject"
 
-const FORMDATA = {
-    name: '',
-    business_id: '',
-    address: {
-        street: '',
-        city: '',
-        state: '',
-        zipcode: '',
-        country: '',
-    },
-    location: {
-        type: 'Point',
-        coordinates: [0, 0],
-    },
-    contact_info: {
-        visible: true,
-        email: '',
-        phone: '',
-    },
+
+type Props = {
+    mode: 'edit' | 'new'
+    formData: any
+    setFormData: (data: any) => void
 }
 
-export default function OrganizationForm({ mode }: { mode: 'edit' | 'new' }) {
+export default function OrganizationForm({ mode, formData, setFormData }: Props) {
     // If edit mode, use fetched data. If new mode, use empty data
-    const { data, isLoading } = useDetailedOrganizations({ disabled: mode === 'new' })
-    const [formData, setFormData] = useState(FORMDATA)
+    const { data, isLoading } = useDetailedOrganizations(mode === 'new')
 
+    // we keep track if address was selected from Google Autocomplete
+    const [placeSelected, setPlaceSelected] = useState(false)
+
+    console.log(formData)
     // if Edit mode, set fetched organization data to form data
     useEffect(() => {
         if (mode === 'edit' && !isLoading) {
@@ -70,9 +61,34 @@ export default function OrganizationForm({ mode }: { mode: 'edit' | 'new' }) {
         })
     }
 
+    // GOOGLE AUTOCOMPLETE
+    function onPlaceSelected(place: PlaceType) {
+        geocodeByPlaceId(place.place_id)
+            .then(results => getLatLng(results[0])
+                .then(latLng => {
+                    console.log(results)
+
+                    const address = {
+                        ...getAddressObject(results[0])
+                    }
+
+                    setFormData({
+                        ...formData,
+                        address: address,
+                        location: {
+                            ...formData.location,
+                            coordinates: [latLng.lng, latLng.lat]
+                        }
+                    })
+                    setPlaceSelected(true)
+                })
+                .catch(error => console.error('Error', error)))
+    }
+
     // render new
     return (
         <form>
+            
             <Stack spacing={4} m={4}>
                 <Stack direction={'row'} spacing={2}>
                     <TextField
@@ -93,11 +109,13 @@ export default function OrganizationForm({ mode }: { mode: 'edit' | 'new' }) {
                 </Stack>
                 <Stack spacing={2}>
                     <Typography variant="h6">Osoite</Typography>
+                    <GooglePlacesAutocomplete onPlaceSelected={onPlaceSelected} />
                     <TextField
                         name={'street'}
                         label='Katuosoite'
                         required
                         fullWidth
+                        disabled={!placeSelected}
                         value={formData.address.street}
                         onChange={handleAddressChange}
                     />
@@ -105,6 +123,7 @@ export default function OrganizationForm({ mode }: { mode: 'edit' | 'new' }) {
                         name={'city'}
                         label='Kaupunki'
                         required
+                        disabled
                         fullWidth
                         value={formData.address.city}
                         onChange={handleAddressChange}
@@ -113,6 +132,7 @@ export default function OrganizationForm({ mode }: { mode: 'edit' | 'new' }) {
                         name={'state'}
                         label='Maakunta'
                         required
+                        disabled
                         fullWidth
                         value={formData.address.state}
                         onChange={handleAddressChange}
@@ -121,6 +141,7 @@ export default function OrganizationForm({ mode }: { mode: 'edit' | 'new' }) {
                         name={'zipcode'}
                         label='Postinumero'
                         required
+                        disabled
                         fullWidth
                         value={formData.address.zipcode}
                         onChange={handleAddressChange}
@@ -129,6 +150,7 @@ export default function OrganizationForm({ mode }: { mode: 'edit' | 'new' }) {
                         name={'country'}
                         label='Maa'
                         required
+                        disabled
                         fullWidth
                         value={formData.address.country}
                         onChange={handleAddressChange}
@@ -153,9 +175,9 @@ export default function OrganizationForm({ mode }: { mode: 'edit' | 'new' }) {
                         onChange={handleContactChange}
                     />
                     <Stack direction={'row'} alignItems={'center'}>
-                        <Checkbox 
+                        <Checkbox
                             value={formData.contact_info.visible}
-                            onChange={e => setFormData({...formData, contact_info: {...formData.contact_info, visible: e.target.checked}})}
+                            onChange={e => setFormData({ ...formData, contact_info: { ...formData.contact_info, visible: e.target.checked } })}
                         />
                         <Typography variant="body2">Näytä yhteystiedot julkisena</Typography>
                     </Stack>

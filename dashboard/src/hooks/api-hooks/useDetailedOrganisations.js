@@ -2,10 +2,10 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { useAppContext } from "src/context/appContext";
 
-export default function useDetailedOrganizations(options = {}) {
+export default function useDetailedOrganizations(disabled=false) {
     // We fetch organization using details in appContext
     const { selectedOrganization: organization_id, session} = useAppContext()
-    const enabled = Boolean((organization_id && session?.token)) && !options?.disabled
+    const enabled = Boolean((organization_id && session?.token && !disabled))
     const token = session.token
 
     return useQuery({
