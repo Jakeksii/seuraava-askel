@@ -2,7 +2,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { useAppContext } from 'src/context/appContext';
 
-export default function useGetEvents() {
+export function useGetEvents() {
     // We fetch organization using details in appContext
     const { selectedOrganization: organization_id, session } = useAppContext()
     const enabled = Boolean((organization_id && session?.token))
@@ -14,6 +14,28 @@ export default function useGetEvents() {
         staleTime: 1000 * 60,
         queryFn: async () => {
             const { data } = await axios.get(`/api/events/organization-events`, {
+                headers: {
+                    "Authorization": token,
+                    "Organization": organization_id,
+                }
+            });
+            return data
+        }
+    })
+}
+
+export function useGetEvent({_id, disable = false}) {
+    // We fetch organization using details in appContext
+    const { selectedOrganization: organization_id, session } = useAppContext()
+    const enabled = Boolean((organization_id && session?.token) && !disable)
+    const token = session.token
+
+    return useQuery({
+        enabled: enabled,
+        queryKey: ['event', _id, organization_id, token],
+        staleTime: 1000 * 60,
+        queryFn: async () => {
+            const { data } = await axios.get(`/api/events/organization-events/${_id}`, {
                 headers: {
                     "Authorization": token,
                     "Organization": organization_id,

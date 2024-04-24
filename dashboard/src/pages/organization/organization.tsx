@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
-import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
+import { ErrorBoundary } from 'src/components/Error/ErrorBoundary';
 
 import { ChangeOrganizationView, NewOrganizationView, OrganizationView } from 'src/sections/organization/view';
 

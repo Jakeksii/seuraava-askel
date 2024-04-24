@@ -1,14 +1,13 @@
-import ThemeProvider from 'src/theme';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import fi from 'date-fns/locale/fi';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import 'src/global.css';
-
-import { QueryClient, QueryClientProvider } from 'react-query'
-
 import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
-
 import Router from 'src/routes/router';
-
-import ColorModeContextProvider from './context/colormode-context';
+import ThemeProvider from 'src/theme';
 import { AppContextProvider } from './context/appContext';
+import ColorModeContextProvider from './context/colormode-context';
 
 // ----------------------------------------------------------------------
 
@@ -19,13 +18,15 @@ export default function App() {
 
   return (
     <ColorModeContextProvider>
-      <ThemeProvider>
-        <QueryClientProvider client={queryClient}>
-          <AppContextProvider>
-            <Router />
-          </AppContextProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
+      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={fi}>
+        <ThemeProvider>
+          <QueryClientProvider client={queryClient}>
+            <AppContextProvider>
+              <Router />
+            </AppContextProvider>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </LocalizationProvider>
     </ColorModeContextProvider>
   );
 }

@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import LoadingView from "src/components/loading/loading-view";
-import useGetEvents from "src/hooks/api-hooks/useGetOrgEvents";
+import { useGetEvents } from "src/hooks/api-hooks/useEvents";
 import Event from "./Event";
 
 export default function Feed() {

@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
+import { ErrorBoundary } from 'src/components/Error/ErrorBoundary';
 import { useAppContext } from 'src/context/appContext';
 import useCurrentUser from 'src/hooks/api-hooks/useCurrentUser';
 import LoadingView from 'src/components/loading/loading-view';

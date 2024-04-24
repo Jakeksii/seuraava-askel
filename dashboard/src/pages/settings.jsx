@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
+import { ErrorBoundary } from 'src/components/Error/ErrorBoundary';
 
 import { UserView } from 'src/sections/settings/view';
 

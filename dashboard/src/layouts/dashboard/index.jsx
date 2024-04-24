@@ -27,9 +27,9 @@ export default function DashboardLayout({ children }) {
         <Nav openNav={openNav} onCloseNav={() => setOpenNav(false)} />
 
         <Main>
-          <SnackbarProvider maxSnack={3}>
-            {children}
-          </SnackbarProvider>
+            <SnackbarProvider maxSnack={3}>
+              {children}
+            </SnackbarProvider>
         </Main>
       </Box>
     </>

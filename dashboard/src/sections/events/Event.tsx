@@ -8,6 +8,8 @@ import CloudImage from 'src/components/images/image';
 import useFormatDate from "src/functions/formatDate";
 import { useIsMobile } from 'src/hooks/useResponsive';
 import { Event as EventType } from 'src/types';
+import { format } from 'date-fns';
+import fi from 'date-fns/locale/fi';
 
 type Props = {
     event: EventType
@@ -16,12 +18,19 @@ type Props = {
 const Event = memo(({ event }: Props) => {
     const mobile = useIsMobile()
 
+    const startDate = format(new Date(event.start_date), 'dd.MM.', { locale: fi })
+    const endDate = format(new Date(event.start_date), 'dd.MM.', { locale: fi })
+
+    
+
     const formattedDates = useFormatDate(event.start_date, event.end_date)
     const date = (
         <Typography variant="body2" fontWeight={'bold'}>
-            {(formattedDates.startDate === formattedDates.endDate) ?
-                formattedDates.startDate :
-                formattedDates.startDate + " - " + formattedDates.endDate}
+            {
+                (startDate === endDate)
+                    ? startDate
+                    : startDate + " - " + endDate
+            }
         </Typography>
     )
 

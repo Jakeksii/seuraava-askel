@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Stack, Typography } from '@mui/material';
+import { Button, Card, CardContent, CardMedia, Stack, Typography } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import CloudImage from 'src/components/images/image';
@@ -6,6 +6,7 @@ import { useGetImages } from 'src/hooks/api-hooks/useImages';
 import { useWidth } from 'src/hooks/use-responsive';
 import LoadingView from '../../components/loading/loading-view';
 import DeleteImageButton from './delete-image-button';
+import { useState } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -19,9 +20,24 @@ type ImageObject = {
   updateAt: Date
 }
 
-export default function MediaLibrary() {
+type Props = {
+  setImage_id?: (value: string) => void
+}
+
+export default function MediaLibrary({ setImage_id }: Props) {
+  const [selectedImage, setSelectedImage] = useState('')
   const width = useWidth()
   const { data, isLoading } = useGetImages()
+
+  const handleSelect = (selected: string) => {
+    setSelectedImage(selected)
+    setImage_id && setImage_id(selected)
+  }
+  const handleClear = (image_id: string) => {
+    if (image_id === selectedImage) {
+      setSelectedImage(''), setImage_id && setImage_id('')
+    }
+  }
 
   if (!data || isLoading) return <LoadingView />
 
@@ -45,14 +61,14 @@ export default function MediaLibrary() {
   const renderImages = (
     imageObjects.slice().reverse().map((object) => (
       <ImageListItem key={object._id}>
-        <Card>
-          <CardMedia sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Card sx={{ m: object._id === selectedImage ? 0 : .5, border: object._id === selectedImage ? 4 : 'none', borderColor: 'primary.main' }}>
+          <CardMedia sx={{ display: 'flex', justifyContent: 'center', padding: 0 }} component={Button} onClick={() => handleSelect(object._id)}>
             <CloudImage image_id={`${object.organization_id}/${object._id}`} width={400} height={400} />
           </CardMedia>
           <CardContent>
             <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
               <Typography>{object.name}</Typography>
-              <DeleteImageButton image_id={object._id} />
+              <DeleteImageButton image_id={object._id} clear={handleClear} />
             </Stack>
           </CardContent>
         </Card>

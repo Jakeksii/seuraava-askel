@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
 import App from './app';
-import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
+import { ErrorBoundary } from './components/Error/ErrorBoundary';
 
 // ----------------------------------------------------------------------
 

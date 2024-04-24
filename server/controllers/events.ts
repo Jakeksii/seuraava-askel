@@ -243,3 +243,25 @@ export const getOrgEvents = async (req: Request, res: Response) => {
     return res.status(500).end();
   }
 }
+
+export const getOrgEvent = async (req: Request, res: Response) => {
+  try {
+    const { _id } = req.params
+    const event = await Event.findById(_id);
+
+    if(!event) {
+      return res.status(404).end();
+    }
+
+    // validate event ownership
+    if(event.organization.organization_id !== req.organization) {
+      return res.status(404).end();
+    }
+
+    return res.status(200).json(event);
+    
+  } catch (error) {
+    return res.status(500).end();
+  }
+}
+

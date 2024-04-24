@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import { ErrorBoundary } from 'src/components/ErrorBoundary/ErrorBoundary';
+import { ErrorBoundary } from 'src/components/Error/ErrorBoundary';
 import Feed from '../Feed';
 
 // ----------------------------------------------------------------------
@@ -22,9 +22,9 @@ export default function EventsView() {
         </Button>
       </Stack>
 
-        <ErrorBoundary>
-          <Feed/>
-        </ErrorBoundary>
+      <ErrorBoundary>
+        <Feed />
+      </ErrorBoundary>
     </Container>
   );
 }

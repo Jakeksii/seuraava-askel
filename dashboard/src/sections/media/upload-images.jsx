@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Card, CardContent, CardMedia, Paper, Stack, Typography } from '@mui/material';
+import { Button, Card, CardContent, CardMedia, Paper, Stack, Typography } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useUploadImage } from 'src/hooks/api-hooks/useImages';
@@ -60,7 +60,7 @@ export default function UploadImages() {
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography variant="h4" gutterBottom>Lataa kuvia</Typography>
       </Stack>
-      <Card {...getRootProps({ className: 'dropzone' })} sx={{ p: 4 }}>
+      <Card {...getRootProps({ className: 'dropzone' })} sx={{ p: 4 }} component={Button} fullWidth>
         <input {...getInputProps()} />
         <Stack>
           {

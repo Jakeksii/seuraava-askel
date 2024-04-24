@@ -1,0 +1,9 @@
+.quill  * {
+    border: none !important;
+}
+.ql-editor {
+    min-height: 250px;
+}
+.ql-tooltip {
+    z-index: 1000 !important;
+}
