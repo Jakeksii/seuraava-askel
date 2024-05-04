@@ -7,6 +7,8 @@ interface Session {
 type AppContextType = {
     session: Session
     setSession: (session: Session) => void
+    selectedOrganization: string | null,
+    switchOrganization: (organization_id?: string) => void
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
@@ -28,7 +30,7 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
     const switchOrganization = useMemo(() => (
         (organization_id?: string) => {
             setSelectedOrganization(organization_id ?? null)
-            if(organization_id) localStorage.setItem('selected_organization', organization_id)
+            if (organization_id) localStorage.setItem('selected_organization', organization_id)
         }
     ), [])
 

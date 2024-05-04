@@ -101,7 +101,7 @@ export default function Nav({ openNav, onCloseNav }) {
         },
       }}
     >
-      <Typography color='primary' variant='h2' align='center' >NexTep</Typography>
+      <Typography color='primary' variant='h1' align='center' >NexTep</Typography>
 
       {renderOrganization}
 

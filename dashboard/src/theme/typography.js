@@ -36,15 +36,15 @@ export const typography = {
   fontWeightBold: 700,
   h1: {
     fontWeight: 800,
-    lineHeight: 80 / 64,
-    fontSize: pxToRem(40),
-    ...responsiveFontSizes({ sm: 52, md: 58, lg: 64 }),
+    lineHeight: 1.25,
+    fontSize: 28,
+    ...responsiveFontSizes({ sm: 36, md: 41, lg: 45 }),
   },
   h2: {
     fontWeight: 800,
-    lineHeight: 64 / 48,
-    fontSize: pxToRem(32),
-    ...responsiveFontSizes({ sm: 40, md: 44, lg: 48 }),
+    lineHeight: 1.33,
+    fontSize: 22,
+    ...responsiveFontSizes({ sm: 28, md: 31, lg: 34 }),
   },
   h3: {
     fontWeight: 700,

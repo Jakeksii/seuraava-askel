@@ -1,7 +1,13 @@
-import { Address } from "../types";
+type Address = {
+    street: string;
+    city: string;
+    state: string;
+    zipcode: string;
+    country: string;
+}
 
 export default function getAddressObject(result: google.maps.GeocoderResult) {
-    var ShouldBeComponent: Record<string, string[]> = {
+    const ShouldBeComponent: Record<string, string[]> = {
         zipcode: ["postal_code"],
         street: ["street_address", "route"],
         street_number: ["street_number"],
@@ -23,7 +29,7 @@ export default function getAddressObject(result: google.maps.GeocoderResult) {
         country: ["country"]
     };
 
-    var address: Record<string, string> = {
+    const address: Record<string, string> = {
         street_number: "",
         zipcode: "",
         street: "",
@@ -31,8 +37,9 @@ export default function getAddressObject(result: google.maps.GeocoderResult) {
         city: "",
         country: ""
     };
+    // eslint-disable-next-line
     result.address_components.forEach((component: { types: any[]; short_name: string; long_name: any; }) => {
-        for (var shouldBe in ShouldBeComponent) {
+        for (const shouldBe in ShouldBeComponent) {
             if (ShouldBeComponent[shouldBe].indexOf(component.types[0]) !== -1) {
                 address[shouldBe] = component.long_name;
             }
@@ -42,5 +49,5 @@ export default function getAddressObject(result: google.maps.GeocoderResult) {
         ...address,
         street: address.street + " " + address.street_number
     }
-    return formattedAddress as Omit<Address, 'coordinates'>;
+    return formattedAddress as Address
 }

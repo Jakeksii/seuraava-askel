@@ -1,10 +1,13 @@
 // Sub types
 export type Address = {
-    street: string
-    city: string
-    state: string
-    zipcode: string
-    country: string
+    street: string | null
+    city: string | null
+    state: string | null
+    zipcode: string | null
+    country: string | null
+}
+export type Location = {
+    coordinates: number[]
 }
 export type FormattedDate = {
     startDate: string
@@ -15,19 +18,18 @@ export type FormattedDate = {
 
 // EVENT
 export type Event = {
+    description: string
     _id: string
     start_date: Date
     end_date: Date
     title: string
     extract: string
     address: Address
-    location: {
-        coordinates: [number, number]
-    }
+    location: Location
     image_id: string
     organization: {
-        organization_id: string
-        organization_name: string
+        _id: string
+        name: string
     }
     createdAt: Date
     updatedAt: Date
@@ -40,9 +42,7 @@ export type EventPage = {
     extract: string
     description?: string
     address: Address
-    location: {
-        coordinates: [number, number]
-    }
+    location: Location
     image_id: string
     meta: {
         denomination?: string

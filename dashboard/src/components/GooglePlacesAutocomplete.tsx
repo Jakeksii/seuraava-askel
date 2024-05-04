@@ -1,11 +1,12 @@
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Autocomplete from '@mui/material/Autocomplete';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import parse from 'autosuggest-highlight/parse';
 import { debounce } from '@mui/material/utils';
+import parse from 'autosuggest-highlight/parse';
 import { useEffect, useMemo, useState } from 'react';
 
 // GOOGLE PLACES
@@ -52,7 +53,7 @@ export default function GooglePlacesAutocomplete(props: Props) {
                             ...request,
                             componentRestrictions: { country: 'fi' }
                         },
-                        callback,
+                        callback
                     );
                     console.log(request)
                 },

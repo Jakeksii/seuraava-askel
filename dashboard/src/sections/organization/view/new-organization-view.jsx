@@ -1,19 +1,17 @@
 import { useState } from 'react';
-import { useCreateOrganization } from 'src/hooks/api-hooks/useOrganisations';
 import { useQueryClient } from "react-query";
+import { useCreateOrganization } from 'src/hooks/api-hooks/useOrganisations';
 
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
 
+import { useSnackbar } from 'notistack';
 import { BackButton } from 'src/components/buttons/back-button';
-import OrganizationForm from '../organization-form';
-import { SaveButton } from 'src/components/buttons/save-button';
 import { PublishButton } from 'src/components/buttons/publish-button';
 import { useRouter } from 'src/routes/hooks';
-import { Typography } from '@mui/material';
-import { useSnackbar } from 'notistack';
+import OrganizationForm from '../organization-form';
 // variant could be success, error, warning, info, or default
 
 // ----------------------------------------------------------------------
@@ -23,7 +21,6 @@ export default function NewOrganizationView() {
   const queryClient = useQueryClient()
   const { mutate, isLoading } = useCreateOrganization()
 
-  const [successSnackbarOpen, setSuccessSnackbarOpen] = useState(false)
   const { enqueueSnackbar } = useSnackbar();
 
   const [formData, setFormData] = useState({
@@ -51,7 +48,7 @@ export default function NewOrganizationView() {
     e.preventDefault();
 
     mutate(formData, {
-      onSuccess: (data) => {
+      onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['user'] })
         enqueueSnackbar('Uusi organisaatio luotu!', {
           variant: 'success', anchorOrigin: {

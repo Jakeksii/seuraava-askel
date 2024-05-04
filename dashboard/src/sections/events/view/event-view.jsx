@@ -1,17 +1,16 @@
 
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import { useParams } from 'react-router-dom';
 import { ErrorBoundary } from 'src/components/Error/ErrorBoundary';
 import { BackButton } from 'src/components/buttons/back-button';
 import { EditButton } from 'src/components/buttons/edit-button';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 
 // ----------------------------------------------------------------------
 
-export default function EventView(props) {
+export default function EventView() {
   // Get event id from url
   const { _id } = useParams()
   const state = 0

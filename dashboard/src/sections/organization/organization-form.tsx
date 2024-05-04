@@ -1,19 +1,39 @@
 import { Checkbox, Typography } from "@mui/material"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
-import { useEffect, useState } from "react"
-import LoadingView from "src/components/loading/loading-view"
-import useDetailedOrganizations from "src/hooks/api-hooks/useOrganisations"
+import { ChangeEvent, FormEventHandler, useEffect, useState } from "react"
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete"
 import GooglePlacesAutocomplete, { PlaceType } from "src/components/GooglePlacesAutocomplete"
+import LoadingView from "src/components/loading/loading-view"
 import getAddressObject from "src/functions/getAddressObject"
+import useDetailedOrganizations from "src/hooks/api-hooks/useOrganisations"
 
+type FormData = {
+    name: string;
+    business_id: string;
+    address: {
+        street: string;
+        city: string;
+        state: string;
+        zipcode: string;
+        country: string;
+    };
+    location: {
+        type: string;
+        coordinates: number[];
+    };
+    contact_info: {
+        visible: boolean;
+        email: string;
+        phone: string;
+    };
+}
 
 type Props = {
     mode: 'edit' | 'new'
-    formData: any
-    setFormData: (data: any) => void
-    onSubmit: (e: any) => void
+    formData: FormData
+    setFormData: (data: FormData) => void
+    onSubmit: FormEventHandler<HTMLFormElement>
 }
 
 export default function OrganizationForm({ mode, formData, setFormData, onSubmit }: Props) {
@@ -29,7 +49,7 @@ export default function OrganizationForm({ mode, formData, setFormData, onSubmit
         if (mode === 'edit' && !isLoading) {
             data && setFormData(data)
         }
-    }, [isLoading, data, mode])
+    }, [isLoading, data, mode, setFormData])
 
 
     // render load
@@ -37,13 +57,13 @@ export default function OrganizationForm({ mode, formData, setFormData, onSubmit
         return <Stack m={8}><LoadingView /></Stack>
     }
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
     }
-    const handleAddressChange = (e: any) => {
+    const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             address: {
@@ -52,7 +72,7 @@ export default function OrganizationForm({ mode, formData, setFormData, onSubmit
             }
         })
     }
-    const handleContactChange = (e: any) => {
+    const handleContactChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             contact_info: {

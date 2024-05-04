@@ -1,20 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { StaticDateTimePicker as MUIStaticDateTimePicker } from "@mui/x-date-pickers";
 
 type Props = {
-    name: string
-    onChange: (name: string, value: Date | null) => void
+
     toolbarTitle?: string
     minDateTime?: Date
+
+    [key: string]: any
 }
 
-export default function StaticDateTimePicker({name, onChange, toolbarTitle, minDateTime}: Props) {
+export default function StaticDateTimePicker({toolbarTitle, minDateTime, ...props}: Props) {
 
     return (
         <MUIStaticDateTimePicker
-            onChange={(value) => onChange(name, value)}
-
             minDateTime={minDateTime ? new Date(minDateTime) : undefined}
-
+            {...props}
             sx={{
                 backgroundColor: 'transparent',
             }}

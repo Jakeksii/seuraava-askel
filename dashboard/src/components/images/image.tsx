@@ -15,14 +15,12 @@ type Props = {
     height: number
 }
 export default function CloudImage({ image_id, width, height }: Props) {
-    // Instantiate a CloudinaryImage object for the image with the public ID, 'docs/models'.
     const myImage = cld.image(image_id);
 
-    // Resize to 250 x 250 pixels using the 'fill' crop mode.
     myImage.resize(fill().width(width).height(height));
 
     // Render the image in a React component.
     return (
-        <AdvancedImage cldImg={myImage} style={{objectFit: 'cover'}}/>
+        <AdvancedImage cldImg={myImage} style={{objectFit: 'cover', width: '100%', height: '100%'}}/>
     )
 }

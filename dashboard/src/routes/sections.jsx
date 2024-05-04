@@ -1,15 +1,15 @@
 import { CircularProgress } from '@mui/material';
-import { lazy, Suspense } from 'react';
-import { Outlet, Navigate, useRoutes } from 'react-router-dom';
+import { Suspense } from 'react';
+import { Outlet, useRoutes } from 'react-router-dom';
 
 // Layout
 import DashboardLayout from 'src/layouts/dashboard';
 
 // Routes by state
-import unauthenticated from './routes-by-state/unauthenticated';
 import authenticated from './routes-by-state/authenticated';
-import verified from './routes-by-state/verified';
 import selected from './routes-by-state/selected';
+import unauthenticated from './routes-by-state/unauthenticated';
+import verified from './routes-by-state/verified';
 
 // Shared routes
 import shared from './routes-by-state/shared';
