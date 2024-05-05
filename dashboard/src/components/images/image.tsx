@@ -12,12 +12,11 @@ const cld = new Cloudinary({
 type Props = {
     image_id: string
     width: number
-    height: number
 }
-export default function CloudImage({ image_id, width, height }: Props) {
+export default function CloudImage({ image_id, width }: Props) {
     const myImage = cld.image(image_id);
 
-    myImage.resize(fill().width(width).height(height));
+    myImage.resize(fill().width(width).aspectRatio(4/3));
 
     // Render the image in a React component.
     return (

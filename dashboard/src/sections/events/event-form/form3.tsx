@@ -45,7 +45,7 @@ export function Form3({ setData, defaultValues, organization }: Props) {
     return (
         <form onSubmit={handleSubmit(setData)}>
             <Stack mb={2} direction={'row'} gap={1} alignItems={'center'}>
-                <Switch {...register('useOrganizationAddress')} />
+                <Switch {...register('useOrganizationAddress')} defaultChecked={useOrganizationAddress} />
                 <Typography>Käytä organisaation osoitetta</Typography>
             </Stack>
             {!useOrganizationAddress && (

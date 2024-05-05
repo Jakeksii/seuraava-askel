@@ -12,8 +12,8 @@ export const createEvent = async (req: Request, res: Response) => {
     const event = new Event({
       ...req.body, // event data that client sended. Any data that is not in IEvent will be discarded.
       organization: {
-        organization_id: organization._id,
-        organization_name: organization.organization_name
+        _id: organization._id,
+        name: organization.organization_name
       },
       created_by: req.user._id,
       updated_by: req.user._id
@@ -28,12 +28,12 @@ export const createEvent = async (req: Request, res: Response) => {
     // TEST if image exist
     if (!Types.ObjectId.isValid(event.image_id)) return res.status(400).json({ message: "Image_id is not valid Object_id" })
     const image = await Image.findById(new Types.ObjectId(event.image_id))
-    if (!(image.organization_id === organization._id)) return res.status(403).json({ message: "Image does not belong to provided organization" })
+    if (!(image.organization_id.toString() === organization._id.toString())) return res.status(403).json({ message: "Image does not belong to provided organization" })
     if (!image) return res.status(400).json({ message: "Image not found with provided image_id" })
 
-    // Prefix image_id with organization_id (this way client can only use its own organization images)
-    // images will be queried from cloudinary with this event.image_id (this image is already uploaded to cloudinary)
-    event.image_id = organization._id + "/" + image._id
+    // // Prefix image_id with organization_id (this way client can only use its own organization images)
+    // // images will be queried from cloudinary with this event.image_id (this image is already uploaded to cloudinary)
+    // event.image_id = organization._id + "/" + image._id
 
     // save created event to db and return saved event to client
     const savedEvent = await event.save()
@@ -237,7 +237,7 @@ export const getEventPage = async (req: Request, res: Response) => {
 // GET Events from one Organization
 export const getOrgEvents = async (req: Request, res: Response) => {
   try {
-    const events = await Event.find({ 'organization.organization_id': req.organization });
+    const events = await Event.find({ 'organization._id': req.organization });
     return res.status(200).json(events);
   } catch (error) {
     return res.status(500).end();
@@ -249,17 +249,17 @@ export const getOrgEvent = async (req: Request, res: Response) => {
     const { _id } = req.params
     const event = await Event.findById(_id);
 
-    if(!event) {
+    if (!event) {
       return res.status(404).end();
     }
 
     // validate event ownership
-    if(event.organization.organization_id !== req.organization) {
+    if (event.organization._id !== req.organization) {
       return res.status(404).end();
     }
 
     return res.status(200).json(event);
-    
+
   } catch (error) {
     return res.status(500).end();
   }

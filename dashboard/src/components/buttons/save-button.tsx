@@ -1,9 +1,9 @@
 import { LoadingButton } from '@mui/lab';
-
-export function SaveButton() {
+/* eslint-disable-next-line */
+export function SaveButton({...props}: {[key: string]: any}) {
     
     return (
-        <LoadingButton variant="contained" color="primary" >
+        <LoadingButton variant="contained" color="primary" {...props} >
           Tallenna
         </LoadingButton>
     )

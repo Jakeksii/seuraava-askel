@@ -50,7 +50,7 @@ const EventSchema = new Schema<IEvent>({
         }
     },
     dummydata: String,
-    image_id: { type: String, required: true },
+    image_id: { type: Schema.Types.ObjectId, required: true },
     meta: {
         denomination: { type: [String], maxlength: 200 },
         category: { type: [String], maxlength: 200 },
@@ -63,14 +63,12 @@ const EventSchema = new Schema<IEvent>({
         online: { type: Boolean, default: false }
     },
     organization: {
-        organization_id: Types.ObjectId,
-        organization_name: { type: String, index: true }
+        _id: Types.ObjectId,
+        name: { type: String, index: true }
     },
 
     created_by: Types.ObjectId,
-    updated_by: String
+    updated_by: Types.ObjectId
 }, { timestamps: true }); //adds createdAt, updatedAt
-
-EventSchema.index({ location: "2dsphere" })
 
 export default EventSchema

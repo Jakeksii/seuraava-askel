@@ -27,12 +27,12 @@ export default function SelectImage({ image_id, organization_id, setImage_id, ch
     return (
         <>
             <Card
-                sx={{ flexGrow: 1, aspectRatio: '1/1', maxWidth: { xs: '100%', sm: '60%', md: '30%' }, mb: { xs: 2, sm: 0 }, p: 0 }}
+                sx={{ flexGrow: 1, aspectRatio: '4/3', maxWidth: { xs: '100%', sm: '60%', md: '40%' }, mb: { xs: 2, sm: 0 }, p: 0 }}
                 component={Button}
                 onClick={() => setOpen(true)}
             >
                 {(image_id.length === 0) && <Typography variant="h6">Valitse kuva</Typography>}
-                {(image_id.length > 0) && <CloudImage image_id={`${organization_id}/${image_id}`} width={400} height={400} />}
+                {(image_id.length > 0) && <CloudImage image_id={`${organization_id}/${image_id}`} width={400} />}
                 {children}
             </Card>
 

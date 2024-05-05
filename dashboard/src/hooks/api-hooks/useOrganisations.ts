@@ -16,6 +16,9 @@ export type Organization = {
         zipcode: string;
         country: string;
     };
+    location: {
+        coordinates: number[]
+    }
     contact_info: {
         visible: boolean;
         email: string;

@@ -63,7 +63,7 @@ export default function MediaLibrary({ setImage_id }: Props) {
       <ImageListItem key={object._id}>
         <Card sx={{ m: object._id === selectedImage ? 0 : .5, border: object._id === selectedImage ? 4 : 'none', borderColor: 'primary.main' }}>
           <CardMedia sx={{ display: 'flex', justifyContent: 'center', padding: 0 }} component={Button} onClick={() => handleSelect(object._id)}>
-            <CloudImage image_id={`${object.organization_id}/${object._id}`} width={400} height={400} />
+            <CloudImage image_id={`${object.organization_id}/${object._id}`} width={400} />
           </CardMedia>
           <CardContent>
             <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>

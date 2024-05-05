@@ -45,7 +45,7 @@ export interface IEvent {
         coordinates: [Number, Number] // [longitude, latitude]
     }
     dummydata: string
-    image_id: string
+    image_id: Types.ObjectId
     meta: {
         denomination?: string
         types?: string[]
@@ -58,8 +58,8 @@ export interface IEvent {
         presenter?: string
     }
     organization: {
-        organization_id: String,
-        organization_name: String,
+        _id: String,
+        name: String,
     }
     created_by: Types.ObjectId
     updated_by: Types.ObjectId

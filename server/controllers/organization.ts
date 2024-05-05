@@ -8,6 +8,7 @@ export const createOrganization = async (req: Request, res: Response): Promise<R
             name: req.body.name,
             business_id: req.body.business_id,
             address: req.body.address,
+            location: req.body.location,
             contact_info: req.body.contact_info,
             contact_info_visible: req.body.contact_info_visible,
             organization_users: [{
@@ -106,6 +107,7 @@ export const getDetailedOrganization = async (req: Request, res: Response): Prom
             visible: organization.visible,
 
             address: organization.address,
+            location: organization.location,
             contact_info: organization.contact_info,
             organization_users: [...organization.organization_users],
 

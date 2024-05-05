@@ -20,8 +20,8 @@ export type FormattedDate = {
 export type Event = {
     description: string
     _id: string
-    start_date: Date
-    end_date: Date
+    start_date: string | Date
+    end_date: string | Date
     title: string
     extract: string
     address: Address
@@ -31,8 +31,8 @@ export type Event = {
         _id: string
         name: string
     }
-    createdAt: Date
-    updatedAt: Date
+    createdAt: string
+    updatedAt: string
 }
 export type EventPage = {
     _id: string

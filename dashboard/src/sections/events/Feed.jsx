@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Card, Stack, Typography } from "@mui/material";
 import LoadingView from "src/components/loading/loading-view";
 import { useGetEvents } from "src/hooks/api-hooks/useEvents";
 import Event from "./Event";
@@ -11,9 +11,7 @@ export default function Feed() {
 
     // RENDER
     const renderEvents = data?.map((event) => (
-        <Box key={event._id} width='100%'>
-            <Event event={event} />
-        </Box>
+            <Event key={event._id} event={event} />
     ));
 
     return (

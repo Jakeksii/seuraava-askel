@@ -28,12 +28,15 @@ type Props = {
     setFormData: (data: FormData) => void
     event_id?: string
     organization: Organization
+
+    publish: () => void
+    save: () => void
 }
 
-export default function EventForm({ mode, formData, setFormData, event_id, organization }: Props) {
+export default function EventForm({ mode, formData, setFormData, event_id, organization, publish, save }: Props) {
 
     // If edit mode, use fetched data. If new mode, use empty data
-    const { data, isLoading } = useGetEvent({ _id: event_id, disable: mode === 'new' })
+    const { data, isLoading } = useGetEvent({ _id: event_id ?? "", disable: mode === 'new' })
 
     // if Edit mode, set fetched event data to form data
     useEffect(() => {
@@ -77,7 +80,6 @@ export default function EventForm({ mode, formData, setFormData, event_id, organ
                         setFormData({
                             ...formData,
                             ...data,
-                            image_id: `${organization._id}/${data.image_id}`
                         })
                         setDisabledTabs({
                             ...disabledTabs,
@@ -150,10 +152,10 @@ export default function EventForm({ mode, formData, setFormData, event_id, organ
                             }
                         }} />
                     <Stack direction={'row'} gap={1} justifyContent={'center'} alignItems={'center'}>
-                        <Button variant="contained" fullWidth color="success">
+                        <Button variant="contained" fullWidth color="success" onClick={publish}>
                             Julkaise
                         </Button>
-                        <Button variant="contained" fullWidth>
+                        <Button variant="contained" fullWidth onClick={save}>
                             Tallenna
                         </Button>
                     </Stack>

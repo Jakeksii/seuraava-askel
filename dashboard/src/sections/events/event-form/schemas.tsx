@@ -32,9 +32,12 @@ export type Schema1 = z.infer<typeof schema1>
 export const schema2 = z.object({
     start_date: z.date(),
     end_date: z.date(),
-}).refine((data) => data.start_date < data.end_date, {
-    message: "Start date must be before end date",
-})
+}).refine(data => {
+    const diffInMinutes = (data.end_date.getTime() - data.start_date.getTime()) / (1000 * 60);
+    return diffInMinutes >= 20; // Check if difference is at least 20 minutes
+}, {
+    message: "Tapahtuman keston tulee olla vähintään 20 minuuttia.",
+});
 export type Schema2 = z.infer<typeof schema2>
 
 
