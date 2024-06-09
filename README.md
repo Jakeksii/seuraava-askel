@@ -2,7 +2,7 @@
 Production version off the app Seuraava askel
 
 Julkinen versio:
-- cyclic-client branch https://seuraava-askel.cyclic.app/
+- cyclic-client branch https://nextep.fi/
 - cyclic-dashboard branch https://seuraava-askel-dashboard.cyclic.app/
 
 Frontti: React by vite https://vitejs.dev/
